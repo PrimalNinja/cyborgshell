@@ -27,3 +27,9 @@ Contact PrimalNinja if would like to consider other licensing options.
 About Us
 
 OHCJS is Proudly Developed by the PrimalNinja of Cyborg Unicorn Pty Ltd.
+
+Instructions and Deployment
+
+Read the instructions in the help folder.
+
+To deploy, simply place the lot into your web root folder if the World doesn't have access to it.  If you do want to host it for the World, then move the help, home, public and users folders outside of the webroot somewhere it is not accessible and edit the $strDataRoot within inc-env.php.

@@ -2,6 +2,8 @@
 
 Welcome to Open Home Computer JC! (OHCJS)
 
+RELEASE CANDIDATE 3
+
 OHCJS brings the retro charm of home computers to modern devices, allowing you to create, code, and collaborate anywhere, anytime. With OHCJS, you can:
 
 - Create an account and login on multiple devices

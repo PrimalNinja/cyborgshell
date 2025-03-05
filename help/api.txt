@@ -1,0 +1,11 @@
+API Reference
+
+For now it is just the following:
+
+api.cls();
+
+	clear the screen
+
+api.print(<output>);
+
+	print some output

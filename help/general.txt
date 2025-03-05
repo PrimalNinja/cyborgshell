@@ -1,0 +1,14 @@
+General Commands
+These commands provide general information and control.
+
+reset
+
+	Resets the environment.
+	
+run
+
+	Runs the current program.
+
+startup
+
+	Displays the startup text.

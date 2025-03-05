@@ -1,0 +1,23 @@
+Terms & Conditions
+
+Limitations
+
+By using this system, you agree not to use it to negatively impact, compromise, or exploit other systems, networks, or services that are not part of this environment.
+
+Test Our Limits
+
+You are free to use this system as you see fit. In fact, we encourage you to try and push the system to its limits. Attempt to hack, crack, or bring the system down - we want to see what you're capable of!
+
+By using this system, you acknowledge that:
+
+- We do not guarantee the security or integrity of the system
+- We do not guarantee the privacy or confidentiality of any information shared or stored on the system
+- You are responsible for your own actions on the system
+
+Cookies
+
+If you do not login, we do not store cookies on your computer.  If you login, we do, but only to allow you to remain logged in until you logout again. 
+
+Security
+
+Your account passwords are not stored as plain text on the server. We do follow best practices and your password is not known to us either - it is not a decryptable password.

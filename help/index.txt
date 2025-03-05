@@ -1,0 +1,38 @@
+Welcome to Home Computer JS!
+
+This help guide will walk you through the various commands and features available.
+
+Be sure to read the about by typing 'help about'.
+
+You can register so you can login and program your own programs and share them with others.
+Type 'help account' for help on the register and login commands as well as some other account commands.
+
+Help Index
+
+help
+
+	Shows this help index.
+
+help general
+
+	Shows help on general commands.
+	
+help editor
+
+	Shows help on editor commands.
+	
+help file
+
+	Shows help on file commands.
+	
+help account
+
+	Shows help on account commands.
+	
+help sharing
+
+	Shows help on sharing commands.
+
+help about
+
+	Shows some information about this product.

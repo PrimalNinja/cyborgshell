@@ -1,0 +1,47 @@
+Sharing and File Space Commands
+These commands relate to sharing file spaces and the file spaces you have access to.
+
+grant <sharekey>
+
+	Shares your file space with the user who provided the sharekey.
+	
+keys
+
+	Lists all your keys. Only share your share keys.
+	
+newkey <keyname>
+
+	Creates a new sharekey with the given key name.
+	
+revoke <sharekey>
+
+	Unshares your file space from the user who provided the sharekey.
+	
+shares
+
+	Lists all the shares you have granted.
+
+
+Sharing Process
+
+Example of how to share file spaces:
+
+Fred
+
+	1. Fred wants access to Wilma's space.
+	2. Fred creates a sharekey for Wilma by typing 'newkey wilma' and provides the sharekey to Wilma.
+	note: wilma in 'newkey wilma' is Fred's alias for the sharekey, it has nothing to do with Wilma's account.
+										
+Wilma
+
+	3. Using the sharekey Fred had provided, grants access to Fred typing 'grant <sharekey>'.
+
+Fred
+
+	4. Fred now has access to Wilma's space.
+
+Wilma
+
+	5. Wilma still has control over who she is sharing with and can revoke or reinstate Fred as she pleases.
+
+This sharing process allows also for teams to have a shared area. Let's imagine Wilma is actually managing the team space. Wilma can request individual sharekeys from each developer in the team so that they can be granted or revoked as required to the team space.

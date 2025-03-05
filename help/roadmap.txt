@@ -1,0 +1,25 @@
+Roadmap
+
+Here is an overview of some upcoming features we plan to add to this product keeping simplicity as the main goal. Not necessarily in the order they will be available: 
+
+	The ability to create packages, deploy packages, share plackages either publically or to nominated shares.
+	
+	Additions to the file commands to facilite copying and moving files between spaces and packages.
+	
+	Some device and key management functions (deleting them).
+
+	Version control. The ability to list versions, load previous versions, rollback to previous versions.
+	
+	The ability to develop and enhance this product using itself.
+	
+	Some AI facilities, not only LLM integration but perhaps integration with our dAIbolical product.
+	
+	Ongoing API development so you don't have to do everything from scratch.
+
+	Auto-execution of a program upon login, with optional bypassing this for if something goes wrong.
+	
+	Sourcecode 'flavour' support so you can work with different types of files intelligently, such as edit your binary files with the line editor. 
+	
+	More tools to make teaching software development as simple as it was in the 80s.
+	
+	Some other suprises.

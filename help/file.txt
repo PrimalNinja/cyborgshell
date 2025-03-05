@@ -1,0 +1,46 @@
+File Commands
+These commands relate to files in your current file space.
+
+beautify <filename>
+
+	Beautifies a JSON file without corrupting the currently loaded program.
+	
+dir [<filename>] (or cat, files, ls)
+
+	Lists saved programs. Filename can contain wildcards * or ?.
+	
+copy <filename1> <filename2> (or cp)
+
+	Copies a file from filename1 to filename2.
+	
+del <filename> (or delete, era)
+
+	Erases a program.
+	
+load <filename>
+
+	Loads a program.
+	
+ren <filename1> <filename2> (or rename, mv)
+
+	Renames a file from filename1 to filename2.
+	
+run <filename>
+
+	Runs a program, replacing the existing loaded program.
+	
+save <filename>
+
+	Saves a program.
+	
+space [<spacekey> | <alias>] (or cs, cd, chdir)
+
+	Shows your current space or changes to a new one.
+	
+spaces
+
+	Lists all file spaces you have access to.
+
+type <filename> [[fromline]-[toline]]
+
+	Types a program without corrupting the currently loaded program.

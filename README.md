@@ -18,6 +18,8 @@ Sharing is a key feature in OHCJS. Just like swapping floppy disks in the 80s, y
 - Teamwork: Collaborate on projects in shared team spaces
 - Friendship: Mutually share spaces with trusted friends
 
+A live Environment based on OHCJS is located at http://8bitology.com/.
+
 License
 
 Open Home Computer JS is released under the MIT software license, because "sharing is caring."

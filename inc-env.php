@@ -35,7 +35,7 @@ $strDataRoot = __DIR__;					// dev
 error_reporting(0);
 error_reporting(E_ALL);	// enable for debug
 
-$arrValidLanguages = ["chinese", "chineset", "english", "french", "german", "indonesian", "klingon", "russian", "spanish", "tagalog"];
+$arrValidLanguages = ["chinese", "chineset", "english", "french", "german", "javanese", "klingon", "russian", "spanish", "tagalog"];
 
 // ensure directories exist
 

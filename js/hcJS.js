@@ -740,7 +740,7 @@ function hcJS(strInput_a, strOutput_a, blnShowStartupText_a)
 					case 'help':		// file
 					case 'load':		// file
 					case 'save':		// file
-					case 'space':		// file TODO
+					case 'space':		// file
 					handleServerCommands(strInput_a, '1file');
 					break;
 

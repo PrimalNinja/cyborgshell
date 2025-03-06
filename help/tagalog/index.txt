@@ -1,0 +1,38 @@
+Welcome to Open Home Computer JS!
+
+Ang gabay na ito ay magbibigay sa iyo ng impormasyon tungkol sa iba't ibang mga utos at tampok na available.
+
+Siguraduhing basahin ang tungkol dito sa pamamagitan ng pag-type ng 'tulong tungkol'.
+
+Maaari kang magparehistro upang makapag-login at mag-program ng iyong sariling mga programa at ibahagi ang mga ito sa iba.
+I-type ang 'help account' para sa tulong sa mga utos ng pagrehistro at pag-login pati na rin ang ilang iba pang mga utos sa account.
+
+Help Index
+
+help
+
+	Ipinapakita ang gabay na ito.
+
+help general
+
+	Ipinapakita ang tulong sa mga pangkalahatang utos.
+	
+help editor
+
+	Ipinapakita ang tulong sa mga utos ng editor.
+	
+help file
+
+	Ipinapakita ang tulong sa mga utos ng file.
+	
+help account
+
+	Ipinapakita ang tulong sa mga utos ng account.
+	
+help sharing
+
+	Ipinapakita ang tulong sa mga utos ng pagbabahagi.
+
+help about
+
+	Ipinapakita ang ilang impormasyon tungkol sa produktong ito.

@@ -1,0 +1,30 @@
+Perintah Editor  
+Perintah-perintah ini membantu Anda mengedit program Anda saat ini.
+
+beautify
+
+	Mempercantik JSON yang dimuat.
+
+cls (atau clear)
+
+	 membersihkan layar.
+
+edit (atau ed)
+
+	Mengedit satu baris dengan editor baris.
+	
+list [[fromline]-[toline]]
+
+	Menampilkan program. Contoh: list 30-, list -30, list 20-30, list, list 40.
+	
+new
+
+	 membersihkan program saat ini dari editor kode.
+
+renum
+
+	Menomori ulang program. Catatan: JavaScript tidak menggunakan nomor baris, tetapi kami menggunakannya untuk tujuan pengeditan.
+
+run
+
+	Menjalankan program saat ini.

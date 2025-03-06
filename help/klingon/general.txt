@@ -1,0 +1,10 @@
+General Commands
+These commands provide general information and control.
+
+reset
+
+	Resets the environment.
+	
+startup
+
+	Displays the startup text.

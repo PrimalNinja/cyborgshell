@@ -1,0 +1,30 @@
+編輯器命令  
+這些命令幫助你編輯當前的程式。
+
+beautify
+
+	美化已加載的 JSON。
+
+cls （或 clear）
+
+	清除螢幕。
+
+edit <linenumber> （或 ed）
+
+	使用行編輯器編輯一行。
+
+list [[fromline]-[toline]]
+
+	列出程式。範例：list 30-，list -30，list 20-30，list，list 40。
+
+new
+
+	從代碼編輯器清除當前程式。
+
+renum
+
+	重新編號程式。注意：JavaScript 不使用行號，但我們使用它們來進行編輯目的。
+
+run
+
+	運行當前程式。

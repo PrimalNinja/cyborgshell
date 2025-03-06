@@ -2,6 +2,31 @@
 
 // general commands
 
+function cmdLanguage($strLanguage_a)
+{
+	global $arrValidLanguages;
+	global $g_strCurrentLanguage;
+
+	if ((strlen($strLanguage_a) > 0) && (in_array($strLanguage_a, $arrValidLanguages)))
+	{
+		$g_strCurrentLanguage = $strLanguage_a;
+		$_SESSION['server_currentlanguage'] = $g_strCurrentLanguage;
+		echo getResponseJSON($g_strCurrentLanguage, "", "", "");
+	}
+	else
+	{
+		echo getResponseJSON($g_strCurrentLanguage, "", "", "");
+	}
+}
+
+function cmdLanguages()
+{
+	global $arrValidLanguages;
+
+	$strMessage = implode(', ', $arrValidLanguages);
+	echo getResponseJSON($strMessage, "", "", "");
+}
+
 function cmdStartup()
 {
 	global $g_strEnvStartupFile;
@@ -187,6 +212,7 @@ function cmdDelete($strFilename_a)
 
 function cmdHelp($strTopic_a)
 {
+	global $g_strCurrentLanguage;
 	global $g_strServerHelpDir;
 	global $g_strEnvHelpIndexFile;
 	
@@ -197,7 +223,7 @@ function cmdHelp($strTopic_a)
 	}
 	else
 	{
-		$strHelpFile = $g_strServerHelpDir . $strTopic_a . ".txt";
+		$strHelpFile = $g_strServerHelpDir . $g_strCurrentLanguage . '/' . $strTopic_a . ".txt";
 	}
 	
 	if (file_exists($strHelpFile)) 

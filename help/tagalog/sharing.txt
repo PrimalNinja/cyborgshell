@@ -1,0 +1,48 @@
+Sharing and File Space Commands  
+Ang mga utos na ito ay nauugnay sa pagbabahagi ng mga file space at ang mga file space na mayroon kang access.
+
+grant <sharekey>
+
+	Ibabahagi ang iyong file space sa gumagamit na nagbigay ng sharekey.
+	
+keys
+
+	Naglilista ng lahat ng iyong mga susi. Ibahagi lamang ang iyong mga share key.
+	
+newkey <keyname>
+
+	Gumagawa ng bagong sharekey gamit ang ibinigay na pangalan ng susi.
+	
+revoke <sharekey>
+
+	Alisin ang pagbabahagi ng iyong file space mula sa gumagamit na nagbigay ng sharekey.
+	
+shares
+
+	Naglilista ng lahat ng mga pagbabahagi na iyong ibinigay.
+
+
+Sharing Process
+
+Halimbawa kung paano magbahagi ng mga file space:
+
+Fred
+
+	1. Nais ni Fred na magkaroon ng access sa espasyo ni Wilma.
+	2. Gumawa si Fred ng sharekey para kay Wilma sa pamamagitan ng pag-type ng 'newkey wilma' at ibinibigay ang sharekey kay Wilma.  
+	note: ang wilma sa 'newkey wilma' ay alias ni Fred para sa sharekey, wala itong kinalaman sa account ni Wilma.
+										
+
+Wilma
+
+	3. Gamit ang sharekey na ibinigay ni Fred, binibigyan ng access si Fred sa pamamagitan ng pag-type ng 'grant <sharekey>'.
+
+Fred
+
+	4. Ngayon ay may access na si Fred sa espasyo ni Wilma.
+
+Wilma
+
+	5. Si Wilma ay may kontrol pa rin sa kung sino ang kanyang ibinabahagi at maaari niyang bawiin o ibalik si Fred ayon sa kanyang nais.
+
+Ang prosesong ito ng pagbabahagi ay nagbibigay-daan din para sa mga koponan na magkaroon ng isang pinagsamang lugar. Isipin natin na si Wilma ay talagang namamahala sa espasyo ng koponan. Maaaring humiling si Wilma ng mga indibidwal na sharekey mula sa bawat developer sa koponan upang sila ay maibigay o mabawi ayon sa kinakailangan sa espasyo ng koponan.

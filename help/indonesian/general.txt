@@ -1,0 +1,18 @@
+Perintah Umum  
+Perintah ini memberikan informasi umum dan kontrol.
+
+language [<language>]
+
+    Menampilkan bahasa Anda saat ini atau mengatur yang baru.
+
+languages
+
+    Mencantumkan bahasa manusia yang tersedia untuk digunakan dalam sistem.
+
+reset
+
+	Mengatur ulang lingkungan dan kehilangan semua kode yang saat ini ada di editor kode.
+
+startup
+
+	Menampilkan teks startup.

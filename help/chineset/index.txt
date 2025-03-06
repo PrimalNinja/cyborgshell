@@ -1,0 +1,38 @@
+歡迎來到 Open Home Computer JS!
+
+本幫助指南將引導您了解可用的各種命令和功能。
+
+請務必輸入 'help about' 來閱讀說明。
+
+您可以註冊，以便登錄並編寫自己的程序，並與他人分享。
+輸入 'help account' 獲取有關註冊和登錄命令以及其他一些帳戶命令的幫助。
+
+幫助索引
+
+help
+
+	顯示此幫助索引。
+
+help general
+
+	顯示一般命令的幫助。
+	
+help editor
+
+	顯示編輯器命令的幫助。
+	
+help file
+
+	顯示文件命令的幫助。
+	
+help account
+
+	顯示帳戶命令的幫助。
+	
+help sharing
+
+	顯示共享命令的幫助。
+
+help about
+
+	顯示有關此產品的一些信息。

@@ -7,13 +7,14 @@ define("MINIFIED", "FALSE");	// can be TRUE or FALSE, to use the minified versio
 
 // environment constants
 define("APPNAME", "Open Home Computer JS");
-define("VERSION", "v1.0 RC3");
-define("BUILD", "Build 20250305");
+define("VERSION", "v1.0 RC4");
+define("BUILD", "Build 20250307");
 define("AUTHOR", "By PrimalNinja 2025");
 define("PASSWORDMINIMUMLENGTH", 8);
 
 define("JSONVERSION", 1);		// the current user file JSON version
 
+define("LANGUAGE_DIRNAME", "languages");// langauge files go in here
 define("HELP_DIRNAME", "help");			// help files go in here
 define("USERS_DIRNAME", "users");		// this is where user data is stored
 define("PUBLIC_DIRNAME", "public");		// this is the public home dir
@@ -34,12 +35,21 @@ $strDataRoot = __DIR__;					// dev
 error_reporting(0);
 error_reporting(E_ALL);	// enable for debug
 
+$arrValidLanguages = ["chinese", "chineset", "english", "french", "german", "indonesian", "klingon", "russian", "tagalog"];
+
 // ensure directories exist
 
+$g_strServerLanguageDir = $strDataRoot . '/' . LANGUAGE_DIRNAME . '/';
 $g_strServerHelpDir = $strDataRoot . '/' . HELP_DIRNAME . '/';
 $g_strServerUsersDir = $strDataRoot . '/' . USERS_DIRNAME . '/';
 $g_strServerPublicDir = $strDataRoot . '/' . PUBLIC_DIRNAME . '/';
 $g_strServerHomeDir = $strDataRoot . '/' . HOME_DIRNAME . '/';
+
+// Ensure the language directory exists
+if (!is_dir($g_strServerLanguageDir)) 
+{
+    mkdir($g_strServerLanguageDir);
+}
 
 // Ensure the help directory exists
 if (!is_dir($g_strServerHelpDir)) 
@@ -64,8 +74,5 @@ if (!is_dir($g_strServerHomeDir))
 {
     mkdir($g_strServerHomeDir);
 }
-
-$g_strEnvStartupFile = __DIR__ . '/startup.txt';
-$g_strEnvHelpIndexFile = $g_strServerHelpDir . 'index.txt';
 
 ?>

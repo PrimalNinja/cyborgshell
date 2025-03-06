@@ -1,0 +1,13 @@
+API Reference
+
+Sa ngayon, ito ay ang mga sumusunod:
+
+(screen related)
+
+api.cls();
+
+	linisin ang screen
+
+api.print(<output>);
+
+	i-print ang ilang output

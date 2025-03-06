@@ -1,0 +1,46 @@
+Datei-Befehle  
+Diese Befehle beziehen sich auf Dateien in Ihrem aktuellen Dateispeicher.
+
+beautify <filename>
+
+	Verschönert eine JSON-Datei, ohne das aktuell geladene Programm zu beschädigen.
+	
+dir [<filename>] (oder cat, ls)
+
+	Auflistung der gespeicherten Programme. Der Dateiname kann Wildcards * oder ? enthalten.
+	
+copy <filename1> <filename2> (oder cp)
+
+	Kopiert eine Datei von filename1 nach filename2.
+	
+del <filename> (oder delete, era)
+
+	Löscht ein Programm.
+	
+load <filename>
+
+	Lädt ein Programm.
+	
+ren <filename1> <filename2> (oder rename, mv)
+
+	Ändert den Namen einer Datei von filename1 nach filename2.
+	
+run <filename>
+
+	Führt ein Programm aus und ersetzt das aktuell geladene Programm.
+	
+save <filename>
+
+	Speichert ein Programm.
+	
+space [<spacekey> | <alias>] (oder cs, cd, chdir)
+
+	Zeigt Ihren aktuellen Speicherort an oder wechselt zu einem neuen.
+	
+spaces
+
+	Auflistung aller Dateispeicherorte, auf die Sie Zugriff haben.
+
+type <filename> [[fromline]-[toline]]
+
+	Gibt ein Programm aus, ohne das aktuell geladene Programm zu beschädigen.

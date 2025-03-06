@@ -599,15 +599,7 @@ function hcJS(strInput_a, strOutput_a, blnShowStartupText_a)
 			var strCookie = getCookie(m_COOKIENAME);
 			var strCommand = 'validatecookie ' + strCookie;
 
-			if (strCookie.length > 0)
-			{
-				processCommand(strCommand);
-			}
-			else
-			{
-				appendOutput("You are not currently logged in.");
-				ready();
-			}
+			processCommand(strCommand);
 		}
 
 		// callbacks
@@ -700,9 +692,11 @@ function hcJS(strInput_a, strOutput_a, blnShowStartupText_a)
 					case 'login':		// account
 					handleServerCommands(strInput_a, 'nofiles', cbLogin, true);
 					break;
-
+					
 					case 'device':		// general
 					case 'devices':		// general
+					case 'language':	// general
+					case 'languages':	// general
 
 					case 'cat':			// file
 					case 'dir':			// file

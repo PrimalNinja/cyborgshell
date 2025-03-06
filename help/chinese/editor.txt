@@ -1,0 +1,30 @@
+编辑器命令  
+这些命令帮助您编辑当前程序。
+
+beautify
+
+    美化已加载的 JSON。
+
+cls (或 clear)
+
+    清除屏幕。
+
+edit <linenumber> (或 ed)
+
+    使用行编辑器编辑一行。
+
+list [[fromline]-[toline]]
+
+    列出程序。示例：list 30-，list -30，list 20-30，list，list 40。
+
+new
+
+    清除代码编辑器中的当前程序。
+
+renum
+
+    重新编号程序。注意：JavaScript 不使用行号，但我们出于编辑目的使用它们。
+
+run
+
+    运行当前程序。

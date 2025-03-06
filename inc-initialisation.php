@@ -10,6 +10,8 @@ $g_strCurrentDir = $g_strServerPublicDir;
 $g_strUserSpace = "";
 $g_strUserDir = "";
 
+$g_strCurrentLanguage = "";
+
 if (isset($_SESSION['server_userkey']))
 {
 	$g_strUserKey = $_SESSION['server_userkey'];
@@ -44,6 +46,19 @@ if (isset($_SESSION['server_currentdevicekey']))
 {
 	$g_strCurrentDeviceKey = $_SESSION['server_currentdevicekey'];
 }
+
+if (isset($_SESSION['server_currentlanguage']))
+{
+	$g_strCurrentLanguage = $_SESSION['server_currentlanguage'];
+}
+
+if (strlen($g_strCurrentLanguage) == 0)
+{
+	$g_strCurrentLanguage = "english";
+}
+
+$g_strEnvStartupFile = __DIR__ . '/startup.txt';
+$g_strEnvHelpIndexFile = $g_strServerHelpDir . $g_strCurrentLanguage . '/index.txt';
 
 // parameters
 $g_strIPAddress = "";

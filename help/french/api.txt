@@ -1,0 +1,13 @@
+Référence API
+
+Pour l'instant, il s'agit simplement de ce qui suit :
+
+(liaison à l'écran)
+
+api.cls();
+
+	vider l'écran
+
+api.print(<output>);
+
+	imprimer une sortie

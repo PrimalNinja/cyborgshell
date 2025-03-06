@@ -1,0 +1,18 @@
+Allgemeine Befehle  
+Diese Befehle bieten allgemeine Informationen und Kontrolle.  
+
+language [<language>]
+
+    Zeigt Ihre aktuelle Sprache an oder setzt eine neue.
+
+languages
+
+    Listet verfügbare menschliche Sprachen auf, die im System verwendet werden können.
+
+reset  
+
+	Setzt die Umgebung zurück und verliert allen Code, der sich derzeit im Code-Editor befindet.  
+
+startup  
+
+	Zeigt den Starttext an.

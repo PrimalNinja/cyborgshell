@@ -1,4 +1,4 @@
-Welcome to Open Home Computer JC! (OHCJS)
+Welcome to Open Home Computer JS! (OHCJS)
 
 OHCJS brings the retro charm of home computers to modern devices, allowing you to create, code, and collaborate anywhere, anytime. With OHCJS, you can:
 
@@ -18,7 +18,7 @@ Sharing is a key feature in OHCJS. Just like swapping floppy disks in the 80s, y
 
 License
 
-Open Home Computer JS is released under the MIT software license, because "sharing is caring."
+Open Home Computer JS (OHCJS) [github.com/PrimalNinja/ohcjs] is released under the MIT software license, because "sharing is caring."
 
 Contact PrimalNinja if would like to consider other licensing options.
 

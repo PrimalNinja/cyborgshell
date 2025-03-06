@@ -1,0 +1,30 @@
+Editor-Befehle  
+Diese Befehle helfen Ihnen, Ihr aktuelles Programm zu bearbeiten.
+
+beautify
+
+	Schönformatiert das geladene JSON.
+
+cls (oder clear)
+
+	Leert den Bildschirm.
+
+edit (oder ed)
+
+	Bearbeitet eine Zeile mit dem Zeileneditor.
+	
+list [[fromline]-[toline]]
+
+	Listet das Programm auf. Beispiele: list 30-, list -30, list 20-30, list, list 40.
+	
+new
+
+	Leert das aktuelle Programm im Code-Editor.
+
+renum
+
+	Nummeriert das Programm neu. Hinweis: JavaScript verwendet keine Zeilennummern, aber wir verwenden sie zu Bearbeitungszwecken.
+
+run
+
+	Führt das aktuelle Programm aus.

@@ -1,0 +1,46 @@
+文件命令  
+这些命令与您当前文件空间中的文件相关。
+
+beautify <filename>
+
+	美化一个 JSON 文件，而不破坏当前加载的程序。
+	
+dir [<filename>] (或 cat, ls)
+
+	列出已保存的程序。文件名可以包含通配符 * 或 ?。
+	
+copy <filename1> <filename2> (或 cp)
+
+	将文件从 filename1 复制到 filename2。
+	
+del <filename> (或 delete, era)
+
+	删除一个程序。
+	
+load <filename>
+
+	加载一个程序。
+	
+ren <filename1> <filename2> (或 rename, mv)
+
+	将文件从 filename1 重命名为 filename2。
+	
+run <filename>
+
+	运行一个程序，替换现有的加载程序。
+	
+save <filename>
+
+	保存一个程序。
+	
+space [<spacekey> | <alias>] (或 cs, cd, chdir)
+
+	显示您当前的空间或更改为新的空间。
+	
+spaces
+
+	列出您可以访问的所有文件空间。
+
+type <filename> [[fromline]-[toline]]
+
+	输出一个程序，而不破坏当前加载的程序。

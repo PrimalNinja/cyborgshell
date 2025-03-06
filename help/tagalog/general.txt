@@ -1,0 +1,18 @@
+Pangkalahatang Utos  
+Ang mga utos na ito ay nagbibigay ng pangkalahatang impormasyon at kontrol.  
+
+language [<language>]
+
+	Ipinapakita ang iyong kasalukuyang wika o nagtatakda ng bago.
+
+languages
+
+	Naglilista ng mga available na wika ng tao na maaaring gamitin sa sistema.
+
+reset  
+
+	Ni-reset ang kapaligiran at nawawala ang lahat ng code na kasalukuyang nasa code editor.  
+
+startup  
+
+	Ipinapakita ang startup na teksto.  

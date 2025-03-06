@@ -1,0 +1,30 @@
+Editor Commands
+These commands help you edit your current program.
+
+beautify
+
+	Beautifies loaded JSON.
+
+cls (or clear)
+
+	Clears the screen.
+
+edit (or ed)
+
+	Edits a line with the line editor.
+	
+list [[fromline]-[toline]]
+
+	Lists the program. Examples: list 30-, list -30, list 20-30, list, list 40.
+	
+new
+
+	Clears the current program.
+	
+renum
+
+	Renumbers the program. Note: JavaScript doesn't use line numbers, but we use them for editing purposes.
+
+run
+
+	Runs the current program.

@@ -1,0 +1,47 @@
+Commandes de partage et d'espace de fichiers  
+Ces commandes concernent le partage des espaces de fichiers et les espaces de fichiers auxquels vous avez accès.
+
+grant <sharekey>
+
+	Partage votre espace de fichiers avec l'utilisateur qui a fourni le sharekey.
+	
+keys
+
+	Liste tous vos clés. Ne partagez que vos clés de partage.
+	
+newkey <keyname>
+
+	Crée un nouveau sharekey avec le nom de clé donné.
+	
+revoke <sharekey>
+
+	Retire le partage de votre espace de fichiers de l'utilisateur qui a fourni le sharekey.
+	
+shares
+
+	Liste tous les partages que vous avez accordés.
+
+
+Processus de partage
+
+Exemple de la manière de partager des espaces de fichiers :
+
+Fred
+
+	1. Fred veut accéder à l'espace de Wilma.
+	2. Fred crée un sharekey pour Wilma en tapant 'newkey wilma' et fournit le sharekey à Wilma.
+	remarque : wilma dans 'newkey wilma' est l'alias de Fred pour le sharekey, cela n'a rien à voir avec le compte de Wilma.
+										
+Wilma
+
+	3. En utilisant le sharekey que Fred a fourni, accorde l'accès à Fred en tapant 'grant <sharekey>'.
+
+Fred
+
+	4. Fred a maintenant accès à l'espace de Wilma.
+
+Wilma
+
+	5. Wilma a toujours le contrôle sur qui elle partage et peut révoquer ou rétablir Fred comme elle le souhaite.
+
+Ce processus de partage permet également aux équipes d'avoir une zone partagée. Imaginons que Wilma gère en fait l'espace de l'équipe. Wilma peut demander des sharekeys individuels à chaque développeur de l'équipe afin qu'ils puissent être accordés ou révoqués selon les besoins pour l'espace de l'équipe.

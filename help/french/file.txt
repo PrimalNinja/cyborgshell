@@ -1,0 +1,46 @@
+Commandes de Fichier  
+Ces commandes se rapportent aux fichiers dans votre espace de fichiers actuel.
+
+beautify <filename>
+
+	Embélit un fichier JSON sans corrompre le programme actuellement chargé.
+	
+dir [<filename>] (ou cat, ls)
+
+	Liste les programmes sauvegardés. Le nom de fichier peut contenir des caractères génériques * ou ?.
+	
+copy <filename1> <filename2> (ou cp)
+
+	Copie un fichier de filename1 à filename2.
+	
+del <filename> (ou delete, era)
+
+	Éradique un programme.
+	
+load <filename>
+
+	Charge un programme.
+	
+ren <filename1> <filename2> (ou rename, mv)
+
+	Renomme un fichier de filename1 à filename2.
+	
+run <filename>
+
+	Exécute un programme, remplaçant le programme chargé existant.
+	
+save <filename>
+
+	Sauvegarde un programme.
+	
+space [<spacekey> | <alias>] (ou cs, cd, chdir)
+
+	Affiche votre espace actuel ou change pour un nouveau.
+	
+spaces
+
+	Liste tous les espaces de fichiers auxquels vous avez accès.
+
+type <filename> [[fromline]-[toline]]
+
+	Tape un programme sans corrompre le programme actuellement chargé.

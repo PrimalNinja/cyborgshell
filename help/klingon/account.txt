@@ -1,0 +1,54 @@
+Account Commands
+These commands relate to your account and account access.
+
+about [<message>]
+
+	Shows your about message or sets a new one.
+	
+admins [<alias>]
+
+	List all admin users of the system. Alias can contain wildcards * or ?.
+	
+alias [<alias>]
+
+	Shows your alias or sets a new one.
+	
+device <devicekey> <alias>
+
+	Gives your device a new alias.
+	
+devices
+
+	Lists your devices
+	
+login <username> <password>
+
+	Logs you in on the current device.
+	
+logout
+
+	Logs you out of the current device.
+	
+offline
+
+	Flags you offline for other users, this is the default for new registrations.
+	
+online
+
+	Flags you online for other users, you remain online until you change yourself to offline.
+	
+password <oldpassword> <newpassword> (or chpwd)
+
+	Changes your password.
+	
+register <username> <password> [<alias>]
+
+	Creates a new user account. Note: This does not log you into the newly created account.
+	
+username [<username>]
+
+	Shows your username or sets a new one.
+	
+users [<alias>]
+
+	List all users of the system. Alias can contain wildcards * or ?.

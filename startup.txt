@@ -1,1 +1,1 @@
-Type 'help' for online help.
+This is RELEASE CANDIDATE 4. Type 'help' for online help.

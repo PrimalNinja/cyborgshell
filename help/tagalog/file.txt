@@ -1,0 +1,46 @@
+Mga Utos ng File  
+Ang mga utos na ito ay may kaugnayan sa mga file sa iyong kasalukuyang espasyo ng file.
+
+beautify <filename>
+
+	Beautifies a JSON file without corrupting the currently loaded program.
+	
+dir [<filename>] (o cat, ls)
+
+	Naglilista ng mga naka-save na programa. Ang filename ay maaaring maglaman ng mga wildcard * o ?.
+	
+copy <filename1> <filename2> (o cp)
+
+	Nagkokopya ng file mula filename1 papuntang filename2.
+	
+del <filename> (o delete, era)
+
+	Nililinis ang isang programa.
+	
+load <filename>
+
+	Naglo-load ng isang programa.
+	
+ren <filename1> <filename2> (o rename, mv)
+
+	Nagbabago ng pangalan ng file mula filename1 papuntang filename2.
+	
+run <filename>
+
+	Nagpapatakbo ng isang programa, pinapalitan ang kasalukuyang naka-load na programa.
+	
+save <filename>
+
+	Nagsisave ng isang programa.
+	
+space [<spacekey> | <alias>] (o cs, cd, chdir)
+
+	Ipinapakita ang iyong kasalukuyang espasyo o nagbabago sa isang bago.
+	
+spaces
+
+	Naglilista ng lahat ng espasyo ng file na mayroon kang access.
+
+type <filename> [[fromline]-[toline]]
+
+	Nagta-type ng isang programa nang hindi sinisira ang kasalukuyang naka-load na programa.

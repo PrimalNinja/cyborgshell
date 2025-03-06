@@ -1,4 +1,4 @@
-Welcome to Home Computer JS!
+Welcome to Open Home Computer JS!
 
 This help guide will walk you through the various commands and features available.
 

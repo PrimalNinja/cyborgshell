@@ -1,0 +1,46 @@
+Sharing und Datei-Speicherbefehle  
+Diese Befehle beziehen sich auf das Teilen von Dateispeichern und die Dateispeicher, auf die Sie Zugriff haben.
+
+grant <sharekey>
+
+	Teilt Ihren Dateispeicher mit dem Benutzer, der den sharekey bereitgestellt hat.
+
+keys
+
+	Listet alle Ihre Schlüssel auf. Teilen Sie nur Ihre Freigabeschlüssel.
+
+newkey <keyname>
+
+	Erstellt einen neuen sharekey mit dem angegebenen Schlüsselnamen.
+
+revoke <sharekey>
+
+	Entfernt die Freigabe Ihres Dateispeichers von dem Benutzer, der den sharekey bereitgestellt hat.
+
+shares
+
+	Listet alle Freigaben auf, die Sie gewährt haben.
+
+Freigabeprozess
+
+Beispiel, wie man Dateispeicher teilt:
+
+Fred
+
+	1. Fred möchte Zugriff auf Wilmas Speicher.
+	2. Fred erstellt einen sharekey für Wilma, indem er 'newkey wilma' eingibt und den sharekey Wilma bereitstellt.  
+	hinweis: wilma in 'newkey wilma' ist Freds Alias für den sharekey, es hat nichts mit Wilmas Konto zu tun.
+
+Wilma
+
+	3. Mit dem sharekey, den Fred bereitgestellt hat, gewährt sie Fred den Zugriff, indem sie 'grant <sharekey>' eingibt.
+
+Fred
+
+	4. Fred hat jetzt Zugriff auf Wilmas Speicher.
+
+Wilma
+
+	5. Wilma hat weiterhin die Kontrolle darüber, mit wem sie teilt, und kann Fred nach Belieben widerrufen oder wiederherstellen.
+
+Dieser Freigabeprozess ermöglicht es auch Teams, einen gemeinsamen Bereich zu haben. Stellen wir uns vor, Wilma verwaltet tatsächlich den Team-Speicher. Wilma kann von jedem Entwickler im Team individuelle sharekeys anfordern, damit diese nach Bedarf für den Team-Speicher gewährt oder widerrufen werden können.

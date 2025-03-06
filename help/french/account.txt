@@ -1,0 +1,54 @@
+Commandes de Compte  
+Ces commandes concernent votre compte et l'accès au compte.
+
+about [<message>]
+
+	Affiche votre message d'information ou en définit un nouveau.
+	
+admins [<alias>]
+
+	Liste tous les utilisateurs administrateurs du système. L'alias peut contenir des caractères génériques * ou ?.
+	
+alias [<alias>]
+
+	Affiche votre alias ou en définit un nouveau.
+	
+device <devicekey> <alias>
+
+	Définit un nouvel alias pour votre appareil.
+	
+devices
+
+	Liste vos appareils.
+	
+login <username> <password>
+
+	Vous connecte sur l'appareil actuel.
+	
+logout
+
+	Vous déconnecte de l'appareil actuel.
+	
+offline
+
+	Vous marque comme hors ligne pour les autres utilisateurs, c'est la valeur par défaut pour les nouvelles inscriptions.
+	
+online
+
+	Vous marque comme en ligne pour les autres utilisateurs, vous restez en ligne jusqu'à ce que vous vous changiez en hors ligne.
+	
+password <oldpassword> <newpassword> (ou chpwd)
+
+	Change votre mot de passe.
+	
+register <username> <password> [<alias>]
+
+	Crée un nouveau compte utilisateur. Remarque : Cela ne vous connecte pas au compte nouvellement créé.
+	
+username [<username>]
+
+	Affiche votre nom d'utilisateur ou en définit un nouveau.
+	
+users [<alias>]
+
+	Liste tous les utilisateurs du système. L'alias peut contenir des caractères génériques * ou ?.

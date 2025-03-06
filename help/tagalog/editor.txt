@@ -1,0 +1,30 @@
+Editor Commands  
+Ang mga utos na ito ay tumutulong sa iyo na i-edit ang iyong kasalukuyang programa.
+
+beautify
+
+	Beautifies loaded JSON.
+
+cls (o clear)
+
+	Nagbubura ng screen.
+
+edit (o ed)
+
+	Nag-e-edit ng isang linya gamit ang line editor.
+
+list [[fromline]-[toline]]
+
+	Naglilista ng programa. Mga halimbawa: list 30-, list -30, list 20-30, list, list 40.
+
+new
+
+	Nagbubura ng kasalukuyang programa mula sa code editor.
+
+renum
+
+	Nag-renumber ng programa. Tandaan: Ang JavaScript ay hindi gumagamit ng mga numero ng linya, ngunit ginagamit namin ang mga ito para sa mga layunin ng pag-edit.
+
+run
+
+	Nagpapatakbo ng kasalukuyang programa.

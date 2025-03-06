@@ -1,0 +1,13 @@
+API-Referenz
+
+Für den Moment ist es nur Folgendes:
+
+(bildschirmbezogen)
+
+api.cls();
+
+	 löscht den Bildschirm
+
+api.print(<output>);
+
+	gibt eine Ausgabe aus

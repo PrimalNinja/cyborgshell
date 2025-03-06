@@ -1,0 +1,54 @@
+Mga Utos ng Account  
+Ang mga utos na ito ay nauugnay sa iyong account at pag-access sa account.
+
+about [<message>]
+
+	Ipinapakita ang iyong about message o nagtatakda ng bagong isa.
+	
+admins [<alias>]
+
+	Naglista ng lahat ng admin users ng sistema. Ang alias ay maaaring maglaman ng mga wildcard * o ?.
+	
+alias [<alias>]
+
+	Ipinapakita ang iyong alias o nagtatakda ng bagong isa.
+	
+device <devicekey> <alias>
+
+	Binibigyan ang iyong device ng bagong alias.
+	
+devices
+
+	Naglista ng iyong mga device.
+	
+login <username> <password>
+
+	Nagla-log in ka sa kasalukuyang device.
+	
+logout
+
+	Nagla-log out ka sa kasalukuyang device.
+	
+offline
+
+	Nag-flag sa iyo na offline para sa ibang mga user, ito ang default para sa mga bagong rehistrasyon.
+	
+online
+
+	Nag-flag sa iyo na online para sa ibang mga user, mananatili kang online hanggang sa baguhin mo ang iyong sarili sa offline.
+	
+password <oldpassword> <newpassword> (o chpwd)
+
+	Nagbago ng iyong password.
+	
+register <username> <password> [<alias>]
+
+	Naglikha ng bagong user account. Tandaan: Hindi ka nito ilalagay sa bagong nilikhang account.
+	
+username [<username>]
+
+	Ipinapakita ang iyong username o nagtatakda ng bagong isa.
+	
+users [<alias>]
+
+	Naglista ng lahat ng mga user ng sistema. Ang alias ay maaaring maglaman ng mga wildcard * o ?.

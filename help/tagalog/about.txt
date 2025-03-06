@@ -1,0 +1,27 @@
+Maligayang pagdating sa Open Home Computer JS! (OHCJS)
+
+Ang OHCJS ay nagdadala ng retro na alindog ng mga home computer sa mga modernong aparato, na nagbibigay-daan sa iyo upang lumikha, mag-code, at makipagtulungan kahit saan, kahit kailan. Sa OHCJS, maaari mong:
+
+- Gumawa ng account at mag-login sa maraming device
+- Mag-code sa JS, nag-iisa o sa mga koponan
+- Itago ang iyong mga programa sa mga personalisadong "spaces"
+
+Inspirado ng kasimplihan ng 8-bit home computers, ang OHCJS ay naglalayong muling likhain ang instant-on, fuss-free na karanasan ng klasikong computing. Magrehistro, mag-login, at simulan ang pag-code sa loob ng ilang segundo!
+
+Sa OHCJS, ang iyong "space" ay iyong sariling pribadong imbakan, na maa-access lamang ng ikaw. Maaari mo ring tuklasin ang pampublikong espasyo, kung saan maaari kang lumikha, magbahagi, at makipag-eksperimento sa iba.
+
+Ang pagbabahagi ay isang pangunahing tampok sa OHCJS. Tulad ng pagpapalitan ng floppy disks noong 80s, maaari mong ibahagi ang iyong espasyo sa iba, at kabaligtaran. Ang simpleng modelong ito ng pagbabahagi ay nagbibigay-daan sa iba't ibang senaryo:
+
+- Pagtuturo: Magbahagi ng mga espasyo sa mga estudyante para sa guided learning
+- Pagtutulungan: Makipagtulungan sa mga proyekto sa mga pinagsamang espasyo ng koponan
+- Pagkakaibigan: Magbahagi ng mga espasyo sa mga pinagkakatiwalaang kaibigan
+
+Lisensya
+
+Ang Open Home Computer JS (OHCJS) [github.com/PrimalNinja/ohcjs] ay inilabas sa ilalim ng MIT software license, dahil "ang pagbabahagi ay pag-aalaga."
+
+Makipag-ugnayan kay PrimalNinja kung nais mong isaalang-alang ang iba pang mga pagpipilian sa lisensya.
+
+Tungkol sa Amin
+
+Ang OHCJS ay ipinagmamalaki na binuo ng PrimalNinja ng Cyborg Unicorn Pty Ltd.

@@ -1,0 +1,54 @@
+Konto-Befehle  
+Diese Befehle beziehen sich auf Ihr Konto und den Kontozugriff.
+
+about [<message>]
+
+	Zeigt Ihre "Über"-Nachricht an oder setzt eine neue.
+
+admins [<alias>]
+
+	Listet alle Admin-Benutzer des Systems auf. Alias kann Wildcards * oder ? enthalten.
+
+alias [<alias>]
+
+	Zeigt Ihr Alias an oder setzt ein neues.
+
+device <devicekey> <alias>
+
+	Gibt Ihrem Gerät ein neues Alias.
+
+devices
+
+	Listet Ihre Geräte auf.
+
+login <username> <password>
+
+	Meldet Sie am aktuellen Gerät an.
+
+logout
+
+	Meldet Sie vom aktuellen Gerät ab.
+
+offline
+
+	Setzt Sie offline für andere Benutzer, dies ist die Standardeinstellung für neue Registrierungen.
+
+online
+
+	Setzt Sie online für andere Benutzer, Sie bleiben online, bis Sie sich selbst auf offline ändern.
+
+password <oldpassword> <newpassword> (oder chpwd)
+
+	Ändert Ihr Passwort.
+
+register <username> <password> [<alias>]
+
+	Erstellt ein neues Benutzerkonto. Hinweis: Dies meldet Sie nicht in das neu erstellte Konto an.
+
+username [<username>]
+
+	Zeigt Ihren Benutzernamen an oder setzt einen neuen.
+
+users [<alias>]
+
+	Listet alle Benutzer des Systems auf. Alias kann Wildcards * oder ? enthalten.

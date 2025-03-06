@@ -9,6 +9,14 @@ if ($blnContinue)
 		// general commands
 		switch ($strCommand) 
 		{
+			case 'language':
+				cmdLanguage($g_strP1);
+				exit;
+
+			case 'languages':
+				cmdLanguages();
+				exit;
+
 			case 'startup':
 				cmdStartup();
 				exit;
@@ -23,7 +31,6 @@ if ($blnContinue)
 
 			case 'cat':
 			case 'dir':
-			case 'files':
 			case 'ls':
 				cmdDir($g_strP1);
 				exit;

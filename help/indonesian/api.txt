@@ -1,0 +1,13 @@
+Referensi API
+
+Saat ini hanya yang berikut ini:
+
+(berkaitan dengan layar)
+
+api.cls();
+
+	membersihkan layar
+
+api.print(<output>);
+
+	mencetak beberapa output

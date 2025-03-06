@@ -1,0 +1,46 @@
+檔案命令  
+這些命令與您當前檔案空間中的檔案有關。
+
+beautify <filename>
+
+	美化 JSON 檔案，而不會損壞當前載入的程式。
+	
+dir [<filename>] (或 cat, ls)
+
+	列出已保存的程式。檔名可以包含通配符 * 或 ?。
+	
+copy <filename1> <filename2> (或 cp)
+
+	將檔案從 filename1 複製到 filename2。
+	
+del <filename> (或 delete, era)
+
+	刪除一個程式。
+	
+load <filename>
+
+	載入一個程式。
+	
+ren <filename1> <filename2> (或 rename, mv)
+
+	將檔案從 filename1 重新命名為 filename2。
+	
+run <filename>
+
+	運行一個程式，替換當前載入的程式。
+	
+save <filename>
+
+	保存一個程式。
+	
+space [<spacekey> | <alias>] (或 cs, cd, chdir)
+
+	顯示您當前的空間或更改為新的空間。
+	
+spaces
+
+	列出您可以訪問的所有檔案空間。
+
+type <filename> [[fromline]-[toline]]
+
+	顯示一個程式，而不會損壞當前載入的程式。

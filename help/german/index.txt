@@ -1,0 +1,38 @@
+Willkommen bei Open Home Computer JS!
+
+Dieser Hilfeleitfaden führt Sie durch die verschiedenen verfügbaren Befehle und Funktionen.
+
+Stellen Sie sicher, dass Sie die Informationen lesen, indem Sie 'help about' eingeben.
+
+Sie können sich registrieren, um sich anzumelden und Ihre eigenen Programme zu programmieren und sie mit anderen zu teilen. 
+Geben Sie 'help account' ein, um Hilfe zu den Befehlen zur Registrierung und Anmeldung sowie zu einigen anderen Kontobefehlen zu erhalten.
+
+Hilfeindex
+
+help
+
+	Zeigt diesen Hilfeindex an.
+
+help general
+
+	Zeigt Hilfe zu allgemeinen Befehlen an.
+	
+help editor
+
+	Zeigt Hilfe zu Editorbefehlen an.
+	
+help file
+
+	Zeigt Hilfe zu Datei-Befehlen an.
+	
+help account
+
+	Zeigt Hilfe zu Kontobefehlen an.
+	
+help sharing
+
+	Zeigt Hilfe zu Befehlen zum Teilen an.
+
+help about
+
+	Zeigt einige Informationen über dieses Produkt an.

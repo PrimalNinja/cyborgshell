@@ -1,0 +1,47 @@
+Perintah Berbagi dan Ruang File  
+Perintah ini terkait dengan berbagi ruang file dan ruang file yang Anda akses.
+
+grant <sharekey>
+
+	 Membagikan ruang file Anda dengan pengguna yang memberikan sharekey.
+	
+keys
+
+	 Menampilkan semua kunci Anda. Hanya bagikan kunci berbagi Anda.
+	
+newkey <keyname>
+
+	 Membuat sharekey baru dengan nama kunci yang diberikan.
+	
+revoke <sharekey>
+
+	 Mencabut berbagi ruang file Anda dari pengguna yang memberikan sharekey.
+	
+shares
+
+	 Menampilkan semua berbagi yang telah Anda berikan.
+
+
+Proses Berbagi
+
+Contoh cara berbagi ruang file:
+
+Fred
+
+	1. Fred ingin mengakses ruang Wilma.
+	2. Fred membuat sharekey untuk Wilma dengan mengetik 'newkey wilma' dan memberikan sharekey tersebut kepada Wilma.
+	catatan: wilma dalam 'newkey wilma' adalah alias Fred untuk sharekey, tidak ada hubungannya dengan akun Wilma.
+	
+Wilma
+
+	3. Menggunakan sharekey yang telah diberikan Fred, memberikan akses kepada Fred dengan mengetik 'grant <sharekey>'.
+
+Fred
+
+	4. Fred sekarang memiliki akses ke ruang Wilma.
+
+Wilma
+
+	5. Wilma tetap memiliki kontrol atas siapa yang dia bagikan dan dapat mencabut atau mengembalikan Fred sesuai keinginannya.
+
+Proses berbagi ini juga memungkinkan tim untuk memiliki area bersama. Mari kita bayangkan Wilma sebenarnya mengelola ruang tim. Wilma dapat meminta sharekey individu dari setiap pengembang di tim sehingga mereka dapat diberikan atau dicabut sesuai kebutuhan untuk ruang tim.

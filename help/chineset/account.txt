@@ -1,0 +1,54 @@
+帳戶指令  
+這些指令與您的帳戶及帳戶訪問相關。
+
+about [<message>]
+
+	顯示您的個人介紹或設置一個新的介紹。
+
+admins [<alias>]
+  
+	列出系統的所有管理員用戶。別名可以包含通配符 * 或 ?。
+
+alias [<alias>]
+
+	顯示您的別名或設置一個新的別名。
+
+device <devicekey> <alias>
+
+	為您的設備設置一個新的別名。
+
+devices
+
+	列出您的設備。
+
+login <username> <password>
+
+	在當前設備上登錄。
+
+logout
+
+	在當前設備上登出。
+
+offline
+
+	將您標記為離線，其他用戶無法看到您，這是新註冊用戶的默認設置。
+
+online
+
+	將您標記為在線，其他用戶可以看到您，您將保持在線狀態，直到您將自己更改為離線。
+
+password <oldpassword> <newpassword> (或 chpwd)
+
+	更改您的密碼。
+
+register <username> <password> [<alias>]
+
+	創建一個新的用戶帳戶。注意：這不會讓您登錄到新創建的帳戶。
+
+username [<username>]
+
+	顯示您的用戶名或設置一個新的用戶名。
+
+users [<alias>]
+
+	列出系統的所有用戶。別名可以包含通配符 * 或 ?。

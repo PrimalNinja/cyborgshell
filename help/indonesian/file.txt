@@ -1,0 +1,46 @@
+Perintah File  
+Perintah ini berkaitan dengan file di ruang file Anda saat ini.
+
+beautify <filename>
+
+	Mempercantik file JSON tanpa merusak program yang sedang dimuat.
+
+dir [<filename>] (atau cat, ls)
+
+	Mencantumkan program yang disimpan. Nama file dapat mengandung wildcard * atau ?.
+
+copy <filename1> <filename2> (atau cp)
+
+	Mengcopy file dari filename1 ke filename2.
+
+del <filename> (atau delete, era)
+
+	Menghapus program.
+
+load <filename>
+
+	Memuat program.
+
+ren <filename1> <filename2> (atau rename, mv)
+
+	Mengganti nama file dari filename1 ke filename2.
+
+run <filename>
+
+	Menjalankan program, menggantikan program yang sedang dimuat.
+
+save <filename>
+
+	Menyimpan program.
+
+space [<spacekey> | <alias>] (atau cs, cd, chdir)
+
+	Menampilkan ruang Anda saat ini atau berpindah ke yang baru.
+
+spaces
+
+	Mencantumkan semua ruang file yang dapat Anda akses.
+
+type <filename> [[fromline]-[toline]]
+
+	Mencetak program tanpa merusak program yang sedang dimuat.

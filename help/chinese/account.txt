@@ -1,0 +1,54 @@
+账户命令  
+这些命令与您的账户和账户访问相关。
+
+about [<message>]
+
+	显示您的关于消息或设置新的消息。
+	
+admins [<alias>]
+
+	列出系统的所有管理员用户。别名可以包含通配符 * 或 ?。
+	
+alias [<alias>]
+
+	显示您的别名或设置新的别名。
+	
+device <devicekey> <alias>
+
+	为您的设备设置一个新的别名。
+	
+devices
+
+	列出您的设备。
+	
+login <username> <password>
+
+	在当前设备上登录。
+	
+logout
+
+	在当前设备上注销。
+	
+offline
+
+	将您标记为离线，其他用户无法看到您，这是新注册用户的默认状态。
+	
+online
+
+	将您标记为在线，直到您将自己更改为离线，您将保持在线状态。
+	
+password <oldpassword> <newpassword> (或 chpwd)
+
+	更改您的密码。
+	
+register <username> <password> [<alias>]
+
+	创建一个新的用户账户。注意：这不会让您登录到新创建的账户。
+	
+username [<username>]
+
+	显示您的用户名或设置新的用户名。
+	
+users [<alias>]
+
+	列出系统的所有用户。别名可以包含通配符 * 或 ?。

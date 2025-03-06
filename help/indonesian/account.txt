@@ -1,0 +1,54 @@
+Perintah Akun  
+Perintah-perintah ini berkaitan dengan akun Anda dan akses akun.
+
+about [<message>]
+
+	Menampilkan pesan tentang Anda atau mengatur yang baru.
+	
+admins [<alias>]
+
+	Menampilkan semua pengguna admin dari sistem. Alias dapat mengandung karakter wildcard * atau ?.
+	
+alias [<alias>]
+
+	Menampilkan alias Anda atau mengatur yang baru.
+	
+device <devicekey> <alias>
+
+	Memberikan perangkat Anda alias baru.
+	
+devices
+
+	Menampilkan perangkat-perangkat Anda.
+	
+login <username> <password>
+
+	Masuk ke perangkat saat ini.
+	
+logout
+
+	Keluar dari perangkat saat ini.
+	
+offline
+
+	Menandai Anda sebagai offline untuk pengguna lain, ini adalah default untuk pendaftaran baru.
+	
+online
+
+	Menandai Anda sebagai online untuk pengguna lain, Anda tetap online sampai Anda mengubah diri Anda menjadi offline.
+	
+password <oldpassword> <newpassword> (atau chpwd)
+
+	Mengubah kata sandi Anda.
+	
+register <username> <password> [<alias>]
+
+	Membuat akun pengguna baru. Catatan: Ini tidak membuat Anda masuk ke akun yang baru dibuat.
+	
+username [<username>]
+
+	Menampilkan nama pengguna Anda atau mengatur yang baru.
+	
+users [<alias>]
+
+	Menampilkan semua pengguna dari sistem. Alias dapat mengandung karakter wildcard * atau ?.

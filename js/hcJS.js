@@ -525,6 +525,12 @@ function hcJS(strInput_a, strOutput_a, blnShowStartupText_a)
 
 		function cmdReset()
 		{
+			m_intFiles = 1;
+			m_intCurrentFile = 0;
+			m_arrCurrentCode = [[]];	// 1 file by default
+			m_arrFilenames = [m_NEWFILENAME];	// 1 file by default
+			m_objGlobals = {};
+
 			clearInput();
 			clearOutput();
 

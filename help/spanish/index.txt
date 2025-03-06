@@ -1,0 +1,38 @@
+¡Bienvenido a Open Home Computer JS!
+
+Esta guía de ayuda te guiará a través de los diversos comandos y características disponibles.
+
+Asegúrate de leer la información escribiendo 'help about'.
+
+Puedes registrarte para que puedas iniciar sesión y programar tus propios programas y compartirlos con otros. 
+Escribe 'help account' para obtener ayuda sobre los comandos de registro e inicio de sesión, así como algunos otros comandos de cuenta.
+
+Índice de Ayuda
+
+help
+
+	Muestra este índice de ayuda.
+
+help general
+
+	Muestra ayuda sobre comandos generales.
+	
+help editor
+
+	Muestra ayuda sobre comandos del editor.
+	
+help file
+
+	Muestra ayuda sobre comandos de archivos.
+	
+help account
+
+	Muestra ayuda sobre comandos de cuenta.
+	
+help sharing
+
+	Muestra ayuda sobre comandos de compartir.
+
+help about
+
+	Muestra información sobre este producto.

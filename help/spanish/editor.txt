@@ -1,0 +1,30 @@
+Comandos del Editor  
+Estos comandos te ayudan a editar tu programa actual.
+
+beautify
+
+	Embellece el JSON cargado.
+
+cls (o clear)
+
+	Limpia la pantalla.
+
+edit <linenumber> (o ed)
+
+	Edita una línea con el editor de líneas.
+	
+list [[fromline]-[toline]]
+
+	Lista el programa. Ejemplos: list 30-, list -30, list 20-30, list, list 40.
+	
+new
+
+	Limpia el programa actual del editor de código.
+
+renum
+
+	Renumera el programa. Nota: JavaScript no utiliza números de línea, pero nosotros los usamos con fines de edición.
+
+run
+
+	Ejecuta el programa actual.

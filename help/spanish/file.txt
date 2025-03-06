@@ -1,0 +1,46 @@
+Comandos de Archivos  
+Estos comandos se relacionan con los archivos en tu espacio de archivos actual.
+
+beautify <filename>
+
+	Embellece un archivo JSON sin corromper el programa actualmente cargado.
+	
+dir [<filename>] (o cat, ls)
+
+	Lista los programas guardados. El nombre del archivo puede contener comodines * o ?.
+	
+copy <filename1> <filename2> (o cp)
+
+	Copia un archivo de filename1 a filename2.
+	
+del <filename> (o delete, era)
+
+	Elimina un programa.
+	
+load <filename>
+
+	Carga un programa.
+	
+ren <filename1> <filename2> (o rename, mv)
+
+	Renombra un archivo de filename1 a filename2.
+	
+run <filename>
+
+	Ejecuta un programa, reemplazando el programa cargado existente.
+	
+save <filename>
+
+	Guarda un programa.
+	
+space [<spacekey> | <alias>] (o cs, cd, chdir)
+
+	Muestra tu espacio actual o cambia a uno nuevo.
+	
+spaces
+
+	Lista todos los espacios de archivos a los que tienes acceso.
+
+type <filename> [[fromline]-[toline]]
+
+	Escribe un programa sin corromper el programa actualmente cargado.

@@ -4,7 +4,7 @@ Welcome to Open Home Computer JC! (OHCJS)
 
 RELEASE CANDIDATE 4 
 
-- added support for the following human languages: chinese (simplified), chinese (traditional), english, french, german, indonesian, klingon (limited), russian, tagalog
+- added support for the following human languages: chinese (simplified), chinese (traditional), english, french, german, indonesian, klingon (limited), russian, spanish, tagalog
 
 OHCJS brings the retro charm of home computers to modern devices, allowing you to create, code, and collaborate anywhere, anytime. With OHCJS, you can:
 

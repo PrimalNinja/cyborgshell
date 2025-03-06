@@ -1,0 +1,13 @@
+Referencia de la API
+
+Por ahora, solo es lo siguiente:
+
+(relacionado con la pantalla)
+
+api.cls();
+
+	limpia la pantalla
+
+api.print(<output>);
+
+	imprime alguna salida

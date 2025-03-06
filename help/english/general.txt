@@ -1,9 +1,17 @@
 General Commands
 These commands provide general information and control.
 
+language [<language>]
+
+	Shows your current language or sets a new one.
+
+languages
+
+	Lists available human languages for which to use the system.
+
 reset
 
-	Resets the environment.
+	Resets the environment and loses all code currently in the code editor.
 	
 startup
 

@@ -120,7 +120,7 @@ function cmdDir($strPattern_a)
 	}
 	else
 	{
-		$strMessage = "Directory of " . $g_strCurrentSpace . ":\n\n" . $strFileList . "\n";
+		$strMessage = MSG_DIRECTORYOF . $g_strCurrentSpace . ":\n\n" . $strFileList . "\n";
 		echo getResponseJSON($strMessage, "", "", "");
 	}
 }
@@ -443,7 +443,7 @@ function cmdSpaces()
 			$strMessage = "";
 			if (count($arrJSON["spaces"]) == 0)
 			{
-				$strMessage = "spaces: none";
+				$strMessage = MSG_SPACESNONE;
 			}
 			else
 			{
@@ -476,7 +476,7 @@ function cmdSpaces()
 						$strMessage .= $strSpaceKey . " " . $objSpace["alias"];
 					}
 				}
-				$strMessage = "spaces:\n" . $strMessage;
+				$strMessage = MSG_SPACES . "\n" . $strMessage;
 			}
 			
 			echo getResponseJSON($strMessage, "", "", "");
@@ -614,7 +614,7 @@ function cmdAdmins($strPattern_a)
 	}
 	else
 	{
-		$strMessage = "List of Users:\n\n" . $strUserList . "\n";
+		$strMessage = MSG_LISTOFADMINS . "\n\n" . $strUserList . "\n";
 		echo getResponseJSON($strMessage, "", "", "");
 	}
 }
@@ -770,7 +770,7 @@ function cmdDevices()
 			$strDeviceKeys = "";
 			if (count($arrJSON["devicekeys"]) == 0)
 			{
-				$strDeviceKeys = "devicekeys: none";
+				$strDeviceKeys = MSG_DEVICEKEYSNONE;
 			}
 			else
 			{
@@ -807,10 +807,10 @@ function cmdDevices()
 						$strDeviceKeys .= "  " . $objDeviceKey["ipaddress"] . "\n";
 					}
 				}
-				$strDeviceKeys = "devicekeys: " . $strDeviceKeys;
+				$strDeviceKeys = MSG_DEVICEKEYS . $strDeviceKeys;
 			}
 
-			$strMessage = $strDeviceKeys . "\n\n* current device";
+			$strMessage = $strDeviceKeys . "\n\n* " . MSG_CURRENTDEVICE;
 			echo getResponseJSON($strMessage, "", "", "");
 		}
 	}
@@ -999,7 +999,11 @@ function cmdRegister($strUsername_a, $strPassword_a, $strAlias_a)
 				createHomeDir($strUserKey);
 				saveUserFile($strUserKey.'.json', $arrJSON);
 
-				$strMessage = "User '" . $strUsername . "' registered, please take note of the following information and do not share your username and password with other users.\nusername: " . $strUsername . "\npassword: " . $strPassword . "\nalias:    " . $strAlias . "\nuserkey:  " . $strUserKey;
+				$strMessage = MSG_REGISTRATION;
+				$strMessage = str_replace("%%USERNAME%%", $strUsername, $strMessage);
+				$strMessage = str_replace("%%PASSWORD%%", $strPassword, $strMessage);
+				$strMessage = str_replace("%%ALIAS%%", $strAlias, $strMessage);
+				$strMessage = str_replace("%%USERKEY%%", $strUserKey, $strMessage);
 				echo getResponseJSON($strMessage, "", "", "");
 			}
 		}
@@ -1146,7 +1150,7 @@ function cmdUsers($strPattern_a)
 	}
 	else
 	{
-		$strMessage = "List of Users:\n\n" . $strUserList . "\n";
+		$strMessage = MSG_LISTOFUSERS . "\n\n" . $strUserList . "\n";
 		echo getResponseJSON($strMessage, "", "", "");
 	}
 }
@@ -1282,7 +1286,7 @@ function cmdKeys()
 			$strShareKeys = "";
 			if (count($arrJSON["sharekeys"]) == 0)
 			{
-				$strShareKeys = "sharekeys:  none";
+				$strShareKeys = MSG_SHAREKEYSNONE;
 			}
 			else
 			{
@@ -1319,7 +1323,7 @@ function cmdKeys()
 				$strShareKeys = "sharekeys:  " . $strShareKeys;
 			}
 
-			$strMessage = $strShareKeys . "\n\n* active keys";
+			$strMessage = $strShareKeys . "\n\n* " . MSG_ACTIVEKEYS;
 			echo getResponseJSON($strMessage, "", "", "");
 		}
 	}
@@ -1453,7 +1457,7 @@ function cmdShares()
 			$strMessage = "";
 			if (count($arrJSON["shares"]) == 0)
 			{
-				$strMessage = "shares: none";
+				$strMessage = MSG_SHARESNONE;
 			}
 			else
 			{
@@ -1481,7 +1485,7 @@ function cmdShares()
 					}
 					$strMessage .= $strActive . " " . $strShareKey . " " . $objShare["alias"];
 				}
-				$strMessage = "shares:\n" . $strMessage . "\n\n* active shares";
+				$strMessage = MSG_SHARES . "\n" . $strMessage . "\n\n* " . MSG_ACTIVESHARES;
 			}
 			
 			echo getResponseJSON($strMessage, "", "", "");

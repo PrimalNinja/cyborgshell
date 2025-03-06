@@ -24,3 +24,7 @@ new
 renum
 
 	Renumbers the program. Note: JavaScript doesn't use line numbers, but we use them for editing purposes.
+
+run
+
+	Runs the current program.

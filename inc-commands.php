@@ -4,10 +4,10 @@
 
 function cmdLanguage($strLanguage_a)
 {
-	global $arrValidLanguages;
+	global $g_arrValidLanguages;
 	global $g_strCurrentLanguage;
 
-	if ((strlen($strLanguage_a) > 0) && (in_array($strLanguage_a, $arrValidLanguages)))
+	if ((strlen($strLanguage_a) > 0) && (in_array($strLanguage_a, $g_arrValidLanguages)))
 	{
 		$g_strCurrentLanguage = $strLanguage_a;
 		$_SESSION['server_currentlanguage'] = $g_strCurrentLanguage;
@@ -21,9 +21,9 @@ function cmdLanguage($strLanguage_a)
 
 function cmdLanguages()
 {
-	global $arrValidLanguages;
+	global $g_arrValidLanguages;
 
-	$strMessage = implode(', ', $arrValidLanguages);
+	$strMessage = implode(', ', $g_arrValidLanguages);
 	echo getResponseJSON($strMessage, "", "", "");
 }
 

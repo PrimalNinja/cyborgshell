@@ -6,7 +6,7 @@ require_once('inc-env.php');
 require_once('inc-utils.php');
 require_once('inc-initialisation.php');
 
-if ((strlen($g_strCurrentLanguage) > 0) && (in_array($g_strCurrentLanguage, $arrValidLanguages)))
+if ((strlen($g_strCurrentLanguage) > 0) && (in_array($g_strCurrentLanguage, $g_arrValidLanguages)))
 {
 	$strLanguageFile = $g_strServerLanguageDir . 'inc-' . $g_strCurrentLanguage . '.php';
 	if (file_exists($strLanguageFile))

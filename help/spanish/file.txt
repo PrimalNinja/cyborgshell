@@ -9,9 +9,9 @@ dir [<filename>] (o cat, ls)
 
 	Lista los programas guardados. El nombre del archivo puede contener comodines * o ?.
 	
-copy <filename1> <filename2> (o cp)
+copy <filenamea> <filenameb> (o cp)
 
-	Copia un archivo de filename1 a filename2.
+	Copia un archivo de filenamea a filenameb.
 	
 del <filename> (o delete, era)
 
@@ -21,9 +21,9 @@ load <filename>
 
 	Carga un programa.
 	
-ren <filename1> <filename2> (o rename, mv)
+ren <filenamea> <filenameb> (o rename, mv)
 
-	Renombra un archivo de filename1 a filename2.
+	Renombra un archivo de filenamea a filenameb.
 	
 run <filename>
 

@@ -9,9 +9,9 @@ dir [<filename>] (или cat, ls)
 
 	Список сохранённых программ. Имя файла может содержать подстановочные знаки * или ?.  
 
-copy <filename1> <filename2> (или cp)  
+copy <filenamea> <filenameb> (или cp)  
 
-	Копирует файл из filename1 в filename2.  
+	Копирует файл из filenamea в filenameb.  
 
 del <filename> (или delete, era)  
 
@@ -21,9 +21,9 @@ load <filename>
 
 	Загружает программу.  
 
-ren <filename1> <filename2> (или rename, mv)  
+ren <filenamea> <filenameb> (или rename, mv)  
 
-	Переименовывает файл из filename1 в filename2.  
+	Переименовывает файл из filenamea в filenameb.  
 
 run <filename>  
 

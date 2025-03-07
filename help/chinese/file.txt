@@ -9,9 +9,9 @@ dir [<filename>] (或 cat, ls)
 
 	列出已保存的程序。文件名可以包含通配符 * 或 ?。
 	
-copy <filename1> <filename2> (或 cp)
+copy <filenamea> <filenameb> (或 cp)
 
-	将文件从 filename1 复制到 filename2。
+	将文件从 filenamea 复制到 filenameb。
 	
 del <filename> (或 delete, era)
 
@@ -21,9 +21,9 @@ load <filename>
 
 	加载一个程序。
 	
-ren <filename1> <filename2> (或 rename, mv)
+ren <filenamea> <filenameb> (或 rename, mv)
 
-	将文件从 filename1 重命名为 filename2。
+	将文件从 filenamea 重命名为 filenameb。
 	
 run <filename>
 

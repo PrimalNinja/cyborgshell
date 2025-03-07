@@ -9,9 +9,9 @@ dir [<filename>] (o cat, ls)
 
 	Naglilista ng mga naka-save na programa. Ang filename ay maaaring maglaman ng mga wildcard * o ?.
 	
-copy <filename1> <filename2> (o cp)
+copy <filenamea> <filenameb> (o cp)
 
-	Nagkokopya ng file mula filename1 papuntang filename2.
+	Nagkokopya ng file mula filenamea papuntang filenameb.
 	
 del <filename> (o delete, era)
 
@@ -21,9 +21,9 @@ load <filename>
 
 	Naglo-load ng isang programa.
 	
-ren <filename1> <filename2> (o rename, mv)
+ren <filenamea> <filenameb> (o rename, mv)
 
-	Nagbabago ng pangalan ng file mula filename1 papuntang filename2.
+	Nagbabago ng pangalan ng file mula filenamea papuntang filenameb.
 	
 run <filename>
 

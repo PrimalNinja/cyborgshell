@@ -9,9 +9,9 @@ dir [<filename>] (oder cat, ls)
 
 	Auflistung der gespeicherten Programme. Der Dateiname kann Wildcards * oder ? enthalten.
 	
-copy <filename1> <filename2> (oder cp)
+copy <filenamea> <filenameb> (oder cp)
 
-	Kopiert eine Datei von filename1 nach filename2.
+	Kopiert eine Datei von filenamea nach filenameb.
 	
 del <filename> (oder delete, era)
 
@@ -21,9 +21,9 @@ load <filename>
 
 	Lädt ein Programm.
 	
-ren <filename1> <filename2> (oder rename, mv)
+ren <filenamea> <filenameb> (oder rename, mv)
 
-	Ändert den Namen einer Datei von filename1 nach filename2.
+	Ändert den Namen einer Datei von filenamea nach filenameb.
 	
 run <filename>
 

@@ -9,9 +9,9 @@ dir [<filename>] (atau cat, ls)
 
 	Mencantumkan program yang disimpan. Nama file dapat mengandung wildcard * atau ?.
 
-copy <filename1> <filename2> (atau cp)
+copy <filenamea> <filenameb> (atau cp)
 
-	Mengcopy file dari filename1 ke filename2.
+	Mengcopy file dari filenamea ke filenameb.
 
 del <filename> (atau delete, era)
 
@@ -21,9 +21,9 @@ load <filename>
 
 	Memuat program.
 
-ren <filename1> <filename2> (atau rename, mv)
+ren <filenamea> <filenameb> (atau rename, mv)
 
-	Mengganti nama file dari filename1 ke filename2.
+	Mengganti nama file dari filenamea ke filenameb.
 
 run <filename>
 

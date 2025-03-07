@@ -145,8 +145,9 @@ function cmdDir($strPattern_a)
 	}
 	else
 	{
-		$strMessage = MSG_DIRECTORYOF . $g_strCurrentSpace . ":\n\n" . $strFileList . "\n";
-		echo getResponseJSON($strMessage, "", "", "");
+		$strMessage = MSG_DIRECTORYOF . $g_strCurrentSpace . ":\n\n";
+		$strContent = $strFileList . "\n";
+		echo getResponseJSON($strMessage, "", "", $strContent);
 	}
 }
 

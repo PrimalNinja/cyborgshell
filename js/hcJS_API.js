@@ -244,37 +244,68 @@ function parentTabHandler(objOptions_a)
 	};
 }
 
-function hcJS_API(strOutput_a)
+function hcJS_API(objGlobals_a)
 {
-	var m_objOutput = $(strOutput_a);
-
-	// utils
-	function appendOutput(str_a)
-	{
-		//m_objOutput.append(str_a + '\n');
-		m_objOutput.text($(strOutput_a).text() + str_a + '\n');
-	}
-
-	function clearOutput()
-	{
-		m_objOutput.html('');
-	}
+	var m_objThis = this;
+	var globals = objGlobals_a;
 
 	// string functions
+	
 	this.getGuid = function()
 	{
 		return getGUID();
 	};
+	
+	// debugging
 
-	// console functions
+	this.debugObject = function(obj_a, blnRecurse_a, strIndent_a) 
+	{
+		var blnRecurse = blnRecurse_a;
+		var strIndent = strIndent_a;
+		if (blnRecurse === undefined)
+		{
+			blnRecurse = true;
+		}
+		if (strIndent === undefined)
+		{
+			strIndent = '';
+		}
+		
+		for (var strKey in obj_a) 
+		{
+			if (Object.prototype.hasOwnProperty.call(obj_a, strKey)) 
+			{
+				var strValue = obj_a[strKey];
+				m_objThis.print(strIndent + strKey + ': ');
+				if (typeof strValue === 'object' && strValue !== null) 
+				{
+					if (blnRecurse)
+					{
+						m_objThis.debugObject(strValue, blnRecurse, strIndent + ' ');
+					}
+					else
+					{
+						m_objThis.print(strIndent + ' ' + "Object");
+					}
+				} 
+				else 
+				{
+					m_objThis.print(strIndent + ' ' + strValue);
+				}
+			}
+		}
+	};
+
+	// screen functions
+	
 	this.cls = function()
 	{
-		clearOutput();
+		globals.console.clearOutput();
 	};
 	
 	this.print = function(str_a)
 	{
-		appendOutput(str_a);
+		globals.console.appendOutput(str_a);
 	};
 
 	// tab functions

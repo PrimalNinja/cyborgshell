@@ -1,18 +1,52 @@
 function hcJS(strInput_a, strOutput_a, blnShowStartupText_a)
 {
-	var m_objThis = this;
-	var m_objInput = $(strInput_a);
-	var m_objOutput = $(strOutput_a);
-	var m_arrCurrentCode = [];
-
-	var m_objAPI = new hcJS_API(strOutput_a);
-	var m_objGlobals = {};
-
 	var m_COOKIENAME = "hcjsdevicekey";
 	var m_COOKIEEXPIRYDAYS = 365;
 	var m_LINENUMBERWIDTH = 7;
 	var m_INDENTTABCOUNT = 1;
 	
+	var m_objThis = this;
+	var m_objInput = $(strInput_a);
+	var m_objOutput = $(strOutput_a);
+
+	var blnShowStartupText = blnShowStartupText_a;
+
+	var m_arrCurrentCode = [];
+
+	var m_arrOutput = [];
+	var m_objGlobals = {};
+	m_objGlobals.console = m_objThis;
+
+	var m_objAPI = new hcJS_API(m_objGlobals);
+
+	function isFunction(fn_a)
+	{
+		var getType = {};
+		return fn_a && getType.toString.call(fn_a) === '[object Function]';
+	}
+
+	function processArray(arr_a, cb_a)
+	{
+		if (arr_a !== null)
+		{
+			var intRowNum = 1;
+			var intI = 0;
+			var blnAbort = false;
+			while ((!blnAbort) && (intI < arr_a.length))
+			{
+				if (arr_a[intI] !== undefined)
+				{
+					if (isFunction(cb_a))
+					{
+						blnAbort = cb_a(arr_a[intI], intRowNum, intI);
+					}
+				}
+				intRowNum++;
+				intI++;
+			}
+		}
+	}
+
 	function scrollContainer()
 	{
 		setTimeout(function()
@@ -22,6 +56,27 @@ function hcJS(strInput_a, strOutput_a, blnShowStartupText_a)
 		}, 100);
 	}
 
+	this.appendOutput = function(str_a)
+	{
+		m_arrOutput.push(str_a);
+		
+		var strHtml = "";
+		m_objOutput.html("");
+		
+		processArray(m_arrOutput, function(str_a)
+		{
+			strHtml += '<div>' + str_a + '</div>';
+		});
+		
+		m_objOutput.html(strHtml);
+	};
+
+	this.clearOutput = function()
+	{
+		m_arrOutput = [];
+		m_objOutput.html('');
+	};
+
 	this.onResize = function()
 	{
 		scrollContainer();
@@ -29,7 +84,7 @@ function hcJS(strInput_a, strOutput_a, blnShowStartupText_a)
 
 	this.reset = function()
 	{
-		cmdReset();
+		cmdReset(true);
 
 		// bindings
 		$(document.body).on('click', function()
@@ -43,12 +98,6 @@ function hcJS(strInput_a, strOutput_a, blnShowStartupText_a)
 		});
 
 		// utils
-		function appendOutput(str_a)
-		{
-			//m_objOutput.append(str_a + '\n');
-			m_objOutput.text($(strOutput_a).text() + str_a + '\n');
-		}
-
 		function build(arrCode_a, blnIndent_a)
 		{
 			var intIndent = 0;
@@ -81,7 +130,7 @@ function hcJS(strInput_a, strOutput_a, blnShowStartupText_a)
 					strLine = strIndent + strLineCode;
 				}
 				strResult += strLine;
-				//appendOutput(strLine);
+				//m_objThis.appendOutput(strLine);
 
 				intIndent += intIndentOffsetPost;
 			});
@@ -92,11 +141,6 @@ function hcJS(strInput_a, strOutput_a, blnShowStartupText_a)
 		function clearInput()
 		{
 			m_objInput.val('');
-		}
-
-		function clearOutput()
-		{
-			m_objOutput.html('');
 		}
 
 		function deleteCookie(strCookieName_a)
@@ -214,12 +258,6 @@ function hcJS(strInput_a, strOutput_a, blnShowStartupText_a)
 			return strResult;
 		}
 
-		function isFunction(fn_a)
-		{
-			var getType = {};
-			return fn_a && getType.toString.call(fn_a) === '[object Function]';
-		}
-
 		//	<no parameters> list all ine numbers
 		//	10-20 is a range from and to for which to list line numbers
 		//	10 is an absolute line number to list
@@ -269,32 +307,10 @@ function hcJS(strInput_a, strOutput_a, blnShowStartupText_a)
 			return int_a.toString().padStart(intLength_a, " ");
 		}
 
-		function processArray(arr_a, cb_a)
-		{
-			if (arr_a !== null)
-			{
-				var intRowNum = 1;
-				var intI = 0;
-				var blnAbort = false;
-				while ((!blnAbort) && (intI < arr_a.length))
-				{
-					if (arr_a[intI] !== undefined)
-					{
-						if (isFunction(cb_a))
-						{
-							blnAbort = cb_a(arr_a[intI], intRowNum, intI);
-						}
-					}
-					intRowNum++;
-					intI++;
-				}
-			}
-		}
-
 		function ready(strFrom_a)
 		{
-			//appendOutput("Ready: " + strFrom_a);	// for debugging
-			appendOutput("Ready");
+			//m_objThis.appendOutput("Ready: " + strFrom_a);	// for debugging
+			m_objThis.appendOutput("Ready");
 			scrollContainer();
 		}
 
@@ -308,7 +324,7 @@ function hcJS(strInput_a, strOutput_a, blnShowStartupText_a)
 			}
 			catch (objException_a)
 			{
-				appendOutput("Error: " + objException_a.message);
+				m_objThis.appendOutput("Error: " + objException_a.message);
 				scrollContainer();
 			}
 		}
@@ -360,7 +376,7 @@ function hcJS(strInput_a, strOutput_a, blnShowStartupText_a)
 			if (objEvent_a.which === 13)
 			{
 				var strCommand = m_objInput.val();
-				appendOutput(strCommand);
+				m_objThis.appendOutput(strCommand);
 				processCommand(strCommand);
 				clearInput();
 			}
@@ -427,14 +443,14 @@ function hcJS(strInput_a, strOutput_a, blnShowStartupText_a)
 			}
 			catch (objException_a)
 			{
-				appendOutput("Error: " + objException_a.message);
+				m_objThis.appendOutput("Error: " + objException_a.message);
 			}
 			ready('cmdBeautify');
 		}
 		
 		function cmdCLS()
 		{
-			clearOutput();
+			m_objThis.clearOutput();
 			ready('cmdCLS');
 		}
 
@@ -448,7 +464,7 @@ function hcJS(strInput_a, strOutput_a, blnShowStartupText_a)
 			}
 			else
 			{
-				appendOutput("Invalid line number.");
+				m_objThis.appendOutput("Invalid line number.");
 				ready('cmdEdit');
 			}
 		}
@@ -494,15 +510,17 @@ function hcJS(strInput_a, strOutput_a, blnShowStartupText_a)
 						var strLineNumber = padWithSpaces(intLineNumber, m_LINENUMBERWIDTH);
 						var strLine = '';
 						var strLineCode = objLine_a.lineCode.trim();
+						
 						if (strLineCode.length > 0)
 						{
 							strLine = strLineNumber + '\t' + strIndent + strLineCode;
 						}
 						else
 						{
-							strLine = strLineNumber;
+							strLine = strLineNumber + '\t';
 						}
-						appendOutput(strLine);
+						
+						m_objThis.appendOutput(strLine);
 
 						intIndent += intIndentOffsetPost;
 					}
@@ -523,22 +541,16 @@ function hcJS(strInput_a, strOutput_a, blnShowStartupText_a)
 			ready('cmdRenum');
 		}
 
-		function cmdReset()
+		function cmdReset(blnSuppressReady_a)
 		{
 			m_arrCurrentCode = [[]];	// 1 file by default
 			m_objGlobals = {};
+			m_objGlobals.console = m_objThis;
 
 			clearInput();
-			clearOutput();
+			m_objThis.clearOutput();
 
-			if (blnShowStartupText_a)
-			{
-				processCommand('startup');
-			}
-			else
-			{
-				cmdValidateCookie();
-			}
+			cmdValidateCookie(blnSuppressReady_a);
 		}
 
 		function cmdRun(arrParams_a)
@@ -594,40 +606,54 @@ function hcJS(strInput_a, strOutput_a, blnShowStartupText_a)
 			}
 		}
 
-		function cmdValidateCookie()
+		function cmdValidateCookie(blnSuppressReady_a)
 		{
 			var strCookie = getCookie(m_COOKIENAME);
 			var strCommand = 'validatecookie ' + strCookie;
 
-			processCommand(strCommand);
+			processCommand(strCommand, null, blnSuppressReady_a);
 		}
 
 		// callbacks
 		function cbLogin(objResponse_a)
 		{
 			setCookie(m_COOKIENAME, objResponse_a.devicekey, m_COOKIEEXPIRYDAYS);
-			cmdValidateCookie();
+			cmdValidateCookie(false);
 		}
 
 		function cbStartup(objResponse_a)
 		{
 			if (objResponse_a.content.length > 0)
 			{
-				appendOutput(objResponse_a.content);
+				m_objThis.appendOutput(objResponse_a.content);
 			}
-			cmdValidateCookie();
+		}
+
+		function cbValidateCookie(objResponse_a)
+		{
+			if (blnShowStartupText)
+			{
+				blnShowStartupText = false;
+				processCommand('startup');
+			}
 		}
 
 		// command processors
-		function processCommand(strInput_a, cb_a)
+		function processCommand(strInput_a, cb_a, blnSuppressReady_a)
 		{
+			var blnSuppressReady = blnSuppressReady_a;
 			var arrParams = strInput_a.split(' ');
 			var strCommand = arrParams[0];
 			var intLineNumber = parseInt(strCommand, 10);
 
+			if (blnSuppressReady === undefined)
+			{
+				blnSuppressReady = false;
+			}
+
 			if (strCommand.trim().length === 0)
 			{
-				appendOutput("");
+				m_objThis.appendOutput("");
 			}
 			else if (!isNaN(intLineNumber))
 			{
@@ -674,7 +700,7 @@ function hcJS(strInput_a, strOutput_a, blnShowStartupText_a)
 					break;
 
 					case 'reset':
-					cmdReset();
+					cmdReset(false);
 					break;
 
 					case 'run':
@@ -686,13 +712,17 @@ function hcJS(strInput_a, strOutput_a, blnShowStartupText_a)
 					break;
 
 					case 'startup':		// general
-					handleServerCommands(strInput_a, '1file', cbStartup, true);
+					handleServerCommands(strInput_a, '1file', cbStartup);
 					break;
 
 					case 'login':		// account
 					handleServerCommands(strInput_a, 'nofiles', cbLogin, true);
 					break;
 					
+					case 'validatecookie':// account
+					handleServerCommands(strInput_a, 'nofiles', cbValidateCookie, blnSuppressReady);
+					break;
+
 					case 'device':		// general
 					case 'devices':		// general
 					case 'language':	// general
@@ -700,7 +730,6 @@ function hcJS(strInput_a, strOutput_a, blnShowStartupText_a)
 
 					case 'cat':			// file
 					case 'dir':			// file
-					case 'files':		// file
 					case 'ls':			// file
 
 					case 'spaces':		// file
@@ -716,7 +745,6 @@ function hcJS(strInput_a, strOutput_a, blnShowStartupText_a)
 					case 'register':	// account
 					case 'username':	// account
 					case 'users':		// account
-					case 'validatecookie':// account
 
 					case 'grant':		// sharing
 					case 'keys':		// sharing
@@ -831,19 +859,30 @@ function hcJS(strInput_a, strOutput_a, blnShowStartupText_a)
 
 				if (objResponseJSON.error.length > 0)
 				{
-					appendOutput(objResponseJSON.error);
+					m_objThis.appendOutput(objResponseJSON.error);
 				}
-				else if (objResponseJSON.message.length > 0)
+				
+				if (objResponseJSON.message.length > 0)
 				{
-					appendOutput(objResponseJSON.message);
-				}
-				else
-				{
-					if (strInput_a.startsWith('load '))
+					if (strInput_a.startsWith('help'))
 					{
-						strBuild = objResponseJSON.content;
-						m_arrCurrentCode = unbuild(strBuild);
+						m_objThis.appendOutput(objResponseJSON.message);
 					}
+					else if ((strInput_a.startsWith('cat')) || (strInput_a.startsWith('dir')) || (strInput_a.startsWith('ls')))
+					{
+						m_objThis.appendOutput(objResponseJSON.message);
+						m_objThis.appendOutput(objResponseJSON.content);
+					}
+					else
+					{
+						m_objThis.appendOutput(objResponseJSON.message);
+					}
+				}
+				
+				if (strInput_a.startsWith('load '))
+				{
+					strBuild = objResponseJSON.content;
+					m_arrCurrentCode = unbuild(strBuild);
 				}
 
 				if (isFunction(cb_a))
@@ -880,7 +919,7 @@ function hcJS(strInput_a, strOutput_a, blnShowStartupText_a)
 			}
 			else
 			{
-				appendOutput("Line number out of range.");
+				m_objThis.appendOutput("Line number out of range.");
 			}
 		}
 
@@ -899,11 +938,11 @@ function hcJS(strInput_a, strOutput_a, blnShowStartupText_a)
 
 				if (objResponseJSON.error.length > 0)
 				{
-					appendOutput(objResponseJSON.error);
+					m_objThis.appendOutput(objResponseJSON.error);
 				}
 				else if (objResponseJSON.message.length > 0)
 				{
-					appendOutput(objResponseJSON.message);
+					m_objThis.appendOutput(objResponseJSON.message);
 				}
 				else
 				{

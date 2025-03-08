@@ -6,6 +6,7 @@ RELEASE CANDIDATE 7
 
 - added support for the following human languages: arabic, chinese (simplified), chinese (traditional), czech, dutch, english, french, german, greek, hebrew, hindi, italian, japanese, javanese, klingon, korean, persian, polish, portuguese, romanian, russian, spanish, swahili, swedish, tagalog, thai, turkish, vietnamese
 - added multiple file support within the editor, API now has load and save functions - but I haven't updated the documentation for the API yet, not sure how I want to document the API yet.
+- added saveall command and ability to drag one or more files into the editor from your PC.
 
 OHCJS brings the retro charm of home computers to modern devices, allowing you to create, code, and collaborate anywhere, anytime. With OHCJS, you can:
 

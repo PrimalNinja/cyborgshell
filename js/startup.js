@@ -1,7 +1,7 @@
 $(document).ready(function() 
 {
 
-	var objHCJS = new hcJS('#ge-command', '#ge-output', true);
+	var objHCJS = new hcJS('#ge-container', '#ge-command', '#ge-output', true);
 	objHCJS.reset();
 
 	$(window).resize(function() 

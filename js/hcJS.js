@@ -1,4 +1,4 @@
-function hcJS(strInput_a, strOutput_a, blnShowStartupText_a)
+function hcJS(strContainer_a, strInput_a, strOutput_a, blnShowStartupText_a)
 {
 	var m_COOKIENAME = "hcjsdevicekey";
 	var m_COOKIEEXPIRYDAYS = 365;
@@ -8,6 +8,7 @@ function hcJS(strInput_a, strOutput_a, blnShowStartupText_a)
 	var m_NEWFILENAME = 'Unnamed File';
 	
 	var m_objThis = this;
+	var m_objContainer = $(strContainer_a);
 	var m_objInput = $(strInput_a);
 	var m_objOutput = $(strOutput_a);
 
@@ -15,8 +16,11 @@ function hcJS(strInput_a, strOutput_a, blnShowStartupText_a)
 
 	var m_intFiles = 1;
 	var m_intCurrentFile = 0;
-	var m_arrCurrentCode = [[]];	// 1 file by default
-	var m_arrFilenames = [m_NEWFILENAME];	// 1 file by default
+	var m_arrFiles = [{
+		code: [],
+		filename: m_NEWFILENAME,
+		dirty: false
+	}];	// 1 file by default
 	var m_arrOutput = [];
 	var m_objGlobals = {};
 	var m_blnRTL = false;
@@ -119,11 +123,12 @@ function hcJS(strInput_a, strOutput_a, blnShowStartupText_a)
 	// command support
 	function editLine(intLineNumber_a)
 	{
-		var intLineIndex = findLine(m_arrCurrentCode[m_intCurrentFile], intLineNumber_a);
+		var intLineIndex = findLine(m_arrFiles[m_intCurrentFile].code, intLineNumber_a);
 
 		if (intLineIndex >= 0)
 		{
-			var strLineCode = intLineNumber_a + ' ' + m_arrCurrentCode[m_intCurrentFile][intLineIndex].lineCode.replace(/[ \r\n]+$/, '');
+			var strLineCode = intLineNumber_a + ' ' + m_arrFiles[m_intCurrentFile].code[intLineIndex].lineCode.replace(/[ \r\n]+$/, '');
+			m_arrFiles[m_intCurrentFile].dirty = true;
 			setTimeout(function() 
 			{ 
 				scrollContainer();
@@ -333,8 +338,8 @@ function hcJS(strInput_a, strOutput_a, blnShowStartupText_a)
 
 		if (blnSaveProgram)
 		{
-			strContent = build(m_arrCurrentCode[m_intCurrentFile], true);
-			m_arrFilenames[m_intCurrentFile] = strF1;
+			strContent = build(m_arrFiles[m_intCurrentFile].code, true);
+			m_arrFiles[m_intCurrentFile].filename = strF1;
 		}
 
 		// commandline: '', f1: '', f2: '', p1: '', p2: '', p3: '', r: '', content: ''
@@ -384,8 +389,14 @@ function hcJS(strInput_a, strOutput_a, blnShowStartupText_a)
 			if (blnLoadProgram)
 			{
 				strContent = objResponseJSON.content;
-				m_arrCurrentCode[m_intCurrentFile] = unbuild(strContent);
-				m_arrFilenames[m_intCurrentFile] = strF1;
+				m_arrFiles[m_intCurrentFile].code = unbuild(strContent);
+				m_arrFiles[m_intCurrentFile].filename = strF1;
+				m_arrFiles[m_intCurrentFile].dirty = false;
+			}
+
+			if (blnSaveProgram && objResponseJSON.error.length === 0)
+			{
+				m_arrFiles[m_intCurrentFile].dirty = false;
 			}
 
 			if (isFunction(cb_a))
@@ -689,7 +700,7 @@ function hcJS(strInput_a, strOutput_a, blnShowStartupText_a)
 	{
 		var arrParts;
 		var strNewLine = '';
-		var intLineIndex = findLine(m_arrCurrentCode[m_intCurrentFile], intLineNumber_a);
+		var intLineIndex = findLine(m_arrFiles[m_intCurrentFile].code, intLineNumber_a);
 		if (intLineIndex >= 0)
 		{
 			arrParts = strInput_a.split(' ');
@@ -700,14 +711,16 @@ function hcJS(strInput_a, strOutput_a, blnShowStartupText_a)
 				strNewLine = getNewLine(strInput_a);
 				if (strNewLine.trim().length > 0)
 				{
-					m_arrCurrentCode[m_intCurrentFile][intLineIndex].lineCode = strNewLine;
+					m_arrFiles[m_intCurrentFile].code[intLineIndex].lineCode = strNewLine;
+					m_arrFiles[m_intCurrentFile].dirty = true;
 				}
 				ready('cmdAddReplaceDeleteLine');
 			}
 			else
 			{
 				// delete a line
-				m_arrCurrentCode[m_intCurrentFile].splice(intLineIndex, 1);
+				m_arrFiles[m_intCurrentFile].code.splice(intLineIndex, 1);
+				m_arrFiles[m_intCurrentFile].dirty = true;
 				ready('cmdAddReplaceDeleteLine');
 			}
 		}
@@ -717,14 +730,15 @@ function hcJS(strInput_a, strOutput_a, blnShowStartupText_a)
 			strNewLine = getNewLine(strInput_a);
 			if (strNewLine.trim().length > 0)
 			{
-				m_arrCurrentCode[m_intCurrentFile].push({
+				m_arrFiles[m_intCurrentFile].code.push({
 					lineNumber: intLineNumber_a,
 					lineCode: strNewLine
 				});
+				m_arrFiles[m_intCurrentFile].dirty = true;
 			}
 
 			// sort the lines
-			m_arrCurrentCode[m_intCurrentFile].sort(function(a, b)
+			m_arrFiles[m_intCurrentFile].code.sort(function(a, b)
 			{
 				return a.lineNumber - b.lineNumber;
 			});
@@ -735,13 +749,14 @@ function hcJS(strInput_a, strOutput_a, blnShowStartupText_a)
 
 	function cmdBeautify()
 	{
-		var strJSON = build(m_arrCurrentCode[m_intCurrentFile], false);
+		var strJSON = build(m_arrFiles[m_intCurrentFile].code, false);
 		
 		try
 		{
 			var arrJSON = JSON.parse(strJSON);
 			strJSON = JSON.stringify(arrJSON, null, 2);
-			m_arrCurrentCode[m_intCurrentFile] = unbuild(strJSON);
+			m_arrFiles[m_intCurrentFile].code = unbuild(strJSON);
+			m_arrFiles[m_intCurrentFile].dirty = true;
 		}
 		catch (objException_a)
 		{
@@ -811,11 +826,11 @@ function hcJS(strInput_a, strOutput_a, blnShowStartupText_a)
 			var strFilename = arrParams_a[1].trim();
 			if (strFilename.length > 0)
 			{
-				m_arrFilenames[m_intCurrentFile] = strFilename;
+				m_arrFiles[m_intCurrentFile].filename = strFilename;
 			}
 			else
 			{
-				appendOutput(m_arrFilenames[m_intCurrentFile]);
+				appendOutput(m_arrFiles[m_intCurrentFile].filename);
 			}
 		}
 
@@ -826,18 +841,23 @@ function hcJS(strInput_a, strOutput_a, blnShowStartupText_a)
 	{
 		var intFile = 1;
 		appendOutput("Files:", false, true);
-		processArray(m_arrFilenames, function(strFile_a)
+		processArray(m_arrFiles, function(objFile_a)
 		{
 			var strFileNumber = padWithSpaces(intFile, m_FILENUMBERWIDTH);
-			var strCurrent = "   ";
+			var strCurrent = " ";
 			if (m_intCurrentFile + 1 === intFile)
 			{
-				strCurrent = " * ";
+				strCurrent = "*";
 			}
-			appendOutput(strFileNumber + strCurrent + strFile_a, false, true);
+			var strDirty = " ";
+			if (objFile_a.dirty)
+			{
+				strDirty = "D";
+			}
+			appendOutput(strFileNumber + " " + strCurrent + strDirty + " " + objFile_a.filename, false, true);
 			intFile++;
 		});
-		appendOutput("\n* current file", false, true);
+		appendOutput("\n* current file, D dirty file", false, true);
 		ready('cmdFiles');
 	}
 
@@ -915,18 +935,27 @@ function hcJS(strInput_a, strOutput_a, blnShowStartupText_a)
 
 	function cmdNew()
 	{
-		m_arrCurrentCode[m_intCurrentFile] = [];
-		m_arrFilenames[m_intCurrentFile] = m_NEWFILENAME;
+		m_arrFiles[m_intCurrentFile].code = [];
+		m_arrFiles[m_intCurrentFile].filename = m_NEWFILENAME;
+		m_arrFiles[m_intCurrentFile].dirty= false;
 		ready('cmdNew');
 	}
 	
-	function cmdNewFile()
+	function cmdNewFile(blnSuppressReady_a)
 	{
-		m_arrCurrentCode.push([]);
-		m_arrFilenames.push(m_NEWFILENAME);
+		m_arrFiles.push({
+			code: [],
+			filename: m_NEWFILENAME,
+			dirty: false
+		});
+
 		m_intCurrentFile = m_intFiles;
 		m_intFiles++;
-		ready('cmdNewFile');
+		
+		if (!blnSuppressReady_a)
+		{
+			ready('cmdNewFile');
+		}
 	}
 
 	function cmdPaste(arrParams_a)
@@ -946,7 +975,7 @@ function hcJS(strInput_a, strOutput_a, blnShowStartupText_a)
 				
 				// take up to intLineNumber from current File into start
 				// AND take from intLineNumber from current File into end
-				processArray(m_arrCurrentCode[m_intCurrentFile], function(objLine_a)
+				processArray(m_arrFiles[m_intCurrentFile].code, function(objLine_a)
 				{
 					if (objLine_a.lineNumber < intLineNumber)
 					{
@@ -981,7 +1010,7 @@ function hcJS(strInput_a, strOutput_a, blnShowStartupText_a)
 				});
 
 				// take all the lines from intFile into middle
-				processArray(m_arrCurrentCode[intFile - 1], function(objLine_a)
+				processArray(m_arrFiles[intFile - 1].code, function(objLine_a)
 				{
 					if (strMiddle.length > 0)
 					{
@@ -1009,7 +1038,8 @@ function hcJS(strInput_a, strOutput_a, blnShowStartupText_a)
 					strNewCode += '\r\n';
 				}
 				strNewCode += strEnd;
-				m_arrCurrentCode[m_intCurrentFile] = unbuild(strNewCode);
+				m_arrFiles[m_intCurrentFile].code = unbuild(strNewCode);
+				m_arrFiles[m_intCurrentFile].dirty = true;
 			}
 			else
 			{
@@ -1026,7 +1056,7 @@ function hcJS(strInput_a, strOutput_a, blnShowStartupText_a)
 	
 	function cmdRenum()
 	{
-		m_arrCurrentCode[m_intCurrentFile] = unbuild(build(m_arrCurrentCode[m_intCurrentFile], false));
+		m_arrFiles[m_intCurrentFile].code = unbuild(build(m_arrFiles[m_intCurrentFile].code, false));
 		ready('cmdRenum');
 	}
 
@@ -1034,8 +1064,11 @@ function hcJS(strInput_a, strOutput_a, blnShowStartupText_a)
 	{
 		m_intFiles = 1;
 		m_intCurrentFile = 0;
-		m_arrCurrentCode = [[]];	// 1 file by default
-		m_arrFilenames = [m_NEWFILENAME];	// 1 file by default
+		m_arrFiles = [{
+			code: [],
+			filename: m_NEWFILENAME,
+			dirty: false
+		}];	// 1 file by default
 		m_arrOutput = [];
 		m_objGlobals = {};
 		m_blnRTL = false;
@@ -1072,9 +1105,10 @@ function hcJS(strInput_a, strOutput_a, blnShowStartupText_a)
 				blnImmediate = false;
 				loadProgram(strFilename, function(objResponse_a)
 				{
-					m_arrCurrentCode[m_intCurrentFile] = unbuild(objResponse_a.content);
-					m_arrFilenames[m_intCurrentFile] = strFilename;
-					strBuild = build(m_arrCurrentCode[m_intCurrentFile], false);
+					m_arrFiles[m_intCurrentFile].code = unbuild(objResponse_a.content);
+					m_arrFiles[m_intCurrentFile].filename = strFilename;
+					m_arrFiles[m_intCurrentFile].dirty = false;
+					strBuild = build(m_arrFiles[m_intCurrentFile].code, false);
 					runJS(strBuild);
 				});
 			}
@@ -1082,11 +1116,50 @@ function hcJS(strInput_a, strOutput_a, blnShowStartupText_a)
 
 		if (blnImmediate)
 		{
-			strBuild = build(m_arrCurrentCode[m_intCurrentFile], false);
+			strBuild = build(m_arrFiles[m_intCurrentFile].code, false);
 			runJS(strBuild);
 		}
 	}
 
+	function cmdSaveAll()
+	{
+		var intFile = 0;
+		var arrFiles = [];
+		
+		processArray(m_arrFiles, function(objFile_a)
+		{
+			if (objFile_a.filename !== m_NEWFILENAME)
+			{
+				arrFiles.push(intFile);
+			}
+			intFile++;
+		});
+		
+		function next()
+		{
+			if (arrFiles.length > 0)
+			{
+				var intFile = arrFiles.pop();
+
+				function saved()
+				{
+					m_arrFiles[intFile].dirty = false;
+					next();
+				}
+				
+				var strContent = build(m_arrFiles[intFile].code, true);
+				var strFilename = m_arrFiles[intFile].filename;
+				saveFile(strFilename, strContent, saved);
+			}
+			else
+			{
+				ready('cmdSaveAll');
+			}
+		}
+		
+		next();
+	}
+	
 	function cmdType(arrParams_a)
 	{
 		var blnImmediate = true;
@@ -1213,7 +1286,7 @@ function hcJS(strInput_a, strOutput_a, blnShowStartupText_a)
 
 				case 'list':
 				var strSelection = arrParams[1];
-				cmdList(m_arrCurrentCode[m_intCurrentFile], strSelection);
+				cmdList(m_arrFiles[m_intCurrentFile].code, strSelection);
 				break;
 
 				case 'ltr':
@@ -1225,7 +1298,7 @@ function hcJS(strInput_a, strOutput_a, blnShowStartupText_a)
 				break;
 				
 				case 'newfile':
-				cmdNewFile();
+				cmdNewFile(false);
 				break;
 
 				case 'paste':
@@ -1316,6 +1389,10 @@ function hcJS(strInput_a, strOutput_a, blnShowStartupText_a)
 				handleServerCommands(strInput_a, '1file', null, false, false, false, true);
 				break;
 
+				case 'saveall':		// file
+				cmdSaveAll();
+				break;
+
 				case 'save':		// file
 				handleServerCommands(strInput_a, '1file', null, false, false, false, false, true);
 				break;
@@ -1381,6 +1458,54 @@ function hcJS(strInput_a, strOutput_a, blnShowStartupText_a)
 		m_objInput.on('keypress', function(objEvent_a)
 		{
 			inputCommand_onKeyPress(objEvent_a);
+		});
+
+		m_objContainer.on('dragleave', function() 
+		{
+			m_objContainer.removeClass('dragover-highlight');
+		});
+
+		m_objContainer.on('dragover', function(objEvent_a) 
+		{
+			objEvent_a.preventDefault();
+			m_objContainer.addClass('dragover-highlight');
+		});
+
+		m_objContainer.on('drop', function(objEvent_a) 
+		{
+			var intCurrentFile = m_intCurrentFile;
+			
+			m_objContainer.removeClass('dragover-highlight');
+
+			objEvent_a.preventDefault();
+			var arrFiles = objEvent_a.originalEvent.dataTransfer.files;
+
+			var blnFirst = true;
+			processArray(arrFiles, function(objFile_a)
+			{
+				var objReader = new FileReader();
+
+				objReader.onload = function(objEvent_a) 
+				{
+					var strContent = objEvent_a.target.result;
+					if (blnFirst)
+					{
+						blnFirst = false;
+					}
+					else
+					{
+						cmdNewFile(true);
+					}
+					
+					m_arrFiles[m_intCurrentFile].code = unbuild(strContent);
+					m_arrFiles[m_intCurrentFile].filename = objFile_a.name;
+					m_arrFiles[m_intCurrentFile].dirty = true;
+					
+					m_intCurrentFile = intCurrentFile;
+				};
+
+				objReader.readAsText(objFile_a);
+			});
 		});
 	};
 }

@@ -14,6 +14,7 @@
 			.gs-Content { width: 100%; overflow:none; }
 			.rtlo { direction: rtl; unicode-bidi: bidi-override; }
 			.rtli { text-align:right; }
+			.dragover-highlight { xborder: 2px solid #007bff; background-color: grey; box-shadow: 0 0 10px rgba(0, 123, 255, 0.5); }
 			@media only screen and (max-width: 650px) { .gs-container { height: 93%; } }
 			@media only screen and (max-height: 650px) { .gs-container { height: 85%; } }
 		</style>

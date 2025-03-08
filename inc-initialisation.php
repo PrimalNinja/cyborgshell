@@ -57,6 +57,7 @@ if (strlen($g_strCurrentLanguage) == 0)
 	$g_strCurrentLanguage = "english";
 }
 
+$g_strEnvNotesFile = __DIR__ . '/notes.txt';
 $g_strEnvStartupFile = __DIR__ . '/startup.txt';
 $g_strEnvHelpIndexFile = $g_strServerHelpDir . $g_strCurrentLanguage . '/index.txt';
 

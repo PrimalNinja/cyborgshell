@@ -17,6 +17,10 @@ if ($blnContinue)
 				cmdLanguages();
 				exit;
 
+			case 'notes':
+				cmdNotes();
+				exit;
+
 			case 'startup':
 				cmdStartup();
 				exit;

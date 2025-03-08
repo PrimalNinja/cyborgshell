@@ -54,6 +54,21 @@ function cmdLanguages()
 	echo getResponseJSON($strMessage, "", [], $strContent);
 }
 
+function cmdNotes()
+{
+	global $g_strEnvNotesFile;
+	
+	if (file_exists($g_strEnvNotesFile)) 
+	{
+		$strMessage = file_get_contents($g_strEnvNotesFile);
+		echo getResponseJSON("", "", [], $strMessage);
+	} 
+	else 
+	{
+		echo getResponseJSON("", "", [], ""); // ok for no output here
+	}
+}
+
 function cmdStartup()
 {
 	global $g_strEnvStartupFile;

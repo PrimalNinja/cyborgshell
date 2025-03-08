@@ -1329,6 +1329,7 @@ function hcJS(strContainer_a, strInput_a, strOutput_a, blnShowStartupText_a)
 				cmdWidth();
 				break;
 
+				case 'notes':		// general
 				case 'startup':		// general
 				handleServerCommands(strInput_a, '1file', cbStartup);
 				break;

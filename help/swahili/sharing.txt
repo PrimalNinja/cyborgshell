@@ -1,0 +1,46 @@
+Sharing and File Space Commands  
+Hizi amri zinahusiana na kushiriki nafasi za faili na nafasi za faili ambazo una ufaccess.  
+
+grant <sharekey>  
+
+    Inashiriki nafasi yako ya faili na mtumiaji aliyeleta sharekey.  
+
+keys  
+
+    Inataja funguo zako zote. Shiriki tu funguo zako za kushiriki.  
+
+newkey <keyname>  
+
+    Inaunda sharekey mpya kwa jina la funguo lililotolewa.  
+
+revoke <sharekey>  
+
+    Inafuta ushirikiano wa nafasi yako ya faili kutoka kwa mtumiaji aliyeleta sharekey.  
+
+shares  
+
+    Inataja zote za ushirikiano uliofanywa.  
+
+Sharing Process  
+
+Mfano wa jinsi ya kushiriki nafasi za faili:  
+
+Fred  
+
+    1. Fred anataka ufikiaji wa nafasi ya Wilma.  
+    2. Fred anaunda sharekey kwa ajili ya Wilma kwa kuandika 'newkey wilma' na anatoa sharekey kwa Wilma.  
+    kumbuka: wilma katika 'newkey wilma' ni jina la utani la Fred kwa sharekey, halina uhusiano wowote na akaunti ya Wilma.  
+                                            
+Wilma  
+
+    3. Kwa kutumia sharekey aliyopewa Fred, anampa ufikiaji Fred kwa kuandika 'grant <sharekey>'.  
+
+Fred  
+
+    4. Fred sasa ana ufikiaji wa nafasi ya Wilma.  
+
+Wilma  
+
+    5. Wilma bado ana udhibiti juu ya ni nani anayeweza kushiriki naye na anaweza kufuta au kurejesha Fred kama atakavyo.  
+
+Mchakato huu wa kushiriki pia unaruhusu timu kuwa na eneo la pamoja. Hebu tufikirie Wilma kwa kweli anasimamia nafasi ya timu. Wilma anaweza kuomba sharekeys za kibinafsi kutoka kwa kila mende katika timu ili waweze kupewa au kufutwa kama inavyohitajika kwa nafasi ya timu.

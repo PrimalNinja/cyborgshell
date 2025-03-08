@@ -1,0 +1,19 @@
+Tài liệu tham khảo API
+
+Hiện tại chỉ có những điều sau:
+
+(liên quan đến gỡ lỗi)
+
+api.debugObject(<object>, [<recurseflag>]);
+
+	hiển thị đối tượng được cung cấp, nếu cờ đệ quy bị bỏ qua, nó mặc định là true.
+
+(liên quan đến màn hình)
+
+api.cls();
+
+	xóa màn hình
+
+api.print(<output>);
+
+	in một số đầu ra

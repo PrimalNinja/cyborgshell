@@ -1,0 +1,48 @@
+Comandi di Condivisione e Spazio File  
+Questi comandi riguardano la condivisione degli spazi file e gli spazi file a cui hai accesso.
+
+grant <sharekey>
+
+	Condivide il tuo spazio file con l'utente che ha fornito il sharekey.
+	
+keys
+
+	Elenca tutte le tue chiavi. Condividi solo le tue chiavi di condivisione.
+	
+newkey <keyname>
+
+	Crea un nuovo sharekey con il nome della chiave fornito.
+	
+revoke <sharekey>
+
+	Revoca la condivisione del tuo spazio file dall'utente che ha fornito il sharekey.
+	
+shares
+
+	Elenca tutte le condivisioni che hai concesso.
+
+
+Processo di Condivisione
+
+Esempio di come condividere spazi file:
+
+Fred
+
+	1. Fred desidera accedere allo spazio di Wilma.
+	2. Fred crea un sharekey per Wilma digitando 'newkey wilma' e fornisce il sharekey a Wilma.
+	note: wilma in 'newkey wilma' è l'alias di Fred per il sharekey, non ha nulla a che fare con l'account di Wilma.
+										
+
+Wilma
+
+	3. Utilizzando il sharekey fornito da Fred, concede l'accesso a Fred digitando 'grant <sharekey>'.
+
+Fred
+
+	4. Fred ora ha accesso allo spazio di Wilma.
+
+Wilma
+
+	5. Wilma ha ancora il controllo su chi sta condividendo e può revocare o ripristinare Fred come desidera.
+
+Questo processo di condivisione consente anche ai team di avere un'area condivisa. Immaginiamo che Wilma stia effettivamente gestendo lo spazio del team. Wilma può richiedere sharekey individuali a ciascun sviluppatore del team in modo che possano essere concessi o revocati secondo necessità allo spazio del team.

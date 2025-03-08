@@ -1,0 +1,46 @@
+Filkommandon  
+Dessa kommandon relaterar till filer i ditt nuvarande filutrymme.
+
+beautify <filename>
+
+	Skönhetsbehandlar en JSON-fil utan att korrupta det för närvarande inlästa programmet.
+	
+dir [<filename>] (eller cat, ls)
+
+	Listar sparade program. Filnamnet kan innehålla jokertecken * eller ?.
+	
+copy <filenamea> <filenameb> (eller cp)
+
+	Kopierar en fil från filenamea till filenameb.
+	
+del <filename> (eller delete, era)
+
+	Raderar ett program.
+	
+load <filename>
+
+	Laddar ett program.
+	
+ren <filenamea> <filenameb> (eller rename, mv)
+
+	Byter namn på en fil från filenamea till filenameb.
+	
+run <filename>
+
+	Kör ett program och ersätter det befintligt inlästa programmet.
+	
+save <filename>
+
+	Sparar ett program.
+	
+space [<spacekey> | <alias>] (eller cs, cd, chdir)
+
+	Visar ditt nuvarande utrymme eller ändrar till ett nytt.
+	
+spaces
+
+	Listar alla filutrymmen du har åtkomst till.
+
+type <filename> [[fromline]-[toline]]
+
+	Skriver ut ett program utan att korrupta det för närvarande inlästa programmet.

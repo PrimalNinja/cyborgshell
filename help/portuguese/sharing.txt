@@ -1,0 +1,46 @@
+Comandos de Compartilhamento e Espaço de Arquivos  
+Estes comandos estão relacionados ao compartilhamento de espaços de arquivos e aos espaços de arquivos aos quais você tem acesso.
+
+grant <sharekey>
+
+	Compartilha seu espaço de arquivo com o usuário que forneceu a sharekey.
+	
+keys
+
+	Lista todas as suas chaves. Compartilhe apenas suas chaves de compartilhamento.
+	
+newkey <keyname>
+
+	Criando uma nova sharekey com o nome de chave fornecido.
+	
+revoke <sharekey>
+
+	Remove o compartilhamento do seu espaço de arquivo do usuário que forneceu a sharekey.
+	
+shares
+
+	Lista todos os compartilhamentos que você concedeu.
+
+Processo de Compartilhamento
+
+Exemplo de como compartilhar espaços de arquivos:
+
+Fred
+
+	1. Fred quer acesso ao espaço de Wilma.
+	2. Fred cria uma sharekey para Wilma digitando 'newkey wilma' e fornece a sharekey a Wilma.
+	nota: wilma em 'newkey wilma' é o apelido de Fred para a sharekey, não tem nada a ver com a conta de Wilma.
+	
+Wilma
+
+	3. Usando a sharekey que Fred forneceu, concede acesso a Fred digitando 'grant <sharekey>'.
+
+Fred
+
+	4. Fred agora tem acesso ao espaço de Wilma.
+
+Wilma
+
+	5. Wilma ainda tem controle sobre com quem está compartilhando e pode revogar ou reintegrar Fred como desejar.
+
+Esse processo de compartilhamento também permite que equipes tenham uma área compartilhada. Vamos imaginar que Wilma está, na verdade, gerenciando o espaço da equipe. Wilma pode solicitar sharekeys individuais de cada desenvolvedor da equipe para que possam ser concedidas ou revogadas conforme necessário para o espaço da equipe.

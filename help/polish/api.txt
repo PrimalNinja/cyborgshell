@@ -1,0 +1,19 @@
+API Reference
+
+Na razie to tylko to:
+
+(związane z debugowaniem)
+
+api.debugObject(<object>, [<recurseflag>]);
+
+    wyświetla podany obiekt, jeśli flaga rekurencji jest pominięta, domyślnie jest ustawiona na true.
+
+(związane z ekranem)
+
+api.cls();
+
+    wyczyść ekran
+
+api.print(<output>);
+
+    wydrukuj jakieś dane wyjściowe

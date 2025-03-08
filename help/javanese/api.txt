@@ -2,6 +2,12 @@ Referensi API
 
 Saat ini hanya yang berikut ini:
 
+(berkaitan dengan debug)
+
+api.debugObject(<object>, [<recurseflag>]);
+
+	memperlihatkan objek yang diberikan, jika flag rekursif diabaikan, secara default adalah true.
+
 (berkaitan dengan layar)
 
 api.cls();

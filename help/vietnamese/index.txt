@@ -1,0 +1,55 @@
+Chào mừng bạn đến với Home Computer JS!
+
+Hướng dẫn trợ giúp này sẽ hướng dẫn bạn qua các lệnh và tính năng khác nhau có sẵn.
+
+Hãy chắc chắn đọc phần thông tin bằng cách gõ 'help about' và đọc chính sách bảo mật bằng cách gõ 'help privacy' cũng như các điều khoản & điều kiện bằng cách gõ 'help terms'. 
+(cơ bản là nếu bạn sử dụng sản phẩm này, bạn đồng ý với chính sách bảo mật cũng như các điều khoản & điều kiện)
+
+Bạn có thể đăng ký để có thể đăng nhập và lập trình các chương trình của riêng bạn và chia sẻ chúng với người khác.
+Gõ 'help account' để được trợ giúp về các lệnh đăng ký và đăng nhập cũng như một số lệnh tài khoản khác.
+
+Mục Trợ Giúp
+
+help
+
+	Hiển thị mục trợ giúp này.
+
+help general
+
+	Hiển thị trợ giúp về các lệnh chung.
+
+help editor
+
+	Hiển thị trợ giúp về các lệnh chỉnh sửa.
+
+help file
+
+	Hiển thị trợ giúp về các lệnh tệp.
+
+help account
+
+	Hiển thị trợ giúp về các lệnh tài khoản.
+
+help sharing
+
+	Hiển thị trợ giúp về các lệnh chia sẻ.
+
+help about
+
+	Hiển thị một số thông tin về sản phẩm này.
+
+help roadmap
+
+	Hiển thị một số thông tin về những gì chúng tôi dự định làm với sản phẩm này.
+
+help privacy
+
+	Hiển thị chính sách bảo mật.
+
+help terms
+
+	Hiển thị các điều khoản & điều kiện.
+
+help etiquette
+
+	Hiển thị các quy tắc về phép lịch sự cho hệ thống công cộng này.

@@ -2,6 +2,12 @@ API-Referenz
 
 Für den Moment ist es nur Folgendes:
 
+(debugbezogen)
+
+api.debugObject(<object>, [<recurseflag>]);
+
+	zeigt das bereitgestellte Objekt an; wenn das rekursive Flag weggelassen wird, ist es standardmäßig auf true gesetzt.
+
 (bildschirmbezogen)
 
 api.cls();

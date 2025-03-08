@@ -2,6 +2,12 @@ API 參考
 
 目前僅有以下內容：
 
+（調試相關）
+
+api.debugObject(<object>, [<recurseflag>]);
+
+	顯示提供的物件，如果省略遞歸標誌，則預設為 true。
+
 （螢幕相關）
 
 api.cls();

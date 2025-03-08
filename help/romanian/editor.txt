@@ -1,0 +1,50 @@
+Comenzi Editor  
+Aceste comenzi te ajută să editezi programul tău curent.
+
+beautify
+
+	Îmbunătățește JSON-ul încărcat.
+
+cls (sau clear)
+
+	Cleară ecranul.
+
+edit <linenumber> (sau ed)
+
+	Editează o linie cu editorul de linii.
+	
+file [<filenumber>]
+
+	Afișează fișierul curent pentru care se aplică comenzile editorului sau setează unul nou.
+
+filename [<filename>]
+
+	Afișează numele fișierului curent sau îl setează. Acest nume de fișier este pentru editor, nu este dat fișierelor pe care le încarci sau le salvezi, ci mai degrabă va fi setat de tine când încarci sau salvezi fișiere.
+
+files
+
+	Listă toate fișierele din editor cu numerele lor asociate.
+
+list [[fromline]-[toline]]
+
+	Listă programul. Exemple: list 30-, list -30, list 20-30, list, list 40.
+	
+new
+
+	Cleară programul curent din editorul de cod.
+
+newfile
+
+	Creează un fișier nou în editorul tău.
+
+paste <linenumber> <filenumber>
+
+	Inserează conținutul fișierului specificat în fișierul curent înainte de linia specificată. Această abilitate de a lipi îți permite să folosești multiple fragmente de cod încărcate în editor ca clipboard-uri separate și să le inserezi după cum este necesar în codul tău.
+
+renum
+
+	Reenumeră programul. Notă: JavaScript nu folosește numere de linii, dar noi le folosim în scopuri de editare.
+
+run
+
+	Execută programul curent.

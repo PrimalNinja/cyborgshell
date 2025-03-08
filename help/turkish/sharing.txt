@@ -1,0 +1,47 @@
+Paylaşım ve Dosya Alanı Komutları  
+Bu komutlar, dosya alanlarını paylaşma ve erişiminiz olan dosya alanlarıyla ilgilidir.
+
+grant <sharekey>
+
+	Dosya alanınızı, sharekey'i sağlayan kullanıcıyla paylaşıyor.
+	
+keys
+
+	Tüm anahtarlarınızı listeler. Sadece paylaşım anahtarlarınızı paylaşın.
+	
+newkey <keyname>
+
+	Verilen anahtar adıyla yeni bir paylaşım anahtarı oluşturur.
+	
+revoke <sharekey>
+
+	Dosya alanınızı, sharekey'i sağlayan kullanıcıdan kaldırır.
+	
+shares
+
+	Verdiğiniz tüm paylaşımları listeler.
+
+
+Paylaşım Süreci
+
+Dosya alanlarını paylaşmanın bir örneği:
+
+Fred
+
+	1. Fred, Wilma'nın alanına erişim istiyor.  
+	2. Fred, 'newkey wilma' yazarak Wilma için bir paylaşım anahtarı oluşturur ve bu paylaşım anahtarını Wilma'ya verir.  
+	not: 'newkey wilma' içindeki wilma, Fred'in paylaşım anahtarı için takma adıdır, Wilma'nın hesabıyla hiçbir ilgisi yoktur.  
+										  
+Wilma
+
+	3. Fred'in sağladığı paylaşım anahtarını kullanarak, 'grant <sharekey>' yazarak Fred'e erişim izni verir.
+
+Fred
+
+	4. Fred artık Wilma'nın alanına erişime sahip.
+
+Wilma
+
+	5. Wilma, kiminle paylaştığı üzerinde hala kontrol sahibidir ve istediği gibi Fred'in erişimini iptal edebilir veya yeniden verebilir.
+
+Bu paylaşım süreci, ekiplerin de ortak bir alana sahip olmasına olanak tanır. Farz edelim ki Wilma aslında ekip alanını yönetiyor. Wilma, ekipteki her geliştiriciden bireysel paylaşım anahtarları talep edebilir, böylece ekip alanına gerekli olduğunda verilip iptal edilebilir.

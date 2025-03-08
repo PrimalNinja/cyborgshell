@@ -1,0 +1,25 @@
+Termeni și condiții
+
+Limitări
+
+Prin utilizarea acestui sistem, ești de acord să nu-l folosești pentru a afecta negativ, compromite sau exploata alte sisteme, rețele sau servicii care nu fac parte din acest mediu.
+
+Prin utilizarea acestui sistem, ești de asemenea de acord să urmezi regulile de etichetă prezentate în 'help etiquette'.
+
+Testează-ne limitele
+
+Ești liber să folosești acest sistem așa cum consideri de cuviință. De fapt, te încurajăm să încerci să împingi sistemul la limitele sale. Încearcă să hackuiești, să spargi sau să oprești sistemul - vrem să vedem de ce ești capabil!
+
+Prin utilizarea acestui sistem, recunoști că:
+
+- Nu garantăm securitatea sau integritatea sistemului
+- Nu garantăm intimitatea sau confidențialitatea oricăror informații partajate sau stocate pe sistem
+- Ești responsabil pentru propriile acțiuni pe sistem
+
+Cookies
+
+Dacă nu te autentifici, nu stocăm cookies pe computerul tău. Dacă te autentifici, stocăm, dar doar pentru a-ți permite să rămâi autentificat până când te deconectezi din nou.
+
+Securitate
+
+Parolele contului tău nu sunt stocate ca text simplu pe server. Urmăm cele mai bune practici și parola ta nu este cunoscută nici nouă - nu este o parolă decriptabilă.

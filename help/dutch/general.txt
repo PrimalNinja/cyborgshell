@@ -1,0 +1,18 @@
+Algemene Commando's  
+Deze commando's bieden algemene informatie en controle.  
+
+language [<language>]  
+
+    Toont je huidige taal of stelt een nieuwe in.  
+
+languages  
+
+    Lijst beschikbare menselijke talen waarvoor je het systeem kunt gebruiken.  
+
+reset  
+
+    Reset de omgeving en verliest alle code die momenteel in de code-editor staat.  
+
+startup  
+
+    Toont de opstarttekst.  

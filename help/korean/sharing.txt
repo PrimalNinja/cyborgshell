@@ -1,0 +1,42 @@
+공유 및 파일 공간 명령어  
+이 명령어는 파일 공간 공유 및 접근 가능한 파일 공간과 관련이 있습니다.  
+
+grant <sharekey> 
+ 
+	사용자가 제공한 sharekey로 파일 공간을 공유합니다.  
+
+keys  
+
+	모든 키를 나열합니다. 공유 키만 공유하세요.  
+
+newkey <keyname> 
+ 
+	주어진 키 이름으로 새 sharekey를 생성합니다.  
+
+revoke <sharekey> 
+ 
+	사용자가 제공한 sharekey로부터 파일 공간의 공유를 해제합니다.  
+
+shares  
+
+	자신이 부여한 모든 공유를 나열합니다.  
+
+공유 프로세스  
+
+파일 공간을 공유하는 방법의 예:  
+
+Fred  
+	1. Fred는 Wilma의 공간에 접근하고 싶어합니다.  
+	2. Fred는 'newkey wilma'를 입력하여 Wilma를 위한 sharekey를 생성하고, 해당 sharekey를 Wilma에게 제공합니다.  
+	노트: 'newkey wilma'의 wilma는 Fred의 sharekey에 대한 별칭이며, Wilma의 계정과는 관련이 없습니다.  
+
+Wilma  
+	3. Fred가 제공한 sharekey를 사용하여 'grant <sharekey>'를 입력하여 Fred에게 접근 권한을 부여합니다.  
+
+Fred  
+	4. 이제 Fred는 Wilma의 공간에 접근할 수 있습니다.  
+
+Wilma  
+	5. Wilma는 여전히 누구와 공유할지에 대한 통제권을 가지고 있으며, 원할 경우 Fred의 권한을 해제하거나 복원할 수 있습니다.  
+
+이 공유 프로세스는 팀이 공유 영역을 가질 수 있도록 합니다. Wilma가 실제로 팀 공간을 관리하고 있다고 상상해 보세요. Wilma는 팀의 각 개발자로부터 개별 sharekey를 요청할 수 있으며, 이를 통해 팀 공간에 필요한 경우 권한을 부여하거나 해제할 수 있습니다.  

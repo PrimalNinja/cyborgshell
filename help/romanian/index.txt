@@ -1,0 +1,55 @@
+Bine ați venit la Home Computer JS!
+
+Acest ghid de ajutor vă va ghida prin diferitele comenzi și funcții disponibile.
+
+Asigurați-vă că citiți informațiile despre produs tastând 'help about' și citiți politica de confidențialitate tastând 'help privacy', precum și termenii și condițiile tastând 'help terms'.
+(practic, dacă folosiți acest produs, acceptați politica de confidențialitate, precum și termenii și condițiile)
+
+Puteți să vă înregistrați pentru a putea să vă conectați și să vă programați propriile programe și să le împărtășiți cu alții.
+Tastați 'help account' pentru ajutor cu comenzile de înregistrare și conectare, precum și cu alte comenzi legate de cont.
+
+Index de ajutor
+
+help
+
+	Afișează acest index de ajutor.
+
+help general
+
+	Afișează ajutor pentru comenzile generale.
+	
+help editor
+
+	Afișează ajutor pentru comenzile editorului.
+	
+help file
+
+	Afișează ajutor pentru comenzile de fișiere.
+	
+help account
+
+	Afișează ajutor pentru comenzile contului.
+	
+help sharing
+
+	Afișează ajutor pentru comenzile de partajare.
+
+help about
+
+	Afișează informații despre acest produs.
+	
+help roadmap
+
+	Afișează informații despre ceea ce plănuim să facem cu acest produs.
+	
+help privacy
+
+	Afișează politica de confidențialitate.
+
+help terms
+
+	Afișează termenii și condițiile.
+
+help etiquette
+
+	Afișează regulile de etichetă pentru acest sistem public.

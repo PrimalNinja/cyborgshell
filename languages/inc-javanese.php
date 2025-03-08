@@ -2,9 +2,12 @@
 
 // actions
 define("ACTION_INVALIDATE", "invalidate");
+define("ACTION_LTR", "ltr");
+define("ACTION_RTL", "rtl");
 
 // messages
 define("MSG_ABOUTUPDATED", "Tentang telah diperbarui.");
+define("MSG_BLOCKEDWORDFOUND", "Kata yang diblokir ditemukan.");
 define("MSG_DEVICEKEYSNONE", "kunci perangkat: tidak ada");
 define("MSG_FILEBEAUTIFIED", "File telah diperindah.");
 define("MSG_FILECOPIED", "File telah disalin.");

@@ -1,0 +1,25 @@
+Hoja de ruta
+
+Aquí hay una visión general de algunas características futuras que planeamos agregar a este producto, manteniendo la simplicidad como el objetivo principal. No necesariamente en el orden en que estarán disponibles:
+
+- La capacidad de crear paquetes, desplegar paquetes, compartir paquetes ya sea públicamente o a acciones nominadas.
+
+- Adiciones a los comandos de archivos para facilitar la copia y el movimiento de archivos entre espacios y paquetes.
+
+- Algunas funciones de gestión de dispositivos y claves (eliminándolos).
+
+- Control de versiones. La capacidad de listar versiones, cargar versiones anteriores, retroceder a versiones anteriores.
+
+- La capacidad de desarrollar y mejorar este producto utilizando el mismo.
+
+- Algunas facilidades de IA, no solo integración de LLM, sino quizás integración con nuestro producto dAIbolical.
+
+- Desarrollo continuo de API para que no tengas que hacer todo desde cero.
+
+- Ejecución automática de un programa al iniciar sesión, con la opción de omitir esto si algo sale mal.
+
+- Soporte para 'sabores' de código fuente para que puedas trabajar con diferentes tipos de archivos de manera inteligente, como editar tus archivos binarios con el editor de líneas.
+
+- Más herramientas para hacer que la enseñanza del desarrollo de software sea tan simple como lo fue en los años 80.
+
+- Algunas otras sorpresas.

@@ -1,0 +1,19 @@
+Referință API
+
+Pentru moment, este doar următorul:
+
+(legat de debug)
+
+api.debugObject(<object>, [<recurseflag>]);
+
+	afisează obiectul furnizat; dacă flag-ul recursiv este omis, se presupune că este adevărat.
+
+(legat de ecran)
+
+api.cls();
+
+	șterge ecranul
+
+api.print(<output>);
+
+	afișează un anumit output

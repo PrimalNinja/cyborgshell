@@ -1,0 +1,25 @@
+Roadmap
+
+Hapa kuna muonekano wa baadhi ya vipengele vinavyokuja ambavyo tunapanga kuongezea bidhaa hii huku tukilenga urahisi kama lengo kuu. Si lazima katika mpangilio ambao vitapatikana:
+
+	Wezo wa kuunda pakiti, kupeleka pakiti, kushiriki pakiti ama hadharani au kwa sehemu zilizoteuliwa.
+	
+	Nyongeza kwa amri za faili ili kuwezesha kunakili na kuhamasisha faili kati ya maeneo na pakiti.
+	
+	Funguo na usimamizi wa vifaa (kuvifuta).
+	
+	Usimamizi wa toleo. Uwezo wa kuorodhesha matoleo, kupakia matoleo ya zamani, kurudi kwenye matoleo ya zamani.
+	
+	Uwezo wa kuendeleza na kuboresha bidhaa hii kwa kutumia yenyewe.
+	
+	Vifaa vya AI, si tu ushirikiano wa LLM bali labda ushirikiano na bidhaa yetu ya dAIbolical.
+	
+	Maendeleo ya API yanayoendelea ili usijazie kila kitu kutoka mwanzo.
+	
+	Utekelezaji wa kiotomatiki wa programu wakati wa kuingia, na chaguo la kupita hii ikiwa kitu hakitakwenda sawa.
+	
+	Usaidizi wa 'ladha' ya msimbo wa chanzo ili uweze kufanya kazi na aina tofauti za faili kwa njia ya akili, kama vile kuhariri faili zako za binary kwa mhariri wa mistari.
+	
+	Zana zaidi za kufanya kufundisha maendeleo ya programu kuwa rahisi kama ilivyokuwa katika miaka ya 80.
+	
+	Vitu vingine vya kushangaza.

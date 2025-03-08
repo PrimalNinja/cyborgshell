@@ -1,0 +1,55 @@
+Comenzi pentru Cont
+
+Aceste comenzi se referă la contul tău și la accesul la cont.
+
+about [<message>]
+
+	Afișează mesajul tău despre sau setează unul nou.
+
+admins [<alias>]
+
+	Listează toți utilizatorii administratori ai sistemului. Aliasul poate conține caractere wildcard * sau ?.
+
+alias [<alias>]
+
+	Afișează aliasul tău sau setează unul nou.
+
+device <devicekey> <alias>
+
+	Atribuie un nou alias dispozitivului tău.
+
+devices
+
+	Listează dispozitivele tale.
+
+login <username> <password>
+
+	Te autentifică pe dispozitivul curent.
+
+logout
+
+	Te deconectează de pe dispozitivul curent.
+
+offline
+
+	Te marchează ca offline pentru ceilalți utilizatori, acesta este setarea implicită pentru noile înregistrări.
+
+online
+
+	Te marchează ca online pentru ceilalți utilizatori, rămâi online până când te schimbi în offline.
+
+password <oldpassword> <newpassword> (sau chpwd)
+
+	Îți schimbă parola.
+
+register <username> <password> [<alias>]
+
+	Creează un nou cont de utilizator. Notă: Aceasta nu te autentifică în contul nou creat.
+
+username [<username>]
+
+	Afișează numele tău de utilizator sau setează unul nou.
+
+users [<alias>]
+
+	Listează toți utilizatorii sistemului. Aliasul poate conține caractere wildcard * sau ?.

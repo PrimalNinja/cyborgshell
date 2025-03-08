@@ -1,0 +1,18 @@
+Amri za Kawaida  
+Amri hizi zinatoa taarifa za jumla na udhibiti.  
+
+language [<language>]  
+
+    Inaonyesha lugha yako ya sasa au inaweka lugha mpya.  
+
+languages  
+
+    Inataja lugha za kibinadamu zinazopatikana za kutumia mfumo.  
+
+reset  
+
+    Inarejesha mazingira na kupoteza msimbo wote ulio kwenye mhariri wa msimbo.  
+
+startup  
+
+    Inaonyesha maandiko ya kuanzisha.  

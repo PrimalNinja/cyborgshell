@@ -1,0 +1,27 @@
+Welkom bij Open Home Computer JS! (OHCJS)
+
+OHCJS brengt de retro charme van homecomputers naar moderne apparaten, zodat je overal en altijd kunt creëren, coderen en samenwerken. Met OHCJS kun je:
+
+- Een account aanmaken en inloggen op meerdere apparaten
+- Coderen in JavaScript, alleen of in teams
+- Je programma's opslaan in gepersonaliseerde "ruimtes"
+
+Geïnspireerd door de eenvoud van 8-bits homecomputers, heeft OHCJS als doel de directe, probleemloze ervaring van klassieke computing opnieuw te creëren. Registreer, log in en begin binnen enkele seconden met coderen!
+
+In OHCJS is je "ruimte" je eigen privé-opslaggebied, toegankelijk alleen voor jou. Je kunt ook de openbare ruimte verkennen, waar je kunt creëren, delen en experimenteren met anderen.
+
+Delen is een belangrijke functie in OHCJS. Net zoals het wisselen van floppy disks in de jaren '80, kun je je ruimte delen met anderen, en vice versa. Dit eenvoudige deelmodel maakt verschillende scenario's mogelijk:
+
+- Onderwijs: Deel ruimtes met studenten voor begeleid leren
+- Teamwerk: Samenwerken aan projecten in gedeelde teamruimtes
+- Vriendschap: Ruimtes wederzijds delen met vertrouwde vrienden
+
+Licentie
+
+Open Home Computer JS (OHCJS) [github.com/PrimalNinja/ohcjs] is uitgebracht onder de MIT-softwarelicentie, omdat "delen om te geven is."
+
+Neem contact op met PrimalNinja als je andere licentieopties wilt overwegen.
+
+Over Ons
+
+OHCJS is met trots ontwikkeld door de PrimalNinja van Cyborg Unicorn Pty Ltd.

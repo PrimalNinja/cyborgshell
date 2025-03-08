@@ -1,0 +1,46 @@
+Komendy plików  
+Te komendy odnoszą się do plików w twojej bieżącej przestrzeni plików.
+
+beautify <filename>
+
+	Upiększa plik JSON bez uszkadzania aktualnie załadowanego programu.
+	
+dir [<filename>] (lub cat, ls)
+
+	Wyświetla zapisane programy. Nazwa pliku może zawierać znaki wieloznaczne * lub ?.
+	
+copy <filenamea> <filenameb> (lub cp)
+
+	Kopiuje plik z filenamea do filenameb.
+	
+del <filename> (lub delete, era)
+
+	Usuwa program.
+	
+load <filename>
+
+	Ładuje program.
+	
+ren <filenamea> <filenameb> (lub rename, mv)
+
+	Zmienia nazwę pliku z filenamea na filenameb.
+	
+run <filename>
+
+	Uruchamia program, zastępując istniejący załadowany program.
+	
+save <filename>
+
+	Zapisać program.
+	
+space [<spacekey> | <alias>] (lub cs, cd, chdir)
+
+	Wyświetla twoją bieżącą przestrzeń lub zmienia na nową.
+	
+spaces
+
+	Wyświetla wszystkie przestrzenie plików, do których masz dostęp.
+
+type <filename> [[fromline]-[toline]]
+
+	Wypisuje program bez uszkadzania aktualnie załadowanego programu.

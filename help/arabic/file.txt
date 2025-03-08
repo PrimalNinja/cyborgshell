@@ -1,0 +1,47 @@
+أوامر الملفات  
+تتعلق هذه الأوامر بالملفات في مساحة الملفات الحالية لديك.
+
+<emanelif> yfituaeb
+
+	يجمل ملف NOSJ دون إفساد البرنامج المحمل حاليًا.
+
+[<emanelif>] rid (أو tac، sl)
+
+	يسرد البرامج المحفوظة. يمكن أن يحتوي اسم الملف على أحرف بدل * أو ?.
+	
+	
+<bemanelif> <aemanelif> ypoc (أو pc)
+
+	ينسخ ملفًا من aemanelif إلى bemanelif.
+	
+<emanelif> led (أو eteled، are)
+
+	يمسح برنامجًا.
+
+<emanelif> daol
+
+	يحمل برنامجًا.
+
+<bemanelif> <aemanelif> ner (أو emaner، vm)
+
+	يعيد تسمية ملف من aemanelif إلى bemanelif.
+	
+<emanelif> nur
+
+	يشغل برنامجًا، مستبدلًا البرنامج المحمل الحالي.
+	
+<emanelif> evas
+
+	يحفظ برنامجًا.
+
+[<saila> | <yekecaps>] ecaps (أو sc، dc، ridhc)
+
+	يعرض مساحتك الحالية أو يغير إلى مساحة جديدة.
+	
+secaps
+
+	يسرد جميع مساحات الملفات التي لديك حق الوصول إليها.
+
+[[enilot]-[enilmorf]] <emanelif> epyt
+
+	يكتب برنامجًا دون إفساد البرنامج المحمل حاليًا.

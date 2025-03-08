@@ -13,6 +13,18 @@ edit (o ed)
 
 	Nag-e-edit ng isang linya gamit ang line editor.
 
+file [<filenumber>]
+
+	Ipinapakita ang iyong kasalukuyang file kung saan naaangkop ang mga utos ng editor o nagtatakda ng bago.
+
+filename [<filename>]
+
+	Ipinapakita ang filename ng kasalukuyang file o itinatakda ito. Ang filename na ito ay para sa editor, hindi ito ibinibigay sa mga file na iyong ina-load o sine-save, kundi itinatakda ito ng iyong pag-load o pag-save ng mga file.
+
+files
+
+	Naglilista ng lahat ng file sa editor kasama ang kanilang kaukulang filenumber.
+
 list [[fromline]-[toline]]
 
 	Naglilista ng programa. Mga halimbawa: list 30-, list -30, list 20-30, list, list 40.
@@ -20,6 +32,14 @@ list [[fromline]-[toline]]
 new
 
 	Nagbubura ng kasalukuyang programa mula sa code editor.
+
+newfile
+
+	Naglikha ng bagong file sa loob ng iyong editor.
+
+paste <linenumber> <filenumber>
+
+	Ipipaste ang nilalaman ng filenumber na tinukoy sa currentfile bago ang tinukoy na linenumber. Ang kakayahang ito ng paste ay nagbibigay-daan sa iyo na gumamit ng maraming fragment ng code na na-load sa editor bilang magkakahiwalay na clipboard at ipaste ang mga ito ayon sa kinakailangan sa iyong code.
 
 renum
 

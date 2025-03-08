@@ -1,0 +1,46 @@
+Delning och Filutrymme Kommandon  
+Dessa kommandon rör delning av filutrymmen och de filutrymmen du har tillgång till.
+
+grant <sharekey>
+
+	Dela ditt filutrymme med användaren som tillhandahöll sharekey.
+
+keys
+
+	Listar alla dina nycklar. Dela endast dina delningsnycklar.
+
+newkey <keyname>
+
+	Skapar en ny sharekey med det angivna nyckelnamnet.
+
+revoke <sharekey>
+
+	Och delar ditt filutrymme från användaren som tillhandahöll sharekey.
+
+shares
+
+	Listar alla delningar du har beviljat.
+
+Delningsprocess
+
+Exempel på hur man delar filutrymmen:
+
+Fred
+
+	1. Fred vill ha tillgång till Wilmas utrymme.  
+	2. Fred skapar en sharekey för Wilma genom att skriva 'newkey wilma' och tillhandahåller sharekey till Wilma.  
+	anm: wilma i 'newkey wilma' är Freds alias för sharekey, det har inget att göra med Wilmas konto.
+
+Wilma
+
+	3. Med hjälp av sharekey som Fred har tillhandahållit, beviljar hon tillgång till Fred genom att skriva 'grant <sharekey>'.
+
+Fred
+
+	4. Fred har nu tillgång till Wilmas utrymme.
+
+Wilma
+
+	5. Wilma har fortfarande kontroll över vem hon delar med och kan återkalla eller återinföra Fred när hon önskar.
+
+Denna delningsprocess möjliggör även för team att ha ett delat område. Låt oss föreställa oss att Wilma faktiskt hanterar teamutrymmet. Wilma kan begära individuella sharekeys från varje utvecklare i teamet så att de kan beviljas eller återkallas efter behov till teamutrymmet.

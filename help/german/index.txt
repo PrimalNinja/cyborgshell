@@ -1,8 +1,9 @@
-Willkommen bei Open Home Computer JS!
+Willkommen bei Home Computer JS!
 
 Dieser Hilfeleitfaden führt Sie durch die verschiedenen verfügbaren Befehle und Funktionen.
 
-Stellen Sie sicher, dass Sie die Informationen lesen, indem Sie 'help about' eingeben.
+Stellen Sie sicher, dass Sie die Informationen lesen, indem Sie 'help about' eingeben, und die Datenschutzrichtlinie lesen, indem Sie 'help privacy' eingeben, sowie die Allgemeinen Geschäftsbedingungen, indem Sie 'help terms' eingeben. 
+(Im Grunde genommen stimmen Sie mit der Nutzung dieses Produkts der Datenschutzrichtlinie sowie den Allgemeinen Geschäftsbedingungen zu.)
 
 Sie können sich registrieren, um sich anzumelden und Ihre eigenen Programme zu programmieren und sie mit anderen zu teilen. 
 Geben Sie 'help account' ein, um Hilfe zu den Befehlen zur Registrierung und Anmeldung sowie zu einigen anderen Kontobefehlen zu erhalten.
@@ -36,3 +37,19 @@ help sharing
 help about
 
 	Zeigt einige Informationen über dieses Produkt an.
+	
+help roadmap
+
+	Zeigt einige Informationen darüber an, was wir mit diesem Produkt planen.
+	
+help privacy
+
+	Zeigt die Datenschutzrichtlinie an.
+
+help terms
+
+	Zeigt die Allgemeinen Geschäftsbedingungen an.
+
+help etiquette
+
+	Zeigt die Etikette-Regeln für dieses öffentliche System an.

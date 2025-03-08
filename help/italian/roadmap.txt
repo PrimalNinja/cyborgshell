@@ -1,0 +1,25 @@
+Roadmap
+
+Ecco una panoramica di alcune funzionalità future che intendiamo aggiungere a questo prodotto, mantenendo la semplicità come obiettivo principale. Non necessariamente nell'ordine in cui saranno disponibili:
+
+	La possibilità di creare pacchetti, distribuire pacchetti, condividere pacchetti sia pubblicamente che a condivisioni nominate.
+
+	Aggiunte ai comandi di file per facilitare la copia e lo spostamento di file tra spazi e pacchetti.
+
+	Alcune funzioni di gestione dei dispositivi e delle chiavi (eliminarli).
+
+	Controllo delle versioni. La possibilità di elencare le versioni, caricare versioni precedenti, tornare a versioni precedenti.
+
+	La possibilità di sviluppare e migliorare questo prodotto utilizzando se stesso.
+
+	Alcune funzionalità di intelligenza artificiale, non solo integrazione con LLM ma forse integrazione con il nostro prodotto dAIbolical.
+
+	Sviluppo continuo dell'API in modo che tu non debba fare tutto da zero.
+
+	Esecuzione automatica di un programma all'accesso, con opzione di bypassare questo nel caso in cui qualcosa vada storto.
+
+	Supporto per 'flavour' del codice sorgente in modo da poter lavorare in modo intelligente con diversi tipi di file, come modificare i tuoi file binari con l'editor di righe.
+
+	Più strumenti per rendere l'insegnamento dello sviluppo software semplice come era negli anni '80.
+
+	Alcune altre sorprese.

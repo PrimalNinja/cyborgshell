@@ -1,0 +1,47 @@
+Delen en Bestandsruimte Commando's  
+Deze commando's hebben betrekking op het delen van bestandsruimten en de bestandsruimten waartoe je toegang hebt.
+
+grant <sharekey>
+
+	Delen van je bestandsruimte met de gebruiker die de sharekey heeft gegeven.
+	
+keys
+
+	Lijst alle jouw sleutels. Deel alleen je share sleutels.
+	
+newkey <keyname>
+
+	Maken een nieuwe sharekey met de gegeven sleutelnaam.
+	
+revoke <sharekey>
+
+	Ontdelen van je bestandsruimte van de gebruiker die de sharekey heeft gegeven.
+	
+shares
+
+	Lijst alle shares die je hebt verleend.
+
+
+Delen Proces
+
+Voorbeeld van hoe bestandsruimten te delen:
+
+Fred
+
+	1. Fred wil toegang tot Wilma's ruimte.
+	2. Fred maakt een sharekey voor Wilma door 'newkey wilma' te typen en geeft de sharekey aan Wilma.
+	opmerking: wilma in 'newkey wilma' is Fred's alias voor de sharekey, het heeft niets te maken met Wilma's account.
+										
+Wilma
+
+	3. Met de sharekey die Fred heeft gegeven, verleent ze toegang aan Fred door 'grant <sharekey>' te typen.
+
+Fred
+
+	4. Fred heeft nu toegang tot Wilma's ruimte.
+
+Wilma
+
+	5. Wilma heeft nog steeds controle over met wie ze deelt en kan Fred naar wens intrekken of herstellen.
+
+Dit deelproces maakt het ook mogelijk voor teams om een gedeeld gebied te hebben. Laten we ons voorstellen dat Wilma eigenlijk de teamruimte beheert. Wilma kan individuele sharekeys aanvragen van elke ontwikkelaar in het team, zodat ze naar behoefte aan de teamruimte kunnen worden verleend of ingetrokken.

@@ -1,0 +1,18 @@
+Lệnh Chung  
+Những lệnh này cung cấp thông tin chung và điều khiển.
+
+language [<language>]
+
+	Hiển thị ngôn ngữ hiện tại của bạn hoặc thiết lập một ngôn ngữ mới.
+
+languages
+
+	Liệt kê các ngôn ngữ con người có sẵn để sử dụng trong hệ thống.
+
+reset
+
+	Đặt lại môi trường và mất tất cả mã hiện có trong trình chỉnh sửa mã.
+
+startup
+
+	Hiển thị văn bản khởi động.

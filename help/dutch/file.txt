@@ -1,0 +1,46 @@
+Bestand Commando's  
+Deze commando's hebben betrekking op bestanden in jouw huidige bestandsruimte.
+
+beautify <filename>
+
+	Maakt een JSON-bestand mooier zonder het momenteel geladen programma te beschadigen.
+	
+dir [<filename>] (of cat, ls)
+
+	Lijst opgeslagen programma's. Bestandsnaam kan wildcards * of ? bevatten.
+	
+copy <filenamea> <filenameb> (of cp)
+
+	Kopieert een bestand van filenamea naar filenameb.
+	
+del <filename> (of delete, era)
+
+ Verwijdert een programma.
+	
+load <filename>
+
+	Laat een programma laden.
+	
+ren <filenamea> <filenameb> (of rename, mv)
+
+	Herbenoemt een bestand van filenamea naar filenameb.
+	
+run <filename>
+
+	Voert een programma uit, waarbij het bestaande geladen programma wordt vervangen.
+	
+save <filename>
+
+	Slaat een programma op.
+	
+space [<spacekey> | <alias>] (of cs, cd, chdir)
+
+	Toont je huidige ruimte of verandert naar een nieuwe.
+	
+spaces
+
+	Lijst alle bestandsruimtes waar je toegang toe hebt.
+
+type <filename> [[fromline]-[toline]]
+
+	Typt een programma zonder het momenteel geladen programma te beschadigen.

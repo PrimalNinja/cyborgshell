@@ -13,6 +13,18 @@ edit (ou ed)
 
 	Édite une ligne avec l'éditeur de ligne.
 	
+file [<filenumber>]
+
+	Affiche votre fichier actuel pour lequel les commandes de l'éditeur s'appliquent ou en définit un nouveau.
+
+filename [<filename>]
+
+	Affiche le nom de fichier du fichier actuel ou le définit. Ce nom de fichier est pour l'éditeur, il n'est pas donné aux fichiers que vous chargez ou enregistrez, mais plutôt il sera défini par vous lors du chargement ou de l'enregistrement de fichiers.
+
+files
+
+	Liste tous les fichiers dans l'éditeur avec leur numéro de fichier associé.
+	
 list [[fromline]-[toline]]
 
 	Liste le programme. Exemples : list 30-, list -30, list 20-30, list, list 40.
@@ -20,6 +32,14 @@ list [[fromline]-[toline]]
 new
 
 	Nettoie le programme actuel de l'éditeur de code.
+
+newfile
+
+	Crée un nouveau fichier dans votre éditeur.
+
+paste <linenumber> <filenumber>
+
+	Colle le contenu du numéro de fichier spécifié dans le fichier actuel avant le numéro de ligne spécifié. Cette capacité de collage vous permet d'utiliser plusieurs fragments de code chargés dans l'éditeur comme des portées-papiers séparées et de les coller selon vos besoins dans votre code.
 
 renum
 

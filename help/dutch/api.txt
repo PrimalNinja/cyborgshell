@@ -1,0 +1,19 @@
+API Referentie
+
+Voor nu is het gewoon het volgende:
+
+(debug gerelateerd)
+
+api.debugObject(<object>, [<recurseflag>]);
+
+	geef het opgegeven object weer, als de recursieve vlag wordt weggelaten, is deze standaard op true.
+
+(screen gerelateerd)
+
+api.cls();
+
+	maak het scherm schoon
+
+api.print(<output>);
+
+	print wat output

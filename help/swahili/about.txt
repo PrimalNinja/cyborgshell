@@ -1,0 +1,27 @@
+Karibu kwenye Open Home Computer JS! (OHCJS)
+
+OHCJS inaletewa mvuto wa zamani wa kompyuta za nyumbani kwa vifaa vya kisasa, ikikuruhusu kuunda, kuandika msimbo, na kushirikiana popote, wakati wowote. Pamoja na OHCJS, unaweza:
+
+- Kuunda akaunti na kuingia kwenye vifaa vingi
+- Kuandika msimbo kwa JavaScript, peke yako au katika timu
+- Kuhifadhi programu zako katika "nukta" za kibinafsi
+
+Imeshawishiwa na urahisi wa kompyuta za nyumbani za 8-bit, OHCJS inalenga kurejesha uzoefu wa haraka na usio na usumbufu wa kompyuta za zamani. Jisajili, ingia, na anza kuandika msimbo kwa sekunde chache!
+
+Katika OHCJS, "nukta" yako ni eneo lako la faragha la kuhifadhi, linalopatikana tu kwako. Unaweza pia kuchunguza eneo la umma, ambapo unaweza kuunda, kushiriki, na kufanya majaribio na wengine.
+
+Kushiriki ni kipengele muhimu katika OHCJS. Kama vile kubadilisha diski za floppy katika miaka ya 80, unaweza kushiriki nukta yako na wengine, na kinyume chake. Mfano huu rahisi wa kushiriki unaruhusu hali mbalimbali:
+
+- Kufundisha: Shiriki nukta na wanafunzi kwa ajili ya kujifunza kwa mwongozo
+- Kazi ya Kundi: Shirikiana kwenye miradi katika nukta za timu zilizoshirikiwa
+- Urafiki: Shiriki nukta kwa pande zote na marafiki wa kuaminika
+
+Leseni
+
+Open Home Computer JS (OHCJS) [github.com/PrimalNinja/ohcjs] imetolewa chini ya leseni ya programu ya MIT, kwa sababu "kushiriki ni kujali."
+
+Wasiliana na PrimalNinja ikiwa ungependa kufikiria chaguzi nyingine za leseni.
+
+Kuhusu Sisi
+
+OHCJS inakuzwa kwa fahari na PrimalNinja wa Cyborg Unicorn Pty Ltd.

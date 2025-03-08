@@ -1,0 +1,50 @@
+Editör Komutları  
+Bu komutlar mevcut programınızı düzenlemenize yardımcı olur.
+
+beautify
+
+	Yüklenen JSON'u güzelleştirir.
+
+cls (veya clear)
+
+	Ekranı temizler.
+
+edit <linenumber> (veya ed)
+
+	Satırı satır düzenleyici ile düzenler.
+
+file [<filenumber>]
+
+	Düzenleyici komutlarının geçerli olduğu dosyanızı gösterir veya yeni bir tane ayarlar.
+
+filename [<filename>]
+
+	Mevcut dosyanın dosya adını gösterir veya ayarlar. Bu dosya adı düzenleyici içindir, yüklediğiniz veya kaydettiğiniz dosyalara verilmez, bunun yerine dosyaları yükleyerek veya kaydederek siz tarafından ayarlanır.
+
+files
+
+	Düzenleyicideki tüm dosyaları ilgili dosya numaraları ile listeler.
+
+list [[fromline]-[toline]]
+
+	Programı listeler. Örnekler: list 30-, list -30, list 20-30, list, list 40.
+
+new
+
+	Mevcut programı kod düzenleyicisinden temizler.
+
+newfile
+
+	Düzenleyiciniz içinde yeni bir dosya oluşturur.
+
+paste <linenumber> <filenumber>
+
+	Belirtilen dosya numarasının içeriğini, belirtilen satır numarasından önce mevcut dosyaya yapıştırır. Bu yapıştırma yeteneği, düzenleyiciye yüklenmiş olan birden fazla kod parçasını ayrı panolar olarak kullanmanıza ve gerektiğinde kodunuza yapıştırmanıza olanak tanır.
+
+renum
+
+	Programı yeniden numaralandırır. Not: JavaScript satır numaralarını kullanmaz, ancak düzenleme amaçları için biz kullanıyoruz.
+
+run
+
+	Mevcut programı çalıştırır.

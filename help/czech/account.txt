@@ -1,0 +1,54 @@
+Účetní příkazy  
+Tyto příkazy se týkají vašeho účtu a přístupu k účtu.  
+
+about [<message>]  
+
+	Zobrazí vaši zprávu o účtu nebo nastaví novou.  
+
+admins [<alias>]  
+
+	Vylistuje všechny administrátory systému. Alias může obsahovat zástupné znaky * nebo ?.  
+
+alias [<alias>]  
+
+	Zobrazí váš alias nebo nastaví nový.  
+
+device <devicekey> <alias>  
+
+	Dává vašemu zařízení nový alias.  
+
+devices  
+
+	Vylistuje vaše zařízení  
+
+login <username> <password>  
+
+	Přihlásí vás na aktuálním zařízení.  
+
+logout  
+
+	Odhlásí vás z aktuálního zařízení.  
+
+offline  
+
+	Označí vás jako offline pro ostatní uživatele, toto je výchozí pro nové registrace.  
+
+online  
+
+	Označí vás jako online pro ostatní uživatele, zůstanete online, dokud se sami nezměníte na offline.  
+
+password <oldpassword> <newpassword> (nebo chpwd)  
+
+	Změní vaše heslo.  
+
+register <username> <password> [<alias>]  
+
+	Vytvoří nový uživatelský účet. Poznámka: Toto vás nepřihlásí do nově vytvořeného účtu.  
+
+username [<username>]  
+
+	Zobrazí vaše uživatelské jméno nebo nastaví nové.  
+
+users [<alias>]  
+
+	Vylistuje všechny uživatele systému. Alias může obsahovat zástupné znaky * nebo ?.  

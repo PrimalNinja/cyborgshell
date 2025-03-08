@@ -1,0 +1,18 @@
+Allmänna kommandon  
+Dessa kommandon ger allmän information och kontroll.  
+
+language [<language>]  
+
+    Visar ditt nuvarande språk eller ställer in ett nytt.  
+
+languages  
+
+    Visar tillgängliga mänskliga språk som kan användas med systemet.  
+
+reset  
+
+    Återställer miljön och förlorar all kod som för närvarande finns i kodredigeraren.  
+
+startup  
+
+    Visar starttexten.  

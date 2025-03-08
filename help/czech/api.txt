@@ -1,0 +1,19 @@
+API Reference
+
+Prozatím je to jen následující:
+
+(debug related)
+
+api.debugObject(<object>, [<recurseflag>]);
+
+	zobrazí poskytnutý objekt, pokud je rekurzivní příznak vynechán, výchozí hodnota je true.
+
+(screen related)
+
+api.cls();
+
+	vyčistí obrazovku
+
+api.print(<output>);
+
+	vytiskne nějaký výstup

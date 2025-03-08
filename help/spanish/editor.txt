@@ -13,6 +13,18 @@ edit <linenumber> (o ed)
 
 	Edita una línea con el editor de líneas.
 	
+file [<filenumber>]
+
+	Muestra tu archivo actual para el cual se aplican los comandos del editor o establece uno nuevo.
+
+filename [<filename>]
+
+	Muestra el nombre del archivo actual o lo establece. Este nombre de archivo es para el editor, no se da a los archivos que cargas o guardas, sino que se establecerá al cargar o guardar archivos.
+
+files
+
+	Lista todos los archivos en el editor con su número de archivo asociado.
+	
 list [[fromline]-[toline]]
 
 	Lista el programa. Ejemplos: list 30-, list -30, list 20-30, list, list 40.
@@ -20,6 +32,14 @@ list [[fromline]-[toline]]
 new
 
 	Limpia el programa actual del editor de código.
+
+newfile
+
+	Crea un nuevo archivo dentro de tu editor.
+
+paste <linenumber> <filenumber>
+
+	Pega el contenido del número de archivo especificado en el archivo actual antes del número de línea especificado. Esta capacidad de pegar te permite usar múltiples fragmentos de código cargados en el editor como portapapeles separados y pegarlos según sea necesario en tu código.
 
 renum
 

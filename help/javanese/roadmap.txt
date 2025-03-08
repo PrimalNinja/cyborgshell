@@ -1,0 +1,25 @@
+Peta Jalan
+
+Berikut adalah gambaran beberapa fitur yang akan datang yang kami rencanakan untuk ditambahkan ke produk ini dengan menjaga kesederhanaan sebagai tujuan utama. Tidak harus dalam urutan ketersediaan:
+
+	Kemampuan untuk membuat paket, menerapkan paket, dan membagikan paket baik secara publik maupun kepada share yang ditunjuk.
+
+	Penambahan pada perintah file untuk memfasilitasi penyalinan dan pemindahan file antara ruang dan paket.
+
+	Beberapa fungsi manajemen perangkat dan kunci (menghapusnya).
+
+	Kontrol versi. Kemampuan untuk mencantumkan versi, memuat versi sebelumnya, dan kembali ke versi sebelumnya.
+
+	Kemampuan untuk mengembangkan dan meningkatkan produk ini dengan menggunakan produk itu sendiri.
+
+	Beberapa fasilitas AI, tidak hanya integrasi LLM tetapi mungkin juga integrasi dengan produk dAIbolical kami.
+
+	Pengembangan API yang berkelanjutan sehingga Anda tidak perlu melakukan semuanya dari awal.
+
+	Eksekusi otomatis program saat login, dengan opsi untuk melewati ini jika ada yang salah.
+
+	Dukungan 'flavour' kode sumber sehingga Anda dapat bekerja dengan berbagai jenis file secara cerdas, seperti mengedit file biner Anda dengan editor baris.
+
+	Lebih banyak alat untuk membuat pengajaran pengembangan perangkat lunak semudah pada tahun 80-an.
+
+	Beberapa kejutan lainnya.

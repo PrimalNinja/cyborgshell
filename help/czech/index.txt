@@ -1,0 +1,55 @@
+Vítejte v Home Computer JS!
+
+Tato příručka vám pomůže seznámit se s různými příkazy a funkcemi, které jsou k dispozici.
+
+Nezapomeňte si přečíst informace o produktu zadáním 'help about' a přečíst si zásady ochrany osobních údajů zadáním 'help privacy', stejně jako obchodní podmínky zadáním 'help terms'.
+(v podstatě, pokud používáte tento produkt, souhlasíte se zásadami ochrany osobních údajů a obchodními podmínkami)
+
+Můžete se registrovat, abyste se mohli přihlásit a programovat své vlastní programy a sdílet je s ostatními.
+Zadejte 'help account' pro pomoc s příkazy pro registraci a přihlášení, stejně jako s některými dalšími příkazy účtu.
+
+Nápovědní index
+
+help
+
+	Zobrazí tento nápovědní index.
+
+help general
+
+	Zobrazí nápovědu k obecným příkazům.
+	
+help editor
+
+	Zobrazí nápovědu k příkazům editoru.
+	
+help file
+
+	Zobrazí nápovědu k příkazům souboru.
+	
+help account
+
+	Zobrazí nápovědu k příkazům účtu.
+	
+help sharing
+
+	Zobrazí nápovědu k příkazům pro sdílení.
+
+help about
+
+	Zobrazí informace o tomto produktu.
+	
+help roadmap
+
+	Zobrazí informace o tom, co plánujeme s tímto produktem dělat.
+	
+help privacy
+
+	Zobrazí zásady ochrany osobních údajů.
+
+help terms
+
+	Zobrazí obchodní podmínky.
+
+help etiquette
+
+	Zobrazí pravidla etikety pro tento veřejný systém.

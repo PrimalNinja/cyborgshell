@@ -1,0 +1,55 @@
+Witaj w Home Computer JS!
+
+Ten przewodnik pomoże Ci zapoznać się z różnymi poleceniami i funkcjami dostępnymi w systemie.
+
+Pamiętaj, aby przeczytać informacje o produkcie, wpisując 'help about', oraz zapoznać się z polityką prywatności, wpisując 'help privacy', a także z regulaminem, wpisując 'help terms'.
+(w zasadzie, korzystając z tego produktu, zgadzasz się na politykę prywatności oraz regulamin)
+
+Możesz się zarejestrować, aby móc się zalogować, programować własne programy i dzielić się nimi z innymi.
+Wpisz 'help account', aby uzyskać pomoc dotyczącą poleceń rejestracji i logowania, a także innych poleceń związanych z kontem.
+
+Indeks pomocy
+
+help
+
+	Wyświetla ten indeks pomocy.
+
+help general
+
+	Wyświetla pomoc dotyczącą poleceń ogólnych.
+	
+help editor
+
+	Wyświetla pomoc dotyczącą poleceń edytora.
+	
+help file
+
+	Wyświetla pomoc dotyczącą poleceń plików.
+	
+help account
+
+	Wyświetla pomoc dotyczącą poleceń konta.
+	
+help sharing
+
+	Wyświetla pomoc dotyczącą poleceń udostępniania.
+
+help about
+
+	Wyświetla informacje o tym produkcie.
+	
+help roadmap
+
+	Wyświetla informacje o tym, co planujemy zrobić z tym produktem.
+	
+help privacy
+
+	Wyświetla politykę prywatności.
+
+help terms
+
+	Wyświetla regulamin.
+
+help etiquette
+
+	Wyświetla zasady etykiety dla tego publicznego systemu.

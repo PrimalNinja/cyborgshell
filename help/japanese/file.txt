@@ -1,0 +1,46 @@
+ファイルコマンド  
+これらのコマンドは、現在のファイルスペース内のファイルに関連しています。
+
+beautify <filename>
+
+	現在読み込まれているプログラムを破損させることなく、JSONファイルを美化します。
+
+dir [<filename>] (または cat, ls)
+
+	保存されたプログラムをリストします。ファイル名にはワイルドカード * または ? を含めることができます。
+
+copy <filenamea> <filenameb> (または cp)
+
+	ファイルを filenamea から filenameb にコピーします。
+
+del <filename> (または delete, era)
+
+	プログラムを消去します。
+
+load <filename>
+
+	プログラムを読み込みます。
+
+ren <filenamea> <filenameb> (または rename, mv)
+
+	ファイルを filenamea から filenameb に名前変更します。
+
+run <filename>
+
+	プログラムを実行し、既存の読み込まれているプログラムを置き換えます。
+
+save <filename>
+
+	プログラムを保存します。
+
+space [<spacekey> | <alias>] (または cs, cd, chdir)
+
+	現在のスペースを表示するか、新しいスペースに変更します。
+
+spaces
+
+	アクセス可能なすべてのファイルスペースをリストします。
+
+type <filename> [[fromline]-[toline]]
+
+	現在読み込まれているプログラムを破損させることなく、プログラムを表示します。

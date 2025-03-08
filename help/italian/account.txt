@@ -1,0 +1,54 @@
+Comandi Account  
+Questi comandi riguardano il tuo account e l'accesso all'account.
+
+about [<message>]  
+
+    Mostra il tuo messaggio informativo o ne imposta uno nuovo.
+
+admins [<alias>]  
+
+    Elenca tutti gli utenti amministratori del sistema. L'alias può contenere caratteri jolly * o ?.
+
+alias [<alias>]  
+
+    Mostra il tuo alias o ne imposta uno nuovo.
+
+device <devicekey> <alias>  
+
+    Assegna un nuovo alias al tuo dispositivo.
+
+devices  
+
+    Elenca i tuoi dispositivi.
+
+login <username> <password>  
+
+    Ti accede sul dispositivo attuale.
+
+logout  
+
+    Ti disconnette dal dispositivo attuale.
+
+offline  
+
+    Ti segnala come offline per gli altri utenti, questo è il valore predefinito per le nuove registrazioni.
+
+online  
+
+    Ti segnala come online per gli altri utenti, rimani online finché non ti cambi in offline.
+
+password <oldpassword> <newpassword> (o chpwd)  
+
+    Cambia la tua password.
+
+register <username> <password> [<alias>]  
+
+    Crea un nuovo account utente. Nota: Questo non ti accede all'account appena creato.
+
+username [<username>]  
+
+    Mostra il tuo nome utente o ne imposta uno nuovo.
+
+users [<alias>]  
+
+    Elenca tutti gli utenti del sistema. L'alias può contenere caratteri jolly * o ?.

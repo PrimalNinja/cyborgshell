@@ -1,0 +1,46 @@
+פקודות קבצים  
+הפקודות הללו מתייחסות לקבצים במרחב הקבצים הנוכחי שלך.  
+
+<emanelif> yfituaeb
+
+    משפרת קובץ JSON מבלי לשחוק את התוכנית המוטענת הנוכחית.  
+
+[<emanelif>] rid (או tac, sl)  
+
+    מציגה תוכניות שמורות. שם הקובץ יכול להכיל תווים כלליים * או ?.  
+
+<bemanelif> <aemanelif> ypoc (או pc)  
+
+    מעתיקה קובץ מ- aemanelif ל- bemanelif.  
+
+<emanelif> led (או eteled, are)  
+
+    מוחקת תוכנית.  
+
+<emanelif> daol
+
+    טוענת תוכנית.  
+
+<bemanelif> <aemanelif> ner (או emaner, vm)  
+
+    משנה שם קובץ מ- aemanelif ל- bemanelif.  
+
+<emanelif> nur
+
+    מריצה תוכנית, מחליפה את התוכנית המוטענת הנוכחית.  
+
+<emanelif> evas
+
+    שומרת תוכנית.  
+
+[<saila> | <yekecaps>] ecaps (או sc, dc, ridhc)  
+
+    מציגה את המרחב הנוכחי שלך או משנה למרחב חדש.  
+
+secaps
+
+    מציגה את כל מרחבי הקבצים שיש לך גישה אליהם.  
+
+[[enilot]-[enilmorf]] <emanelif> epyt
+
+    מדפיסה תוכנית מבלי לשחוק את התוכנית המוטענת הנוכחית.  

@@ -1,0 +1,19 @@
+API 참조
+
+현재는 다음과 같습니다:
+
+(디버그 관련)
+
+api.debugObject(<object>, [<recurseflag>]);
+
+	제공된 객체를 표시합니다. 재귀 플래그가 생략되면 기본값은 true입니다.
+
+(화면 관련)
+
+api.cls();
+
+	화면을 지웁니다.
+
+api.print(<output>);
+
+	출력을 인쇄합니다.

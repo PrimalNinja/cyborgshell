@@ -1,0 +1,18 @@
+Comenzi Generale  
+Aceste comenzi oferă informații generale și control.
+
+language [<language>]
+
+	Afișează limba ta curentă sau setează una nouă.
+
+languages
+
+	Listează limbile umane disponibile pentru a folosi sistemul.
+
+reset
+
+	Resetează mediul și pierde tot codul aflat în prezent în editorul de cod.
+
+startup
+
+	Afișează textul de pornire.

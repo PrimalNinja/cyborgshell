@@ -1,0 +1,47 @@
+Comenzi pentru Partajare și Spațiu de Fișiere  
+Aceste comenzi se referă la partajarea spațiilor de fișiere și la spațiile de fișiere la care ai acces.
+
+grant <sharekey>
+
+	Partajează-ți spațiul de fișiere cu utilizatorul care a furnizat sharekey-ul.
+	
+keys
+
+	Enumeră toate cheile tale. Partajează doar cheile tale de partajare.
+	
+newkey <keyname>
+
+	Creează un nou sharekey cu numele de cheie dat.
+	
+revoke <sharekey>
+
+	Îndepărtează partajarea spațiului tău de fișiere de la utilizatorul care a furnizat sharekey-ul.
+	
+shares
+
+	Enumeră toate partajările pe care le-ai acordat.
+
+
+Procesul de Partajare
+
+Exemplu de cum să partajezi spațiile de fișiere:
+
+Fred
+
+	1. Fred dorește acces la spațiul lui Wilma.
+	2. Fred creează un sharekey pentru Wilma tastând 'newkey wilma' și îi furnizează sharekey-ul lui Wilma.
+	notă: wilma în 'newkey wilma' este aliasul lui Fred pentru sharekey, nu are nimic de-a face cu contul lui Wilma.
+										
+Wilma
+
+	3. Folosind sharekey-ul pe care Fred l-a furnizat, îi acordă acces lui Fred tastând 'grant <sharekey>'.
+
+Fred
+
+	4. Fred are acum acces la spațiul lui Wilma.
+
+Wilma
+
+	5. Wilma are în continuare control asupra cui partajează și poate revoca sau reinstaura pe Fred după cum îi place.
+
+Acest proces de partajare permite, de asemenea, echipelor să aibă o zonă comună. Să ne imaginăm că Wilma gestionează de fapt spațiul echipei. Wilma poate solicita chei de partajare individuale de la fiecare dezvoltator din echipă, astfel încât acestea să poată fi acordate sau revocate după cum este necesar pentru spațiul echipei.

@@ -13,6 +13,18 @@ edit <linenumber> （或 ed）
 
 	使用行編輯器編輯一行。
 
+file [<filenumber>]
+
+	顯示當前適用於編輯器命令的檔案，或設置一個新的檔案。
+
+filename [<filename>]
+
+	顯示當前檔案的檔案名稱或設置它。這個檔案名稱是為編輯器而設，不會給你加載或保存的檔案，而是由你加載或保存檔案時設置。
+
+files
+
+	列出編輯器中所有檔案及其相關的檔案編號。
+
 list [[fromline]-[toline]]
 
 	列出程式。範例：list 30-，list -30，list 20-30，list，list 40。
@@ -20,6 +32,14 @@ list [[fromline]-[toline]]
 new
 
 	從代碼編輯器清除當前程式。
+
+newfile
+
+	在你的編輯器中創建一個新檔案。
+
+paste <linenumber> <filenumber>
+
+	將指定檔案編號的內容在指定行號之前粘貼到當前檔案中。這個粘貼功能允許你將多個加載到編輯器中的代碼片段作為獨立的剪貼簿使用，並根據需要將它們粘貼到你的代碼中。
 
 renum
 

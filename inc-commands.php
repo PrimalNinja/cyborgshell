@@ -7,24 +7,51 @@ function cmdLanguage($strLanguage_a)
 	global $g_arrValidLanguages;
 	global $g_strCurrentLanguage;
 
-	if ((strlen($strLanguage_a) > 0) && (in_array($strLanguage_a, $g_arrValidLanguages)))
+	if ((strlen($g_strCurrentLanguage) > 0) && (in_array($strLanguage_a, $g_arrValidLanguages)))
 	{
 		$g_strCurrentLanguage = $strLanguage_a;
 		$_SESSION['server_currentlanguage'] = $g_strCurrentLanguage;
-		echo getResponseJSON($g_strCurrentLanguage, "", "", "");
+
+		$arrActions = array();
+		if (isRTLLanguage())
+		{
+			$arrActions[] = ACTION_RTL;
+		}
+		else
+		{
+			$arrActions[] = ACTION_LTR;
+		}
+		
+		$strMessage = rtlReverse($g_strCurrentLanguage);
+		$strContent = $g_strCurrentLanguage;
+		echo getResponseJSON($strMessage, "", $arrActions, $g_strCurrentLanguage);
 	}
 	else
 	{
-		echo getResponseJSON($g_strCurrentLanguage, "", "", "");
+		$strMessage = rtlReverse($g_strCurrentLanguage);
+		$strContent = $g_strCurrentLanguage;
+		echo getResponseJSON($strMessage, "", [], $g_strCurrentLanguage);
 	}
 }
 
 function cmdLanguages()
 {
 	global $g_arrValidLanguages;
+	
+	$strMessage = "";
+	$strContent = "";
+	foreach ($g_arrValidLanguages as $strLanguage) 
+	{
+		if (strlen($strMessage) > 0)
+		{
+			$strMessage .= ", ";
+		}
+		
+		$strMessage .= rtlReverse($strLanguage);
+		$strContent .= $strLanguage;
+	}
 
-	$strMessage = implode(', ', $g_arrValidLanguages);
-	echo getResponseJSON($strMessage, "", "", "");
+	echo getResponseJSON($strMessage, "", [], $strContent);
 }
 
 function cmdStartup()
@@ -34,11 +61,11 @@ function cmdStartup()
 	if (file_exists($g_strEnvStartupFile)) 
 	{
 		$strMessage = file_get_contents($g_strEnvStartupFile);
-		echo getResponseJSON($strMessage, "", "", "");
+		echo getResponseJSON("", "", [], $strMessage);
 	} 
 	else 
 	{
-		echo getResponseJSON("", "", "", ""); // ok for no output here
+		echo getResponseJSON("", "", [], ""); // ok for no output here
 	}
 }
 
@@ -50,7 +77,7 @@ function cmdBeautify($strFilename_a)
 
 	if (strlen($strFilename_a) == 0)
 	{
-		echo getResponseJSON("", ERR_PARAMETERSMISSING, "", "");
+		echo getResponseJSON("", ERR_PARAMETERSMISSING, [], "");
 	}
 	else
 	{
@@ -58,7 +85,7 @@ function cmdBeautify($strFilename_a)
 
 		if (!file_exists($strFile)) 
 		{
-			echo getResponseJSON("", ERR_FILENOTEXISTS, "", "");
+			echo getResponseJSON("", ERR_FILENOTEXISTS, [], "");
 		}
 		else
 		{
@@ -68,12 +95,12 @@ function cmdBeautify($strFilename_a)
 			
 			if (strlen($strContent) == 0)
 			{
-				echo getResponseJSON("", ERR_JSONINVALID, "", "");
+				echo getResponseJSON("", ERR_JSONINVALID, [], "");
 			}
 			else
 			{
 				file_put_contents($strFile, $strContent);
-				echo getResponseJSON(MSG_FILEBEAUTIFIED, "", "", "");
+				echo getResponseJSON(MSG_FILEBEAUTIFIED, "", [], "");
 			}
 		} 
 	}
@@ -84,6 +111,8 @@ function cmdDir($strPattern_a)
 	global $g_strCurrentDir;
 	global $g_strCurrentSpace;
 	
+	$blnRTLLanguage = isRTLLanguage();
+	
 	$arrFileList = array();
 	$strFileList = "";
 	
@@ -91,6 +120,7 @@ function cmdDir($strPattern_a)
 	$arrFiles = array_diff($arrFiles, array('..', '.'));
 
 	//get the longest filename length
+	$intLength = 0;
 	$intLongest = 0;
 
 	foreach ($arrFiles as $strFilename) 
@@ -111,13 +141,20 @@ function cmdDir($strPattern_a)
 			
 		if ($blnDisplay)
 		{
-			$intFilenameLength = strlen($strFilename);
-			if ($intFilenameLength > $intLongest)
-			{
-				$intLongest = $intFilenameLength;
-			}
-			
 			$strFilesize = filesize($g_strCurrentDir . '/' . $strFilename);
+
+			if ($blnRTLLanguage)
+			{
+				$intLength = strlen($strFilesize);
+			}
+			else
+			{
+				$intLength = strlen($strFilename);
+			}
+			if ($intLength > $intLongest)
+			{
+				$intLongest = $intLength;
+			}
 
 			$arrFileList[] = array( 
 					"filename" => $strFilename,
@@ -133,21 +170,30 @@ function cmdDir($strPattern_a)
 			$strFileList .= "\n";
 		}
 		
-		$strFilename = str_pad($objFile["filename"], $intLongest, ' ', STR_PAD_RIGHT);
+		$strFilename = $objFile["filename"];
 		$strFilesize = $objFile["filesize"];
+		if ($blnRTLLanguage)
+		{
+			$strFilesize = str_pad($strFilesize, $intLongest, ' ', STR_PAD_LEFT);
+		}
+		else
+		{
+			$strFilename = str_pad($strFilename, $intLongest, ' ', STR_PAD_LEFT);
+		}
 		
-		$strFileList .= $strFilename . ' ' . $strFilesize . ' bytes';
+		$strFileList .= rtlReverse($strFilename . ' ' . $strFilesize . ' bytes');
 	}
 	
 	if (strlen($strFileList) == 0)
 	{
-		echo getResponseJSON(MSG_NOFILESFOUND, "", "", "");
+		echo getResponseJSON(MSG_NOFILESFOUND, "", [], "");
 	}
 	else
 	{
-		$strMessage = MSG_DIRECTORYOF . $g_strCurrentSpace . ":\n\n";
+		$strMessage = MSG_DIRECTORYOF . rtlReverse($g_strCurrentSpace) . ":\n\n";
 		$strContent = $strFileList . "\n";
-		echo getResponseJSON($strMessage, "", "", $strContent);
+		//$strMessage = "\n" . $strFileList . "\n\n" . MSG_DIRECTORYOF . $g_strCurrentSpace . ":\n";
+		echo getResponseJSON($strMessage, "", [], $strContent);
 	}
 }
 
@@ -157,7 +203,7 @@ function cmdCopy($strFilenameFrom_a, $strFilenameTo_a)
 
 	if ((strlen($strFilenameFrom_a) == 0) || (strlen($strFilenameTo_a) == 0))
 	{
-		echo getResponseJSON("", ERR_PARAMETERSMISSING, "", "");
+		echo getResponseJSON("", ERR_PARAMETERSMISSING, [], "");
 	}
 	else
 	{
@@ -166,18 +212,18 @@ function cmdCopy($strFilenameFrom_a, $strFilenameTo_a)
 
 		if (!file_exists($strFileFrom)) 
 		{
-			echo getResponseJSON("", ERR_FILENOTEXISTS_SOURCE, "", "");
+			echo getResponseJSON("", ERR_FILENOTEXISTS_SOURCE, [], "");
 		}
 		else
 		{
 			if (file_exists($strFileTo)) 
 			{
-				echo getResponseJSON("", ERR_FILEEXISTS_DESTINATION, "", "");
+				echo getResponseJSON("", ERR_FILEEXISTS_DESTINATION, [], "");
 			}
 			else
 			{
 				copy($strFileFrom, $strFileTo);
-				echo getResponseJSON(MSG_FILECOPIED, "", "", "");
+				echo getResponseJSON(MSG_FILECOPIED, "", [], "");
 			}
 		}
 	}
@@ -189,7 +235,7 @@ function cmdDelete($strFilename_a)
 
 	if (strlen($strFilename_a) == 0)
 	{
-		echo getResponseJSON("", ERR_PARAMETERSMISSING, "", "");
+		echo getResponseJSON("", ERR_PARAMETERSMISSING, [], "");
 	}
 	else
 	{
@@ -197,7 +243,7 @@ function cmdDelete($strFilename_a)
 
 		if (!file_exists($strFile)) 
 		{
-			echo getResponseJSON("", ERR_FILENOTEXISTS, "", "");
+			echo getResponseJSON("", ERR_FILENOTEXISTS, [], "");
 		}
 		else
 		{
@@ -206,7 +252,7 @@ function cmdDelete($strFilename_a)
 				unlink($strFile);
 			}
 			
-			echo getResponseJSON(MSG_FILEDELETED, "", "", "");
+			echo getResponseJSON(MSG_FILEDELETED, "", [], "");
 		}
 	}
 }
@@ -230,11 +276,11 @@ function cmdHelp($strTopic_a)
 	if (file_exists($strHelpFile)) 
 	{
 		$strMessage = file_get_contents($strHelpFile);
-		echo getResponseJSON($strMessage, "", "", "");
+		echo getResponseJSON($strMessage, "", [], "");
 	} 
 	else 
 	{
-		echo getResponseJSON("", ERR_FILENOTEXISTS_HELP, "", "");
+		echo getResponseJSON("", ERR_FILENOTEXISTS_HELP, [], "");
 	}
 }
 
@@ -244,7 +290,7 @@ function cmdLoad($strFilename_a)
 
 	if (strlen($strFilename_a) == 0)
 	{
-		echo getResponseJSON("", ERR_PARAMETERSMISSING, "", "");
+		echo getResponseJSON("", ERR_PARAMETERSMISSING, [], "");
 	}
 	else
 	{
@@ -253,18 +299,18 @@ function cmdLoad($strFilename_a)
 		if (file_exists($strFile)) 
 		{
 			$strContent = file_get_contents($strFile);
-			echo getResponseJSON("", "", "", $strContent);
+			echo getResponseJSON("", "", [], $strContent);
 		} 
 		else 
 		{
 			if (!file_exists($strFile.".js")) 
 			{
-				echo getResponseJSON("", ERR_FILENOTEXISTS, "", "");
+				echo getResponseJSON("", ERR_FILENOTEXISTS, [], "");
 			}
 			else
 			{
 				$strContent = file_get_contents($strFile.".js");
-				echo getResponseJSON("", "", "", $strContent);
+				echo getResponseJSON("", "", [], $strContent);
 			} 
 		}
 	}
@@ -276,7 +322,7 @@ function cmdRename($strOldName_a, $strNewName_a)
 
 	if ((strlen($strOldName_a) == 0) || (strlen($strNewName_a) == 0))
 	{
-		echo getResponseJSON("", ERR_PARAMETERSMISSING, "", "");
+		echo getResponseJSON("", ERR_PARAMETERSMISSING, [], "");
 	}
 	else
 	{
@@ -285,18 +331,18 @@ function cmdRename($strOldName_a, $strNewName_a)
 
 		if (!file_exists($strFileOld)) 
 		{
-			echo getResponseJSON("", ERR_FILENOTEXISTS_SOURCE, "", "");
+			echo getResponseJSON("", ERR_FILENOTEXISTS_SOURCE, [], "");
 		}
 		else
 		{
 			if (file_exists($strFileNew)) 
 			{
-				echo getResponseJSON("", ERR_FILEEXISTS_DESTINATION, "", "");
+				echo getResponseJSON("", ERR_FILEEXISTS_DESTINATION, [], "");
 			}
 			else
 			{
 				rename($strFileOld, $strFileNew);
-				echo getResponseJSON(MSG_FILERENAMED, "", "", "");
+				echo getResponseJSON(MSG_FILERENAMED, "", [], "");
 			}
 		}
 	}
@@ -308,7 +354,7 @@ function cmdSave($strFilename_a, $strContent_a)
 
 	if (strlen($strFilename_a) == 0)
 	{
-		echo getResponseJSON("", ERR_PARAMETERSMISSING, "", "");
+		echo getResponseJSON("", ERR_PARAMETERSMISSING, [], "");
 	}
 	else
 	{
@@ -320,7 +366,7 @@ function cmdSave($strFilename_a, $strContent_a)
 		}
 		
 		file_put_contents($strFile, $strContent_a);
-		echo getResponseJSON(MSG_FILESAVED, "", "", "");
+		echo getResponseJSON(MSG_FILESAVED, "", [], "");
 	}
 }
 
@@ -333,52 +379,59 @@ function cmdSpace($strSpaceKey_a, $strAlias_a)
 
 	if (!validLogin())
 	{
-		echo getResponseJSON("", ERR_LOGINNOTCURRENT, "", "");
+		echo getResponseJSON("", ERR_LOGINNOTCURRENT, [], "");
 	}
 	else
 	{
 		if (!validCurrentUser())
 		{
-			echo getResponseJSON("", ERR_LOGINNOTCURRENT, ACTION_INVALIDATE, "");
+			echo getResponseJSON("", ERR_LOGINNOTCURRENT, [ACTION_INVALIDATE], "");
 		}
 		else
 		{
 			if (strlen($strSpaceKey_a) == 0)
 			{
-				echo getResponseJSON($g_strCurrentSpace, "", "", "");
+				echo getResponseJSON(rtlReverse($g_strCurrentSpace), "", [], "");
 			}
 			else if ((strlen($strSpaceKey_a) > 0) && (strlen($strAlias_a) > 0))
 			{
-				// change alias
-				$arrJSON = getCurrentUserFile();
-				
-				$blnFound = false;
-				foreach ($arrJSON["spaces"] as &$objSpace)
+				if (hasBlockedWords($strAlias_a))
 				{
-					$blnActive = $objSpace["isactive"];
-					$strKey = $objSpace["key"];
-					$strAlias = $objSpace["alias"];
-					if (($blnActive) && (strlen($strAlias) > 0))
-					{
-						if (($strKey == $strSpaceKey_a) || ($strAlias == $strSpaceKey_a))
-						{
-							$objSpace["alias"] = $strAlias_a;
-							$blnFound = true;
-							break;
-						}
-					}
-				}
-
-				if (!$blnFound)
-				{
-					echo getResponseJSON("", ERR_SPACEKEYINVALID, "", "");
+					echo getResponseJSON(MSG_BLOCKEDWORDFOUND, "", [], "");
 				}
 				else
 				{
-					saveCurrentUserFile($arrJSON);
+					// change alias
+					$arrJSON = getCurrentUserFile();
+					
+					$blnFound = false;
+					foreach ($arrJSON["spaces"] as &$objSpace)
+					{
+						$blnActive = $objSpace["isactive"];
+						$strKey = $objSpace["key"];
+						$strAlias = $objSpace["alias"];
+						if (($blnActive) && (strlen($strAlias) > 0))
+						{
+							if (($strKey == $strSpaceKey_a) || ($strAlias == $strSpaceKey_a))
+							{
+								$objSpace["alias"] = $strAlias_a;
+								$blnFound = true;
+								break;
+							}
+						}
+					}
 
-					$strMessage = str_replace("%%ALIAS%%", $strAlias_a, MSG_ALIASISNOW);
-					echo getResponseJSON($strMessage, "", "", "");
+					if (!$blnFound)
+					{
+						echo getResponseJSON("", ERR_SPACEKEYINVALID, [], "");
+					}
+					else
+					{
+						saveCurrentUserFile($arrJSON);
+
+						$strMessage = str_replace("%%ALIAS%%", rtlReverse($strAlias_a), MSG_ALIASISNOW);
+						echo getResponseJSON($strMessage, "", [], "");
+					}
 				}
 			}
 			else if ($strSpaceKey_a == HOME_SPACENAME)
@@ -390,8 +443,8 @@ function cmdSpace($strSpaceKey_a, $strAlias_a)
 				$_SESSION['server_currentspace'] = $g_strCurrentSpace;
 				$_SESSION['server_currentdir'] = $g_strCurrentDir;
 
-				$strMessage = str_replace("%%SPACENAME%%", HOME_SPACENAME, MSG_SPACENAMEISNOW);
-				echo getResponseJSON($strMessage, "", "", "");
+				$strMessage = str_replace("%%SPACENAME%%", rtlReverse(HOME_SPACENAME), MSG_SPACENAMEISNOW);
+				echo getResponseJSON($strMessage, "", [], "");
 			}
 			else if ($strSpaceKey_a == PUBLIC_SPACENAME)
 			{
@@ -402,8 +455,8 @@ function cmdSpace($strSpaceKey_a, $strAlias_a)
 				$_SESSION['server_currentspace'] = $g_strCurrentSpace;
 				$_SESSION['server_currentdir'] = $g_strCurrentDir;
 
-				$strMessage = str_replace("%%SPACENAME%%", PUBLIC_SPACENAME, MSG_SPACENAMEISNOW);
-				echo getResponseJSON($strMessage, "", "", "");
+				$strMessage = str_replace("%%SPACENAME%%", rtlReverse(PUBLIC_SPACENAME), MSG_SPACENAMEISNOW);
+				echo getResponseJSON($strMessage, "", [], "");
 			}
 			else
 			{
@@ -433,7 +486,7 @@ function cmdSpace($strSpaceKey_a, $strAlias_a)
 
 				if (!$blnFound)
 				{
-					echo getResponseJSON("", ERR_SPACEKEYINVALID, "", "");
+					echo getResponseJSON("", ERR_SPACEKEYINVALID, [], "");
 				}
 				else
 				{
@@ -443,8 +496,8 @@ function cmdSpace($strSpaceKey_a, $strAlias_a)
 					$_SESSION['server_currentspace'] = $g_strCurrentSpace;
 					$_SESSION['server_currentdir'] = $g_strCurrentDir;
 
-					$strMessage = str_replace("%%SPACENAME%%", $strFoundSpaceAlias, MSG_SPACENAMEISNOW);
-					echo getResponseJSON($strMessage, "", "", "");
+					$strMessage = str_replace("%%SPACENAME%%", rtlReverse($strFoundSpaceAlias), MSG_SPACENAMEISNOW);
+					echo getResponseJSON($strMessage, "", [], "");
 				}
 			}
 		}
@@ -455,13 +508,13 @@ function cmdSpaces()
 {
 	if (!validLogin())
 	{
-		echo getResponseJSON("", ERR_LOGINNOTCURRENT, "", "");
+		echo getResponseJSON("", ERR_LOGINNOTCURRENT, [], "");
 	}
 	else
 	{
 		if (!validCurrentUser())
 		{
-			echo getResponseJSON("", ERR_LOGINNOTCURRENT, ACTION_INVALIDATE, "");
+			echo getResponseJSON("", ERR_LOGINNOTCURRENT, [ACTION_INVALIDATE], "");
 		}
 		else
 		{
@@ -500,13 +553,13 @@ function cmdSpaces()
 						{
 							$strMessage .= "\n";
 						}
-						$strMessage .= $strSpaceKey . " " . $objSpace["alias"];
+						$strMessage .= rtlReverse($strSpaceKey) . " " . rtlReverse($objSpace["alias"]);
 					}
 				}
 				$strMessage = MSG_SPACES . "\n" . $strMessage;
 			}
 			
-			echo getResponseJSON($strMessage, "", "", "");
+			echo getResponseJSON($strMessage, "", [], "");
 		}
 	}
 }
@@ -520,13 +573,13 @@ function cmdAbout($strP1_a, $strP2_a, $strP3_a, $strR_a)
 	
 	if (!validLogin())
 	{
-		echo getResponseJSON("", ERR_LOGINNOTCURRENT, "", "");
+		echo getResponseJSON("", ERR_LOGINNOTCURRENT, [], "");
 	}
 	else
 	{
 		if (!validCurrentUser())
 		{
-			echo getResponseJSON("", ERR_LOGINNOTCURRENT, ACTION_INVALIDATE, "");
+			echo getResponseJSON("", ERR_LOGINNOTCURRENT, [ACTION_INVALIDATE], "");
 		}
 		else
 		{
@@ -534,16 +587,23 @@ function cmdAbout($strP1_a, $strP2_a, $strP3_a, $strR_a)
 			
 			if (strlen($strAbout) == 0)
 			{
-				$strAbout = $arrJSON["about"];
-				echo getResponseJSON($strAbout, "", "", "");
+				$strAbout = rtlReverse($arrJSON["about"]);
+				echo getResponseJSON($strAbout, "", [], "");
 			}
 			else
 			{
-				$arrJSON["about"] = $strAbout;
-				
-				saveCurrentUserFile($arrJSON);
-				
-				echo getResponseJSON(MSG_ABOUTUPDATED, "", "", "");
+				if (hasBlockedWords($strAbout))
+				{
+					echo getResponseJSON(MSG_BLOCKEDWORDFOUND, "", [], "");
+				}
+				else
+				{
+					$arrJSON["about"] = $strAbout;
+					
+					saveCurrentUserFile($arrJSON);
+					
+					echo getResponseJSON(MSG_ABOUTUPDATED, "", [], "");
+				}
 			}
 		}
 	}
@@ -632,17 +692,17 @@ function cmdAdmins($strPattern_a)
 		
 		$strAbout = $objUser["about"];
 		
-		$strUserList .= $strAlias . " " . $strOnline . " " . $strAbout;
+		$strUserList .= rtlReverse($strAlias) . " " . rtlReverse($strOnline) . " " . rtlReverse($strAbout);
 	}
 	
 	if (strlen($strUserList) == 0)
 	{
-		echo getResponseJSON(MSG_NOUSERSFOUND, "", "", "");
+		echo getResponseJSON(MSG_NOUSERSFOUND, "", [], "");
 	}
 	else
 	{
 		$strMessage = MSG_LISTOFADMINS . "\n\n" . $strUserList . "\n";
-		echo getResponseJSON($strMessage, "", "", "");
+		echo getResponseJSON($strMessage, "", [], "");
 	}
 }
 
@@ -650,13 +710,13 @@ function cmdAlias($strAlias_a)
 {
 	if (!validLogin())
 	{
-		echo getResponseJSON("", ERR_LOGINNOTCURRENT, "", "");
+		echo getResponseJSON("", ERR_LOGINNOTCURRENT, [], "");
 	}
 	else
 	{
 		if (!validCurrentUser())
 		{
-			echo getResponseJSON("", ERR_LOGINNOTCURRENT, ACTION_INVALIDATE, "");
+			echo getResponseJSON("", ERR_LOGINNOTCURRENT, [ACTION_INVALIDATE], "");
 		}
 		else
 		{
@@ -664,17 +724,24 @@ function cmdAlias($strAlias_a)
 
 			if (strlen($strAlias_a) == 0)
 			{
-				$strMessage = $arrJSON["alias"];
-				echo getResponseJSON($strMessage, "", "", "");
+				$strMessage = rtlReverse($arrJSON["alias"]);
+				echo getResponseJSON($strMessage, "", [], "");
 			}
 			else
 			{
-				$arrJSON["alias"] = $strAlias_a;
+				if (hasBlockedWords($strAlias_a))
+				{
+					echo getResponseJSON(MSG_BLOCKEDWORDFOUND, "", [], "");
+				}
+				else
+				{
+					$arrJSON["alias"] = $strAlias_a;
 
-				saveCurrentUserFile($arrJSON);
-				
-				$strMessage = str_replace("%%ALIAS%%", $strAlias_a, MSG_ALIASISNOW);
-				echo getResponseJSON($strMessage, "", "", "");
+					saveCurrentUserFile($arrJSON);
+					
+					$strMessage = str_replace("%%ALIAS%%", rtlReverse($strAlias_a), MSG_ALIASISNOW);
+					echo getResponseJSON($strMessage, "", [], "");
+				}
 			}
 		}
 	}
@@ -684,19 +751,19 @@ function cmdChPwd($strOldPassword_a, $strNewPassword_a)
 {
 	if (!validLogin())
 	{
-		echo getResponseJSON("", ERR_LOGINNOTCURRENT, "", "");
+		echo getResponseJSON("", ERR_LOGINNOTCURRENT, [], "");
 	}
 	else
 	{
 		if (!validCurrentUser())
 		{
-			echo getResponseJSON("", ERR_LOGINNOTCURRENT, ACTION_INVALIDATE, "");
+			echo getResponseJSON("", ERR_LOGINNOTCURRENT, [ACTION_INVALIDATE], "");
 		}
 		else
 		{
 			if ((strlen($strOldPassword_a) == 0) || (strlen($strNewPassword_a) == 0))
 			{
-				echo getResponseJSON("", ERR_PARAMETERSMISSING, "", "");
+				echo getResponseJSON("", ERR_PARAMETERSMISSING, [], "");
 			}
 			else
 			{
@@ -704,13 +771,13 @@ function cmdChPwd($strOldPassword_a, $strNewPassword_a)
 				
 				if (!password_verify($strOldPassword_a, $arrJSON["password"]))
 				{
-					echo getResponseJSON("", ERR_PASSWORDINVALIDPREVIOUS, "", "");
+					echo getResponseJSON("", ERR_PASSWORDINVALIDPREVIOUS, [], "");
 				}
 				else
 				{
 					if (strlen($strNewPassword_a) < PASSWORDMINIMUMLENGTH)
 					{
-						echo getResponseJSON("", ERR_PASSWORDINVALIDNEW, "", "");
+						echo getResponseJSON("", ERR_PASSWORDINVALIDNEW, [], "");
 					}
 					else
 					{
@@ -718,7 +785,7 @@ function cmdChPwd($strOldPassword_a, $strNewPassword_a)
 						
 						saveCurrentUserFile($arrJSON);
 						
-						echo getResponseJSON(MSG_PASSWORDCHANGED, "", "", "");
+						echo getResponseJSON(MSG_PASSWORDCHANGED, "", [], "");
 					}
 				}
 			}
@@ -730,46 +797,53 @@ function cmdDevice($strDeviceKey_a, $strAlias_a)
 {
 	if (!validLogin())
 	{
-		echo getResponseJSON("", ERR_LOGINNOTCURRENT, "", "");
+		echo getResponseJSON("", ERR_LOGINNOTCURRENT, [], "");
 	}
 	else
 	{
 		if (!validCurrentUser())
 		{
-			echo getResponseJSON("", ERR_LOGINNOTCURRENT, ACTION_INVALIDATE, "");
+			echo getResponseJSON("", ERR_LOGINNOTCURRENT, [ACTION_INVALIDATE], "");
 		}
 		else
 		{
 			if ((strlen($strDeviceKey_a) == 0) || (strlen($strAlias_a) == 0))
 			{
-				echo getResponseJSON("", ERR_PARAMETERSMISSING, "", "");
+				echo getResponseJSON("", ERR_PARAMETERSMISSING, [], "");
 			}
 			else
 			{
-				$arrJSON = getCurrentUserFile();
-				
-				$blnFound = false;
-				foreach ($arrJSON["devicekeys"] as &$objDeviceKey)
+				if (hasBlockedWords($strAlias_a))
 				{
-					$strKey = $objDeviceKey["key"];
-					if ($strKey == $strDeviceKey_a)
-					{
-						$objDeviceKey["alias"] = $strAlias_a;
-						$blnFound = true;
-						break;
-					}
-				}
-				
-				if (!$blnFound)
-				{
-					echo getResponseJSON("", ERR_DEVICEKEYINVALID, "", "");
+					echo getResponseJSON(MSG_BLOCKEDWORDFOUND, "", [], "");
 				}
 				else
 				{
-					saveCurrentUserFile($arrJSON);
+					$arrJSON = getCurrentUserFile();
+					
+					$blnFound = false;
+					foreach ($arrJSON["devicekeys"] as &$objDeviceKey)
+					{
+						$strKey = $objDeviceKey["key"];
+						if ($strKey == $strDeviceKey_a)
+						{
+							$objDeviceKey["alias"] = $strAlias_a;
+							$blnFound = true;
+							break;
+						}
+					}
+					
+					if (!$blnFound)
+					{
+						echo getResponseJSON("", ERR_DEVICEKEYINVALID, [], "");
+					}
+					else
+					{
+						saveCurrentUserFile($arrJSON);
 
-					$strMessage = str_replace("%%ALIAS%%", $strAlias_a, MSG_ALIASISNOW);
-					echo getResponseJSON($strMessage, "", "", "");
+						$strMessage = str_replace("%%ALIAS%%", rtlReverse($strAlias_a), MSG_ALIASISNOW);
+						echo getResponseJSON($strMessage, "", [], "");
+					}
 				}
 			}
 		}
@@ -782,13 +856,13 @@ function cmdDevices()
 	
 	if (!validLogin())
 	{
-		echo getResponseJSON("", ERR_LOGINNOTCURRENT, "", "");
+		echo getResponseJSON("", ERR_LOGINNOTCURRENT, [], "");
 	}
 	else
 	{
 		if (!validCurrentUser())
 		{
-			echo getResponseJSON("", ERR_LOGINNOTCURRENT, ACTION_INVALIDATE, "");
+			echo getResponseJSON("", ERR_LOGINNOTCURRENT, [ACTION_INVALIDATE], "");
 		}
 		else
 		{
@@ -828,17 +902,17 @@ function cmdDevices()
 						if ($objDeviceKey["key"] == $g_strCurrentDeviceKey) { $strCurrent = "*"; }
 
 						$strDeviceKeys .= "\n";
-						$strDeviceKeys .= $strCurrent . " " . $strDeviceKey . " " . $objDeviceKey["alias"] . "\n";
-						$strDeviceKeys .= "  Last access: " . $objDeviceKey["datetime"] . "\n";
-						$strDeviceKeys .= "  " . getBrowser($objDeviceKey["agent"]) . "\n";
-						$strDeviceKeys .= "  " . $objDeviceKey["ipaddress"] . "\n";
+						$strDeviceKeys .= rtlReverse($strCurrent) . " " . rtlReverse($strDeviceKey) . " " . rtlReverse($objDeviceKey["alias"]) . "\n";
+						$strDeviceKeys .= "  " . rtlReverse("Last access") . ": " . rtlReverse($objDeviceKey["datetime"]) . "\n";
+						$strDeviceKeys .= "  " . rtlReverse(getBrowser($objDeviceKey["agent"])) . "\n";
+						$strDeviceKeys .= "  " . rtlReverse($objDeviceKey["ipaddress"]) . "\n";
 					}
 				}
 				$strDeviceKeys = MSG_DEVICEKEYS . $strDeviceKeys;
 			}
 
 			$strMessage = $strDeviceKeys . "\n\n* " . MSG_CURRENTDEVICE;
-			echo getResponseJSON($strMessage, "", "", "");
+			echo getResponseJSON($strMessage, "", [], "");
 		}
 	}
 }
@@ -850,14 +924,14 @@ function cmdLogin($strUsername_a, $strPassword_a)
 	
 	if ((strlen($strUsername_a) == 0) || (strlen($strPassword_a) == 0))
 	{
-		echo getResponseJSON("", ERR_PARAMETERSMISSING, "", "");
+		echo getResponseJSON("", ERR_PARAMETERSMISSING, [], "");
 	}
 	else
 	{
 		$strFoundUserFilename = findUserFileByUsername($strUsername_a);
 		if (strlen($strFoundUserFilename) == 0)
 		{
-			echo getResponseJSON("", ERR_LOGININVALID, ACTION_INVALIDATE, "");
+			echo getResponseJSON("", ERR_LOGININVALID, [ACTION_INVALIDATE], "");
 		}
 		else
 		{
@@ -865,7 +939,7 @@ function cmdLogin($strUsername_a, $strPassword_a)
 			
 			if (!password_verify($strPassword_a, $arrJSON["password"]))
 			{
-				echo getResponseJSON("", ERR_LOGININVALID, ACTION_INVALIDATE, "");
+				echo getResponseJSON("", ERR_LOGININVALID, [ACTION_INVALIDATE], "");
 			}
 			else
 			{
@@ -885,7 +959,7 @@ function cmdLogin($strUsername_a, $strPassword_a)
 				$arrResponse = array(
 					"message" => "",
 					"error" => "",
-					"action" => "",
+					"actions" => [],
 					"username" => $arrJSON["username"],
 					"devicekey" => $strDeviceKey
 				);
@@ -899,20 +973,20 @@ function cmdLogin($strUsername_a, $strPassword_a)
 
 function cmdLogout()
 {
-	echo getResponseJSON("", ERR_LOGINNOTCURRENT, ACTION_INVALIDATE, "");
+	echo getResponseJSON("", ERR_LOGINNOTCURRENT, [ACTION_INVALIDATE], "");
 }
 
 function cmdOffline()
 {
 	if (!validLogin())
 	{
-		echo getResponseJSON("", ERR_LOGINNOTCURRENT, "", "");
+		echo getResponseJSON("", ERR_LOGINNOTCURRENT, [], "");
 	}
 	else
 	{
 		if (!validCurrentUser())
 		{
-			echo getResponseJSON("", ERR_LOGINNOTCURRENT, ACTION_INVALIDATE, "");
+			echo getResponseJSON("", ERR_LOGINNOTCURRENT, [ACTION_INVALIDATE], "");
 		}
 		else
 		{
@@ -922,7 +996,7 @@ function cmdOffline()
 			
 			saveCurrentUserFile($arrJSON);
 			
-			echo getResponseJSON(MSG_OFFLINE, "", "", "");
+			echo getResponseJSON(MSG_OFFLINE, "", [], "");
 		}
 	}
 }
@@ -931,13 +1005,13 @@ function cmdOnline()
 {
 	if (!validLogin())
 	{
-		echo getResponseJSON("", ERR_LOGINNOTCURRENT, "", "");
+		echo getResponseJSON("", ERR_LOGINNOTCURRENT, [], "");
 	}
 	else
 	{
 		if (!validCurrentUser())
 		{
-			echo getResponseJSON("", ERR_LOGINNOTCURRENT, ACTION_INVALIDATE, "");
+			echo getResponseJSON("", ERR_LOGINNOTCURRENT, [ACTION_INVALIDATE], "");
 		}
 		else
 		{
@@ -947,7 +1021,7 @@ function cmdOnline()
 			
 			saveCurrentUserFile($arrJSON);
 			
-			echo getResponseJSON(MSG_ONLINE, "", "", "");
+			echo getResponseJSON(MSG_ONLINE, "", [], "");
 		}
 	}
 }
@@ -958,7 +1032,7 @@ function cmdRegister($strUsername_a, $strPassword_a, $strAlias_a)
 
 	if ((strlen($strUsername_a) == 0) || (strlen($strPassword_a) == 0))
 	{
-		echo getResponseJSON("", ERR_PARAMETERSMISSING, "", "");
+		echo getResponseJSON("", ERR_PARAMETERSMISSING, [], "");
 	}
 	else
 	{
@@ -981,57 +1055,64 @@ function cmdRegister($strUsername_a, $strPassword_a, $strAlias_a)
 			$strAlias = $strUsername;
 		}
 		
-		$strFoundUserFilename = findUserFileByUsername($strUsername);
-		if (strlen($strFoundUserFilename) > 0)
+		if (hasBlockedWords($strUsername) || hasBlockedWords($strAlias))
 		{
-			echo getResponseJSON("", ERR_USERNAMEUNAVAILABLE, "", "");
+			echo getResponseJSON(MSG_BLOCKEDWORDFOUND, "", [], "");
 		}
 		else
 		{
-			$strUserKey = getGUID();
-	
-			$strFilename = $strUserKey.'.json';
-			$strUserFile = $g_strServerUsersDir . basename($strFilename); // Prevent directory traversal
-
-			if (file_exists($strUserFile)) 
+			$strFoundUserFilename = findUserFileByUsername($strUsername);
+			if (strlen($strFoundUserFilename) > 0)
 			{
-				echo getResponseJSON("", ERR_REGISTRATION, "", "");
+				echo getResponseJSON("", ERR_USERNAMEUNAVAILABLE, [], "");
 			}
 			else
 			{
-				$strDateTime = date("Y-m-d H:i:s");
-				$arrDefaultSpaces = array();
-				$arrDefaultSpaces[] = array( "key" => HOME_SPACENAME, "alias" => "", "datetime" => $strDateTime, "isactive" => true );
-				$arrDefaultSpaces[] = array( "key" => PUBLIC_SPACENAME, "alias" => "", "datetime" => $strDateTime, "isactive" => true );
-				
-				$arrJSON = array(
-					"jsonversion" => JSONVERSION,
-					"username" => $strUsername,
-					"password" => password_hash($strPassword, PASSWORD_DEFAULT),
-					"alias" => $strAlias,
-					"emailaddress" => "",
-					"about" => "",
-					"datetime" => $strDateTime,
-					"issysadmin" => false,
-					"isadmin" => false,
-					"isactive" => true,
-					"isonline" => false,
-					"userkey" => $strUserKey,
-					"devicekeys" => array(),
-					"sharekeys" => array(),
-					"shares" => array(),
-					"spaces" => $arrDefaultSpaces
-				);
+				$strUserKey = getGUID();
+		
+				$strFilename = $strUserKey.'.json';
+				$strUserFile = $g_strServerUsersDir . basename($strFilename); // Prevent directory traversal
 
-				createHomeDir($strUserKey);
-				saveUserFile($strUserKey.'.json', $arrJSON);
+				if (file_exists($strUserFile)) 
+				{
+					echo getResponseJSON("", ERR_REGISTRATION, [], "");
+				}
+				else
+				{
+					$strDateTime = date("Y-m-d H:i:s");
+					$arrDefaultSpaces = array();
+					$arrDefaultSpaces[] = array( "key" => HOME_SPACENAME, "alias" => "", "datetime" => $strDateTime, "isactive" => true );
+					$arrDefaultSpaces[] = array( "key" => PUBLIC_SPACENAME, "alias" => "", "datetime" => $strDateTime, "isactive" => true );
+					
+					$arrJSON = array(
+						"jsonversion" => JSONVERSION,
+						"username" => $strUsername,
+						"password" => password_hash($strPassword, PASSWORD_DEFAULT),
+						"alias" => $strAlias,
+						"emailaddress" => "",
+						"about" => "",
+						"datetime" => $strDateTime,
+						"issysadmin" => false,
+						"isadmin" => false,
+						"isactive" => true,
+						"isonline" => false,
+						"userkey" => $strUserKey,
+						"devicekeys" => array(),
+						"sharekeys" => array(),
+						"shares" => array(),
+						"spaces" => $arrDefaultSpaces
+					);
 
-				$strMessage = MSG_REGISTRATION;
-				$strMessage = str_replace("%%USERNAME%%", $strUsername, $strMessage);
-				$strMessage = str_replace("%%PASSWORD%%", $strPassword, $strMessage);
-				$strMessage = str_replace("%%ALIAS%%", $strAlias, $strMessage);
-				$strMessage = str_replace("%%USERKEY%%", $strUserKey, $strMessage);
-				echo getResponseJSON($strMessage, "", "", "");
+					createHomeDir($strUserKey);
+					saveUserFile($strUserKey.'.json', $arrJSON);
+
+					$strMessage = MSG_REGISTRATION;
+					$strMessage = str_replace("%%USERNAME%%", rtlReverse($strUsername), $strMessage);
+					$strMessage = str_replace("%%PASSWORD%%", rtlReverse($strPassword), $strMessage);
+					$strMessage = str_replace("%%ALIAS%%", rtlReverse($strAlias), $strMessage);
+					$strMessage = str_replace("%%USERKEY%%", rtlReverse($strUserKey), $strMessage);
+					echo getResponseJSON($strMessage, "", [], "");
+				}
 			}
 		}
 	}
@@ -1043,19 +1124,19 @@ function cmdUsername($strUsername_a)
 	
 	if (!validLogin())
 	{
-		echo getResponseJSON("", ERR_LOGINNOTCURRENT, "", "");
+		echo getResponseJSON("", ERR_LOGINNOTCURRENT, [], "");
 	}
 	else
 	{
 		if (!validCurrentUser())
 		{
-			echo getResponseJSON("", ERR_LOGINNOTCURRENT, ACTION_INVALIDATE, "");
+			echo getResponseJSON("", ERR_LOGINNOTCURRENT, [ACTION_INVALIDATE], "");
 		}
 		else
 		{
 			if (strlen($strUsername_a) == 0)
 			{
-				echo getResponseJSON($g_strUsername, "", "", "");
+				echo getResponseJSON(rtlReverse($g_strUsername), "", [], "");
 			}
 			else
 			{
@@ -1064,21 +1145,28 @@ function cmdUsername($strUsername_a)
 				$strFoundUserFilename = findUserFileByUsername($strUsername);
 				if (strlen($strFoundUserFilename) > 0)
 				{
-					echo getResponseJSON("", ERR_USERNAMEUNAVAILABLE, "", "");
+					echo getResponseJSON("", ERR_USERNAMEUNAVAILABLE, [], "");
 				}
 				else
 				{
-					$arrJSON = getCurrentUserFile();
-					
-					$arrJSON["username"] = $strUsername;
-					
-					saveCurrentUserFile($arrJSON);
-					
-					$g_strUsername = $strUsername;
-					$_SESSION['server_username'] = $g_strUsername;
+					if (hasBlockedWords($strUsername))
+					{
+						echo getResponseJSON(MSG_BLOCKEDWORDFOUND, "", [], "");
+					}
+					else
+					{
+						$arrJSON = getCurrentUserFile();
+						
+						$arrJSON["username"] = $strUsername;
+						
+						saveCurrentUserFile($arrJSON);
+						
+						$g_strUsername = $strUsername;
+						$_SESSION['server_username'] = $g_strUsername;
 
-					$strMessage = str_replace("%%USERNAME%%", $strUsername_a, MSG_USERNAMEISNOW);
-					echo getResponseJSON($strMessage, "", "", "");
+						$strMessage = str_replace("%%USERNAME%%", rtlReverse($strUsername_a), MSG_USERNAMEISNOW);
+						echo getResponseJSON($strMessage, "", [], "");
+					}
 				}
 			}
 		}
@@ -1168,17 +1256,17 @@ function cmdUsers($strPattern_a)
 		
 		$strAbout = $objUser["about"];
 		
-		$strUserList .= $strAlias . " " . $strOnline . " " . $strAbout;
+		$strUserList .= rtlReverse($strAlias) . " " . rtlReverse($strOnline) . " " . rtlReverse($strAbout);
 	}
 	
 	if (strlen($strUserList) == 0)
 	{
-		echo getResponseJSON(MSG_NOUSERSFOUND, "", "", "");
+		echo getResponseJSON(MSG_NOUSERSFOUND, "", [], "");
 	}
 	else
 	{
 		$strMessage = MSG_LISTOFUSERS . "\n\n" . $strUserList . "\n";
-		echo getResponseJSON($strMessage, "", "", "");
+		echo getResponseJSON($strMessage, "", [], "");
 	}
 }
 
@@ -1192,13 +1280,13 @@ function cmdGrant($strShareKey_a)
 {
 	if (!validLogin())
 	{
-		echo getResponseJSON("", ERR_LOGINNOTCURRENT, "", "");
+		echo getResponseJSON("", ERR_LOGINNOTCURRENT, [], "");
 	}
 	else
 	{
 		if (!validCurrentUser())
 		{
-			echo getResponseJSON("", ERR_LOGINNOTCURRENT, ACTION_INVALIDATE, "");
+			echo getResponseJSON("", ERR_LOGINNOTCURRENT, [ACTION_INVALIDATE], "");
 		}
 		else
 		{
@@ -1207,7 +1295,7 @@ function cmdGrant($strShareKey_a)
 
 			if (strlen($strFoundUserFilename) == 0) 
 			{
-				echo getResponseJSON("", ERR_SHAREKEYINVALID, "", "");
+				echo getResponseJSON("", ERR_SHAREKEYINVALID, [], "");
 			}
 			else
 			{
@@ -1249,7 +1337,7 @@ function cmdGrant($strShareKey_a)
 				if ($blnFoundSpace && $blnFoundShare)
 				{
 					// fail
-					//echo getResponseJSON("", ERR_GRANTEXISTS, "", "");
+					//echo getResponseJSON("", ERR_GRANTEXISTS, [], "");
 
 					if ($blnFoundSpace)
 					{
@@ -1261,8 +1349,8 @@ function cmdGrant($strShareKey_a)
 						saveCurrentUserFile($arrJSONOurs);
 					}
 					
-					$strMessage = str_replace("%%ALIAS%%", $strAliasTheirs, MSG_ALIASREINSTATED);
-					echo getResponseJSON($strMessage, "", "", "");
+					$strMessage = str_replace("%%ALIAS%%", rtlReverse($strAliasTheirs), MSG_ALIASREINSTATED);
+					echo getResponseJSON($strMessage, "", [], "");
 				}
 				else
 				{
@@ -1286,8 +1374,8 @@ function cmdGrant($strShareKey_a)
 					
 					saveCurrentUserFile($arrJSONOurs);
 
-					$strMessage = str_replace("%%ALIAS%%", $strAliasTheirs, MSG_ALIASGRANTED);
-					echo getResponseJSON($strMessage, "", "", "");
+					$strMessage = str_replace("%%ALIAS%%", rtlReverse($strAliasTheirs), MSG_ALIASGRANTED);
+					echo getResponseJSON($strMessage, "", [], "");
 				}
 			}
 		}
@@ -1298,13 +1386,13 @@ function cmdKeys()
 {
 	if (!validLogin())
 	{
-		echo getResponseJSON("", ERR_LOGINNOTCURRENT, "", "");
+		echo getResponseJSON("", ERR_LOGINNOTCURRENT, [], "");
 	}
 	else
 	{
 		if (!validCurrentUser())
 		{
-			echo getResponseJSON("", ERR_LOGINNOTCURRENT, ACTION_INVALIDATE, "");
+			echo getResponseJSON("", ERR_LOGINNOTCURRENT, [ACTION_INVALIDATE], "");
 		}
 		else
 		{
@@ -1340,18 +1428,18 @@ function cmdKeys()
 					if (strlen($strShareKeys) > 0)
 					{
 						$strShareKeys .= "\n";
-						$strShareKeys .= "            " . $strActive . " " . $strShareKey . " " . $objShareKey["alias"];
+						$strShareKeys .= "            " . $strActive . " " . rtlReverse($strShareKey) . " " . rtlReverse($objShareKey["alias"]);
 					}
 					else
 					{
-						$strShareKeys .= $strActive . " " . $strShareKey . " " . $objShareKey["alias"];
+						$strShareKeys .= $strActive . " " . rtlReverse($strShareKey) . " " . rtlReverse($objShareKey["alias"]);
 					}
 				}
-				$strShareKeys = "sharekeys:  " . $strShareKeys;
+				$strShareKeys = rtlReverse("sharekeys") . ":  " . $strShareKeys;
 			}
 
 			$strMessage = $strShareKeys . "\n\n* " . MSG_ACTIVEKEYS;
-			echo getResponseJSON($strMessage, "", "", "");
+			echo getResponseJSON($strMessage, "", [], "");
 		}
 	}
 }
@@ -1360,13 +1448,13 @@ function cmdNewKey($strAlias_a)
 {
 	if (strlen($strAlias_a) == 0)
 	{
-		echo getResponseJSON("", ERR_PARAMETERSMISSING, "", "");
+		echo getResponseJSON("", ERR_PARAMETERSMISSING, [], "");
 	}
 	else
 	{
 		if (!validCurrentUser())
 		{
-			echo getResponseJSON("", ERR_LOGINNOTCURRENT, ACTION_INVALIDATE, "");
+			echo getResponseJSON("", ERR_LOGINNOTCURRENT, [ACTION_INVALIDATE], "");
 		}
 		else
 		{
@@ -1383,9 +1471,9 @@ function cmdNewKey($strAlias_a)
 			
 			saveCurrentUserFile($arrJSON);
 			
-			$strMessage = str_replace("%%NEWKEY%%", $strNewKey, MSG_NEWKEYCREATED);
-			$strMessage = str_replace("%%ALIAS%%", $strAlias_a, $strMessage);
-			echo getResponseJSON($strMessage, "", "", "");
+			$strMessage = str_replace("%%NEWKEY%%", rtlReverse($strNewKey), MSG_NEWKEYCREATED);
+			$strMessage = str_replace("%%ALIAS%%", rtlReverse($strAlias_a), $strMessage);
+			echo getResponseJSON($strMessage, "", [], "");
 		}
 	}
 }
@@ -1394,13 +1482,13 @@ function cmdRevoke($strShareKey_a)
 {
 	if (!validLogin())
 	{
-		echo getResponseJSON("", ERR_LOGINNOTCURRENT, "", "");
+		echo getResponseJSON("", ERR_LOGINNOTCURRENT, [], "");
 	}
 	else
 	{
 		if (!validCurrentUser())
 		{
-			echo getResponseJSON("", ERR_LOGINNOTCURRENT, ACTION_INVALIDATE, "");
+			echo getResponseJSON("", ERR_LOGINNOTCURRENT, [ACTION_INVALIDATE], "");
 		}
 		else
 		{
@@ -1409,7 +1497,7 @@ function cmdRevoke($strShareKey_a)
 
 			if (strlen($strFoundUserFilename) == 0) 
 			{
-				echo getResponseJSON("", ERR_SHAREKEYINVALID, "", "");
+				echo getResponseJSON("", ERR_SHAREKEYINVALID, [], "");
 			}
 			else
 			{
@@ -1458,8 +1546,8 @@ function cmdRevoke($strShareKey_a)
 					saveCurrentUserFile($arrJSONOurs);
 				}
 				
-				$strMessage = str_replace("%%ALIAS%%", $strAliasTheirs, MSG_ALIASREVOKED);
-				echo getResponseJSON($strMessage, "", "", "");
+				$strMessage = str_replace("%%ALIAS%%", rtlReverse($strAliasTheirs), MSG_ALIASREVOKED);
+				echo getResponseJSON($strMessage, "", [], "");
 			}
 		}
 	}
@@ -1469,13 +1557,13 @@ function cmdShares()
 {
 	if (!validLogin())
 	{
-		echo getResponseJSON("", ERR_LOGINNOTCURRENT, "", "");
+		echo getResponseJSON("", ERR_LOGINNOTCURRENT, [], "");
 	}
 	else
 	{
 		if (!validCurrentUser())
 		{
-			echo getResponseJSON("", ERR_LOGINNOTCURRENT, ACTION_INVALIDATE, "");
+			echo getResponseJSON("", ERR_LOGINNOTCURRENT, [ACTION_INVALIDATE], "");
 		}
 		else
 		{
@@ -1510,12 +1598,12 @@ function cmdShares()
 					{
 						$strMessage .= "\n";
 					}
-					$strMessage .= $strActive . " " . $strShareKey . " " . $objShare["alias"];
+					$strMessage .= $strActive . " " . rtlReverse($strShareKey) . " " . rtlReverse($objShare["alias"]);
 				}
 				$strMessage = MSG_SHARES . "\n" . $strMessage . "\n\n* " . MSG_ACTIVESHARES;
 			}
 			
-			echo getResponseJSON($strMessage, "", "", "");
+			echo getResponseJSON($strMessage, "", [], "");
 		}
 	}
 }
@@ -1529,9 +1617,21 @@ function cmdValidateCookie($strDeviceKey_a)
 	global $g_strUserSpace;
 	global $g_strUserDir;
 	
+	$arrActions = array();
+
+	if (isRTLLanguage())
+	{
+		$arrActions[] = ACTION_RTL;
+	}
+	else
+	{
+		$arrActions[] = ACTION_LTR;
+	}
+		
 	if (strlen($strDeviceKey_a) == 0)
 	{
-		echo getResponseJSON("", ERR_LOGINNOTCURRENT, ACTION_INVALIDATE, "");
+		$arrActions[] = ACTION_INVALIDATE;
+		echo getResponseJSON("", ERR_LOGINNOTCURRENT, $arrActions, "");
 	}
 	else
 	{
@@ -1539,7 +1639,8 @@ function cmdValidateCookie($strDeviceKey_a)
 		$strFoundUserFilename = findUserFileByDeviceKey($strDeviceKey_a, true);
 		if (strlen($strFoundUserFilename) == 0) 
 		{
-			echo getResponseJSON("", ERR_LOGINNOTCURRENT, ACTION_INVALIDATE, "");
+			$arrActions[] = ACTION_INVALIDATE;
+			echo getResponseJSON("", ERR_LOGINNOTCURRENT, $arrActions, "");
 		}
 		else
 		{
@@ -1567,8 +1668,8 @@ function cmdValidateCookie($strDeviceKey_a)
 			$g_strCurrentDeviceKey = $strDeviceKey_a;
 			$_SESSION['server_currentdevicekey'] = $g_strCurrentDeviceKey;
 
-			$strMessage = str_replace("%%USERNAME%%", $g_strUsername, MSG_LOGGEDINAS);
-			echo getResponseJSON($strMessage, "", "", "");
+			$strMessage = str_replace("%%USERNAME%%", rtlReverse($g_strUsername), MSG_LOGGEDINAS);
+			echo getResponseJSON($strMessage, "", $arrActions, "");
 		}
 	}
 }

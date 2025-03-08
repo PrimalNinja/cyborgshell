@@ -2,6 +2,12 @@ API 参考
 
 目前仅包含以下内容：
 
+（调试相关）
+
+api.debugObject(<object>, [<recurseflag>]);
+
+	显示提供的对象，如果省略递归标志，则默认为 true。
+
 （屏幕相关）
 
 api.cls();

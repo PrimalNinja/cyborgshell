@@ -1,0 +1,50 @@
+Comandi dell'Editor  
+Questi comandi ti aiutano a modificare il tuo programma attuale.
+
+beautify
+
+	Abbellisce il JSON caricato.
+
+cls (o clear)
+
+	Cancella lo schermo.
+
+edit <linenumber> (o ed)
+
+	Modifica una riga con l'editor di righe.
+	
+file [<filenumber>]
+
+	Mostra il tuo file attuale per il quale si applicano i comandi dell'editor o ne imposta uno nuovo.
+
+filename [<filename>]
+
+	Mostra il nome del file corrente o lo imposta. Questo nome del file è per l'editor, non viene dato ai file che carichi o salvi, ma piuttosto sarà impostato da te caricando o salvando file.
+
+files
+
+	Elenca tutti i file nell'editor con i loro numeri di file associati.
+	
+list [[fromline]-[toline]]
+
+	Elenca il programma. Esempi: list 30-, list -30, list 20-30, list, list 40.
+	
+new
+
+	Cancella il programma attuale dall'editor di codice.
+
+newfile
+
+	Crea un nuovo file all'interno del tuo editor.
+
+paste <linenumber> <filenumber>
+
+	Incolla il contenuto del numero di file specificato nel file corrente prima del numero di riga specificato. Questa capacità di incollare ti consente di utilizzare più frammenti di codice caricati nell'editor come appunti separati e incollarli come richiesto nel tuo codice.
+
+renum
+
+	Rinomina il programma. Nota: JavaScript non utilizza numeri di riga, ma noi li usiamo per scopi di modifica.
+
+run
+
+	Esegue il programma attuale.

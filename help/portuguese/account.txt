@@ -1,0 +1,54 @@
+Comandos de Conta  
+Estes comandos estão relacionados à sua conta e ao acesso à conta.
+
+about [<mensagem>]
+
+	Mostra sua mensagem sobre ou define uma nova.
+
+admins [<alias>]
+
+	Lista todos os usuários administradores do sistema. O alias pode conter caracteres curinga * ou ?.
+
+alias [<alias>]
+
+	Mostra seu alias ou define um novo.
+
+device <devicekey> <alias>
+
+	Dá um novo alias ao seu dispositivo.
+
+devices
+
+	Lista seus dispositivos.
+
+login <username> <password>
+
+	Faz login no dispositivo atual.
+
+logout
+
+	Desloga você do dispositivo atual.
+
+offline
+
+	Marca você como offline para outros usuários, este é o padrão para novos registros.
+
+online
+
+	Marca você como online para outros usuários, você permanece online até mudar para offline.
+
+password <oldpassword> <newpassword> (ou chpwd)
+
+	Altera sua senha.
+
+register <username> <password> [<alias>]
+
+	Cria uma nova conta de usuário. Nota: Isso não faz login na conta recém-criada.
+
+username [<username>]
+
+	Mostra seu nome de usuário ou define um novo.
+
+users [<alias>]
+
+	Lista todos os usuários do sistema. O alias pode conter caracteres curinga * ou ?.

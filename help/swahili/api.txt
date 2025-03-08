@@ -1,0 +1,19 @@
+Marejeo ya API
+
+Kwa sasa ni yafuatayo tu:
+
+(kuhusiana na debug)
+
+api.debugObject(<object>, [<recurseflag>]);
+
+	onyesha kitu kilichotolewa, ikiwa bendera ya kurudi nyuma haijajumuishwa, inachukuliwa kuwa kweli.
+
+(kuhusiana na skrini)
+
+api.cls();
+
+	clear the screen
+
+api.print(<output>);
+
+	print some output

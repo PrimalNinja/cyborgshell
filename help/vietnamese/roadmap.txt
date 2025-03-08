@@ -1,0 +1,25 @@
+Lịch trình
+
+Dưới đây là cái nhìn tổng quan về một số tính năng sắp tới mà chúng tôi dự định thêm vào sản phẩm này, với mục tiêu chính là sự đơn giản. Không nhất thiết theo thứ tự mà chúng sẽ có sẵn:
+
+- Khả năng tạo gói, triển khai gói, chia sẻ gói công khai hoặc đến các chia sẻ được chỉ định.
+
+- Thêm vào các lệnh tệp để tạo điều kiện cho việc sao chép và di chuyển tệp giữa các không gian và gói.
+
+- Một số chức năng quản lý thiết bị và khóa (xóa chúng).
+
+- Kiểm soát phiên bản. Khả năng liệt kê các phiên bản, tải các phiên bản trước đó, quay lại các phiên bản trước đó.
+
+- Khả năng phát triển và nâng cao sản phẩm này bằng cách sử dụng chính nó.
+
+- Một số tiện ích AI, không chỉ tích hợp LLM mà có thể là tích hợp với sản phẩm dAIbolical của chúng tôi.
+
+- Phát triển API liên tục để bạn không phải làm mọi thứ từ đầu.
+
+- Tự động thực thi một chương trình khi đăng nhập, với tùy chọn bỏ qua điều này nếu có điều gì đó sai.
+
+- Hỗ trợ 'hương vị' mã nguồn để bạn có thể làm việc với các loại tệp khác nhau một cách thông minh, chẳng hạn như chỉnh sửa các tệp nhị phân của bạn bằng trình chỉnh sửa dòng.
+
+- Nhiều công cụ hơn để làm cho việc dạy phát triển phần mềm trở nên đơn giản như nó đã từng ở những năm 80.
+
+- Một số bất ngờ khác.

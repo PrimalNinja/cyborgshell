@@ -13,6 +13,18 @@ edit <linenumber> (或 ed)
 
     使用行编辑器编辑一行。
 
+file [<filenumber>]
+
+    显示当前适用编辑器命令的文件，或设置一个新的文件。
+
+filename [<filename>]
+
+    显示当前文件的文件名或设置它。这个文件名是为编辑器设置的，并不会被用于您加载或保存的文件，而是由您在加载或保存文件时设置。
+
+files
+
+    列出编辑器中的所有文件及其相关的文件编号。
+
 list [[fromline]-[toline]]
 
     列出程序。示例：list 30-，list -30，list 20-30，list，list 40。
@@ -20,6 +32,14 @@ list [[fromline]-[toline]]
 new
 
     清除代码编辑器中的当前程序。
+
+newfile
+
+    在您的编辑器中创建一个新文件。
+
+paste <linenumber> <filenumber>
+
+    在指定的行号之前，将指定文件编号的内容粘贴到当前文件中。这个粘贴功能允许您使用加载到编辑器中的多个代码片段作为单独的剪贴板，并根据需要将它们粘贴到您的代码中。
 
 renum
 

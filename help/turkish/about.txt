@@ -1,0 +1,27 @@
+Hoş geldiniz Open Home Computer JS! (OHCJS)
+
+OHCJS, ev bilgisayarlarının retro cazibesini modern cihazlara getirerek, her yerde, her zaman yaratma, kodlama ve iş birliği yapmanıza olanak tanır. OHCJS ile şunları yapabilirsiniz:
+
+- Bir hesap oluşturun ve birden fazla cihazda oturum açın
+- JavaScript ile, yalnız başınıza veya ekiplerle kodlayın
+- Programlarınızı kişiselleştirilmiş "alanlarda" saklayın
+
+8 bit ev bilgisayarlarının sadeliğinden ilham alan OHCJS, klasik bilgisayar deneyiminin anında açılan, zahmetsiz deneyimini yeniden yaratmayı hedefliyor. Kaydolun, oturum açın ve saniyeler içinde kodlamaya başlayın!
+
+OHCJS'de, "alanınız" sadece sizin erişebildiğiniz özel bir depolama alanıdır. Ayrıca, başkalarıyla birlikte yaratabileceğiniz, paylaşabileceğiniz ve deney yapabileceğiniz kamu alanını keşfedebilirsiniz.
+
+Paylaşım, OHCJS'deki önemli bir özelliktir. 80'lerde disket takas etmek gibi, alanınızı başkalarıyla paylaşabilir ve tersi de geçerlidir. Bu basit paylaşım modeli çeşitli senaryoları mümkün kılar:
+
+- Öğretim: Öğrencilerle rehberli öğrenim için alanları paylaşın
+- Takım Çalışması: Paylaşılan ekip alanlarında projelerde iş birliği yapın
+- Arkadaşlık: Güvendiğiniz arkadaşlarla karşılıklı alanları paylaşın
+
+Lisans
+
+Open Home Computer JS (OHCJS) [github.com/PrimalNinja/ohcjs] MIT yazılım lisansı altında yayımlanmıştır, çünkü "paylaşmak önemsemektir."
+
+Diğer lisans seçeneklerini değerlendirmek isterseniz PrimalNinja ile iletişime geçin.
+
+Hakkımızda
+
+OHCJS, Cyborg Unicorn Pty Ltd'nin PrimalNinja'sı tarafından gururla geliştirilmiştir.

@@ -1,0 +1,46 @@
+Lệnh Tệp
+Các lệnh này liên quan đến các tệp trong không gian tệp hiện tại của bạn.
+
+beautify <filename>
+
+	Làm đẹp một tệp JSON mà không làm hỏng chương trình đang được tải.
+
+dir [<filename>] (hoặc cat, ls)
+
+	Liệt kê các chương trình đã lưu. Tên tệp có thể chứa ký tự đại diện * hoặc ?.
+
+copy <filenamea> <filenameb> (hoặc cp)
+
+	Sao chép một tệp từ filenamea sang filenameb.
+
+del <filename> (hoặc delete, era)
+
+	Xóa một chương trình.
+
+load <filename>
+
+	Tải một chương trình.
+
+ren <filenamea> <filenameb> (hoặc rename, mv)
+
+	Đổi tên một tệp từ filenamea sang filenameb.
+
+run <filename>
+
+	Chạy một chương trình, thay thế chương trình hiện đang được tải.
+
+save <filename>
+
+	Lưu một chương trình.
+
+space [<spacekey> | <alias>] (hoặc cs, cd, chdir)
+
+	Hiển thị không gian hiện tại của bạn hoặc chuyển sang một không gian mới.
+
+spaces
+
+	Liệt kê tất cả các không gian tệp mà bạn có quyền truy cập.
+
+type <filename> [[fromline]-[toline]]
+
+	Gõ một chương trình mà không làm hỏng chương trình đang được tải.

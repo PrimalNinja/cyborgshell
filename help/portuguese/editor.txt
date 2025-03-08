@@ -1,0 +1,50 @@
+Comandos do Editor  
+Estes comandos ajudam você a editar seu programa atual.
+
+beautify
+
+	Embeleza o JSON carregado.
+
+cls (ou clear)
+
+	Limpa a tela.
+
+edit <linenumber> (ou ed)
+
+	Edita uma linha com o editor de linhas.
+	
+file [<filenumber>]
+
+	Mostra seu arquivo atual para o qual os comandos do editor se aplicam ou define um novo.
+
+filename [<filename>]
+
+	Mostra o nome do arquivo do arquivo atual ou o define. Este nome de arquivo é para o editor, não é dado aos arquivos que você carrega ou salva, mas sim será definido por você ao carregar ou salvar arquivos.
+
+files
+
+	Lista todos os arquivos no editor com seus números de arquivo associados.
+	
+list [[fromline]-[toline]]
+
+	Lista o programa. Exemplos: list 30-, list -30, list 20-30, list, list 40.
+	
+new
+
+	Limpa o programa atual do editor de código.
+
+newfile
+
+	Cria um novo arquivo dentro do seu editor.
+
+paste <linenumber> <filenumber>
+
+	Cola o conteúdo do número de arquivo especificado no arquivo atual antes do número da linha especificado. Essa capacidade de colar permite que você use múltiplos fragmentos de código carregados no editor como áreas de transferência separadas e os cole conforme necessário em seu código.
+
+renum
+
+	Renumera o programa. Nota: JavaScript não usa números de linha, mas nós os usamos para fins de edição.
+
+run
+
+	Executa o programa atual.

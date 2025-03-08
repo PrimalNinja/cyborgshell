@@ -1,0 +1,54 @@
+Hesap Komutları  
+Bu komutlar, hesabınız ve hesap erişiminizle ilgilidir.
+
+about [<message>]  
+
+    Hakkında mesajınızı gösterir veya yenisini ayarlar.
+
+admins [<alias>]  
+
+    Sistemin tüm admin kullanıcılarını listeler. Alias, joker karakterler * veya ? içerebilir.
+
+alias [<alias>]  
+
+    Takma adınızı gösterir veya yenisini ayarlar.
+
+device <devicekey> <alias>  
+
+    Cihazınıza yeni bir takma ad verir.
+
+devices  
+
+    Cihazlarınızı listeler.
+
+login <username> <password>  
+
+    Sizi mevcut cihazda oturum açar.
+
+logout  
+
+    Sizi mevcut cihazdan çıkış yapar.
+
+offline  
+
+    Diğer kullanıcılar için çevrimdışı olarak işaretler, bu yeni kayıtlar için varsayılandır.
+
+online  
+
+    Diğer kullanıcılar için çevrimiçi olarak işaretler, çevrimdışı olana kadar çevrimiçi kalırsınız.
+
+password <oldpassword> <newpassword> (veya chpwd)  
+
+    Parolanızı değiştirir.
+
+register <username> <password> [<alias>]  
+
+    Yeni bir kullanıcı hesabı oluşturur. Not: Bu, sizi yeni oluşturulan hesaba giriş yapmaz.
+
+username [<username>]  
+
+    Kullanıcı adınızı gösterir veya yenisini ayarlar.
+
+users [<alias>]  
+
+    Sistemin tüm kullanıcılarını listeler. Alias, joker karakterler * veya ? içerebilir.

@@ -1,0 +1,55 @@
+Benvenuto in Home Computer JS!
+
+Questa guida di aiuto ti accompagnerà attraverso i vari comandi e funzionalità disponibili.
+
+Assicurati di leggere l'informativa digitando 'help about' e di leggere l'informativa sulla privacy digitando 'help privacy', così come i termini e le condizioni digitando 'help terms'.
+(praticamente, se utilizzi questo prodotto, accetti l'informativa sulla privacy e i termini e le condizioni)
+
+Puoi registrarti in modo da poter accedere e programmare i tuoi programmi e condividerli con altri.
+Digita 'help account' per assistenza sui comandi di registrazione e accesso, così come su altri comandi relativi all'account.
+
+Indice di aiuto
+
+help
+
+	Mostra questo indice di aiuto.
+
+help general
+
+	Mostra aiuto sui comandi generali.
+	
+help editor
+
+	Mostra aiuto sui comandi dell'editor.
+	
+help file
+
+	Mostra aiuto sui comandi dei file.
+	
+help account
+
+	Mostra aiuto sui comandi dell'account.
+	
+help sharing
+
+	Mostra aiuto sui comandi di condivisione.
+
+help about
+
+	Mostra alcune informazioni su questo prodotto.
+	
+help roadmap
+
+	Mostra alcune informazioni su cosa abbiamo in programma di fare con questo prodotto.
+	
+help privacy
+
+	Mostra l'informativa sulla privacy.
+
+help terms
+
+	Mostra i termini e le condizioni.
+
+help etiquette
+
+	Mostra le regole di etichetta per questo sistema pubblico.

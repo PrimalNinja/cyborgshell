@@ -13,6 +13,18 @@ edit (atau ed)
 
 	Mengedit satu baris dengan editor baris.
 	
+file [<filenumber>]
+
+	Menampilkan file Anda saat ini yang berlaku untuk perintah editor atau mengatur yang baru.
+
+filename [<filename>]
+
+	Menampilkan nama file dari file saat ini atau mengaturnya. Nama file ini untuk editor, tidak diberikan kepada file yang Anda muat atau simpan, tetapi akan diatur oleh Anda saat memuat atau menyimpan file.
+
+files
+
+	Menampilkan semua file di editor beserta nomor filenya.
+
 list [[fromline]-[toline]]
 
 	Menampilkan program. Contoh: list 30-, list -30, list 20-30, list, list 40.
@@ -20,6 +32,14 @@ list [[fromline]-[toline]]
 new
 
 	 membersihkan program saat ini dari editor kode.
+
+newfile
+
+	Membuat file baru dalam editor Anda.
+
+paste <linenumber> <filenumber>
+
+	Menyisipkan konten dari nomor file yang ditentukan ke dalam file saat ini sebelum nomor baris yang ditentukan. Kemampuan menyisipkan ini memungkinkan Anda untuk menggunakan beberapa potongan kode yang dimuat ke dalam editor sebagai papan klip terpisah dan menyisipkannya sesuai kebutuhan dalam kode Anda.
 
 renum
 

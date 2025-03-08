@@ -1,0 +1,46 @@
+Příkazy souborů  
+Tyto příkazy se vztahují k souborům ve vašem aktuálním prostoru souborů.  
+
+beautify <filename>  
+
+	Formátuje JSON soubor, aniž by došlo k poškození aktuálně načteného programu.  
+
+dir [<filename>] (nebo cat, ls)  
+
+	Vypisuje uložené programy. Název souboru může obsahovat zástupné znaky * nebo ?.  
+
+copy <filenamea> <filenameb> (nebo cp)  
+
+	Kopíruje soubor z filenamea do filenameb.  
+
+del <filename> (nebo delete, era)  
+
+	Smaže program.  
+
+load <filename>  
+
+	Nahraje program.  
+
+ren <filenamea> <filenameb> (nebo rename, mv)  
+
+	Přejmenuje soubor z filenamea na filenameb.  
+
+run <filename>  
+
+	Spustí program a nahradí aktuálně načtený program.  
+
+save <filename>  
+
+	Uloží program.  
+
+space [<spacekey> | <alias>] (nebo cs, cd, chdir)  
+
+	Zobrazí váš aktuální prostor nebo přepne na nový.  
+
+spaces  
+
+	Vypisuje všechny prostory souborů, ke kterým máte přístup.  
+
+type <filename> [[fromline]-[toline]]  
+
+	Vypisuje program, aniž by došlo k poškození aktuálně načteného programu.  

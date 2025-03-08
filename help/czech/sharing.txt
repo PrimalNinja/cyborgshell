@@ -1,0 +1,46 @@
+Sdílení a příkazy pro prostor souborů  
+Tyto příkazy se týkají sdílení prostorů souborů a prostorů souborů, ke kterým máte přístup.
+
+grant <sharekey>
+
+	Sdílí váš prostor souborů s uživatelem, který poskytl sharekey.
+
+keys
+
+	Vylistuje všechny vaše klíče. Sdílejte pouze své sdílecí klíče.
+
+newkey <keyname>
+
+	Vytvoří nový sharekey s daným názvem klíče.
+
+revoke <sharekey>
+
+	Zruší sdílení vašeho prostoru souborů s uživatelem, který poskytl sharekey.
+
+shares
+
+	Vylistuje všechny sdílení, která jste udělili.
+
+Proces sdílení
+
+Příklad, jak sdílet prostory souborů:
+
+Fred
+
+	1. Fred chce přístup k Wilminu prostoru.
+	2. Fred vytvoří sharekey pro Wilmu tím, že napíše 'newkey wilma' a poskytne sharekey Wilmě.  
+	note: wilma v 'newkey wilma' je Fredova přezdívka pro sharekey, nemá to nic společného s Wilminým účtem.
+
+Wilma
+
+	3. Pomocí sharekey, kterou Fred poskytl, udělí přístup Fredovi tím, že napíše 'grant <sharekey>'.
+
+Fred
+
+	4. Fred nyní má přístup k Wilminu prostoru.
+
+Wilma
+
+	5. Wilma stále má kontrolu nad tím, s kým sdílí, a může Freda zrušit nebo obnovit podle svého uvážení.
+
+Tento proces sdílení také umožňuje týmům mít společnou oblast. Představme si, že Wilma ve skutečnosti spravuje týmový prostor. Wilma může požádat jednotlivé sharekey od každého vývojáře v týmu, aby je mohla udělit nebo zrušit podle potřeby pro týmový prostor.

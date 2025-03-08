@@ -1,0 +1,46 @@
+Dosya Komutları  
+Bu komutlar, mevcut dosya alanınızdaki dosyalarla ilgilidir.  
+
+beautify <filename>  
+
+	JSON dosyasını, mevcut yüklenmiş programı bozmadan güzelleştirir.  
+
+dir [<filename>] (veya cat, ls)  
+
+	Kayıtlı programları listeler. Dosya adı joker karakterler * veya ? içerebilir.  
+
+copy <filenamea> <filenameb> (veya cp)  
+
+	Bir dosyayı filenamea'dan filenameb'ye kopyalar.  
+
+del <filename> (veya delete, era)  
+
+	Bir programı siler.  
+
+load <filename>  
+
+	Bir program yükler.  
+
+ren <filenamea> <filenameb> (veya rename, mv)  
+
+	Bir dosyayı filenamea'dan filenameb'ye yeniden adlandırır.  
+
+run <filename>  
+
+	Bir program çalıştırır ve mevcut yüklenmiş programı değiştirir.  
+
+save <filename>  
+
+	Bir programı kaydeder.  
+
+space [<spacekey> | <alias>] (veya cs, cd, chdir)  
+
+	Mevcut alanınızı gösterir veya yeni bir alana geçer.  
+
+spaces  
+
+	Erişiminiz olan tüm dosya alanlarını listeler.  
+
+type <filename> [[fromline]-[toline]]  
+
+	Mevcut yüklenmiş programı bozmadan bir programı yazar.  

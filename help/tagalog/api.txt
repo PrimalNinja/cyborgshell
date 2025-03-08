@@ -2,6 +2,12 @@ API Reference
 
 Sa ngayon, ito ay ang mga sumusunod:
 
+(debug related)
+
+api.debugObject(<object>, [<recurseflag>]);
+
+	ipakita ang ibinigay na object, kung ang recursive flag ay hindi nakasama, ang default nito ay true.
+
 (screen related)
 
 api.cls();

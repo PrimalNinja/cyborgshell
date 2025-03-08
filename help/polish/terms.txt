@@ -1,0 +1,25 @@
+Warunki i zasady
+
+Ograniczenia
+
+Korzystając z tego systemu, zgadzasz się nie używać go w sposób negatywny, nie kompromitować ani nie wykorzystywać innych systemów, sieci lub usług, które nie są częścią tego środowiska.
+
+Korzystając z tego systemu, zgadzasz się również przestrzegać zasad etykiety opisanych w 'help etiquette'.
+
+Testuj nasze limity
+
+Masz swobodę korzystania z tego systemu według własnego uznania. W rzeczywistości zachęcamy cię do próbowania i popychania systemu do jego granic. Spróbuj hakować, łamać lub zburzyć system - chcemy zobaczyć, na co cię stać!
+
+Korzystając z tego systemu, przyjmujesz do wiadomości, że:
+
+- Nie gwarantujemy bezpieczeństwa ani integralności systemu
+- Nie gwarantujemy prywatności ani poufności jakichkolwiek informacji udostępnionych lub przechowywanych w systemie
+- Jesteś odpowiedzialny za swoje działania w systemie
+
+Ciasteczka
+
+Jeśli się nie zalogujesz, nie przechowujemy ciasteczek na twoim komputerze. Jeśli się zalogujesz, przechowujemy je, ale tylko po to, aby umożliwić ci pozostanie zalogowanym, dopóki się ponownie nie wylogujesz.
+
+Bezpieczeństwo
+
+Hasła twojego konta nie są przechowywane jako tekst jawny na serwerze. Stosujemy najlepsze praktyki i twoje hasło nie jest nam znane - nie jest to hasło, które można odszyfrować.

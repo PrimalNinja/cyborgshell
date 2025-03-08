@@ -1,0 +1,55 @@
+Hoş geldiniz Home Computer JS'e!
+
+Bu yardım kılavuzu, mevcut olan çeşitli komutlar ve özellikler hakkında sizi bilgilendirecektir.
+
+'help about' yazarak hakkında kısmını okuyun ve 'help privacy' yazarak gizlilik politikasını, ayrıca 'help terms' yazarak şartlar ve koşulları okuyun.
+(basically if you use this product, you agree to the privacy policy as well as the terms & conditions)
+
+Kayıt olabilirsiniz, böylece giriş yapabilir ve kendi programlarınızı yazıp başkalarıyla paylaşabilirsiniz.
+Kayıt ve giriş komutları ile diğer bazı hesap komutları hakkında yardım almak için 'help account' yazın.
+
+Yardım Dizini
+
+help
+
+	Bu yardım dizinini gösterir.
+
+help general
+
+	Genel komutlar hakkında yardım gösterir.
+	
+help editor
+
+	Düzenleyici komutları hakkında yardım gösterir.
+	
+help file
+
+	Dosya komutları hakkında yardım gösterir.
+	
+help account
+
+	Hesap komutları hakkında yardım gösterir.
+	
+help sharing
+
+	Paylaşım komutları hakkında yardım gösterir.
+
+help about
+
+	Bu ürün hakkında bazı bilgiler gösterir.
+	
+help roadmap
+
+	Bu ürünle ne yapmayı planladığımız hakkında bazı bilgiler gösterir.
+	
+help privacy
+
+	Gizlilik politikasını gösterir.
+
+help terms
+
+	Şartlar ve koşulları gösterir.
+
+help etiquette
+
+	Bu kamu sistemi için etiket kurallarını gösterir.

@@ -1,0 +1,46 @@
+파일 명령어  
+이 명령어들은 현재 파일 공간의 파일과 관련이 있습니다.
+
+beautify <filename>
+
+	현재 로드된 프로그램을 손상시키지 않고 JSON 파일을 아름답게 만듭니다.
+	
+dir [<filename>] (또는 cat, ls)
+
+	저장된 프로그램을 나열합니다. 파일 이름에는 와일드카드 * 또는 ?를 사용할 수 있습니다.
+	
+copy <filenamea> <filenameb> (또는 cp)
+
+	filenamea에서 filenameb로 파일을 복사합니다.
+	
+del <filename> (또는 delete, era)
+
+	프로그램을 삭제합니다.
+	
+load <filename>
+
+	프로그램을 로드합니다.
+	
+ren <filenamea> <filenameb> (또는 rename, mv)
+
+	filenamea에서 filenameb로 파일의 이름을 변경합니다.
+	
+run <filename>
+
+	프로그램을 실행하며, 기존에 로드된 프로그램을 대체합니다.
+	
+save <filename>
+
+	프로그램을 저장합니다.
+	
+space [<spacekey> | <alias>] (또는 cs, cd, chdir)
+
+	현재 공간을 보여주거나 새 공간으로 변경합니다.
+	
+spaces
+
+	접근할 수 있는 모든 파일 공간을 나열합니다.
+
+type <filename> [[fromline]-[toline]]
+
+	현재 로드된 프로그램을 손상시키지 않고 프로그램을 출력합니다.

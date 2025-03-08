@@ -1,0 +1,19 @@
+Riferimento API
+
+Per ora è solo il seguente:
+
+(riguardante il debug)
+
+api.debugObject(<object>, [<recurseflag>]);
+
+	visualizza l'oggetto fornito; se il flag ricorsivo è omesso, il valore predefinito è true.
+
+(riguardante lo schermo)
+
+api.cls();
+
+	cancella lo schermo
+
+api.print(<output>);
+
+	stampa qualche output

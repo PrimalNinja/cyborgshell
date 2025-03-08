@@ -1,0 +1,1 @@
+(\W|^)fucker(\W|$)|(\W|^)fuck3r(\W|$)|(\W|^)motherfucker(\W|$)|(\W|^)m0therfuck3r(\W|$)

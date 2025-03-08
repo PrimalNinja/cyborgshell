@@ -1,0 +1,55 @@
+Välkommen till Home Computer JS!
+
+Denna hjälpguide kommer att gå igenom de olika kommandona och funktionerna som finns tillgängliga.
+
+Se till att läsa om genom att skriva 'help about' och läs sekretesspolicy genom att skriva 'help privacy' samt villkor genom att skriva 'help terms'.
+(om du använder denna produkt, godkänner du sekretesspolicyn samt villkoren)
+
+Du kan registrera dig så att du kan logga in och programmera dina egna program och dela dem med andra.
+Skriv 'help account' för hjälp med registrerings- och inloggningskommandon samt några andra kontokommandon.
+
+Hjälpindex
+
+help
+
+	Visa detta hjälpindex.
+
+help general
+
+	Visa hjälp om allmänna kommandon.
+	
+help editor
+
+	Visa hjälp om redigeringskommandon.
+	
+help file
+
+	Visa hjälp om filkommandon.
+	
+help account
+
+	Visa hjälp om kontokommandon.
+	
+help sharing
+
+	Visa hjälp om delningskommandon.
+
+help about
+
+	Visa viss information om denna produkt.
+	
+help roadmap
+
+	Visa viss information om vad vi planerar att göra med denna produkt.
+	
+help privacy
+
+	Visa sekretesspolicy.
+
+help terms
+
+	Visa villkor.
+
+help etiquette
+
+	Visa etikettsregler för detta offentliga system.

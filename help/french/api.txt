@@ -2,6 +2,12 @@ Référence API
 
 Pour l'instant, il s'agit simplement de ce qui suit :
 
+(liaison au débogage)
+
+api.debugObject(<object>, [<recurseflag>]);
+
+	affiche l'objet fourni, si le drapeau de récursivité est omis, il est par défaut à true.
+
 (liaison à l'écran)
 
 api.cls();

@@ -2,6 +2,12 @@ Referencia de la API
 
 Por ahora, solo es lo siguiente:
 
+(relacionado con depuración)
+
+api.debugObject(<object>, [<recurseflag>]);
+
+	muestra el objeto proporcionado; si se omite el flag recursivo, se establece en verdadero por defecto.
+
 (relacionado con la pantalla)
 
 api.cls();

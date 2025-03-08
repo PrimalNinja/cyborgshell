@@ -1,0 +1,18 @@
+Obecné příkazy  
+Tyto příkazy poskytují obecné informace a kontrolu.  
+
+language [<language>]  
+
+	Zobrazí vaši aktuální jazykovou nastavení nebo nastaví nový.  
+
+languages  
+
+	Vypisuje dostupné lidské jazyky, které lze použít v systému.  
+
+reset  
+
+	Obnoví prostředí a ztratí veškerý kód aktuálně v editoru kódu.  
+
+startup  
+
+	Zobrazí text při spuštění.  

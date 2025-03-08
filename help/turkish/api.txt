@@ -1,0 +1,19 @@
+API Referansı
+
+Şu anda sadece aşağıdakiler:
+
+(debug ile ilgili)
+
+api.debugObject(<object>, [<recurseflag>]);
+
+	verilen nesneyi görüntüler, eğer yineleme bayrağı belirtilmezse, varsayılan olarak true'dur.
+
+(ekran ile ilgili)
+
+api.cls();
+
+	ekranı temizler
+
+api.print(<output>);
+
+	bir çıktı yazdırır

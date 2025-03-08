@@ -1,0 +1,25 @@
+Termos e Condições
+
+Limitações
+
+Ao usar este sistema, você concorda em não utilizá-lo para impactar negativamente, comprometer ou explorar outros sistemas, redes ou serviços que não fazem parte deste ambiente.
+
+Ao usar este sistema, você também concorda em seguir as regras de etiqueta descritas em 'help etiquette'.
+
+Teste Nossos Limites
+
+Você é livre para usar este sistema como achar melhor. Na verdade, incentivamos você a tentar e empurrar o sistema até seus limites. Tente hackear, quebrar ou derrubar o sistema - queremos ver do que você é capaz!
+
+Ao usar este sistema, você reconhece que:
+
+- Não garantimos a segurança ou integridade do sistema
+- Não garantimos a privacidade ou confidencialidade de qualquer informação compartilhada ou armazenada no sistema
+- Você é responsável por suas próprias ações no sistema
+
+Cookies
+
+Se você não fizer login, não armazenamos cookies em seu computador. Se você fizer login, armazenamos, mas apenas para permitir que você permaneça conectado até que faça logout novamente.
+
+Segurança
+
+As senhas da sua conta não são armazenadas como texto simples no servidor. Seguimos as melhores práticas e sua senha também não é conhecida por nós - não é uma senha que pode ser descriptografada.

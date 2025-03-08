@@ -1,0 +1,19 @@
+API Referens
+
+För nu är det bara följande:
+
+(debug relaterat)
+
+api.debugObject(<object>, [<recurseflag>]);
+
+	visa det angivna objektet, om den rekursiva flaggan utelämnas, standardvärdet är true.
+
+(skärm relaterat)
+
+api.cls();
+
+	rensa skärmen
+
+api.print(<output>);
+
+	skriv ut något resultat

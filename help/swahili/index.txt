@@ -1,0 +1,55 @@
+Karibu kwenye Home Computer JS!
+
+Hiki ni kiwango cha msaada ambacho kitakusaidia kupitia amri mbalimbali na vipengele vilivyopo.
+
+Hakikisha unasoma kuhusu kwa kuandika 'help about' na kusoma sera ya faragha kwa kuandika 'help privacy' pamoja na masharti na hali kwa kuandika 'help terms'.
+(kimsingi ikiwa unatumia bidhaa hii, unakubali sera ya faragha pamoja na masharti na hali)
+
+Unaweza kujiandikisha ili uweze kuingia na kuunda programu zako mwenyewe na kuzishiriki na wengine.
+Andika 'help account' kwa msaada juu ya amri za kujiandikisha na kuingia pamoja na amri nyingine za akaunti.
+
+Msaada wa Kielelezo
+
+help
+
+	Inaonyesha kielelezo hiki cha msaada.
+
+help general
+
+	Inaonyesha msaada juu ya amri za jumla.
+	
+help editor
+
+	Inaonyesha msaada juu ya amri za mhariri.
+	
+help file
+
+	Inaonyesha msaada juu ya amri za faili.
+	
+help account
+
+	Inaonyesha msaada juu ya amri za akaunti.
+	
+help sharing
+
+	Inaonyesha msaada juu ya amri za kushiriki.
+
+help about
+
+	Inaonyesha taarifa kuhusu bidhaa hii.
+	
+help roadmap
+
+	Inaonyesha taarifa kuhusu kile tunachopanga kufanya na bidhaa hii.
+	
+help privacy
+
+	Inaonyesha sera ya faragha.
+
+help terms
+
+	Inaonyesha masharti na hali.
+
+help etiquette
+
+	Inaonyesha sheria za adabu kwa mfumo huu wa umma.

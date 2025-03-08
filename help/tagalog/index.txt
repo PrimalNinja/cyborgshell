@@ -1,8 +1,9 @@
-Welcome to Open Home Computer JS!
+Welcome to Home Computer JS!
 
 Ang gabay na ito ay magbibigay sa iyo ng impormasyon tungkol sa iba't ibang mga utos at tampok na available.
 
-Siguraduhing basahin ang tungkol dito sa pamamagitan ng pag-type ng 'tulong tungkol'.
+Siguraduhing basahin ang tungkol dito sa pamamagitan ng pag-type ng 'help about' at basahin ang privacy policy sa pamamagitan ng pag-type ng 'help privacy' pati na rin ang mga terms & conditions sa pamamagitan ng pag-type ng 'help terms'.
+(basically kung gagamitin mo ang produktong ito, sumasang-ayon ka sa privacy policy pati na rin ang mga terms & conditions)
 
 Maaari kang magparehistro upang makapag-login at mag-program ng iyong sariling mga programa at ibahagi ang mga ito sa iba.
 I-type ang 'help account' para sa tulong sa mga utos ng pagrehistro at pag-login pati na rin ang ilang iba pang mga utos sa account.
@@ -36,3 +37,19 @@ help sharing
 help about
 
 	Ipinapakita ang ilang impormasyon tungkol sa produktong ito.
+	
+help roadmap
+
+	Ipinapakita ang ilang impormasyon tungkol sa mga plano namin para sa produktong ito.
+	
+help privacy
+
+	Ipinapakita ang privacy policy.
+
+help terms
+
+	Ipinapakita ang mga terms & conditions.
+
+help etiquette
+
+	Ipinapakita ang mga patakaran ng etika para sa pampublikong sistemang ito.

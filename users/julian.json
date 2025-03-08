@@ -1,0 +1,213 @@
+{
+	"jsonversion": 1,
+	"username": "julian",
+	"password": "$2y$10$7.MgcjfrbqkjCir89ycPFeNcCyTuYllEFmq6syzvl9/BVuv0f3j0C",
+	"alias": "PrimalNinja",
+	"emailaddress": "",
+	"about": ">> Primal Ninja <<",
+	"datetime": "2025-03-03 17:55:51",
+	"issysadmin": false,
+	"isadmin": false,
+	"isactive": true,
+	"isonline": false,
+	"userkey": "julian",
+	"devicekeys": [
+		{
+			"key": "67c5ed7ae4ea42-88983291",
+			"datetime": "2025-03-03 17:57:14",
+			"alias": "67c5ed7ae4ea42-88983291",
+			"agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+			"ipaddress": "::1",
+			"isactive": true
+		},
+		{
+			"key": "67c945a71c14b1-32522197",
+			"datetime": "2025-03-06 06:50:15",
+			"alias": "67c945a71c14b1-32522197",
+			"agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+			"ipaddress": "::1",
+			"isactive": true
+		},
+		{
+			"key": "67c95d9881cc91-91943953",
+			"datetime": "2025-03-06 08:32:24",
+			"alias": "67c95d9881cc91-91943953",
+			"agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+			"ipaddress": "::1",
+			"isactive": true
+		},
+		{
+			"key": "67c9a34824d6a1-05200506",
+			"datetime": "2025-03-06 13:29:44",
+			"alias": "67c9a34824d6a1-05200506",
+			"agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+			"ipaddress": "::1",
+			"isactive": true
+		},
+		{
+			"key": "67c9bf726103b3-10230878",
+			"datetime": "2025-03-06 15:29:54",
+			"alias": "67c9bf726103b3-10230878",
+			"agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+			"ipaddress": "::1",
+			"isactive": true
+		},
+		{
+			"key": "67c9e80c7014a2-11630649",
+			"datetime": "2025-03-06 18:23:08",
+			"alias": "67c9e80c7014a2-11630649",
+			"agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+			"ipaddress": "::1",
+			"isactive": true
+		},
+		{
+			"key": "67ca0f2fb67a27-60816696",
+			"datetime": "2025-03-06 21:10:07",
+			"alias": "67ca0f2fb67a27-60816696",
+			"agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+			"ipaddress": "::1",
+			"isactive": true
+		},
+		{
+			"key": "67ca0f374e9706-77502114",
+			"datetime": "2025-03-06 21:10:15",
+			"alias": "67ca0f374e9706-77502114",
+			"agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+			"ipaddress": "::1",
+			"isactive": true
+		},
+		{
+			"key": "67ca0f66941559-92264304",
+			"datetime": "2025-03-06 21:11:02",
+			"alias": "67ca0f66941559-92264304",
+			"agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+			"ipaddress": "::1",
+			"isactive": true
+		},
+		{
+			"key": "67ca0f9d892625-76926796",
+			"datetime": "2025-03-06 21:11:57",
+			"alias": "67ca0f9d892625-76926796",
+			"agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+			"ipaddress": "::1",
+			"isactive": true
+		},
+		{
+			"key": "67ca0fd0f3ca77-54589799",
+			"datetime": "2025-03-06 21:12:48",
+			"alias": "67ca0fd0f3ca77-54589799",
+			"agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+			"ipaddress": "::1",
+			"isactive": true
+		},
+		{
+			"key": "67ca10731f7921-17819459",
+			"datetime": "2025-03-06 21:15:31",
+			"alias": "67ca10731f7921-17819459",
+			"agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+			"ipaddress": "::1",
+			"isactive": true
+		},
+		{
+			"key": "67ca1088b5d1b4-89260629",
+			"datetime": "2025-03-06 21:15:52",
+			"alias": "67ca1088b5d1b4-89260629",
+			"agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+			"ipaddress": "::1",
+			"isactive": true
+		},
+		{
+			"key": "67ca10d62484f2-38412144",
+			"datetime": "2025-03-06 21:17:10",
+			"alias": "67ca10d62484f2-38412144",
+			"agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+			"ipaddress": "::1",
+			"isactive": true
+		},
+		{
+			"key": "67ca10e427ce54-28821490",
+			"datetime": "2025-03-06 21:17:24",
+			"alias": "67ca10e427ce54-28821490",
+			"agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+			"ipaddress": "::1",
+			"isactive": true
+		},
+		{
+			"key": "67ca2e05ecb2c6-06398858",
+			"datetime": "2025-03-06 23:21:41",
+			"alias": "67ca2e05ecb2c6-06398858",
+			"agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+			"ipaddress": "::1",
+			"isactive": true
+		},
+		{
+			"key": "67ca2e11e2ba93-97008209",
+			"datetime": "2025-03-06 23:21:53",
+			"alias": "67ca2e11e2ba93-97008209",
+			"agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+			"ipaddress": "::1",
+			"isactive": true
+		},
+		{
+			"key": "67ca8f37a93bc1-31126913",
+			"datetime": "2025-03-07 06:16:23",
+			"alias": "67ca8f37a93bc1-31126913",
+			"agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+			"ipaddress": "::1",
+			"isactive": true
+		},
+		{
+			"key": "67cac46c350e22-12338017",
+			"datetime": "2025-03-07 10:03:24",
+			"alias": "67cac46c350e22-12338017",
+			"agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:136.0) Gecko/20100101 Firefox/136.0",
+			"ipaddress": "127.0.0.1",
+			"isactive": true
+		},
+		{
+			"key": "67cb0b45adf2b4-20294581",
+			"datetime": "2025-03-07 15:05:41",
+			"alias": "67cb0b45adf2b4-20294581",
+			"agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+			"ipaddress": "::1",
+			"isactive": true
+		},
+		{
+			"key": "67cb3126884868-52861326",
+			"datetime": "2025-03-07 17:47:18",
+			"alias": "67cb3126884868-52861326",
+			"agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+			"ipaddress": "::1",
+			"isactive": true
+		}
+	],
+	"sharekeys": [
+		{
+			"key": "67cb0e12718112-36542854",
+			"alias": "fred",
+			"datetime": "2025-03-07 15:17:38",
+			"isactive": true
+		},
+		{
+			"key": "67cb0e2fef94a9-00991592",
+			"alias": "barney",
+			"datetime": "2025-03-07 15:18:07",
+			"isactive": true
+		}
+	],
+	"shares": [],
+	"spaces": [
+		{
+			"key": "home",
+			"alias": "",
+			"datetime": "2025-03-03 17:55:51",
+			"isactive": true
+		},
+		{
+			"key": "public",
+			"alias": "",
+			"datetime": "2025-03-03 17:55:51",
+			"isactive": true
+		}
+	]
+}

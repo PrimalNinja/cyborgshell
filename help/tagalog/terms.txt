@@ -1,0 +1,25 @@
+Mga Tuntunin at Kundisyon
+
+Mga Limitasyon
+
+Sa paggamit ng sistemang ito, sumasang-ayon ka na hindi ito gagamitin upang negatibong makaapekto, magkompromiso, o samantalahin ang iba pang mga sistema, network, o serbisyo na hindi bahagi ng kapaligirang ito.
+
+Sa paggamit ng sistemang ito, sumasang-ayon ka ring sundin ang mga patakaran ng etika na nakasaad sa 'help etiquette'.
+
+Subukan ang Aming mga Hangganan
+
+Malaya kang gamitin ang sistemang ito ayon sa iyong nais. Sa katunayan, hinihikayat ka naming subukan at itulak ang sistema sa kanyang mga hangganan. Subukan mong i-hack, i-crack, o ibagsak ang sistema - gusto naming makita kung ano ang kaya mong gawin!
+
+Sa paggamit ng sistemang ito, kinikilala mo na:
+
+- Hindi namin ginagarantiyahan ang seguridad o integridad ng sistema
+- Hindi namin ginagarantiyahan ang privacy o pagiging kumpidensyal ng anumang impormasyong ibinahagi o iniimbak sa sistema
+- Ikaw ang may pananagutan para sa iyong sariling mga aksyon sa sistema
+
+Cookies
+
+Kung hindi ka mag-login, hindi kami nag-iimbak ng cookies sa iyong computer. Kung mag-login ka, nag-iimbak kami, ngunit tanging upang payagan kang manatiling naka-login hanggang sa mag-logout ka muli.
+
+Seguridad
+
+Ang mga password ng iyong account ay hindi naka-imbak bilang plain text sa server. Sinusunod namin ang mga pinakamahusay na kasanayan at hindi rin namin alam ang iyong password - ito ay hindi isang ma-dedecrypt na password.

@@ -1,0 +1,46 @@
+Comandi File  
+Questi comandi riguardano i file nel tuo attuale spazio di file.
+
+beautify <filename>
+
+	Abbellisce un file JSON senza corrompere il programma attualmente caricato.
+
+dir [<filename>] (o cat, ls)
+
+	Elenca i programmi salvati. Il nome del file può contenere caratteri jolly * o ?.
+
+copy <filenamea> <filenameb> (o cp)
+
+	Copia un file da filenamea a filenameb.
+
+del <filename> (o delete, era)
+
+	Cancella un programma.
+
+load <filename>
+
+	Carica un programma.
+
+ren <filenamea> <filenameb> (o rename, mv)
+
+	Rinomina un file da filenamea a filenameb.
+
+run <filename>
+
+	Esegue un programma, sostituendo il programma attualmente caricato.
+
+save <filename>
+
+	Salva un programma.
+
+space [<spacekey> | <alias>] (o cs, cd, chdir)
+
+	Mostra il tuo spazio attuale o cambia in uno nuovo.
+
+spaces
+
+	Elenca tutti gli spazi di file a cui hai accesso.
+
+type <filename> [[fromline]-[toline]]
+
+	Tipizza un programma senza corrompere il programma attualmente caricato.

@@ -2,9 +2,12 @@
 
 // actions
 define("ACTION_INVALIDATE", "invalidate");
+define("ACTION_LTR", "ltr");
+define("ACTION_RTL", "rtl");
 
 // messages
 define("MSG_ABOUTUPDATED", "關於已更新。");
+define("MSG_BLOCKEDWORDFOUND", "發現被阻擋的詞語。");
 define("MSG_DEVICEKEYSNONE", "設備金鑰：無");
 define("MSG_FILEBEAUTIFIED", "文件已美化。");
 define("MSG_FILECOPIED", "文件已複製。");

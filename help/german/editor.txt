@@ -13,6 +13,18 @@ edit (oder ed)
 
 	Bearbeitet eine Zeile mit dem Zeileneditor.
 	
+file [<filenumber>]
+
+	Zeigt Ihre aktuelle Datei an, für die die Editorbefehle gelten, oder setzt eine neue.
+
+filename [<filename>]
+
+	Zeigt den Dateinamen der aktuellen Datei an oder setzt ihn. Dieser Dateiname ist für den Editor, er wird nicht für die Dateien, die Sie laden oder speichern, angegeben, sondern wird von Ihnen festgelegt, wenn Sie Dateien laden oder speichern.
+
+files
+
+	Listet alle Dateien im Editor mit ihren zugehörigen Dateinummern auf.
+	
 list [[fromline]-[toline]]
 
 	Listet das Programm auf. Beispiele: list 30-, list -30, list 20-30, list, list 40.
@@ -20,6 +32,14 @@ list [[fromline]-[toline]]
 new
 
 	Leert das aktuelle Programm im Code-Editor.
+
+newfile
+
+	Erschafft eine neue Datei innerhalb Ihres Editors.
+
+paste <linenumber> <filenumber>
+
+	Fügt den Inhalt der angegebenen Dateinummer in die aktuelle Datei vor der angegebenen Zeilennummer ein. Diese Einfügefunktion ermöglicht es Ihnen, mehrere Codefragmente, die in den Editor geladen wurden, als separate Zwischenablagen zu verwenden und sie nach Bedarf in Ihren Code einzufügen.
 
 renum
 

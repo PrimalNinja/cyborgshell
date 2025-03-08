@@ -2,6 +2,14 @@ API Reference
 
 For now it is just the following:
 
+(debug related)
+
+api.debugObject(<object>, [<recurseflag>]);
+
+	display the provided object, if the recursive flag is ommitted, it defaults to true.
+
+(screen related)
+
 api.cls();
 
 	clear the screen

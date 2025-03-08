@@ -1,0 +1,25 @@
+Roadmap
+
+Narito ang isang pangkalahatang-ideya ng ilang mga paparating na tampok na plano naming idagdag sa produktong ito, na pinapanatili ang pagiging simple bilang pangunahing layunin. Hindi kinakailangang ayon sa pagkakasunod-sunod ng kanilang pagdating:
+
+    Ang kakayahang lumikha ng mga package, mag-deploy ng mga package, at magbahagi ng mga package nang pampubliko o sa mga itinalagang bahagi.
+
+    Mga karagdagan sa mga file commands upang mapadali ang pagkopya at paglipat ng mga file sa pagitan ng mga espasyo at mga package.
+
+    Ilang mga pag-andar sa pamamahala ng device at key (pagtanggal sa mga ito).
+
+    Version control. Ang kakayahang ilista ang mga bersyon, mag-load ng mga nakaraang bersyon, at mag-rollback sa mga nakaraang bersyon.
+
+    Ang kakayahang bumuo at magpahusay sa produktong ito gamit ang sarili nito.
+
+    Ilang mga pasilidad ng AI, hindi lamang ang LLM integration kundi marahil ang integrasyon sa aming produktong dAIbolical.
+
+    Patuloy na pag-unlad ng API upang hindi mo na kailangang simulan ang lahat mula sa simula.
+
+    Auto-execution ng isang programa sa pag-login, na may opsyonal na pag-bypass nito kung may mangyaring mali.
+
+    Suporta para sa 'flavour' ng sourcecode upang makapagtrabaho ka sa iba't ibang uri ng mga file nang may talino, tulad ng pag-edit ng iyong mga binary file gamit ang line editor.
+
+    Higit pang mga tool upang gawing kasing simple ng dati ang pagtuturo ng software development tulad ng noong 80s.
+
+    Ilang iba pang mga sorpresa.

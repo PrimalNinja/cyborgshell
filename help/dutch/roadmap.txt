@@ -1,0 +1,25 @@
+Roadmap
+
+Hier is een overzicht van enkele aankomende functies die we van plan zijn toe te voegen aan dit product, met eenvoud als hoofddoel. Niet noodzakelijk in de volgorde waarin ze beschikbaar zullen zijn:
+
+	De mogelijkheid om pakketten te maken, pakketten te implementeren, pakketten openbaar of naar aangewezen delen te delen.
+
+	Toevoegingen aan de bestandcommando's om het kopiëren en verplaatsen van bestanden tussen ruimtes en pakketten te vergemakkelijken.
+
+	Enkele apparaat- en sleutelbeheerfuncties (het verwijderen ervan).
+
+	Versiebeheer. De mogelijkheid om versies te lijsten, eerdere versies te laden, terug te rollen naar eerdere versies.
+
+	De mogelijkheid om dit product te ontwikkelen en te verbeteren met behulp van zichzelf.
+
+	Enkele AI-faciliteiten, niet alleen LLM-integratie maar misschien ook integratie met ons dAIbolical-product.
+
+ doorlopende API-ontwikkeling zodat je niet alles vanaf nul hoeft te doen.
+
+	Automatische uitvoering van een programma bij inloggen, met de optie om dit over te slaan als er iets misgaat.
+
+	Sourcecode 'smaak' ondersteuning zodat je intelligent met verschillende soorten bestanden kunt werken, zoals het bewerken van je binaire bestanden met de line editor.
+
+	Meer tools om het onderwijzen van softwareontwikkeling zo eenvoudig te maken als het in de jaren '80 was.
+
+	Enkele andere verrassingen.

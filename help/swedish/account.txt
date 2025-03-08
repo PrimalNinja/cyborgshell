@@ -1,0 +1,54 @@
+Konto Kommandon  
+Dessa kommandon relaterar till ditt konto och kontotillgång.
+
+about [<message>]
+
+    Visar ditt om-meddelande eller sätter ett nytt.
+
+admins [<alias>]
+
+    Lista alla administratörer av systemet. Alias kan innehålla jokertecken * eller ?.
+
+alias [<alias>]
+
+    Visar ditt alias eller sätter ett nytt.
+
+device <devicekey> <alias>
+
+    Ger din enhet ett nytt alias.
+
+devices
+
+    Listar dina enheter
+
+login <username> <password>
+
+    Loggar in dig på den aktuella enheten.
+
+logout
+
+    Loggar ut dig från den aktuella enheten.
+
+offline
+
+    Markerar dig som offline för andra användare, detta är standard för nya registreringar.
+
+online
+
+    Markerar dig som online för andra användare, du förblir online tills du ändrar dig till offline.
+
+password <oldpassword> <newpassword> (eller chpwd)
+
+    Ändrar ditt lösenord.
+
+register <username> <password> [<alias>]
+
+    Skapar ett nytt användarkonto. Obs: Detta loggar inte in dig på det nyss skapade kontot.
+
+username [<username>]
+
+    Visar ditt användarnamn eller sätter ett nytt.
+
+users [<alias>]
+
+    Lista alla användare av systemet. Alias kan innehålla jokertecken * eller ?.

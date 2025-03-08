@@ -1,0 +1,25 @@
+Şartlar ve Koşullar
+
+Sınırlamalar
+
+Bu sistemi kullanarak, bu ortamın parçası olmayan diğer sistemlere, ağlara veya hizmetlere olumsuz etki etmemeyi, tehlikeye atmama veya sömurmama konusunda hemfikir olursunuz.
+
+Bu sistemi kullanarak, ayrıca 'yardım etiketi'nde belirtilen görgü kurallarına uymayı kabul edersiniz.
+
+Sınırlarımızı Test Edin
+
+Bu sistemi istediğiniz gibi kullanma özgürlüğüne sahipsiniz. Aslında, sistemi sınırlarına kadar zorlamanızı teşvik ediyoruz. Sistemi hacklemeyi, kırmayı veya çökertmeyi deneyin - neler yapabileceğinizi görmek istiyoruz!
+
+Bu sistemi kullanarak, şunları kabul edersiniz:
+
+- Sisteminin güvenliğini veya bütünlüğünü garanti etmiyoruz
+- Sistemde paylaşılan veya depolanan herhangi bir bilginin gizliliğini veya mahremiyetini garanti etmiyoruz
+- Sistemdeki kendi eylemlerinizden sorumlusunuz
+
+Çerezler
+
+Eğer giriş yapmazsanız, bilgisayarınızda çerez saklamıyoruz. Eğer giriş yaparsanız, yalnızca tekrar çıkış yapana kadar girişte kalmanızı sağlamak için çerez saklıyoruz.
+
+Güvenlik
+
+Hesap şifreleriniz sunucuda düz metin olarak saklanmaz. En iyi uygulamaları takip ediyoruz ve şifreniz bizim tarafımızdan da bilinmiyor - deşifre edilebilir bir şifre değildir.

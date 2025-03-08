@@ -1,0 +1,51 @@
+Lệnh Biên Tập
+
+Các lệnh này giúp bạn chỉnh sửa chương trình hiện tại của bạn.
+
+beautify
+
+	Làm đẹp JSON đã tải.
+
+cls (hoặc clear)
+
+	Xóa màn hình.
+
+edit <linenumber> (hoặc ed)
+
+	Chỉnh sửa một dòng bằng trình biên tập dòng.
+
+file [<filenumber>] 
+
+	Hiển thị tệp hiện tại mà các lệnh biên tập áp dụng hoặc đặt một tệp mới.
+
+filename [<filename>] 
+
+	Hiển thị tên tệp của tệp hiện tại hoặc đặt nó. Tên tệp này dành cho trình biên tập, không được cung cấp cho các tệp bạn tải hoặc lưu, mà sẽ được bạn thiết lập khi tải hoặc lưu tệp.
+
+files
+
+	Liệt kê tất cả các tệp trong trình biên tập với số tệp tương ứng của chúng.
+
+list [[fromline]-[toline]]
+
+	Liệt kê chương trình. Ví dụ: list 30-, list -30, list 20-30, list, list 40.
+
+new
+
+	Xóa chương trình hiện tại khỏi trình biên tập mã.
+
+newfile
+
+	Tạo một tệp mới trong trình biên tập của bạn.
+
+paste <linenumber> <filenumber>
+
+	Dán nội dung của số tệp được chỉ định vào tệp hiện tại trước số dòng được chỉ định. Khả năng dán này cho phép bạn sử dụng nhiều đoạn mã đã tải vào trình biên tập như các bảng tạm riêng biệt và dán chúng khi cần trong mã của bạn.
+
+renum
+
+	Đánh số lại chương trình. Lưu ý: JavaScript không sử dụng số dòng, nhưng chúng tôi sử dụng chúng cho mục đích chỉnh sửa.
+
+run
+
+	Chạy chương trình hiện tại.

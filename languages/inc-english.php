@@ -2,9 +2,12 @@
 
 // actions
 define("ACTION_INVALIDATE", "invalidate");
+define("ACTION_LTR", "ltr");
+define("ACTION_RTL", "rtl");
 
 // messages
 define("MSG_ABOUTUPDATED", "About updated.");
+define("MSG_BLOCKEDWORDFOUND", "Blocked word found.");
 define("MSG_DEVICEKEYSNONE", "devicekeys: none");
 define("MSG_FILEBEAUTIFIED", "File beautified.");
 define("MSG_FILECOPIED", "File copied.");

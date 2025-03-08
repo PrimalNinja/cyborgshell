@@ -5,7 +5,7 @@ beautify <filename>
 
 	Beautifies a JSON file without corrupting the currently loaded program.
 	
-dir [<filename>] (or cat, files, ls)
+dir [<filename>] (or cat, ls)
 
 	Lists saved programs. Filename can contain wildcards * or ?.
 	

@@ -1,0 +1,25 @@
+Roadmap
+
+Zde je přehled některých nadcházejících funkcí, které plánujeme přidat do tohoto produktu s důrazem na jednoduchost jako hlavní cíl. Ne nutně v pořadí, v jakém budou k dispozici:
+
+    Schopnost vytvářet balíčky, nasazovat balíčky, sdílet balíčky buď veřejně, nebo na nominovaných sdíleních.
+
+    Doplňky k příkazům souborů, které usnadňují kopírování a přesouvání souborů mezi prostory a balíčky.
+
+    Některé funkce správy zařízení a klíčů (odstraňování).
+
+    Správa verzí. Schopnost zobrazit verze, načíst předchozí verze, vrátit se k předchozím verzím.
+
+    Schopnost vyvíjet a vylepšovat tento produkt pomocí něj samotného.
+
+    Některé funkce AI, nejen integrace LLM, ale možná i integrace s naším produktem dAIbolical.
+
+    Průběžný vývoj API, abyste nemuseli všechno dělat od začátku.
+
+    Automatické spuštění programu při přihlášení, s možností toto obejít, pokud něco nefunguje.
+
+    Podpora 'chuti' zdrojového kódu, abyste mohli inteligentně pracovat s různými typy souborů, například upravit své binární soubory pomocí řádkového editoru.
+
+    Více nástrojů, které usnadní výuku softwarového vývoje tak, jak tomu bylo v 80. letech.
+
+    Některá další překvapení.

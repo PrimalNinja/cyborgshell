@@ -1,8 +1,9 @@
-Selamat datang di Open Home Computer JS!
+Selamat datang di Home Computer JS!
 
 Panduan bantuan ini akan memandu Anda melalui berbagai perintah dan fitur yang tersedia.
 
-Pastikan untuk membaca tentang dengan mengetik 'help about'.
+Pastikan untuk membaca tentang dengan mengetik 'help about' dan membaca kebijakan privasi dengan mengetik 'help privacy' serta syarat & ketentuan dengan mengetik 'help terms'.
+(pada dasarnya jika Anda menggunakan produk ini, Anda setuju dengan kebijakan privasi serta syarat & ketentuan)
 
 Anda dapat mendaftar sehingga Anda dapat masuk dan memprogram program Anda sendiri serta membagikannya dengan orang lain.
 Ketik 'help account' untuk bantuan mengenai perintah mendaftar dan masuk serta beberapa perintah akun lainnya.
@@ -36,3 +37,19 @@ help sharing
 help about
 
 	Menampilkan informasi tentang produk ini.
+	
+help roadmap
+
+	Menampilkan informasi tentang apa yang kami rencanakan untuk dilakukan dengan produk ini.
+	
+help privacy
+
+	Menampilkan kebijakan privasi.
+
+help terms
+
+	Menampilkan syarat & ketentuan.
+
+help etiquette
+
+	Menampilkan aturan etiket untuk sistem publik ini.

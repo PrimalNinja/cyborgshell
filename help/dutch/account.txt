@@ -1,0 +1,54 @@
+Account Commando's  
+Deze commando's hebben betrekking op uw account en accounttoegang.
+
+about [<message>]
+
+	Toont uw 'about' bericht of stelt een nieuwe in.
+	
+admins [<alias>]
+
+	Lijst alle admin gebruikers van het systeem. Alias kan wildcards * of ? bevatten.
+	
+alias [<alias>]
+
+	Toont uw alias of stelt een nieuwe in.
+	
+device <devicekey> <alias>
+
+	Geeft uw apparaat een nieuwe alias.
+	
+devices
+
+	Lijst uw apparaten op.
+	
+login <username> <password>
+
+	Logt u in op het huidige apparaat.
+	
+logout
+
+	Logt u uit van het huidige apparaat.
+	
+offline
+
+	Vlagt u offline voor andere gebruikers, dit is de standaard voor nieuwe registraties.
+	
+online
+
+	Vlagt u online voor andere gebruikers, u blijft online totdat u uzelf offline zet.
+	
+password <oldpassword> <newpassword> (of chpwd)
+
+	Wijzigt uw wachtwoord.
+	
+register <username> <password> [<alias>]
+
+	Maken een nieuw gebruikersaccount aan. Opmerking: Dit logt u niet in op het nieuw aangemaakte account.
+	
+username [<username>]
+
+	Toont uw gebruikersnaam of stelt een nieuwe in.
+	
+users [<alias>]
+
+	Lijst alle gebruikers van het systeem. Alias kan wildcards * of ? bevatten.

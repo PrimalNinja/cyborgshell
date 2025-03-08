@@ -2,9 +2,12 @@
 
 // actions
 define("ACTION_INVALIDATE", "invalidate");
+define("ACTION_LTR", "ltr");
+define("ACTION_RTL", "rtl");
 
 // messages
 define("MSG_ABOUTUPDATED", "Информация обновлена.");
+define("MSG_BLOCKEDWORDFOUND", "Найдено заблокированное слово.");
 define("MSG_DEVICEKEYSNONE", "ключи устройств: нет");
 define("MSG_FILEBEAUTIFIED", "Файл оформлен.");
 define("MSG_FILECOPIED", "Файл скопирован.");

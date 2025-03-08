@@ -1,0 +1,46 @@
+Amri za Faili  
+Amri hizi zinahusiana na faili katika nafasi yako ya faili ya sasa.
+
+beautify <filename>
+
+	Inaboresha faili la JSON bila kuharibu programu iliyo sasa.
+
+dir [<filename>] (au cat, ls)
+
+	Inaorodhesha programu zilizohifadhiwa. Jina la faili linaweza kuwa na wahusika wa pori * au ?.
+
+copy <filenamea> <filenameb> (au cp)
+
+	Inakopi faili kutoka filenamea hadi filenameb.
+
+del <filename> (au delete, era)
+
+	Inafuta programu.
+
+load <filename>
+
+	Inapakia programu.
+
+ren <filenamea> <filenameb> (au rename, mv)
+
+	Inabadilisha jina la faili kutoka filenamea hadi filenameb.
+
+run <filename>
+
+	Inakimbia programu, ikibadilisha programu iliyopo.
+
+save <filename>
+
+	Inahifadhi programu.
+
+space [<spacekey> | <alias>] (au cs, cd, chdir)
+
+	Inaonyesha nafasi yako ya sasa au inabadilisha hadi mpya.
+
+spaces
+
+	Inatoa orodha ya nafasi zote za faili ambazo una ufikiaji nazo.
+
+type <filename> [[fromline]-[toline]]
+
+	Inandika programu bila kuharibu programu iliyo sasa.

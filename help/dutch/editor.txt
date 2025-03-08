@@ -1,0 +1,50 @@
+Editor Commando's  
+Deze commando's helpen je bij het bewerken van je huidige programma.
+
+beautify
+
+	Verfraait de geladen JSON.
+
+cls (of clear)
+
+	Maakt het scherm leeg.
+
+edit <linenumber> (of ed)
+
+	Bewerkt een regel met de regel-editor.
+	
+file [<filenumber>]
+
+	Toont je huidige bestand waarvoor de editorcommando's van toepassing zijn of stelt een nieuw bestand in.
+
+filename [<filename>]
+
+	Toont de bestandsnaam van het huidige bestand of stelt deze in. Deze bestandsnaam is voor de editor, het wordt niet gegeven aan de bestanden die je laadt of opslaat, maar het zal worden ingesteld door jou bij het laden of opslaan van bestanden.
+
+files
+
+	Lijst alle bestanden in de editor met hun bijbehorende filenummer.
+	
+list [[fromline]-[toline]]
+
+	Lijst het programma. Voorbeelden: list 30-, list -30, list 20-30, list, list 40.
+	
+new
+
+	Maakt het huidige programma leeg in de code-editor.
+
+newfile
+
+	Creëert een nieuw bestand binnen je editor.
+
+paste <linenumber> <filenumber>
+
+	Plakt de inhoud van het opgegeven filenummer in het huidige bestand vóór het opgegeven lijnnummer. Deze plakfunctie stelt je in staat om meerdere fragmenten code die in de editor zijn geladen als aparte klemborden te gebruiken en deze naar behoefte in je code te plakken.
+
+renum
+
+	Hernummert het programma. Opmerking: JavaScript gebruikt geen lijnnummers, maar wij gebruiken ze voor bewerkingsdoeleinden.
+
+run
+
+	Voert het huidige programma uit.

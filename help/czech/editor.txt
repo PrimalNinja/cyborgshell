@@ -1,0 +1,50 @@
+Editor Commands  
+Tyto příkazy vám pomohou upravit váš aktuální program.
+
+beautify
+
+	Zkrášlí načtený JSON.
+
+cls (nebo clear)
+
+	Vymaže obrazovku.
+
+edit <linenumber> (nebo ed)
+
+	Upraví řádek pomocí editoru řádků.
+	
+file [<filenumber>]
+
+	Zobrazí váš aktuální soubor, na který se příkazy editoru vztahují, nebo nastaví nový.
+
+filename [<filename>]
+
+	Zobrazí název aktuálního souboru nebo jej nastaví. Tento název souboru je pro editor, není předáván souborům, které načítáte nebo ukládáte, ale bude nastaven vámi při načítání nebo ukládání souborů.
+
+files
+
+	Vypíše všechny soubory v editoru s jejich příslušným číslem souboru.
+	
+list [[fromline]-[toline]]
+
+	Vypíše program. Příklady: list 30-, list -30, list 20-30, list, list 40.
+	
+new
+
+	Vymaže aktuální program z editoru kódu.
+
+newfile
+
+	Vytvoří nový soubor ve vašem editoru.
+
+paste <linenumber> <filenumber>
+
+	Vloží obsah specifikovaného čísla souboru do aktuálního souboru před specifikované číslo řádku. Tato schopnost vkládání vám umožňuje používat více fragmentů kódu načtených do editoru jako samostatné schránky a vkládat je podle potřeby do vašeho kódu.
+
+renum
+
+	Znovu čísluje program. Poznámka: JavaScript nepoužívá čísla řádků, ale my je používáme pro účely úprav.
+
+run
+
+	Vyšle aktuální program.

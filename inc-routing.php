@@ -167,13 +167,13 @@ if ($blnContinue)
 		if (strlen($strCommand) > 0)
 		{
 			$strError = str_replace("%%COMMAND%%", $strCommand, ERR_COMMANDNOTDEFINED);
-			echo getResponseJSON("", $strError, "", "");
+			echo getResponseJSON("", $strError, [], "");
 			exit;
 		}
 	}
 	catch (Exception $e)
 	{
-		echo getResponseJSON("", ERR_SYSTEMGENERAL, "", "");
+		echo getResponseJSON("", ERR_SYSTEMGENERAL, [], "");
 		exit;
 	}
 }

@@ -1,0 +1,50 @@
+Komendy Edytora  
+Te komendy pomagają w edytowaniu aktualnego programu.
+
+beautify
+
+    Upiększa załadowany JSON.
+
+cls (lub clear)
+
+    Czyści ekran.
+
+edit <linenumber> (lub ed)
+
+    Edytuje linię za pomocą edytora linii.
+
+file [<filenumber>]
+
+    Pokazuje aktualny plik, dla którego stosują się komendy edytora lub ustawia nowy.
+
+filename [<filename>]
+
+    Pokazuje nazwę pliku aktualnego pliku lub ją ustawia. Ta nazwa pliku jest dla edytora, nie jest podawana dla plików, które ładujesz lub zapisujesz, ale raczej będzie ustawiana przez Ciebie podczas ładowania lub zapisywania plików.
+
+files
+
+    Wyświetla wszystkie pliki w edytorze z ich przypisanymi numerami plików.
+
+list [[fromline]-[toline]]
+
+    Wyświetla program. Przykłady: list 30-, list -30, list 20-30, list, list 40.
+
+new
+
+    Czyści aktualny program z edytora kodu.
+
+newfile
+
+    Tworzy nowy plik w Twoim edytorze.
+
+paste <linenumber> <filenumber>
+
+    Wkleja zawartość wskazanego numeru pliku do aktualnego pliku przed wskazanym numerem linii. Ta funkcja wklejania pozwala na używanie wielu fragmentów kodu załadowanych do edytora jako oddzielnych schowków i wklejanie ich w razie potrzeby w Twoim kodzie.
+
+renum
+
+    Numeruje program na nowo. Uwaga: JavaScript nie używa numerów linii, ale my używamy ich w celach edycyjnych.
+
+run
+
+    Uruchamia aktualny program.

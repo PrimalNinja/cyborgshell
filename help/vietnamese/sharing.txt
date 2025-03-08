@@ -1,0 +1,46 @@
+Lệnh Chia Sẻ và Không Gian Tệp  
+Các lệnh này liên quan đến việc chia sẻ không gian tệp và không gian tệp mà bạn có quyền truy cập.
+
+grant <sharekey>
+
+	Chia sẻ không gian tệp của bạn với người dùng đã cung cấp sharekey.
+	
+keys
+
+	Liệt kê tất cả các khóa của bạn. Chỉ chia sẻ các khóa chia sẻ của bạn.
+	
+newkey <keyname>
+
+	Tạo một sharekey mới với tên khóa đã cho.
+	
+revoke <sharekey>
+
+	Ngừng chia sẻ không gian tệp của bạn với người dùng đã cung cấp sharekey.
+	
+shares
+
+	Liệt kê tất cả các chia sẻ mà bạn đã cấp.
+
+Quy trình Chia Sẻ
+
+Ví dụ về cách chia sẻ không gian tệp:
+
+Fred
+
+	1. Fred muốn truy cập vào không gian của Wilma.
+	2. Fred tạo một sharekey cho Wilma bằng cách gõ 'newkey wilma' và cung cấp sharekey cho Wilma.
+	ghi chú: wilma trong 'newkey wilma' là bí danh của Fred cho sharekey, không liên quan gì đến tài khoản của Wilma.
+
+Wilma
+
+	3. Sử dụng sharekey mà Fred đã cung cấp, cấp quyền truy cập cho Fred bằng cách gõ 'grant <sharekey>'.
+
+Fred
+
+	4. Fred bây giờ đã có quyền truy cập vào không gian của Wilma.
+
+Wilma
+
+	5. Wilma vẫn có quyền kiểm soát ai mà cô ấy đang chia sẻ và có thể thu hồi hoặc khôi phục Fred theo ý muốn.
+
+Quy trình chia sẻ này cũng cho phép các nhóm có một khu vực chung. Hãy tưởng tượng Wilma thực sự đang quản lý không gian nhóm. Wilma có thể yêu cầu các sharekey cá nhân từ mỗi nhà phát triển trong nhóm để có thể được cấp hoặc thu hồi khi cần thiết cho không gian nhóm.

@@ -1,0 +1,54 @@
+Komendy Konta  
+Te komendy dotyczą Twojego konta i dostępu do konta.
+
+about [<message>]
+
+	Wyświetla Twój komunikat o sobie lub ustawia nowy.
+
+admins [<alias>]
+
+	Wyświetla wszystkich użytkowników adminów systemu. Alias może zawierać znaki wieloznaczne * lub ?.
+
+alias [<alias>]
+
+	Wyświetla Twój alias lub ustawia nowy.
+
+device <devicekey> <alias>
+
+	Nadaje Twojemu urządzeniu nowy alias.
+
+devices
+
+	Wyświetla Twoje urządzenia.
+
+login <username> <password>
+
+	Zalacza Cię na bieżącym urządzeniu.
+
+logout
+
+	Wylogowuje Cię z bieżącego urządzenia.
+
+offline
+
+	Oznacza Cię jako offline dla innych użytkowników, jest to domyślne ustawienie dla nowych rejestracji.
+
+online
+
+	Oznacza Cię jako online dla innych użytkowników, pozostajesz online, dopóki nie zmienisz się na offline.
+
+password <oldpassword> <newpassword> (lub chpwd)
+
+	Zmienia Twoje hasło.
+
+register <username> <password> [<alias>]
+
+	Tworzy nowe konto użytkownika. Uwaga: To nie loguje Cię do nowo utworzonego konta.
+
+username [<username>]
+
+	Wyświetla Twoją nazwę użytkownika lub ustawia nową.
+
+users [<alias>]
+
+	Wyświetla wszystkich użytkowników systemu. Alias może zawierać znaki wieloznaczne * lub ?.

@@ -1,0 +1,54 @@
+Amri za Akaunti  
+Amri hizi zinahusiana na akaunti yako na ufikiaji wa akaunti.
+
+about [<message>]
+
+	Inaonyesha ujumbe wako wa kuhusu au kuweka mpya.
+
+admins [<alias>]
+
+	Orodhesha watumiaji wote wa usimamizi wa mfumo. Alias inaweza kuwa na wahusika wa mwituni * au ?.
+
+alias [<alias>]
+
+	Inaonyesha alias yako au kuweka mpya.
+
+device <devicekey> <alias>
+
+	Inatoa kifaa chako alias mpya.
+
+devices
+
+	Orodhesha vifaa vyako.
+
+login <username> <password>
+
+	Inakuingiza kwenye kifaa cha sasa.
+
+logout
+
+	Inakutoa kwenye kifaa cha sasa.
+
+offline
+
+	Inakuweka kuwa offline kwa watumiaji wengine, hii ni hali ya kawaida kwa usajili mpya.
+
+online
+
+	Inakuweka kuwa online kwa watumiaji wengine, unabaki online hadi ubadilishe kuwa offline.
+
+password <oldpassword> <newpassword> (au chpwd)
+
+	Inabadilisha nenosiri lako.
+
+register <username> <password> [<alias>]
+
+	Inaunda akaunti mpya ya mtumiaji. Kumbuka: Hii haiingizi kwenye akaunti iliyoundwa mpya.
+
+username [<username>]
+
+	Inaonyesha jina lako la mtumiaji au kuweka mpya.
+
+users [<alias>]
+
+	Orodhesha watumiaji wote wa mfumo. Alias inaweza kuwa na wahusika wa mwituni * au ?.

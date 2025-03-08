@@ -1,0 +1,25 @@
+Roteiro
+
+Aqui está uma visão geral de alguns recursos futuros que planejamos adicionar a este produto, mantendo a simplicidade como o principal objetivo. Não necessariamente na ordem em que estarão disponíveis:
+
+	A capacidade de criar pacotes, implantar pacotes, compartilhar pacotes publicamente ou para compartilhamentos nomeados.
+
+	Adições aos comandos de arquivo para facilitar a cópia e movimentação de arquivos entre espaços e pacotes.
+
+	Algumas funções de gerenciamento de dispositivos e chaves (excluindo-os).
+
+	Versionamento. A capacidade de listar versões, carregar versões anteriores, reverter para versões anteriores.
+
+	A capacidade de desenvolver e aprimorar este produto usando ele mesmo.
+
+	Algumas funcionalidades de IA, não apenas integração com LLM, mas talvez integração com nosso produto dAIbolical.
+
+	Desenvolvimento contínuo de API para que você não precise fazer tudo do zero.
+
+	Execução automática de um programa ao fazer login, com a opção de ignorar isso se algo der errado.
+
+	Suporte a 'sabores' de código-fonte para que você possa trabalhar com diferentes tipos de arquivos de forma inteligente, como editar seus arquivos binários com o editor de linha.
+
+	Mais ferramentas para tornar o ensino do desenvolvimento de software tão simples quanto era nos anos 80.
+
+	Algumas outras surpresas.

@@ -1,8 +1,9 @@
-Bienvenue dans Open Home Computer JS !
+Bienvenue dans Home Computer JS !
 
 Ce guide d'aide vous accompagnera à travers les différentes commandes et fonctionnalités disponibles.
 
-Assurez-vous de lire les informations en tapant 'aide à propos'.
+Assurez-vous de lire les informations en tapant 'help about' et de consulter la politique de confidentialité en tapant 'help privacy', ainsi que les conditions générales en tapant 'help terms'.
+(en gros, si vous utilisez ce produit, vous acceptez la politique de confidentialité ainsi que les conditions générales)
 
 Vous pouvez vous inscrire afin de pouvoir vous connecter et programmer vos propres programmes et les partager avec d'autres.
 Tapez 'help account' pour obtenir de l'aide sur les commandes d'inscription et de connexion, ainsi que sur d'autres commandes liées au compte.
@@ -36,3 +37,19 @@ help sharing
 help about
 
 	Affiche des informations sur ce produit.
+	
+help roadmap
+
+	Affiche des informations sur ce que nous prévoyons de faire avec ce produit.
+	
+help privacy
+
+	Affiche la politique de confidentialité.
+
+help terms
+
+	Affiche les conditions générales.
+
+help etiquette
+
+	Affiche les règles d'étiquette pour ce système public.

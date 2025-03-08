@@ -1,0 +1,54 @@
+Lệnh Tài Khoản  
+Các lệnh này liên quan đến tài khoản và quyền truy cập tài khoản của bạn.
+
+about [<message>]
+
+	Hiển thị thông điệp giới thiệu của bạn hoặc thiết lập một cái mới.
+	
+admins [<alias>]
+
+	Liệt kê tất cả người dùng quản trị của hệ thống. Alias có thể chứa ký tự đại diện * hoặc ?.
+	
+alias [<alias>]
+
+	Hiển thị bí danh của bạn hoặc thiết lập một cái mới.
+	
+device <devicekey> <alias>
+
+	Cung cấp cho thiết bị của bạn một bí danh mới.
+	
+devices
+
+	Liệt kê các thiết bị của bạn.
+	
+login <username> <password>
+
+	Đăng nhập vào thiết bị hiện tại.
+	
+logout
+
+	Đăng xuất khỏi thiết bị hiện tại.
+	
+offline
+
+	Đánh dấu bạn là ngoại tuyến cho người dùng khác, đây là mặc định cho các đăng ký mới.
+	
+online
+
+	Đánh dấu bạn là trực tuyến cho người dùng khác, bạn sẽ vẫn trực tuyến cho đến khi bạn chuyển sang ngoại tuyến.
+	
+password <oldpassword> <newpassword> (hoặc chpwd)
+
+	Thay đổi mật khẩu của bạn.
+	
+register <username> <password> [<alias>]
+
+	Tạo một tài khoản người dùng mới. Lưu ý: Điều này không đăng nhập bạn vào tài khoản mới tạo.
+	
+username [<username>]
+
+	Hiển thị tên người dùng của bạn hoặc thiết lập một cái mới.
+	
+users [<alias>]
+
+	Liệt kê tất cả người dùng của hệ thống. Alias có thể chứa ký tự đại diện * hoặc ?.

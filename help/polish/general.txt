@@ -1,0 +1,18 @@
+Ogólne polecenia  
+Te polecenia dostarczają ogólnych informacji i kontroli.  
+
+language [<language>]  
+
+	Pokazuje twój obecny język lub ustawia nowy.  
+
+languages  
+
+	Wyświetla dostępne ludzkie języki, które można wykorzystać w systemie.  
+
+reset  
+
+	Zresetowuje środowisko i traci cały kod aktualnie w edytorze kodu.  
+
+startup  
+
+	Wyświetla tekst uruchamiania.  

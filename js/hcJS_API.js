@@ -249,6 +249,36 @@ function hcJS_API(objGlobals_a)
 	var m_objThis = this;
 	var globals = objGlobals_a;
 
+	// utils
+	
+	function isFunction(fn_a)
+	{
+		var getType = {};
+		return fn_a && getType.toString.call(fn_a) === '[object Function]';
+	}
+
+	function processArray(arr_a, cb_a)
+	{
+		if (arr_a !== null)
+		{
+			var intRowNum = 1;
+			var intI = 0;
+			var blnAbort = false;
+			while ((!blnAbort) && (intI < arr_a.length))
+			{
+				if (arr_a[intI] !== undefined)
+				{
+					if (isFunction(cb_a))
+					{
+						blnAbort = cb_a(arr_a[intI], intRowNum, intI);
+					}
+				}
+				intRowNum++;
+				intI++;
+			}
+		}
+	}
+
 	// string functions
 	
 	this.getGuid = function()
@@ -285,12 +315,12 @@ function hcJS_API(objGlobals_a)
 					}
 					else
 					{
-						m_objThis.print(strIndent + ' ' + "Object");
+						m_objThis.print(strIndent + ' ' + "Object", false, true);
 					}
 				} 
 				else 
 				{
-					m_objThis.print(strIndent + ' ' + strValue);
+					m_objThis.print(strIndent + ' ' + strValue, false, true);
 				}
 			}
 		}
@@ -303,12 +333,366 @@ function hcJS_API(objGlobals_a)
 		globals.console.clearOutput();
 	};
 	
-	this.print = function(str_a)
+	this.print = function(str_a, blnForceLTR_a, blnReverseRTL_a)
 	{
-		globals.console.appendOutput(str_a);
+		globals.console.appendOutput(str_a, blnForceLTR_a, blnReverseRTL_a);
+	};
+	
+	// language functions
+	
+	this.language = function(cb_a)
+	{
+		globals.console.handleServerCommands('language', 'nofiles', function(objResponse_a)
+		{
+			if (isFunction(cb_a))
+			{
+				cb_a(objResponse_a);
+			}
+		});
+	};
+	
+	this.languages = function(cb_a)
+	{
+		globals.console.handleServerCommands('languages', 'nofiles', function(objResponse_a)
+		{
+			if (isFunction(cb_a))
+			{
+				cb_a(objResponse_a);
+			}
+		});
+	};
+	
+	// file functions
+
+	this.loadFile = function(strFilename_a, cb_a)
+	{
+		globals.console.loadFile(strFilename_a, function(objResponse_a)
+		{
+			if (isFunction(cb_a))
+			{
+				cb_a(objResponse_a);
+			}
+		});
+	};
+	
+	this.saveFile = function(strFilename_a, objData_a, cb_a)
+	{
+		globals.console.saveFile(strFilename_a, objData_a, function(objResponse_a)
+		{
+			if (isFunction(cb_a))
+			{
+				cb_a(objResponse_a);
+			}
+		});
+	};
+	
+	// data functions
+
+	this.createDatabase = function()
+	{
+		if (globals.Indexes === undefined) 
+		{
+			globals.Indexes = {};
+		}
+
+		if (globals.Cursors === undefined) 
+		{
+			globals.Cursors = {};
+		}
+
+
+		if (globals.TableData === undefined) 
+		{
+			globals.TableData = {};
+		}
+	};
+
+	this.appendTable = function(strTableName_a, arrJSON_a) 
+	{
+		if (!globals.TableData[strTableName_a]) 
+		{
+			globals.TableData[strTableName_a] = [];
+		}
+		globals.TableData[strTableName_a] = globals.TableData[strTableName_a].concat(arrJSON_a);
+	};
+
+	this.createIndex = function(strTableName_a, strFieldName_a, blnAscending_a) 
+	{
+		var objIndex = {};
+		var strIndexName = strTableName_a + '__' + strFieldName_a;
+		var arrJSON = globals.TableData[strTableName_a];
+
+		if (arrJSON === undefined) 
+		{
+			m_objThis.print("Table " + strTableName_a + " not found.");
+		} 
+		else 
+		{
+			arrJSON.forEach(function(objRecord_a, intIndex_a) 
+			{
+				var strValue = objRecord_a[strFieldName_a];
+				var strEscapedValue = m_objThis.escapeValue(strValue);
+
+				if (!objIndex[strEscapedValue]) 
+				{
+					objIndex[strEscapedValue] = [intIndex_a];
+				} 
+				else 
+				{
+					objIndex[strEscapedValue].push(intIndex_a);
+				}
+			});
+
+			// Sort the object properties
+			var sortedObjIndex = {};
+			if (blnAscending_a)
+			{
+				Object.keys(objIndex).sort().forEach(function(strKey_a) 
+				{
+					sortedObjIndex[strKey_a] = objIndex[strKey_a];
+				});
+			}
+			else
+			{
+				Object.keys(objIndex).sort().reverse().forEach(function(strKey_a) 
+				{
+					sortedObjIndex[strKey_a] = objIndex[strKey_a];
+				});
+			}
+
+			globals.Indexes[strIndexName] = { ascending: blnAscending_a, index: sortedObjIndex };
+			globals.Cursors[strIndexName] = { cursor: -1, dataIndex: -1, indexed: true, value: "" };
+		}
+	};
+	
+	this.dropIndex = function(strTableName_a, strFieldName_a)
+	{
+		var strIndexName = strTableName_a + '__' + strFieldName_a;
+		if (globals.Indexes[strIndexName]) 
+		{
+			delete globals.Indexes[strIndexName];
+		}
+	};
+
+	this.escapeValue = function(strValue_a) 
+	{
+	  return strValue_a.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+	};
+
+	this.findData = function(strTableName_a, strFieldName_a, strValue_a) 
+	{
+		var blnAscending = true;
+		var intIndex;
+		var objCursor;
+		var objResult;
+		var strIndexName = strTableName_a + '__' + strFieldName_a;
+		var arrJSON = globals.TableData[strTableName_a];
+		var strValue = strValue_a;
+
+		if (strValue === undefined) { strValue = ""; }
+
+		if (arrJSON === undefined) 
+		{
+			m_objThis.print("Table " + strTableName_a + " not found.");
+		}
+		else
+		{
+			if (globals.Indexes[strIndexName]) 
+			{
+				if (strValue.length > 0) 
+				{
+					var strEscapedValue = this.escapeValue(strValue);
+					//blnAscending = globals.Indexes[strIndexName].ascending;
+					intIndex = globals.Indexes[strIndexName].index[strEscapedValue];
+					if (intIndex !== undefined) 
+					{
+						objCursor = { cursor: 0, dataIndex: intIndex[0], indexed: true, value: strValue };
+					} 
+					else 
+					{
+						objCursor = { cursor: -1, dataIndex: -1, indexed: true, value: strValue };
+					}
+				} 
+				else 
+				{
+					if (arrJSON.length > 0) 
+					{
+						blnAscending = globals.Indexes[strIndexName].ascending;
+						var arrSortedKeys = [];
+						if (blnAscending)
+						{
+							arrSortedKeys = Object.keys(globals.Indexes[strIndexName].index).sort();
+						}
+						else
+						{
+							arrSortedKeys = Object.keys(globals.Indexes[strIndexName].index).sort().reverse();
+						}
+						var intKey = arrSortedKeys[0];
+						intIndex = globals.Indexes[strIndexName].index[intKey];
+						objCursor = { cursor: 0, dataIndex: intIndex[0], indexed: true, value: "" };
+					}
+					else
+					{
+						objCursor = { cursor: -1, dataIndex: -1, indexed: false, value: strValue };
+					}
+				}
+			} 
+			else 
+			{
+				if (strValue.length > 0) 
+				{
+					intIndex = arrJSON.findIndex(function(objRecord_a) 
+					{
+						return objRecord_a[strFieldName_a] === strValue;
+					});
+					
+					objCursor = { cursor: intIndex, dataIndex: intIndex, indexed: false, value: strValue };
+				} 
+				else 
+				{
+					if (arrJSON.length > 0) 
+					{
+						objCursor = { cursor: 0, dataIndex: 0, indexed: false, value: strValue };
+					} 
+					else 
+					{
+						objCursor = { cursor: -1, dataIndex: -1, indexed: false, value: strValue };
+					}
+				}
+			}
+
+			globals.Cursors[strIndexName] = objCursor;
+			if (objCursor.dataIndex !== -1) 
+			{
+				objResult = globals.TableData[strTableName_a][objCursor.dataIndex];
+			}
+		}
+
+		return objResult;
+	};
+
+	this.nextData = function(strTableName_a, strFieldName_a) 
+	{ 
+		var objResult;
+		var strIndexName = strTableName_a + '__' + strFieldName_a;
+		var arrJSON = globals.TableData[strTableName_a];
+		var objCursor = globals.Cursors[strIndexName];
+
+		if (arrJSON === undefined) 
+		{
+			m_objThis.print("Table " + strTableName_a + " not found.");
+		}
+		else if (objCursor === undefined) 
+		{
+			m_objThis.print("Cursor for " + strTableName_a + " not found.");
+		}
+		else
+		{
+			if (globals.Indexes[strIndexName]) 
+			{
+				var arrIndices = [];
+				var intDataIndex = -1;
+				var intNextIndex;
+				var strValue = objCursor.value;
+				if (strValue.length > 0)
+				{
+					var strEscapedValue = this.escapeValue(strValue);
+					var intCurrentIndex = objCursor.cursor;
+					arrIndices = globals.Indexes[strIndexName].index[strEscapedValue];
+					intDataIndex = objCursor.dataIndex;
+
+					if (arrIndices !== undefined) 
+					{
+						intNextIndex = arrIndices.indexOf(intDataIndex) + 1;
+						if (intNextIndex >= arrIndices.length) 
+						{
+							objCursor = { cursor: -1, dataIndex: -1, indexed: true, value: strValue };
+						} 
+						else 
+						{
+							objCursor = { cursor: intCurrentIndex, dataIndex: arrIndices[intNextIndex], indexed: true, value: strValue };
+						}
+					} 
+					else 
+					{
+						objCursor = { cursor: -1, dataIndex: -1, indexed: true, value: strValue };
+					}
+				}
+				else
+				{
+					var objKeys = Object.keys(globals.Indexes[strIndexName].index);
+					var intKeyIndex = 0;
+					var intI = 0;
+					intDataIndex = -1;
+					intNextIndex = objCursor.cursor + 1;
+
+					while ((intI < intNextIndex) && (intDataIndex < 0))
+					{
+						while ((intKeyIndex < objKeys.length) && (intDataIndex < 0))
+						{
+							var objKey = objKeys[intKeyIndex];
+							arrIndices = globals.Indexes[strIndexName].index[objKey];
+							for (var intJ = 0; intJ < arrIndices.length; intJ++) 
+							{
+								if (intI === intNextIndex) 
+								{
+									intDataIndex = arrIndices[intJ];
+									break;
+								} 
+								else 
+								{
+									intI++;
+								}
+							}
+							intKeyIndex++;
+						}
+					}
+  
+					if (intI < intNextIndex) 
+					{
+						objCursor = { cursor: -1, dataIndex: -1, indexed: true, value: "" };
+					} 
+					else 
+					{
+						objCursor = { cursor: intNextIndex, dataIndex: intDataIndex, indexed: true, value: "" };
+					}
+				}
+			} 
+			else 
+			{
+				var intIndex = arrJSON.findIndex(function(objRecord_a, intIndex_a) 
+				{
+					var intResult;
+					if (objCursor.value.length > 0) 
+					{
+						intResult = intIndex_a > objCursor.cursor && objRecord_a[strFieldName_a] === objCursor.value;
+					} 
+					else 
+					{
+						intResult = intIndex_a > objCursor.cursor;
+					}
+					return intResult;
+				});
+				objCursor = { cursor: intIndex, dataIndex: intIndex, indexed: false, value: objCursor.value };
+			}
+
+			globals.Cursors[strIndexName] = objCursor;
+			if (objCursor.dataIndex !== -1) 
+			{
+				objResult = globals.TableData[strTableName_a][objCursor.dataIndex];
+			}
+		}
+		
+		return objResult;
+	};
+
+	this.truncateTable = function(strTableName_a)
+	{
+		globals.TableData[strTableName_a] = [];
 	};
 
 	// tab functions
+	
 	this.getTabHandler = function(cb_a)
 	{
 		return new parentTabHandler({

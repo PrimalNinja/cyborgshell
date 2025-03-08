@@ -1,0 +1,25 @@
+Roadmap
+
+Hier ist eine Übersicht über einige kommende Funktionen, die wir zu diesem Produkt hinzufügen möchten, wobei Einfachheit das Hauptziel bleibt. Nicht unbedingt in der Reihenfolge, in der sie verfügbar sein werden:
+
+    Die Möglichkeit, Pakete zu erstellen, Pakete bereitzustellen und Pakete entweder öffentlich oder an benannte Freigaben zu teilen.
+
+    Ergänzungen zu den Datei-Befehlen, um das Kopieren und Verschieben von Dateien zwischen Räumen und Paketen zu erleichtern.
+
+    Einige Funktionen zur Geräte- und Schlüsselverwaltung (Löschen dieser).
+
+    Versionskontrolle. Die Möglichkeit, Versionen aufzulisten, vorherige Versionen zu laden und auf vorherige Versionen zurückzurollen.
+
+    Die Fähigkeit, dieses Produkt mit sich selbst zu entwickeln und zu verbessern.
+
+    Einige KI-Funktionen, nicht nur LLM-Integration, sondern vielleicht auch die Integration mit unserem dAIbolical-Produkt.
+
+    Laufende API-Entwicklung, sodass Sie nicht alles von Grund auf neu machen müssen.
+
+    Automatische Ausführung eines Programms beim Anmelden, mit optionaler Möglichkeit, dies zu umgehen, falls etwas schiefgeht.
+
+    Unterstützung für 'Flavour' des Quellcodes, sodass Sie intelligent mit verschiedenen Dateitypen arbeiten können, z. B. Ihre Binärdateien mit dem Zeileneditor bearbeiten.
+
+    Mehr Werkzeuge, um das Lehren von Softwareentwicklung so einfach zu gestalten wie in den 80er Jahren.
+
+    Einige andere Überraschungen.

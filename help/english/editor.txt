@@ -9,9 +9,21 @@ cls (or clear)
 
 	Clears the screen.
 
-edit (or ed)
+edit <linenumber> (or ed)
 
 	Edits a line with the line editor.
+	
+file [<filenumber>]
+
+	Shows your current file for which editor commands apply or sets a new one.
+
+filename [<filename>]
+
+	Shows the filename of the current file or sets it. This filename is for the editor, it is not given to the files you load or save, but rather it will be set by you loading or saving files.
+
+files
+
+	Lists all files in the editor with their associated filenumber.
 	
 list [[fromline]-[toline]]
 
@@ -19,8 +31,16 @@ list [[fromline]-[toline]]
 	
 new
 
-	Clears the current program.
-	
+	Clears the current program from the code editor.
+
+newfile
+
+	Creates a new file within your editor.
+
+paste <linenumber> <filenumber>
+
+	Pastes the content of the filenumber specified into the currentfile before the specified linenumber. This paste ability allows you to use multiple fragments of code loaded into the editor as separate clipboards and paste them as required in your code.
+
 renum
 
 	Renumbers the program. Note: JavaScript doesn't use line numbers, but we use them for editing purposes.

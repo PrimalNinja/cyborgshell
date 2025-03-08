@@ -1,0 +1,50 @@
+Amri za Mhariri  
+Amri hizi zinakusaidia kuhariri programu yako ya sasa.  
+
+beautify  
+
+	Inapamba JSON iliyopakuliwa.  
+
+cls (au clear)  
+
+	Inafuta skrini.  
+
+edit <linenumber> (au ed)  
+
+	Inahariri mstari kwa kutumia mhariri wa mistari.  
+
+file [<filenumber>]  
+
+	Inaonyesha faili yako ya sasa ambayo amri za mhariri zinatumika au inaweka mpya.  
+
+filename [<filename>]  
+
+	Inaonyesha jina la faili la faili ya sasa au inaweka. Jina hili la faili ni kwa ajili ya mhariri, halitolewi kwa faili unazopakia au kuhifadhi, bali litakuwapo kwa wewe kupakia au kuhifadhi faili.  
+
+files  
+
+	Inataja faili zote katika mhariri na nambari zao zinazohusiana.  
+
+list [[fromline]-[toline]]  
+
+	Inataja programu. Mifano: list 30-, list -30, list 20-30, list, list 40.  
+
+new  
+
+	Inafuta programu ya sasa kutoka kwa mhariri wa msimbo.  
+
+newfile  
+
+	Inaunda faili mpya ndani ya mhariri wako.  
+
+paste <linenumber> <filenumber>  
+
+	Inakandamiza yaliyomo ya nambari ya faili iliyotajwa katika faili ya sasa kabla ya nambari ya mstari iliyotajwa. Uwezo huu wa kukandamiza unakuruhusu kutumia vipande vingi vya msimbo vilivyopakuliwa katika mhariri kama clipboard tofauti na kuvikandamiza kama inavyohitajika katika msimbo wako.  
+
+renum  
+
+	Inarekebisha nambari za programu. Kumbuka: JavaScript haitumii nambari za mistari, lakini tunazitumia kwa madhumuni ya kuhariri.  
+
+run  
+
+	Inakimbiza programu ya sasa.  

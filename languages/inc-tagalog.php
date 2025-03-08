@@ -2,9 +2,12 @@
 
 // actions
 define("ACTION_INVALIDATE", "invalidate");
+define("ACTION_LTR", "ltr");
+define("ACTION_RTL", "rtl");
 
 // messages
 define("MSG_ABOUTUPDATED", "Na-update ang tungkol.");
+define("MSG_BLOCKEDWORDFOUND", "Nahanap ang naka-block na salita.");
 define("MSG_DEVICEKEYSNONE", "mga susi ng device: wala");
 define("MSG_FILEBEAUTIFIED", "Naging maganda ang file.");
 define("MSG_FILECOPIED", "Nakopya ang file.");

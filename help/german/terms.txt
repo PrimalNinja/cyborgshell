@@ -1,0 +1,25 @@
+Allgemeine Geschäftsbedingungen
+
+Einschränkungen
+
+Durch die Nutzung dieses Systems stimmen Sie zu, es nicht zu verwenden, um andere Systeme, Netzwerke oder Dienste, die nicht Teil dieser Umgebung sind, negativ zu beeinflussen, zu kompromittieren oder auszunutzen.
+
+Durch die Nutzung dieses Systems stimmen Sie auch zu, die in 'help etiquette' dargelegten Etikette-Regeln zu befolgen.
+
+Testen Sie Unsere Grenzen
+
+Sie sind frei, dieses System nach Ihrem Ermessen zu nutzen. Tatsächlich ermutigen wir Sie, zu versuchen, das System an seine Grenzen zu bringen. Versuchen Sie, das System zu hacken, zu knacken oder zum Absturz zu bringen - wir möchten sehen, wozu Sie fähig sind!
+
+Durch die Nutzung dieses Systems erkennen Sie an, dass:
+
+- Wir die Sicherheit oder Integrität des Systems nicht garantieren
+- Wir die Privatsphäre oder Vertraulichkeit von Informationen, die im System geteilt oder gespeichert werden, nicht garantieren
+- Sie für Ihre eigenen Handlungen im System verantwortlich sind
+
+Cookies
+
+Wenn Sie sich nicht anmelden, speichern wir keine Cookies auf Ihrem Computer. Wenn Sie sich anmelden, tun wir dies, aber nur, um Ihnen zu ermöglichen, angemeldet zu bleiben, bis Sie sich wieder abmelden.
+
+Sicherheit
+
+Ihre Kontopasswörter werden nicht als Klartext auf dem Server gespeichert. Wir folgen bewährten Praktiken und Ihr Passwort ist uns ebenfalls nicht bekannt - es handelt sich nicht um ein entschlüsselbares Passwort.

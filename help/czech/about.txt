@@ -1,0 +1,27 @@
+Vítejte v Open Home Computer JS! (OHCJS)
+
+OHCJS přináší retro kouzlo domácích počítačů na moderní zařízení, což vám umožňuje vytvářet, programovat a spolupracovat kdekoli a kdykoli. S OHCJS můžete:
+
+- Vytvořit účet a přihlásit se na více zařízeních
+- Programovat v JavaScriptu, samostatně nebo v týmech
+- Ukládat své programy do personalizovaných "prostorů"
+
+Inspirováno jednoduchostí 8-bitových domácích počítačů, OHCJS si klade za cíl znovu vytvořit okamžitý, bezstarostný zážitek z klasického počítačování. Zaregistrujte se, přihlaste se a začněte programovat během několika sekund!
+
+V OHCJS je váš "prostor" vaše vlastní soukromá úložná oblast, přístupná pouze vám. Můžete také prozkoumávat veřejný prostor, kde můžete vytvářet, sdílet a experimentovat s ostatními.
+
+Sdílení je klíčovou funkcí v OHCJS. Stejně jako výměna disket v 80. letech, můžete sdílet svůj prostor s ostatními a naopak. Tento jednoduchý model sdílení umožňuje různé scénáře:
+
+- Výuka: Sdílejte prostory se studenty pro vedené učení
+- Týmová práce: Spolupracujte na projektech ve sdílených týmových prostorech
+- Přátelství: Vzájemně sdílejte prostory s důvěryhodnými přáteli
+
+Licence
+
+Open Home Computer JS (OHCJS) [github.com/PrimalNinja/ohcjs] je vydán pod licencí MIT, protože "sdílení je péče."
+
+Kontaktujte PrimalNinja, pokud byste chtěli zvážit jiné možnosti licence.
+
+O nás
+
+OHCJS je hrdě vyvíjen PrimalNinja z Cyborg Unicorn Pty Ltd.

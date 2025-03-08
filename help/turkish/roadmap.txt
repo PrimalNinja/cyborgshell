@@ -1,0 +1,25 @@
+Yol Haritası
+
+İşte bu ürüne eklemeyi planladığımız bazı yaklaşan özelliklerin bir özeti; basitliği ana hedef olarak tutarak. Mutlaka mevcut olma sırasına göre değil:
+
+	Paketler oluşturma, paketleri dağıtma, paketleri halka açık veya belirlenen paylaşımlara paylaşma yeteneği.
+	
+	Dosya komutlarına, dosyaları alanlar ve paketler arasında kopyalama ve taşıma işlemlerini kolaylaştıracak eklemeler.
+	
+	Bazı cihaz ve anahtar yönetim işlevleri (silme işlemleri).
+	
+	Sürüm kontrolü. Sürümleri listeleme, önceki sürümleri yükleme, önceki sürümlere geri dönme yeteneği.
+	
+	Bu ürünü kendisi kullanarak geliştirme ve iyileştirme yeteneği.
+	
+	Biraz AI olanakları, sadece LLM entegrasyonu değil, belki de dAIbolical ürünümüzle entegrasyon.
+	
+	Tüm işlemleri sıfırdan yapmanıza gerek kalmadan devam eden API geliştirmesi.
+	
+	Girişte bir programın otomatik olarak çalıştırılması, bir şeyler ters giderse bunu atlama seçeneği ile.
+	
+	Farklı dosya türleriyle akıllıca çalışabilmeniz için kaynak kodu 'tadı' desteği, örneğin ikili dosyalarınızı satır düzenleyici ile düzenleyebilme.
+	
+	Yazılım geliştirmeyi 80'lerdeki kadar basit hale getirmek için daha fazla araç.
+	
+	Bazı diğer sürprizler.

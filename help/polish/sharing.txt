@@ -1,0 +1,47 @@
+Komendy udostępniania i przestrzeni plików  
+Te komendy dotyczą udostępniania przestrzeni plików oraz przestrzeni plików, do których masz dostęp.
+
+grant <sharekey>
+
+	Udostępnia Twoją przestrzeń plików użytkownikowi, który dostarczył sharekey.
+	
+keys
+
+	Wyświetla wszystkie Twoje klucze. Udostępniaj tylko swoje klucze udostępniania.
+	
+newkey <keyname>
+
+	Tworzy nowy sharekey o podanej nazwie klucza.
+	
+revoke <sharekey>
+
+	Cofnięcie udostępnienia Twojej przestrzeni plików użytkownikowi, który dostarczył sharekey.
+	
+shares
+
+	Wyświetla wszystkie udostępnienia, które przyznałeś.
+
+
+Proces udostępniania
+
+Przykład, jak udostępniać przestrzenie plików:
+
+Fred
+
+	1. Fred chce uzyskać dostęp do przestrzeni Wilma.
+	2. Fred tworzy sharekey dla Wilma, wpisując 'newkey wilma' i przekazuje sharekey Wilmie.
+	note: wilma w 'newkey wilma' to alias Freda dla sharekey, nie ma to nic wspólnego z kontem Wilma.
+	
+Wilma
+
+	3. Korzystając z sharekey, który dostarczył Fred, przyznaje dostęp Fredowi, wpisując 'grant <sharekey>'.
+
+Fred
+
+	4. Fred ma teraz dostęp do przestrzeni Wilma.
+
+Wilma
+
+	5. Wilma nadal ma kontrolę nad tym, z kim się dzieli i może cofnąć lub przywrócić Freda, kiedy tylko zechce.
+
+Ten proces udostępniania pozwala również zespołom na posiadanie wspólnej przestrzeni. Wyobraźmy sobie, że Wilma zarządza przestrzenią zespołu. Wilma może poprosić każdego programistę w zespole o indywidualne sharekeys, aby mogły być przyznawane lub cofnęte w razie potrzeby w przestrzeni zespołu.

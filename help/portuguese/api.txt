@@ -1,0 +1,19 @@
+Referência da API
+
+Por enquanto, é apenas o seguinte:
+
+(relacionado a debug)
+
+api.debugObject(<object>, [<recurseflag>]);
+
+	exibe o objeto fornecido; se a flag recursiva for omitida, o padrão é verdadeiro.
+
+(relacionado à tela)
+
+api.cls();
+
+	limpa a tela
+
+api.print(<output>);
+
+	imprime alguma saída

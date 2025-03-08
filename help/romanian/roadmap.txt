@@ -1,0 +1,25 @@
+Plan de dezvoltare
+
+Iată o prezentare generală a unor caracteristici viitoare pe care intenționăm să le adăugăm acestui produs, păstrând simplitatea ca obiectiv principal. Nu neapărat în ordinea în care vor fi disponibile:
+
+	Capacitatea de a crea pachete, de a desfășura pachete, de a partaja pachete fie public, fie către acțiuni nominalizate.
+	
+	Adăugiri la comenzile de fișiere pentru a facilita copierea și mutarea fișierelor între spații și pachete.
+	
+	Unele funcții de gestionare a dispozitivelor și cheilor (ștergerea acestora).
+	
+	Controlul versiunilor. Capacitatea de a lista versiunile, de a încărca versiuni anterioare, de a reveni la versiuni anterioare.
+	
+	Capacitatea de a dezvolta și îmbunătăți acest produs folosind chiar el.
+	
+	Unele facilități AI, nu doar integrarea LLM, ci poate și integrarea cu produsul nostru dAIbolical.
+	
+	Dezvoltare continuă a API-ului, astfel încât să nu fie nevoie să faci totul de la zero.
+	
+	Executarea automată a unui program la autentificare, cu opțiunea de a o ocoli în cazul în care ceva nu merge bine.
+	
+	Suport pentru 'flavour' de cod sursă, astfel încât să poți lucra cu diferite tipuri de fișiere în mod inteligent, cum ar fi editarea fișierelor binare cu editorul de linii.
+	
+	Mai multe instrumente pentru a face predarea dezvoltării software la fel de simplă cum era în anii '80.
+	
+	Unele alte surprize.

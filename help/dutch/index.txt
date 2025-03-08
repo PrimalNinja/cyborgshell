@@ -1,0 +1,55 @@
+Welkom bij Home Computer JS!
+
+Deze helpgids leidt je door de verschillende commando's en functies die beschikbaar zijn.
+
+Zorg ervoor dat je de informatie leest door 'help about' in te typen en lees het privacybeleid door 'help privacy' in te typen, evenals de algemene voorwaarden door 'help terms' in te typen.  
+(basically if you use this product, you agree to the privacy policy as well as the terms & conditions)
+
+Je kunt je registreren zodat je kunt inloggen en je eigen programma's kunt programmeren en deze met anderen kunt delen.  
+Typ 'help account' voor hulp bij de registreren en inloggen commando's, evenals enkele andere accountcommando's.
+
+Help Index
+
+help
+
+    Toont deze helpindex.
+
+help general
+
+    Toont hulp over algemene commando's.
+
+help editor
+
+    Toont hulp over editorcommando's.
+
+help file
+
+    Toont hulp over bestandcommando's.
+
+help account
+
+    Toont hulp over accountcommando's.
+
+help sharing
+
+    Toont hulp over deelcommando's.
+
+help about
+
+    Toont wat informatie over dit product.
+
+help roadmap
+
+    Toont wat informatie over wat we van plan zijn te doen met dit product.
+
+help privacy
+
+    Toont het privacybeleid.
+
+help terms
+
+    Toont de algemene voorwaarden.
+
+help etiquette
+
+    Toont de etiquette regels voor dit openbare systeem.

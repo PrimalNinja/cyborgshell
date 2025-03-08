@@ -1,0 +1,50 @@
+Redigeringskommandon  
+Dessa kommandon hjälper dig att redigera ditt nuvarande program.
+
+beautify
+
+	Beautifierar den inlästa JSON.
+
+cls (eller clear)
+
+	Rensar skärmen.
+
+edit <linenumber> (eller ed)
+
+	Redigerar en rad med radredigeraren.
+
+file [<filenumber>]
+
+	Visar din aktuella fil som redigeringskommandon gäller för eller sätter en ny.
+
+filename [<filename>]
+
+	Visar filnamnet för den aktuella filen eller sätter det. Detta filnamn är för redigeraren, det ges inte till de filer du laddar eller sparar, utan sätts av dig när du laddar eller sparar filer.
+
+files
+
+	Listar alla filer i redigeraren med deras associerade filnummer.
+
+list [[fromline]-[toline]]
+
+	Listar programmet. Exempel: list 30-, list -30, list 20-30, list, list 40.
+
+new
+
+	Rensar det aktuella programmet från kodredigeraren.
+
+newfile
+
+	Skapar en ny fil inom din redigerare.
+
+paste <linenumber> <filenumber>
+
+	Klistrar in innehållet från det angivna filnumret i den aktuella filen före den angivna radnumret. Denna klistra in-funktion gör att du kan använda flera kodfragment som laddats in i redigeraren som separata urklipp och klistra in dem som behövs i din kod.
+
+renum
+
+	Omarbetar programmet. Obs: JavaScript använder inte radnummer, men vi använder dem för redigeringsändamål.
+
+run
+
+	Kör det aktuella programmet.

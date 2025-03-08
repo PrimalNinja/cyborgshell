@@ -1,0 +1,46 @@
+Comenzi pentru Fișiere  
+Aceste comenzi se referă la fișierele din spațiul tău curent de fișiere.
+
+beautify <filename>
+
+	Îmbunătățește un fișier JSON fără a corupe programul actualmente încărcat.
+	
+dir [<filename>] (sau cat, ls)
+
+	Listă programele salvate. Numele fișierului poate conține caractere wildcard * sau ?.
+	
+copy <filenamea> <filenameb> (sau cp)
+
+	Copie un fișier din filenamea în filenameb.
+	
+del <filename> (sau delete, era)
+
+	Șterge un program.
+	
+load <filename>
+
+	Încărca un program.
+	
+ren <filenamea> <filenameb> (sau rename, mv)
+
+	Redenumește un fișier din filenamea în filenameb.
+	
+run <filename>
+
+	Rulează un program, înlocuind programul existent încărcat.
+	
+save <filename>
+
+	Salvează un program.
+	
+space [<spacekey> | <alias>] (sau cs, cd, chdir)
+
+	Afișează spațiul tău curent sau schimbă-l cu unul nou.
+	
+spaces
+
+	Listă toate spațiile de fișiere la care ai acces.
+
+type <filename> [[fromline]-[toline]]
+
+	Tipă un program fără a corupe programul actualmente încărcat.

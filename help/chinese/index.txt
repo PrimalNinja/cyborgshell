@@ -1,8 +1,9 @@
-欢迎来到 Open Home Computer JS!
+欢迎来到 Home Computer JS!
 
 本帮助指南将带您了解各种可用的命令和功能。
 
-请务必通过输入 'help about' 来阅读相关信息。
+请务必通过输入 'help about' 阅读关于本产品的信息，通过输入 'help privacy' 阅读隐私政策，以及通过输入 'help terms' 阅读条款和条件。
+（基本上，如果您使用此产品，您同意隐私政策和条款与条件）
 
 您可以注册以便登录并编写自己的程序，并与他人分享。
 输入 'help account' 以获取有关注册和登录命令以及其他账户命令的帮助。
@@ -36,3 +37,19 @@ help sharing
 help about
 
     显示有关本产品的一些信息。
+    
+help roadmap
+
+    显示我们计划对本产品进行的工作的一些信息。
+    
+help privacy
+
+    显示隐私政策。
+
+help terms
+
+    显示条款和条件。
+
+help etiquette
+
+    显示此公共系统的礼仪规则。

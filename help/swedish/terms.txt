@@ -1,0 +1,25 @@
+Villkor och bestämmelser
+
+Begränsningar
+
+Genom att använda detta system samtycker du till att inte använda det för att negativt påverka, kompromettera eller utnyttja andra system, nätverk eller tjänster som inte är en del av denna miljö.
+
+Genom att använda detta system samtycker du också till att följa etikettreglerna som beskrivs i 'help etiquette'.
+
+Testa våra gränser
+
+Du är fri att använda detta system som du vill. Faktum är att vi uppmuntrar dig att försöka pressa systemet till dess gränser. Försök att hacka, knäcka eller ta ner systemet - vi vill se vad du är kapabel till!
+
+Genom att använda detta system erkänner du att:
+
+- Vi garanterar inte säkerheten eller integriteten hos systemet
+- Vi garanterar inte sekretessen eller konfidentialiteten för någon information som delas eller lagras på systemet
+- Du är ansvarig för dina egna handlingar på systemet
+
+Cookies
+
+Om du inte loggar in lagrar vi inga cookies på din dator. Om du loggar in gör vi det, men endast för att låta dig förbli inloggad tills du loggar ut igen.
+
+Säkerhet
+
+Dina kontolösenord lagras inte som vanlig text på servern. Vi följer bästa praxis och ditt lösenord är inte känt för oss heller - det är inte ett dekrypterbart lösenord.

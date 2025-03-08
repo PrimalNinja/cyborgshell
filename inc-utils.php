@@ -121,6 +121,51 @@ function getUserFile($strFilename_a)
 	return $arrJSON;
 }
 
+function hasBlockedWords($str_a)
+{
+	global $g_strServerSystemDir;
+	
+	$strBlockedWordsFile = $g_strServerSystemDir . "blockedwords.txt";
+	return matchesPatternFile($strBlockedWordsFile, $str_a);
+}
+
+function isRTLLanguage()
+{
+	global $g_arrRTLLanguages;
+	global $g_strCurrentLanguage;
+	
+	$blnResult = false;
+	
+	if (in_array($g_strCurrentLanguage, $g_arrRTLLanguages))
+	{
+		$blnResult = true;
+	}
+	
+	return $blnResult;
+}
+
+function matchesPatternFile($strFilename_a, $str_a)
+{
+	$blnResult = false;
+	$arrPatterns = [];
+	
+	if (file_exists($strFilename_a)) 
+	{
+		$arrPatterns = explode("\n", file_get_contents($strFilename_a));
+	}
+	
+	foreach ($arrPatterns as $strPattern)
+	{
+		if ((trim($strPattern) !== '') && (preg_match('/' . $strPattern . '/i', $str_a)))
+		{
+			$blnResult = true;
+			break;
+		}
+	}
+	
+	return $blnResult;
+}
+
 function saveCurrentUserFile($arrJSON_a)
 {
 	global $g_strUserKey;
@@ -254,18 +299,28 @@ function getBrowser($strAgent_a)
 	return $strResult;
 }
 
-function getResponseJSON($strMessage_a, $strError_a, $strAction_a, $strContent_a)
+function getResponseJSON($strMessage_a, $strError_a, $arrActions_a, $strContent_a)
 {
-	if ($strAction_a == ACTION_INVALIDATE)
+	if (in_array(ACTION_INVALIDATE, $arrActions_a))
 	{
 		invalidateServer();
 	}
 	
+	$strMessage = $strMessage_a;
+	$strError = $strError_a;
+	$strMessage = str_replace("<", "&#x2329;", $strMessage);
+	$strMessage = str_replace(">", "&#x232A;", $strMessage);
+	$strError = str_replace("<", "&#x2329;", $strError);
+	$strError = str_replace(">", "&#x232A;", $strError);
+	
+	$blnIsRTLLanguage = isRTLLanguage();
+	
 	$arrResponse = array(
-		"message" => $strMessage_a,
-		"error" => $strError_a,
-		"action" => $strAction_a,
-		"content" => $strContent_a
+		"message" => $strMessage,
+		"error" => $strError,
+		"actions" => $arrActions_a,
+		"content" => $strContent_a,
+		"rtllanguage" => $blnIsRTLLanguage
 	);
 
 	return json_encode($arrResponse);
@@ -274,6 +329,16 @@ function getResponseJSON($strMessage_a, $strError_a, $strAction_a, $strContent_a
 function getGuid()
 {
     return str_replace('.', '-', uniqid('', true));
+}
+
+function rtlReverse($str_a)
+{
+	$strResult = $str_a;
+	if (isRTLLanguage())
+	{
+		$strResult = strrev($strResult);
+	}
+	return $strResult;
 }
 
 ?>

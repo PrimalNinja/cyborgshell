@@ -2,9 +2,12 @@
 
 // actions
 define("ACTION_INVALIDATE", "invalidate");
+define("ACTION_LTR", "ltr");
+define("ACTION_RTL", "rtl");
 
 // messages
 define("MSG_ABOUTUPDATED", "À propos mis à jour.");
+define("MSG_BLOCKEDWORDFOUND", "Mot bloqué trouvé.");
 define("MSG_DEVICEKEYSNONE", "clés de dispositif : aucune");
 define("MSG_FILEBEAUTIFIED", "Fichier embelli.");
 define("MSG_FILECOPIED", "Fichier copié.");
@@ -38,7 +41,7 @@ define("MSG_REGISTRATION", "Utilisateur '%%USERNAME%%' enregistré, veuillez pre
 define("MSG_SHARES", "parts :");
 define("MSG_SPACENAMEISNOW", "L'espace est maintenant %%SPACENAME%%.");
 define("MSG_SPACES", "espaces :");
-define("MSG_USERNAMEISNOW", "Le nom d'utilisateur est maintenant '%%USERNAME%%'.");f
+define("MSG_USERNAMEISNOW", "Le nom d'utilisateur est maintenant '%%USERNAME%%'.");
 
 // errors
 define("ERR_DEVICEKEYINVALID", "Clé de l'appareil invalide.");

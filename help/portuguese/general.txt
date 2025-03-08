@@ -1,0 +1,18 @@
+Comandos Gerais  
+Estes comandos fornecem informações gerais e controle.
+
+language [<language>]
+
+	Mostra seu idioma atual ou define um novo.
+
+languages
+
+	Lista os idiomas humanos disponíveis para usar no sistema.
+
+reset
+
+	Reinicia o ambiente e perde todo o código atualmente no editor de código.
+
+startup
+
+	Exibe o texto de inicialização.

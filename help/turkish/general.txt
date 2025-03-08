@@ -1,0 +1,18 @@
+Genel Komutlar  
+Bu komutlar genel bilgi ve kontrol sağlar.
+
+language [<language>]  
+
+	Mevcut dilinizi gösterir veya yeni bir dil ayarlar.
+
+languages  
+
+	Sistemi kullanmak için mevcut insan dillerini listeler.
+
+reset  
+
+	Ortamı sıfırlar ve kod editöründeki tüm kodu kaybeder.
+
+startup  
+
+	Açılış metnini görüntüler.

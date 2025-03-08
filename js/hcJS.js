@@ -1128,7 +1128,7 @@ function hcJS(strContainer_a, strInput_a, strOutput_a, blnShowStartupText_a)
 		
 		processArray(m_arrFiles, function(objFile_a)
 		{
-			if (objFile_a.filename !== m_NEWFILENAME)
+			if (objFile_a.dirty && objFile_a.filename !== m_NEWFILENAME)
 			{
 				arrFiles.push(intFile);
 			}

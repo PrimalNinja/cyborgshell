@@ -280,7 +280,16 @@ function cmdHelp($strTopic_a)
 	} 
 	else 
 	{
-		echo getResponseJSON("", ERR_FILENOTEXISTS_HELP, [], "");
+		$strHelpFile = $g_strServerHelpDir . '/default/' . $strTopic_a . ".txt";
+		if (file_exists($strHelpFile)) 
+		{
+			$strMessage = file_get_contents($strHelpFile);
+			echo getResponseJSON($strMessage, "", [], "");
+		} 
+		else 
+		{
+			echo getResponseJSON("", ERR_FILENOTEXISTS_HELP, [], "");
+		}
 	}
 }
 

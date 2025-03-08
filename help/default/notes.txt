@@ -1,0 +1,5 @@
+Late breaking release notes.
+
+- You can now drag files onto the editor from your computer. 
+- Listing files will now show any dirty files.
+- 'saveall' will save all named files.

@@ -8,7 +8,7 @@ define("MINIFIED", "FALSE");	// can be TRUE or FALSE, to use the minified versio
 // environment constants
 define("APPNAME", "Open Home Computer JS");
 define("VERSION", "v1.0 RC7");
-define("BUILD", "Build 20250308");
+define("BUILD", "Build 20250309");
 define("AUTHOR", "By PrimalNinja 2025");
 define("PASSWORDMINIMUMLENGTH", 8);
 

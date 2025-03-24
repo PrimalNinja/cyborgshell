@@ -333,10 +333,21 @@ function hcJS_API(objGlobals_a)
 		globals.console.clearOutput();
 	};
 	
+	this.input = function(cb_a)
+	{
+		globals.console.input(cb_a);
+	};
+	
 	this.print = function(str_a, blnForceLTR_a, blnReverseRTL_a)
 	{
 		globals.console.appendOutput(str_a, blnForceLTR_a, blnReverseRTL_a);
 	};
+	
+	// flow
+	this.stop = function()
+	{
+		globals.console.stop();
+	}
 	
 	// language functions
 	

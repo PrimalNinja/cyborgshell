@@ -32,7 +32,7 @@
 		<div id="ge-container" class="gs-container">
 			<div class="gs-content">
 				<div id="ge-output" class="gs-output"></div>
-				<input type="text" autocorrect="none" autocapitalize="none" id="ge-command" class="gs-command" autofocus />
+				<input type="email" autocorrect="none" autocapitalize="none" id="ge-command" class="gs-command" autofocus />
 			</div>
 		</div>
 		<hr>

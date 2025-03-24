@@ -12,7 +12,9 @@ function hcJS(strContainer_a, strInput_a, strOutput_a, blnShowStartupText_a)
 	var m_objInput = $(strInput_a);
 	var m_objOutput = $(strOutput_a);
 
-	var blnShowStartupText = blnShowStartupText_a;
+	var m_blnInputMode = false;
+	var m_cbInput = null;
+	var m_blnShowStartupText = blnShowStartupText_a;
 
 	var m_intFiles = 1;
 	var m_intCurrentFile = 0;
@@ -602,7 +604,7 @@ function hcJS(strContainer_a, strInput_a, strOutput_a, blnShowStartupText_a)
 		{
 			var strCode = '(function(api, globals){' + strCode_a + '})(m_objAPI, m_objG);';
 			eval(strCode);
-			ready();
+			//ready();
 		}
 		catch (objException_a)
 		{
@@ -688,10 +690,25 @@ function hcJS(strContainer_a, strInput_a, strOutput_a, blnShowStartupText_a)
 	{
 		if (objEvent_a.which === 13)
 		{
-			var strCommand = m_objInput.val();
-			appendOutput(strCommand, false, true);
-			processCommand(strCommand);
-			clearInput();
+			if (m_blnInputMode)
+			{
+				var strInput = m_objInput.val();
+				if ($.isFunction(m_cbInput))
+				{
+					m_cbInput(strInput);
+				}
+
+				m_objInput.val('');
+				m_cbInput = null;
+				m_blnInputMode = false;
+			}
+			else
+			{
+				var strCommand = m_objInput.val();
+				appendOutput(strCommand, false, true);
+				processCommand(strCommand);
+				clearInput();
+			}
 		}
 	}
 
@@ -1217,9 +1234,9 @@ function hcJS(strContainer_a, strInput_a, strOutput_a, blnShowStartupText_a)
 	
 	function cbValidateCookie(objResponse_a)
 	{
-		if (blnShowStartupText)
+		if (m_blnShowStartupText)
 		{
-			blnShowStartupText = false;
+			m_blnShowStartupText = false;
 			processCommand('startup');
 		}
 	}
@@ -1430,6 +1447,13 @@ function hcJS(strContainer_a, strInput_a, strOutput_a, blnShowStartupText_a)
 		handleServerCommands(strInput_a, intFileCount_a, cb_a, true, true, true);
 	};
 	
+	this.input = function(cb_a)
+	{
+		m_cbInput = cb_a;
+		m_blnInputMode = true;
+		m_objInput.focus();
+	};
+	
 	this.loadFile = function(strFilename_a, cb_a)
 	{
 		loadFile(strFilename_a, cb_a);
@@ -1440,6 +1464,11 @@ function hcJS(strContainer_a, strInput_a, strOutput_a, blnShowStartupText_a)
 		saveFile(strFilename_a, objData_a, cb_a);
 	};
 
+	this.stop = function()
+	{
+		ready('stop');
+	};
+	
 	// not usually used from API
 	this.onResize = function()
 	{

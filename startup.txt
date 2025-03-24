@@ -1,1 +1,1 @@
-This is RELEASE CANDIDATE 8. Type 'help' for online help. Type 'notes' for release notes.
+This is RELEASE CANDIDATE 9. Type 'help' for online help. Type 'notes' for release notes.

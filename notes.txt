@@ -3,3 +3,6 @@ Late breaking release notes.
 - You can now drag files onto the editor from your computer. 
 - Listing files will now show any dirty files.
 - 'saveall' will save all named files.
+- added input command, 
+	e.g. api.cls();api.print('enter your name:');api.input(function(str_a) { api.print('hello ' + str_a);api.stop(); });
+- resolved xbox one browser's autocapitalisation issues by using email instead of text input types.

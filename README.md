@@ -1,6 +1,6 @@
 # Open Home Computer JS - JavaScript Development Environment
 
-Welcome to Open Home Computer JC! (OHCJS)
+Welcome to Open Home Computer JS! (OHCJS)
 
 RELEASE CANDIDATE 9
 

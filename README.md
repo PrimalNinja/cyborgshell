@@ -2,6 +2,15 @@
 
 Welcome to Open Home Computer JC! (OHCJS)
 
+RELEASE CANDIDATE 9
+
+- You can now drag files onto the editor from your computer. 
+- Listing files will now show any dirty files.
+- 'saveall' will save all named files.
+- added input command, 
+	e.g. api.cls();api.print('enter your name:');api.input(function(str_a) { api.print('hello ' + str_a);api.stop(); });
+- resolved xbox one browser's autocapitalisation issues by using email instead of text input types.
+
 RELEASE CANDIDATE 7
 
 - added support for the following human languages: arabic, chinese (simplified), chinese (traditional), czech, dutch, english, french, german, greek, hebrew, hindi, italian, japanese, javanese, klingon, korean, persian, polish, portuguese, romanian, russian, spanish, swahili, swedish, tagalog, thai, turkish, vietnamese
@@ -11,8 +20,9 @@ RELEASE CANDIDATE 7
 OHCJS brings the retro charm of home computers to modern devices, allowing you to create, code, and collaborate anywhere, anytime. With OHCJS, you can:
 
 - Create an account and login on multiple devices
-- Code in JavaScript, alone or in teams
+- Code in JavaScript, alone or in teams, on your PC, your phone or your XBox One
 - Store your programs in personalized "spaces"
+- Let AI Agents join your team and work with you - not just coding btw.
 
 Inspired by the simplicity of 8-bit home computers, OHCJS aims to recreate the instant-on, fuss-free experience of classic computing. Register, login, and start coding in seconds!
 

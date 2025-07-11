@@ -61,7 +61,7 @@ function hcJS(strContainer_a, strInput_a, strOutput_a, blnShowStartupText_a)
 			{
 				strOutput = reverseOutput(strOutput);
 			}
-			strHtml += '<div class="' + strRTLClass  + '">' + strOutput + '</div>';
+			strHtml += '<div class="' + strRTLClass  + '">' + escapeHTML(strOutput) + '</div>';
 		});
 		
 		m_objOutput.html(strHtml);
@@ -141,6 +141,19 @@ function hcJS(strContainer_a, strInput_a, strOutput_a, blnShowStartupText_a)
 		{
 			appendOutput("Line number out of range.", false, true);
 		}
+	}
+
+	function escapeHTML(str_a) 
+	{
+		var strResult = str_a;
+		
+		strResult = str_replace(strResult, "&", "&amp;");
+		strResult = str_replace(strResult, "<", "&lt;");
+		strResult = str_replace(strResult, ">", "&gt;");
+		strResult = str_replace(strResult, '"', "&quot;");
+		strResult = str_replace(strResult, "'", "&#39;");
+		
+		return strResult;
 	}
 
 	function findLine(arrCode_a, intLineNumber_a)
@@ -642,6 +655,49 @@ function hcJS(strContainer_a, strInput_a, strOutput_a, blnShowStartupText_a)
 			var divContainer = document.querySelector('#ge-container');
 			divContainer.scrollTop = divContainer.scrollHeight - divContainer.clientHeight;
 		}, 100);
+	}
+
+	function str_replace(str_a, strOld_a, strNew_a)
+	{
+		var blnSubset = false;
+		var strOld = strOld_a + '';	// force them to strings
+		var strNew = strNew_a + '';	// force them to strings
+		var strResult = str_a + '';	// force them to strings
+
+		if (strOld === undefined)
+		{
+			strOld = '';
+		}
+
+		if (strNew === undefined)
+		{
+			strNew = '';
+		}
+
+		if (strResult === undefined)
+		{
+			strResult = '';
+		}
+
+		// if the old is a subset of the new, we would get into an infinite loop, so we need ot make it temporarily not a subset
+		if (strNew.indexOf(strOld) >= 0)
+		{
+			strNew = str_replace(strNew, strOld, '__OLD__');
+			blnSubset = true;
+		}
+
+		while (strResult.indexOf(strOld) >= 0)
+		{
+			strResult = strResult.replace(strOld, strNew);
+		}
+
+		// if we had a subset, revert it
+		if (blnSubset)
+		{
+			strResult = str_replace(strResult, '__OLD__', strOld);
+		}
+
+		return strResult;
 	}
 
 	function setCookie(strCookieName_a, strValue_a, intExpiryDays_a)

@@ -2,6 +2,11 @@
 
 // user file utils
 
+function canAliasSpace($strSpaceKey_a)
+{
+	return (($strSpaceKey_a == HOME_SPACENAME) || ($strSpaceKey_a == DEMO_SPACENAME) || ($strSpaceKey_a == PUBLIC_SPACENAME));
+}
+
 function createHomeDir($strUserKey_a)
 {
 	global $g_strServerHomeDir;
@@ -104,7 +109,14 @@ function getCurrentUserFile()
 {
 	global $g_strUserKey;
 	
-	$strFilename = $g_strUserKey.'.json';
+	$strUserKey = $g_strUserKey;
+	
+	if (strlen($strUserKey) == 0)
+	{
+		$strUserKey = PUBLIC_USERKEY;
+	}
+	
+	$strFilename = $strUserKey.'.json';
 
 	return getUserFile($strFilename);
 }
@@ -170,27 +182,42 @@ function saveCurrentUserFile($arrJSON_a)
 {
 	global $g_strUserKey;
 	
-	saveUserFile($g_strUserKey.'.json', $arrJSON_a);
+	if (strlen($g_strUserKey) > 0)
+	{
+		saveUserFile($g_strUserKey.'.json', $arrJSON_a);
+	}
 }
 
 function saveUserFile($strUserKey_a, $arrJSON_a)
 {
 	global $g_strServerUsersDir;
 	
-	$strUserFile = $g_strServerUsersDir . basename($strUserKey_a); // Prevent directory traversal
-	
-	$strJSON = json_encode($arrJSON_a);
-	
-	$strJSON = beautifyJSON($strJSON);
-	if (strlen($strJSON) == 0)
+	if (strlen($strUserKey_a) > 0)
 	{
-		throw new Exception(ERR_SYSTEMJSON);
+		$strUserFile = $g_strServerUsersDir . basename($strUserKey_a); // Prevent directory traversal
+		
+		$strJSON = json_encode($arrJSON_a);
+		
+		$strJSON = beautifyJSON($strJSON);
+		if (strlen($strJSON) == 0)
+		{
+			throw new Exception(ERR_SYSTEMJSON);
+		}
+		
+		file_put_contents($strUserFile, $strJSON);
 	}
-	
-	file_put_contents($strUserFile, $strJSON);
 }
 
 // security utils
+
+function inDemoAreaNoWriteAccess()
+{
+	global $g_strCurrentDir;
+	global $g_strCurrentSpace;
+	
+	return ((($g_strCurrentSpace == DEMO_SPACENAME) || ($g_strCurrentDir == DEMO_DIRNAME)) && !validLogin());
+}
+
 
 function invalidateServer()
 {
@@ -214,6 +241,8 @@ function invalidateServer()
 	$g_strCurrentSpace = PUBLIC_SPACENAME;
 	$g_strCurrentDir = $g_strServerPublicDir;
 	
+	$g_strCurrentLanguage = "english";
+	
 	$_SESSION['server_userkey'] = $g_strUserKey;
 	$_SESSION['server_username'] = $g_strUsername;
 
@@ -222,6 +251,8 @@ function invalidateServer()
 
 	$_SESSION['server_currentspace'] = $g_strCurrentSpace;
 	$_SESSION['server_currentdir'] = $g_strCurrentDir;
+	
+	$_SESSION['server_currentlanguage'] = $g_strCurrentLanguage;
 }
 
 function sanitizeFilename($strFilename_a) 
@@ -263,13 +294,34 @@ function validUser($strUserKey_a)
 {
 	global $g_strServerUsersDir;
 	
-	$strFilename = $strUserKey_a.'.json';
-	$strUserFile = $g_strServerUsersDir . basename($strFilename); // Prevent directory traversal
+	$blnResult = false;
 	
-	return (file_exists($strUserFile));
+	if (strlen($strUserKey_a) > 0)
+	{
+		$strFilename = $strUserKey_a.'.json';
+		$strUserFile = $g_strServerUsersDir . basename($strFilename); // Prevent directory traversal
+		$blnResult = file_exists($strUserFile);
+	}
+	
+	return $blnResult;
 }
 
 // other utils
+
+function arrayFindByKey($arrData_a, $strArrayKey_a, $strSearchKey_a)
+{
+	$intResult = -1;
+	
+    foreach ($arrData_a as $intIndex => $objItem)
+    {
+        if (isset($objItem[$strArrayKey_a]) && $objItem[$strArrayKey_a] == $strSearchKey_a)
+        {
+            $intResult = $intIndex;
+			break;
+        }
+    }
+    return $intResult;
+}
 
 function beautifyJSON($strJSON_a)
 {

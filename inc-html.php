@@ -4,38 +4,42 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title><?php echo(APPNAME); ?></title>
-		<style>
-			::selection { background-color: #FFD700; color: #000; }
-			body { background: blue; color: yellow; height:800px; overflow:none; }
-			a { color:cyan; font-family: monospace; font-weight:bold; font-size:16px; }
-			.gs-container { width: 100%; height:99%; overflow-x:none; overflow-y:auto; }
-			.gs-output { width: 100%; white-space: pre-wrap; font-family: monospace; font-weight:bold; font-size:16px; overflow:none; tab-size: 4; }
-			.gs-command { background: blue; color: yellow; width: 100%; font-family: monospace; font-weight:bold; font-size:16px; overflow:none; box-sizing:border-box; border:none; outline:none; }
-			.gs-Content { width: 100%; overflow:none; }
-			.rtlo { direction: rtl; unicode-bidi: bidi-override; }
-			.rtli { text-align:right; }
-			.dragover-highlight { xborder: 2px solid #007bff; background-color: grey; box-shadow: 0 0 10px rgba(0, 123, 255, 0.5); }
-			@media only screen and (max-width: 650px) { .gs-container { height: 93%; } }
-			@media only screen and (max-height: 650px) { .gs-container { height: 85%; } }
-		</style>
+		
+		<link href="3p/bootstrap.min.css" rel="stylesheet">
+		<link href="3p/jquery-ui.css" rel="stylesheet">
+		<link href="3p/jquery.ui.rotatable.css" rel="stylesheet">
+
+		<link href="css<?php echo(RELEASEDIRSUFFIX); ?>/shell.css" rel="stylesheet">
+
 		<script src="3p/jquery-3.7.1.min.js"></script>
-		<script src="js<?php echo(RELEASEDIRSUFFIX); ?>/hcJS_API<?php echo($g_strMinifiedSuffix); ?>.js"></script>
-		<script src="js<?php echo(RELEASEDIRSUFFIX); ?>/hcJS<?php echo($g_strMinifiedSuffix); ?>.js"></script>
-		<script src="js<?php echo(RELEASEDIRSUFFIX); ?>/startup<?php echo($g_strMinifiedSuffix); ?>.js"></script>
+		<script src="3p/jquery-ui-1.13.2.min.js"></script>
+		<script src="3p/jquery.ui.rotatable.min.js"></script>
+
+		<script src="js<?php echo(RELEASEDIRSUFFIX); ?>/cyborgShell_API<?php echo($g_strMinifiedSuffix); ?>.js"></script>
+		<script src="js<?php echo(RELEASEDIRSUFFIX); ?>/cyborgShell<?php echo($g_strMinifiedSuffix); ?>.js"></script>
 	</head>
 	<body>
-		<div style="width:100%; display: flex; justify-content: space-between;">
-			<div class="gs-output"><?php echo(APPNAME . " " . VERSION . " - " . BUILD); ?></div>
-			<div class="gs-output" style="text-align:right;"><?php echo(AUTHOR); ?></div>
+		<!-- Existing header stays the same -->
+		<div id="ge-clititlebar" style="width:100%; display: flex; justify-content: space-between;">
+			<div class="gs-clioutput"><?php echo(APPNAME . " " . VERSION); ?></div>
+			<div class="gs-clioutput" style="text-align:right;"><?php echo(AUTHOR); ?></div>
 		</div>
 		<hr>
-		<div id="ge-container" class="gs-container">
-			<div class="gs-content">
-				<div id="ge-output" class="gs-output"></div>
-				<input type="email" autocorrect="none" autocapitalize="none" id="ge-command" class="gs-command" autofocus />
+		
+		<!-- OCR container (was missing) -->
+		<div id="ocr-container" class="gs-ocr-container"></div>
+		
+		<!-- RESTORE ORIGINAL: Existing desktop container -->
+		<div id="ge-clidesktop" class="gs-clidesktop">	<!-- forms go in here -->
+			<div id="ge-clicontainer" class="gs-clicontainer">	<!-- CLI container -->
+				<div class="gs-clicontent">
+					<div id="ge-clioutput" class="gs-clioutput"></div>
+					<input type="email" autocorrect="none" autocapitalize="none" id="ge-clicommand" class="gs-clicommand" autofocus />
+				</div>
 			</div>
 		</div>
 		<hr>
-		<script src="js<?php echo(RELEASEDIRSUFFIX); ?>/startup<?php echo($g_strMinifiedSuffix); ?>.js"</script>
+		<div class="ge-clitaskbar gs-clitaskbar">By your command...</div>
+		<script src="js<?php echo(RELEASEDIRSUFFIX); ?>/startup<?php echo($g_strMinifiedSuffix); ?>.js"></script>
 	</body>
 </html>

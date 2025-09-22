@@ -1,10 +1,5 @@
 <?php
 
-// actions
-define("ACTION_INVALIDATE", "invalidate");
-define("ACTION_LTR", "ltr");
-define("ACTION_RTL", "rtl");
-
 // messages
 define("MSG_ABOUTUPDATED", "Über aktualisiert.");
 define("MSG_BLOCKEDWORDFOUND", "Blockiertes Wort gefunden.");

@@ -1,27 +1,27 @@
-Karibu kwenye Open Home Computer JS! (OHCJS)
+Karibu kwenye CyborgShell!
 
-OHCJS inaletewa mvuto wa zamani wa kompyuta za nyumbani kwa vifaa vya kisasa, ikikuruhusu kuunda, kuandika msimbo, na kushirikiana popote, wakati wowote. Pamoja na OHCJS, unaweza:
+CyborgShell inaletewa mvuto wa zamani wa kompyuta za nyumbani kwa vifaa vya kisasa, ikikuruhusu kuunda, kuandika msimbo, na kushirikiana popote, wakati wowote. Pamoja na CyborgShell, unaweza:
 
 - Kuunda akaunti na kuingia kwenye vifaa vingi
 - Kuandika msimbo kwa JavaScript, peke yako au katika timu
 - Kuhifadhi programu zako katika "nukta" za kibinafsi
 
-Imeshawishiwa na urahisi wa kompyuta za nyumbani za 8-bit, OHCJS inalenga kurejesha uzoefu wa haraka na usio na usumbufu wa kompyuta za zamani. Jisajili, ingia, na anza kuandika msimbo kwa sekunde chache!
+Imeshawishiwa na urahisi wa kompyuta za nyumbani za 8-bit, CyborgShell inalenga kurejesha uzoefu wa haraka na usio na usumbufu wa kompyuta za zamani. Jisajili, ingia, na anza kuandika msimbo kwa sekunde chache!
 
-Katika OHCJS, "nukta" yako ni eneo lako la faragha la kuhifadhi, linalopatikana tu kwako. Unaweza pia kuchunguza eneo la umma, ambapo unaweza kuunda, kushiriki, na kufanya majaribio na wengine.
+Katika CyborgShell, "nukta" yako ni eneo lako la faragha la kuhifadhi, linalopatikana tu kwako. Unaweza pia kuchunguza eneo la umma, ambapo unaweza kuunda, kushiriki, na kufanya majaribio na wengine.
 
-Kushiriki ni kipengele muhimu katika OHCJS. Kama vile kubadilisha diski za floppy katika miaka ya 80, unaweza kushiriki nukta yako na wengine, na kinyume chake. Mfano huu rahisi wa kushiriki unaruhusu hali mbalimbali:
+Kushiriki ni kipengele muhimu katika CyborgShell. Kama vile kubadilisha diski za floppy katika miaka ya 80, unaweza kushiriki nukta yako na wengine, na kinyume chake. Mfano huu rahisi wa kushiriki unaruhusu hali mbalimbali:
 
 - Kufundisha: Shiriki nukta na wanafunzi kwa ajili ya kujifunza kwa mwongozo
 - Kazi ya Kundi: Shirikiana kwenye miradi katika nukta za timu zilizoshirikiwa
 - Urafiki: Shiriki nukta kwa pande zote na marafiki wa kuaminika
 
-Leseni
-
-Open Home Computer JS (OHCJS) [github.com/PrimalNinja/ohcjs] imetolewa chini ya leseni ya programu ya MIT, kwa sababu "kushiriki ni kujali."
-
-Wasiliana na PrimalNinja ikiwa ungependa kufikiria chaguzi nyingine za leseni.
+CyborgShell [github.com/PrimalNinja/cyborgshell], ambayo imeathiriwa katika majukwaa ya kitambulisho ya kiufundi MIT, ingawa "kushirikiana ni muhimu."
 
 Kuhusu Sisi
 
-OHCJS inakuzwa kwa fahari na PrimalNinja wa Cyborg Unicorn Pty Ltd.
+Tuko nchini Australia na tunafanya kazi na kampuni kadhaa za programu ambazo zinatengeneza programu kwa kampuni kubwa za usafirishaji pamoja na programu katika sekta nyingine. Kwa kuongeza, tunatengeneza pia programu kwa vifaa vya simu na kompyuta za zamani. Baadhi ya kazi zetu zinakabidhiwa kwetu na kupewa jina la kampuni nyingine, na baadhi tunaachilia chini ya majina yetu wenyewe.
+
+CyborgShell inatengenezwa kwa fahari na PrimalNinja wa Cyborg Unicorn Pty Ltd na Mitsukibo Pty Ltd, wakati mwingine ikifanya biashara kama QuickDigital na Retrokibo.
+
+Tuma ripoti za hitilafu kwa contact@ hii domain.

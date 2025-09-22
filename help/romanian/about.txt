@@ -1,27 +1,27 @@
-Bun venit la Open Home Computer JS! (OHCJS)
+Bun venit la CyborgShell!
 
-OHCJS aduce farmecul retro al calculatoarelor de acasă pe dispozitive moderne, permițându-ți să creezi, să codezi și să colaborezi oriunde, oricând. Cu OHCJS, poți:
+CyborgShell aduce farmecul retro al calculatoarelor de acasă pe dispozitive moderne, permițându-ți să creezi, să codezi și să colaborezi oriunde, oricând. Cu CyborgShell, poți:
 
 - Crea un cont și te poți conecta pe mai multe dispozitive
 - Codifica în JavaScript, singur sau în echipe
 - Stoca programele tale în "spații" personalizate
 
-Inspirați de simplitatea calculatoarelor de 8 biți, OHCJS își propune să recreeze experiența instantanee și fără bătăi de cap a calculului clasic. Înregistrează-te, conectează-te și începe să codezi în câteva secunde!
+Inspirați de simplitatea calculatoarelor de 8 biți, CyborgShell își propune să recreeze experiența instantanee și fără bătăi de cap a calculului clasic. Înregistrează-te, conectează-te și începe să codezi în câteva secunde!
 
-În OHCJS, "spațiul" tău este zona ta privată de stocare, accesibilă doar ție. Poți explora, de asemenea, spațiul public, unde poți crea, împărtăși și experimenta cu alții.
+În CyborgShell, "spațiul" tău este zona ta privată de stocare, accesibilă doar ție. Poți explora, de asemenea, spațiul public, unde poți crea, împărtăși și experimenta cu alții.
 
-Împărtășirea este o caracteristică cheie în OHCJS. La fel ca schimbul de dischete în anii '80, poți împărtăși spațiul tău cu alții și invers. Acest model simplu de împărtășire permite diverse scenarii:
+Împărtășirea este o caracteristică cheie în CyborgShell. La fel ca schimbul de dischete în anii '80, poți împărtăși spațiul tău cu alții și invers. Acest model simplu de împărtășire permite diverse scenarii:
 
 - Învățare: Împărtășește spații cu studenții pentru învățare ghidată
 - Colaborare: Colaborează la proiecte în spații de echipă partajate
 - Prietenie: Împărtășește reciproc spații cu prieteni de încredere
 
-Licență
-
-Open Home Computer JS (OHCJS) [github.com/PrimalNinja/ohcjs] este lansat sub licența software MIT, deoarece "împărtășirea este îngrijire."
-
-Contactați PrimalNinja dacă doriți să luați în considerare alte opțiuni de licențiere.
+CyborgShell [github.com/PrimalNinja/cyborgshell], fiind lansată sub licența software MIT, pentru că "împărțirea înseamnă îngrijire."
 
 Despre noi
 
-OHCJS este dezvoltat cu mândrie de PrimalNinja de la Cyborg Unicorn Pty Ltd.
+Suntem bazați în Australia și operăm câteva companii de software care produc software pentru companii de transport de top, precum și software în alte industrii. În plus, dezvoltăm și software pentru dispozitive mobile și calculatoare retro. O parte din munca noastră este contractată către noi și etichetată alb pentru alte companii, iar unele le lansăm sub propriile noastre mărci.
+
+CyborgShell este dezvoltat cu mândrie de PrimalNinja de la Cyborg Unicorn Pty Ltd și Mitsukibo Pty Ltd, uneori operând ca QuickDigital și Retrokibo.
+
+Trimite rapoarte de erori la contact@ acest domeniu.

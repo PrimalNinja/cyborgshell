@@ -89,35 +89,42 @@ function cmdStartup()
 function cmdBeautify($strFilename_a)
 {
 	global $g_strCurrentDir;
-
-	if (strlen($strFilename_a) == 0)
+	
+	if (inDemoAreaNoWriteAccess())
 	{
-		echo getResponseJSON("", ERR_PARAMETERSMISSING, [], "");
+		echo getResponseJSON("", ERR_LOGINNOTCURRENT, [], "");
 	}
 	else
 	{
-		$strFile = $g_strCurrentDir . basename($strFilename_a); // Prevent directory traversal
-
-		if (!file_exists($strFile)) 
+		if (strlen($strFilename_a) == 0)
 		{
-			echo getResponseJSON("", ERR_FILENOTEXISTS, [], "");
+			echo getResponseJSON("", ERR_PARAMETERSMISSING, [], "");
 		}
 		else
 		{
-			$strContent = file_get_contents($strFile);
+			$strFile = $g_strCurrentDir . basename($strFilename_a); // Prevent directory traversal
 
-			$strContent = beautifyJSON($strContent);
-			
-			if (strlen($strContent) == 0)
+			if (!file_exists($strFile)) 
 			{
-				echo getResponseJSON("", ERR_JSONINVALID, [], "");
+				echo getResponseJSON("", ERR_FILENOTEXISTS, [], "");
 			}
 			else
 			{
-				file_put_contents($strFile, $strContent);
-				echo getResponseJSON(MSG_FILEBEAUTIFIED, "", [], "");
-			}
-		} 
+				$strContent = file_get_contents($strFile);
+
+				$strContent = beautifyJSON($strContent);
+				
+				if (strlen($strContent) == 0)
+				{
+					echo getResponseJSON("", ERR_JSONINVALID, [], "");
+				}
+				else
+				{
+					file_put_contents($strFile, $strContent);
+					echo getResponseJSON(MSG_FILEBEAUTIFIED, "", [], "");
+				}
+			} 
+		}
 	}
 }
 
@@ -130,6 +137,9 @@ function cmdDir($strPattern_a)
 	
 	$arrFileList = array();
 	$strFileList = "";
+	
+	//echo getResponseJSON("x:" . $g_strCurrentDir, "", [], "");
+	//return;
 	
 	$arrFiles = scandir($g_strCurrentDir);
 	$arrFiles = array_diff($arrFiles, array('..', '.'));
@@ -215,30 +225,37 @@ function cmdDir($strPattern_a)
 function cmdCopy($strFilenameFrom_a, $strFilenameTo_a)
 {
 	global $g_strCurrentDir;
-
-	if ((strlen($strFilenameFrom_a) == 0) || (strlen($strFilenameTo_a) == 0))
+	
+	if (inDemoAreaNoWriteAccess())
 	{
-		echo getResponseJSON("", ERR_PARAMETERSMISSING, [], "");
+		echo getResponseJSON("", ERR_LOGINNOTCURRENT, [], "");
 	}
 	else
 	{
-		$strFileFrom = $g_strCurrentDir . basename($strFilenameFrom_a); // Prevent directory traversal
-		$strFileTo = $g_strCurrentDir . basename($strFilenameTo_a); // Prevent directory traversal
-
-		if (!file_exists($strFileFrom)) 
+		if ((strlen($strFilenameFrom_a) == 0) || (strlen($strFilenameTo_a) == 0))
 		{
-			echo getResponseJSON("", ERR_FILENOTEXISTS_SOURCE, [], "");
+			echo getResponseJSON("", ERR_PARAMETERSMISSING, [], "");
 		}
 		else
 		{
-			if (file_exists($strFileTo)) 
+			$strFileFrom = $g_strCurrentDir . basename($strFilenameFrom_a); // Prevent directory traversal
+			$strFileTo = $g_strCurrentDir . basename($strFilenameTo_a); // Prevent directory traversal
+
+			if (!file_exists($strFileFrom)) 
 			{
-				echo getResponseJSON("", ERR_FILEEXISTS_DESTINATION, [], "");
+				echo getResponseJSON("", ERR_FILENOTEXISTS_SOURCE, [], "");
 			}
 			else
 			{
-				copy($strFileFrom, $strFileTo);
-				echo getResponseJSON(MSG_FILECOPIED, "", [], "");
+				if (file_exists($strFileTo)) 
+				{
+					echo getResponseJSON("", ERR_FILEEXISTS_DESTINATION, [], "");
+				}
+				else
+				{
+					copy($strFileFrom, $strFileTo);
+					echo getResponseJSON(MSG_FILECOPIED, "", [], "");
+				}
 			}
 		}
 	}
@@ -247,27 +264,34 @@ function cmdCopy($strFilenameFrom_a, $strFilenameTo_a)
 function cmdDelete($strFilename_a)
 {
 	global $g_strCurrentDir;
-
-	if (strlen($strFilename_a) == 0)
+	
+	if (inDemoAreaNoWriteAccess())
 	{
-		echo getResponseJSON("", ERR_PARAMETERSMISSING, [], "");
+		echo getResponseJSON("", ERR_LOGINNOTCURRENT, [], "");
 	}
 	else
 	{
-		$strFile = $g_strCurrentDir . basename($strFilename_a); // Prevent directory traversal
-
-		if (!file_exists($strFile)) 
+		if (strlen($strFilename_a) == 0)
 		{
-			echo getResponseJSON("", ERR_FILENOTEXISTS, [], "");
+			echo getResponseJSON("", ERR_PARAMETERSMISSING, [], "");
 		}
 		else
 		{
-			if (file_exists($strFile)) 
+			$strFile = $g_strCurrentDir . basename($strFilename_a); // Prevent directory traversal
+
+			if (!file_exists($strFile)) 
 			{
-				unlink($strFile);
+				echo getResponseJSON("", ERR_FILENOTEXISTS, [], "");
 			}
-			
-			echo getResponseJSON(MSG_FILEDELETED, "", [], "");
+			else
+			{
+				if (file_exists($strFile)) 
+				{
+					unlink($strFile);
+				}
+				
+				echo getResponseJSON(MSG_FILEDELETED, "", [], "");
+			}
 		}
 	}
 }
@@ -343,30 +367,37 @@ function cmdLoad($strFilename_a)
 function cmdRename($strOldName_a, $strNewName_a)
 {
 	global $g_strCurrentDir;
-
-	if ((strlen($strOldName_a) == 0) || (strlen($strNewName_a) == 0))
+	
+	if (inDemoAreaNoWriteAccess())
 	{
-		echo getResponseJSON("", ERR_PARAMETERSMISSING, [], "");
+		echo getResponseJSON("", ERR_LOGINNOTCURRENT, [], "");
 	}
 	else
 	{
-		$strFileOld = $g_strCurrentDir . basename($strOldName_a); // Prevent directory traversal
-		$strFileNew = $g_strCurrentDir . basename($strNewName_a); // Prevent directory traversal
-
-		if (!file_exists($strFileOld)) 
+		if ((strlen($strOldName_a) == 0) || (strlen($strNewName_a) == 0))
 		{
-			echo getResponseJSON("", ERR_FILENOTEXISTS_SOURCE, [], "");
+			echo getResponseJSON("", ERR_PARAMETERSMISSING, [], "");
 		}
 		else
 		{
-			if (file_exists($strFileNew)) 
+			$strFileOld = $g_strCurrentDir . basename($strOldName_a); // Prevent directory traversal
+			$strFileNew = $g_strCurrentDir . basename($strNewName_a); // Prevent directory traversal
+
+			if (!file_exists($strFileOld)) 
 			{
-				echo getResponseJSON("", ERR_FILEEXISTS_DESTINATION, [], "");
+				echo getResponseJSON("", ERR_FILENOTEXISTS_SOURCE, [], "");
 			}
 			else
 			{
-				rename($strFileOld, $strFileNew);
-				echo getResponseJSON(MSG_FILERENAMED, "", [], "");
+				if (file_exists($strFileNew)) 
+				{
+					echo getResponseJSON("", ERR_FILEEXISTS_DESTINATION, [], "");
+				}
+				else
+				{
+					rename($strFileOld, $strFileNew);
+					echo getResponseJSON(MSG_FILERENAMED, "", [], "");
+				}
 			}
 		}
 	}
@@ -375,22 +406,29 @@ function cmdRename($strOldName_a, $strNewName_a)
 function cmdSave($strFilename_a, $strContent_a)
 {
 	global $g_strCurrentDir;
-
-	if (strlen($strFilename_a) == 0)
+	
+	if (inDemoAreaNoWriteAccess())
 	{
-		echo getResponseJSON("", ERR_PARAMETERSMISSING, [], "");
+		echo getResponseJSON("", ERR_LOGINNOTCURRENT, [], "");
 	}
 	else
 	{
-		$strFile = $g_strCurrentDir . basename($strFilename_a); // Prevent directory traversal
-
-		if (file_exists($strFile)) 
+		if (strlen($strFilename_a) == 0)
 		{
-			unlink($strFile);
+			echo getResponseJSON("", ERR_PARAMETERSMISSING, [], "");
 		}
-		
-		file_put_contents($strFile, $strContent_a);
-		echo getResponseJSON(MSG_FILESAVED, "", [], "");
+		else
+		{
+			$strFile = $g_strCurrentDir . basename($strFilename_a); // Prevent directory traversal
+
+			if (file_exists($strFile)) 
+			{
+				unlink($strFile);
+			}
+			
+			file_put_contents($strFile, $strContent_a);
+			echo getResponseJSON(MSG_FILESAVED, "", [], "");
+		}
 	}
 }
 
@@ -400,192 +438,167 @@ function cmdSpace($strSpaceKey_a, $strAlias_a)
 	global $g_strServerPublicDir;
 	global $g_strCurrentSpace;
 	global $g_strCurrentDir;
+	global $g_strUserKey;
 
-	if (!validLogin())
+	if (strlen($strSpaceKey_a) == 0)
 	{
-		echo getResponseJSON("", ERR_LOGINNOTCURRENT, [], "");
-	}
-	else
-	{
-		if (!validCurrentUser())
+		if (strlen($g_strCurrentSpace) == 0)
 		{
-			echo getResponseJSON("", ERR_LOGINNOTCURRENT, [ACTION_INVALIDATE], "");
+			echo getResponseJSON(rtlReverse(PUBLIC_SPACENAME), "", [], "");
 		}
 		else
 		{
-			if (strlen($strSpaceKey_a) == 0)
+			echo getResponseJSON(rtlReverse($g_strCurrentSpace), "", [], "");
+		}
+	}
+	else if ((strlen($strSpaceKey_a) > 0) && (strlen($strAlias_a) > 0))
+	{
+		if (hasBlockedWords($strAlias_a))
+		{
+			echo getResponseJSON(MSG_BLOCKEDWORDFOUND, "", [], "");
+		}
+		else
+		{
+			if (canAliasSpace($strSpaceKey_a))
 			{
-				echo getResponseJSON(rtlReverse($g_strCurrentSpace), "", [], "");
-			}
-			else if ((strlen($strSpaceKey_a) > 0) && (strlen($strAlias_a) > 0))
-			{
-				if (hasBlockedWords($strAlias_a))
-				{
-					echo getResponseJSON(MSG_BLOCKEDWORDFOUND, "", [], "");
-				}
-				else
-				{
-					// change alias
-					$arrJSON = getCurrentUserFile();
-					
-					$blnFound = false;
-					foreach ($arrJSON["spaces"] as &$objSpace)
-					{
-						$blnActive = $objSpace["isactive"];
-						$strKey = $objSpace["key"];
-						$strAlias = $objSpace["alias"];
-						if (($blnActive) && (strlen($strAlias) > 0))
-						{
-							if (($strKey == $strSpaceKey_a) || ($strAlias == $strSpaceKey_a))
-							{
-								$objSpace["alias"] = $strAlias_a;
-								$blnFound = true;
-								break;
-							}
-						}
-					}
-
-					if (!$blnFound)
-					{
-						echo getResponseJSON("", ERR_SPACEKEYINVALID, [], "");
-					}
-					else
-					{
-						saveCurrentUserFile($arrJSON);
-
-						$strMessage = str_replace("%%ALIAS%%", rtlReverse($strAlias_a), MSG_ALIASISNOW);
-						echo getResponseJSON($strMessage, "", [], "");
-					}
-				}
-			}
-			else if ($strSpaceKey_a == HOME_SPACENAME)
-			{
-				// change to home space
-				$g_strCurrentSpace = $_SESSION['server_userspace'];
-				$g_strCurrentDir = $_SESSION['server_userdir'];
-
-				$_SESSION['server_currentspace'] = $g_strCurrentSpace;
-				$_SESSION['server_currentdir'] = $g_strCurrentDir;
-
-				$strMessage = str_replace("%%SPACENAME%%", rtlReverse(HOME_SPACENAME), MSG_SPACENAMEISNOW);
-				echo getResponseJSON($strMessage, "", [], "");
-			}
-			else if ($strSpaceKey_a == PUBLIC_SPACENAME)
-			{
-				// change to public space
-				$g_strCurrentSpace = PUBLIC_SPACENAME;
-				$g_strCurrentDir = $g_strServerPublicDir;
-
-				$_SESSION['server_currentspace'] = $g_strCurrentSpace;
-				$_SESSION['server_currentdir'] = $g_strCurrentDir;
-
-				$strMessage = str_replace("%%SPACENAME%%", rtlReverse(PUBLIC_SPACENAME), MSG_SPACENAMEISNOW);
-				echo getResponseJSON($strMessage, "", [], "");
+				echo getResponseJSON("", ERR_SPACEKEYINVALID, [], "");
 			}
 			else
 			{
-				// change to named space
+				// change alias
 				$arrJSON = getCurrentUserFile();
 
-				$strFoundSpaceAlias = "";
-				$strFoundSpacekey = "";
-				
-				$blnFound = false;
-				foreach ($arrJSON["spaces"] as $objSpace)
-				{
-					$blnActive = $objSpace["isactive"];
-					$strKey = $objSpace["key"];
-					$strAlias = $objSpace["alias"];
-					if (($blnActive) && (strlen($strAlias) > 0))
-					{
-						if (($strKey == $strSpaceKey_a) || ($strAlias == $strSpaceKey_a))
-						{
-							$strFoundSpacekey = $strKey;
-							$strFoundSpaceAlias = $strAlias;
-							$blnFound = true;
-							break;
-						}
-					}
-				}
-
-				if (!$blnFound)
+				$intSpaceIndex = arrayFindByKey($arrJSON["spaces"], "key", $strSpaceKey_a);
+				if ($intSpaceIndex < 0)
 				{
 					echo getResponseJSON("", ERR_SPACEKEYINVALID, [], "");
 				}
 				else
 				{
-					$g_strCurrentSpace = $strFoundSpaceAlias;
-					$g_strCurrentDir = $g_strServerHomeDir . $strFoundSpacekey . '/';
+					$arrJSON["spaces"][$intSpaceIndex]["alias"] = $strAlias_a;
+					saveCurrentUserFile($arrJSON);
 
-					$_SESSION['server_currentspace'] = $g_strCurrentSpace;
-					$_SESSION['server_currentdir'] = $g_strCurrentDir;
-
-					$strMessage = str_replace("%%SPACENAME%%", rtlReverse($strFoundSpaceAlias), MSG_SPACENAMEISNOW);
+					$strMessage = str_replace("%%ALIAS%%", rtlReverse($strAlias_a), MSG_ALIASISNOW);
 					echo getResponseJSON($strMessage, "", [], "");
 				}
 			}
+		}
+	}
+	else if ($strSpaceKey_a == HOME_SPACENAME)
+	{
+		if (strlen($g_strUserKey) > 0)
+		{
+			// change to home space
+			$g_strCurrentSpace = $_SESSION['server_userspace'];
+			$g_strCurrentDir = $_SESSION['server_userdir'];
+		}
+		else
+		{
+			$g_strCurrentSpace = PUBLIC_SPACENAME;
+			$g_strCurrentDir = $g_strServerPublicDir;
+		}
+
+		$_SESSION['server_currentspace'] = $g_strCurrentSpace;
+		$_SESSION['server_currentdir'] = $g_strCurrentDir;
+
+		$strMessage = str_replace("%%SPACENAME%%", rtlReverse(HOME_SPACENAME), MSG_SPACENAMEISNOW);
+		echo getResponseJSON($strMessage, "", [], "");
+	}
+	else if ($strSpaceKey_a == PUBLIC_SPACENAME)
+	{
+		// change to public space
+		$g_strCurrentSpace = PUBLIC_SPACENAME;
+		$g_strCurrentDir = $g_strServerPublicDir;
+
+		$_SESSION['server_currentspace'] = $g_strCurrentSpace;
+		$_SESSION['server_currentdir'] = $g_strCurrentDir;
+
+		$strMessage = str_replace("%%SPACENAME%%", rtlReverse(PUBLIC_SPACENAME), MSG_SPACENAMEISNOW);
+		echo getResponseJSON($strMessage, "", [], "");
+	}
+	else
+	{
+		// change to named space
+		$arrJSON = getCurrentUserFile();
+
+		$intSpaceIndex = arrayFindByKey($arrJSON["spaces"], "key", $strSpaceKey_a);
+		if ($intSpaceIndex < 0)
+		{
+			$intSpaceIndex = arrayFindByKey($arrJSON["spaces"], "alias", $strSpaceKey_a);
+		}
+
+		if ($intSpaceIndex < 0 || !$arrJSON["spaces"][$intSpaceIndex]["isactive"] || strlen($arrJSON["spaces"][$intSpaceIndex]["alias"]) == 0)
+		{
+			echo getResponseJSON("", ERR_SPACEKEYINVALID, [], "");
+		}
+		else
+		{
+			$g_strCurrentSpace = $arrJSON["spaces"][$intSpaceIndex]["alias"];
+			$g_strCurrentDir = $g_strServerHomeDir . $arrJSON["spaces"][$intSpaceIndex]["key"] . '/';
+
+			$_SESSION['server_currentspace'] = $g_strCurrentSpace;
+			$_SESSION['server_currentdir'] = $g_strCurrentDir;
+
+			$strMessage = str_replace("%%SPACENAME%%", rtlReverse($g_strCurrentSpace), MSG_SPACENAMEISNOW);
+			echo getResponseJSON($strMessage, "", [], "");
 		}
 	}
 }
 
 function cmdSpaces()
 {
-	if (!validLogin())
+	$arrJSON = getCurrentUserFile();
+
+	$strMessage = "";
+	if (count($arrJSON["spaces"]) == 0)
 	{
-		echo getResponseJSON("", ERR_LOGINNOTCURRENT, [], "");
+		$strMessage = MSG_SPACESNONE;
 	}
 	else
 	{
-		if (!validCurrentUser())
+		//get the longest key length
+		$intLongest = 0;
+		foreach ($arrJSON["spaces"] as $objSpace) 
 		{
-			echo getResponseJSON("", ERR_LOGINNOTCURRENT, [ACTION_INVALIDATE], "");
+			$blnActive = $objSpace["isactive"];
+			if ($blnActive)
+			{
+				$intKeyLength = strlen($objSpace["key"]);
+				if ($intKeyLength > $intLongest)
+				{
+					$intLongest = $intKeyLength;
+				}
+			}
 		}
-		else
+
+		foreach ($arrJSON["spaces"] as $objSpace) 
 		{
-			$arrJSON = getCurrentUserFile();
-
-			$strMessage = "";
-			if (count($arrJSON["spaces"]) == 0)
-			{
-				$strMessage = MSG_SPACESNONE;
-			}
-			else
-			{
-				//get the longest key length
-				$intLongest = 0;
-				foreach ($arrJSON["spaces"] as $objSpace) 
-				{
-					$blnActive = $objSpace["isactive"];
-					if ($blnActive)
-					{
-						$intKeyLength = strlen($objSpace["key"]);
-						if ($intKeyLength > $intLongest)
-						{
-							$intLongest = $intKeyLength;
-						}
-					}
-				}
-
-				foreach ($arrJSON["spaces"] as $objSpace) 
-				{
-					$blnActive = $objSpace["isactive"];
-					if ($blnActive)
-					{
-						$strSpaceKey = str_pad($objSpace["key"], $intLongest, ' ', STR_PAD_RIGHT);
-						
-						if (strlen($strMessage) > 0)
-						{
-							$strMessage .= "\n";
-						}
-						$strMessage .= rtlReverse($strSpaceKey) . " " . rtlReverse($objSpace["alias"]);
-					}
-				}
-				$strMessage = MSG_SPACES . "\n" . $strMessage;
-			}
+			$blnActive = $objSpace["isactive"];
+			$strAlias = $objSpace["alias"];
+			$strSpaceKey = $objSpace["key"];
 			
-			echo getResponseJSON($strMessage, "", [], "");
+			if ($blnActive)
+			{
+				if (strlen($strMessage) > 0)
+				{
+					$strMessage .= "\n";
+				}
+				
+				if (strtolower($strSpaceKey) == strtolower($strAlias))
+				{
+					$strMessage .= rtlReverse($strSpaceKey);
+				}
+				else
+				{
+					$strSpaceKey = str_pad($strSpaceKey, $intLongest, ' ', STR_PAD_RIGHT);
+					$strMessage .= rtlReverse($strSpaceKey) . " " . rtlReverse($strAlias);
+				}
+			}
 		}
+		$strMessage = MSG_SPACES . "\n" . $strMessage;
 	}
+	
+	echo getResponseJSON($strMessage, "", [], "");
 }
 
 // account commands
@@ -845,24 +858,14 @@ function cmdDevice($strDeviceKey_a, $strAlias_a)
 				{
 					$arrJSON = getCurrentUserFile();
 					
-					$blnFound = false;
-					foreach ($arrJSON["devicekeys"] as &$objDeviceKey)
-					{
-						$strKey = $objDeviceKey["key"];
-						if ($strKey == $strDeviceKey_a)
-						{
-							$objDeviceKey["alias"] = $strAlias_a;
-							$blnFound = true;
-							break;
-						}
-					}
-					
-					if (!$blnFound)
+					$intDeviceIndex = arrayFindByKey($arrJSON["devicekeys"], "key", $strDeviceKey_a);
+					if ($intDeviceIndex < 0)
 					{
 						echo getResponseJSON("", ERR_DEVICEKEYINVALID, [], "");
 					}
 					else
 					{
+						$arrJSON["devicekeys"][$intDeviceIndex]["alias"] = $strAlias_a; 
 						saveCurrentUserFile($arrJSON);
 
 						$strMessage = str_replace("%%ALIAS%%", rtlReverse($strAlias_a), MSG_ALIASISNOW);
@@ -926,10 +929,26 @@ function cmdDevices()
 						if ($objDeviceKey["key"] == $g_strCurrentDeviceKey) { $strCurrent = "*"; }
 
 						$strDeviceKeys .= "\n";
-						$strDeviceKeys .= rtlReverse($strCurrent) . " " . rtlReverse($strDeviceKey) . " " . rtlReverse($objDeviceKey["alias"]) . "\n";
-						$strDeviceKeys .= "  " . rtlReverse("Last access") . ": " . rtlReverse($objDeviceKey["datetime"]) . "\n";
-						$strDeviceKeys .= "  " . rtlReverse(getBrowser($objDeviceKey["agent"])) . "\n";
-						$strDeviceKeys .= "  " . rtlReverse($objDeviceKey["ipaddress"]) . "\n";
+						$strDeviceKeys .= rtlReverse($strCurrent) . " " . rtlReverse($strDeviceKey) . " " . rtlReverse($objDeviceKey["alias"]);
+						if ((ENABLEAGENTS == 'TRUE') || (ENABLEIPADDRESSES == 'TRUE'))
+						{
+							$strDeviceKeys .= "\n  " . rtlReverse("Last access");
+						}
+						$strDeviceKeys .= ": " . rtlReverse($objDeviceKey["datetime"]);
+						if ((ENABLEAGENTS == 'TRUE') || (ENABLEIPADDRESSES == 'TRUE'))
+						{
+							$strDeviceKeys .= "\n";
+						}
+						
+						if (ENABLEAGENTS == 'TRUE')
+						{
+							$strDeviceKeys .= "  " . rtlReverse(getBrowser($objDeviceKey["agent"])) . "\n";
+						}
+
+						if (ENABLEIPADDRESSES == 'TRUE')
+						{
+							$strDeviceKeys .= "  " . rtlReverse($objDeviceKey["ipaddress"]) . "\n";
+						}
 					}
 				}
 				$strDeviceKeys = MSG_DEVICEKEYS . $strDeviceKeys;
@@ -1333,45 +1352,18 @@ function cmdGrant($strShareKey_a)
 				$strAliasTheirs = $arrJSONTheirs["alias"];
 				
 				// check our userkey is not already in their spaces
-				$blnFoundSpace = false;
-				foreach ($arrJSONTheirs["spaces"] as &$objSpace)
-				{
-					$strKey = $objSpace["key"];
-					if ($strKey == $strUserKeyOurs)
-					{
-						$objSpace["isactive"] = true;
-						$blnFoundSpace = true;
-						break;
-					}
-				}
+				$intTheirSpaceIndex = arrayFindByKey($arrJSONTheirs["spaces"], "key", $strUserKeyOurs);
 				
 				// check their sharekey is not already in our shares
-				$blnFoundShare = false;
-				foreach ($arrJSONOurs["shares"] as &$objShare)
-				{
-					$strKey = $objShare["key"];
-					if ($strKey == $strShareKey_a)
-					{
-						$objShare["isactive"] = true;
-						$blnFoundShare = true;
-						break;
-					}
-				}
+				$intOurShareIndex = arrayFindByKey($arrJSONOurs["shares"], "key", $strShareKey_a);
 				
-				if ($blnFoundSpace && $blnFoundShare)
+				if ($intTheirSpaceIndex >= 0 && $intOurShareIndex >= 0)
 				{
-					// fail
-					//echo getResponseJSON("", ERR_GRANTEXISTS, [], "");
+					$arrJSONTheirs["spaces"][$intTheirSpaceIndex]["isactive"] = true;
+					$arrJSONOurs["shares"][$intOurShareIndex]["isactive"] = true;
 
-					if ($blnFoundSpace)
-					{
-						saveUserFile($strUserKeyTheirs.'.json', $arrJSONTheirs);
-					}
-					
-					if ($blnFoundShare)
-					{
-						saveCurrentUserFile($arrJSONOurs);
-					}
+					saveUserFile($strUserKeyTheirs.'.json', $arrJSONTheirs);
+					saveCurrentUserFile($arrJSONOurs);
 					
 					$strMessage = str_replace("%%ALIAS%%", rtlReverse($strAliasTheirs), MSG_ALIASREINSTATED);
 					echo getResponseJSON($strMessage, "", [], "");
@@ -1535,38 +1527,17 @@ function cmdRevoke($strShareKey_a)
 				$strAliasTheirs = $arrJSONTheirs["alias"];
 				
 				// check our userkey is not already in their spaces
-				$blnFoundSpace = false;
-				foreach ($arrJSONTheirs["spaces"] as &$objSpace)
-				{
-					$strKey = $objSpace["key"];
-					if ($strKey == $strUserKeyOurs)
-					{
-						$objSpace["isactive"] = false;
-						$blnFoundSpace = true;
-						break;
-					}
-				}
+				$intTheirSpaceIndex = arrayFindByKey($arrJSONTheirs["spaces"], "key", $strUserKeyOurs);
 				
 				// check their sharekey is not already in our shares
-				$blnFoundShare = false;
-				foreach ($arrJSONOurs["shares"] as &$objShare)
-				{
-					$strKey = $objShare["key"];
-					if ($strKey == $strShareKey_a)
-					{
-						$objShare["isactive"] = false;
-						$blnFoundShare = true;
-						break;
-					}
-				}
+				$intOurShareIndex = arrayFindByKey($arrJSONOurs["shares"], "key", $strShareKey_a);
 				
-				if ($blnFoundSpace)
+				if ($intTheirSpaceIndex >= 0 && $intOurShareIndex >= 0)
 				{
+					$arrJSONTheirs["spaces"][$intTheirSpaceIndex]["isactive"] = false;
+					$arrJSONOurs["shares"][$intOurShareIndex]["isactive"] = false;
+
 					saveUserFile($strUserKeyTheirs.'.json', $arrJSONTheirs);
-				}
-				
-				if ($blnFoundShare)
-				{
 					saveCurrentUserFile($arrJSONOurs);
 				}
 				
@@ -1635,6 +1606,8 @@ function cmdShares()
 function cmdValidateCookie($strDeviceKey_a)
 {
 	global $g_strCurrentDeviceKey;
+	global $g_strCurrentDir;
+	global $g_strCurrentSpace;
 	global $g_strServerHomeDir;
 	global $g_strUserKey;
 	global $g_strUsername;

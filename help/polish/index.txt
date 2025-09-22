@@ -1,4 +1,4 @@
-Witaj w Home Computer JS!
+Witaj w CyborgShell!
 
 Ten przewodnik pomoże Ci zapoznać się z różnymi poleceniami i funkcjami dostępnymi w systemie.
 

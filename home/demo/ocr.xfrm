@@ -1,0 +1,285 @@
+function ocr_xfrm(objAPI_a, objGlobals_a, strSourceFilename_a, strSourceMimeType_a, strSourceMimeTypeEditor_a, strTargetFilename_a, strRaw_a, arrCode_a, strArgs_a, cb_a)
+{
+	var m_TRANSFORMER = 'ocr';	// lowercase for provider settings
+	
+    console.log(m_TRANSFORMER + " plugin called with:");
+    console.log("objAPI_a:", typeof objAPI_a);
+    console.log("objGlobals_a:", typeof objGlobals_a);
+    console.log("strSourceFilename_a:", strSourceFilename_a);
+    console.log("strSourceFilename_a:", strSourceFilename_a);
+	console.log("strSourceMimeType_a:", strSourceMimeType_a);
+    console.log("strSourceMimeTypeEditor_a:", strSourceMimeTypeEditor_a);
+    console.log("strTargetFilename_a:", strTargetFilename_a);
+    //console.log("strRaw_a:", strRaw_a);
+    console.log("arrCode_a:", arrCode_a);
+	console.log("strArgs_a:", strArgs_a);
+    console.log("cb_a:", typeof cb_a);
+
+	var m_MIME_APPPDF = "application/pdf";
+	var m_MIME_IMAGEBMP = "image/bmp";
+	var m_MIME_IMAGEGIF = "image/gif";
+	var m_MIME_IMAGEJPEG = "image/jpeg";
+	var m_MIME_IMAGEPNG = "image/png";
+
+	var m_EDIT_HEX = "hex";
+	var m_EDIT_TEXT = "text";
+	
+	var api = objAPI_a;
+	var globals = objGlobals_a;
+
+	var m_strRaw = strRaw_a;
+	
+	function base64StringToArrayBuffer(str_a) 
+	{
+		var strPrefix = 'data:image/png;base64,';
+		var strBase64 = str_a.substring(strPrefix.length);
+		var strBinary = atob(strBase64);
+		var arrResult = new ArrayBuffer(strBinary.length);
+		var arrUINT8 = new Uint8Array(arrResult);
+
+		for (var intI = 0; intI < strBinary.length; intI++) 
+		{
+			arrUINT8[intI] = strBinary.charCodeAt(intI);
+		}
+		
+		return arrResult;
+	}
+
+	function binaryStringToArrayBuffer(str_a) 
+	{
+		var intLength = str_a.length;
+		var arrResult = new ArrayBuffer(intLength);
+		var arrUINT8 = new Uint8Array(arrResult);
+		
+		for (var intI = 0; intI < intLength; intI++) 
+		{
+			arrUINT8[intI] = str_a.charCodeAt(intI) & 0xFF;
+		}
+		
+		return arrResult;
+	}
+
+	function ocrImage(cb_a)
+	{
+		ocrTesseract(binaryStringToArrayBuffer(m_strRaw), cb_a);
+	}
+
+	function ocrPDF(cb_a)
+	{
+		pdfjsLib.GlobalWorkerOptions.workerSrc = "3p/pdf.worker.js";
+
+		var convertToImage = async (objPDF_a) => 
+		{
+			var arrResult = [];
+			var objContainer = document.getElementById("ocr-container");
+			for (var intPageNumber = 1; intPageNumber <= objPDF_a.numPages; intPageNumber++) 
+			{
+				var objPage = await objPDF_a.getPage(intPageNumber);
+				var objViewPort = objPage.getViewport({ scale: 1.5 });
+				var objCanvas = document.createElement("canvas");
+				objCanvas.height = objViewPort.height;
+				objCanvas.width = objViewPort.width;
+				objContainer.appendChild(objCanvas);
+				await objPage.render({
+					canvasContext: objCanvas.getContext("2d"),
+					viewport: objViewPort,
+				}).promise;
+
+				arrResult.push(objCanvas.toDataURL("image/png"));
+			}
+			return arrResult;
+		};
+
+		var convertToText = async (arrImages_a) => 
+		{
+			var strFullText = "";
+			
+			for (var objImage of arrImages_a) 
+			{
+				await new Promise((resolve) => {
+					ocrTesseract(base64StringToArrayBuffer(objImage), function(strPageText) {
+						strFullText += strPageText + "\n";  // Accumulate text
+						resolve();
+					});
+				});
+			}
+			
+			// Only call the final callback once with all accumulated text
+			cb_a(strFullText);
+		};
+
+		var loadFile = async (objFile_a) => 
+			pdfjsLib.getDocument({ data: objFile_a }).promise;
+
+		var convertFile = async (objFile_a) => 
+		{
+			var objPDF = await loadFile(objFile_a);
+			var arrImages = await convertToImage(objPDF);
+			await convertToText(arrImages);
+		};
+
+		convertFile(m_strRaw);
+	}
+
+	function ocrTesseract(objFile_a, cb_a) 
+	{
+		TesseractCore().then(function(objModule_a) 
+		{
+			var dteStart = Date.now();
+
+			var objAPI = new objModule_a.TessBaseAPI();
+			var strLanguage = 'eng';
+			fetch('3p/traineddata/' + strLanguage + '.traineddata').then(function(objResponse_a) 
+			{ 
+				return objResponse_a.arrayBuffer(); 
+			}).then(function(objBuffer_a) 
+			{
+				objModule_a.FS.writeFile(strLanguage + '.traineddata', new Uint8Array(objBuffer_a));
+			}).then(function() 
+			{
+				objAPI.Init(null, strLanguage);
+				var arrUINT8 = new Uint8Array(objFile_a);
+				objModule_a.FS.writeFile('/input', arrUINT8);
+				objAPI.SetImageFile();
+
+				var dteEnd = Date.now();
+				
+				console.log("Used heap size: " + Math.round((performance.memory.usedJSHeapSize) / 1e6) + "MB");
+				console.log("Total heap size: " + Math.round((performance.memory.totalJSHeapSize) / 1e6) + "MB");
+				console.log("Total runtime: " + (dteEnd - dteStart) / 1e3 + "s");
+
+				var strResult = objAPI.GetUTF8Text();
+				
+				objAPI.End();
+				objModule_a.destroy(objAPI);
+				
+				cb_a(strResult);
+			});
+		});
+	}
+	
+	function finishedOCR(strResult_a)
+	{
+		// globals.console.fileStatus('ocr', ''); // TODO: make this NOT based on current file
+
+		if (strResult_a.length > 0)
+		{
+			cb_a({
+				mte: m_EDIT_TEXT,
+				raw: strResult_a,
+				message: "OCR complete, text extracted from " + strSourceFilename_a
+			});
+		}
+		else
+		{
+			cb_a({
+				mte: m_EDIT_TEXT,
+				error: "No text found in " + strSourceFilename_a
+			});
+		}
+	}
+	
+	function performOCR()
+	{
+		// globals.console.fileStatus('', 'ocr'); // TODO: make this NOT based on current file
+	
+		if ((strSourceMimeType_a === m_MIME_IMAGEBMP) || 
+			(strSourceMimeType_a === m_MIME_IMAGEGIF) || 
+			(strSourceMimeType_a === m_MIME_IMAGEJPEG) || 
+			(strSourceMimeType_a === m_MIME_IMAGEPNG))
+		{
+			ocrImage(finishedOCR);
+		}
+		else if (strSourceMimeType_a === m_MIME_APPPDF)
+		{
+			ocrPDF(finishedOCR);
+		}
+		else
+		{
+			cb_a({
+				mte: m_EDIT_TEXT,
+				error: "Invalid file type for OCR. Supported: PDF, BMP, GIF, JPEG, PNG"
+			});
+		}
+	}
+	
+	function loadOCRDependencies()
+	{
+		api.print("Loading OCR engine...");
+		
+		var arrScripts = [
+			'3p/tesseract-core.wasm.js',
+			'3p/pdf.min.js', 
+			'3p/pdf.worker.js'
+		];
+		
+		var intLoaded = 0;
+		var intTotal = arrScripts.length;
+		
+		function scriptLoaded()
+		{
+			intLoaded++;
+			if (intLoaded === intTotal)
+			{
+				globals.ocr.status = 'loaded';
+				api.print("OCR engine loaded.");
+				
+				performOCR(); // Process the current transformer
+				
+				// Process all queued transformers
+				while (globals.ocr.queue.length > 0) 
+				{
+					var queuedTransformer = globals.ocr.queue.shift();
+					queuedTransformer();
+				}
+			}
+		}
+		
+		arrScripts.forEach(function(strSrc_a) 
+		{
+			var objScript = document.createElement('script');
+			objScript.src = strSrc_a;
+			objScript.onload = scriptLoaded;
+			objScript.onerror = function() 
+			{
+				globals.ocr.status = null; 
+				cb_a({
+					mte: m_EDIT_TEXT,
+					error: "Failed to load OCR dependency: " + strSrc_a
+				});
+			};
+			document.head.appendChild(objScript);
+		});
+	}
+	
+	// Main transformer logic
+	// Initialize if needed
+	if (!globals.ocr) 
+	{
+		globals.ocr = { 
+			status: null,
+			queue: []
+		};
+	}
+
+	// Main transformer logic
+	if (globals.ocr.status === 'loaded') 
+	{
+		performOCR();
+	}
+	else 
+	{
+		// Add to queue regardless of loading status
+		globals.ocr.queue.push(function() 
+		{
+			ocr_xfrm(objAPI_a, objGlobals_a, strSourceFilename_a, strSourceMimeType_a, strSourceMimeTypeEditor_a, strTargetFilename_a, strRaw_a, arrCode_a, strArgs_a, cb_a);
+		});
+		
+		if (globals.ocr.status !== 'loading') 
+		{
+			// Not loaded and not loading, so start loading
+			globals.ocr.status = 'loading';
+			loadOCRDependencies();
+		}
+	}
+}

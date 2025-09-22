@@ -1,13 +1,11 @@
 $(document).ready(function() 
 {
-
-	var objHCJS = new hcJS('#ge-container', '#ge-command', '#ge-output', true);
-	objHCJS.reset();
+	var objCS = new cyborgShell('#ge-clicontainer', '#ge-clicommand', '#ge-clioutput', true);
+	objCS.reset();
 
 	$(window).resize(function() 
 	{
-		$('body').height($(window).height()-50);
-		objHCJS.onResize();
+		objCS.onResize();
 	});
 
 	// Also trigger the event on page load

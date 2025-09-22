@@ -12,6 +12,7 @@ $g_strUserDir = "";
 
 $g_strCurrentLanguage = "";
 
+// START should be preserved based on cookie
 if (isset($_SESSION['server_userkey']))
 {
 	$g_strUserKey = $_SESSION['server_userkey'];
@@ -42,14 +43,15 @@ if (isset($_SESSION['server_userdir']))
 	$g_strUserDir = $_SESSION['server_userdir'];
 }
 
-if (isset($_SESSION['server_currentdevicekey']))
-{
-	$g_strCurrentDeviceKey = $_SESSION['server_currentdevicekey'];
-}
-
 if (isset($_SESSION['server_currentlanguage']))
 {
 	$g_strCurrentLanguage = $_SESSION['server_currentlanguage'];
+}
+// END should be preserved based on cookie
+
+if (isset($_SESSION['server_currentdevicekey']))
+{
+	$g_strCurrentDeviceKey = $_SESSION['server_currentdevicekey'];
 }
 
 if (strlen($g_strCurrentLanguage) == 0)
@@ -74,8 +76,15 @@ $g_strR = "";
 $strContent = "";
 $blnContinue = false;
 
-if (ISSET($_SERVER['HTTP_USER_AGENT'])) { $g_strUserAgent = $_SERVER['HTTP_USER_AGENT']; }
-if (ISSET($_SERVER['REMOTE_ADDR'])) { $g_strIPAddress = $_SERVER['REMOTE_ADDR']; }
+if (ENABLEAGENTS == 'TRUE')
+{
+	if (ISSET($_SERVER['HTTP_USER_AGENT'])) { $g_strUserAgent = $_SERVER['HTTP_USER_AGENT']; }
+}
+
+if (ENABLEIPADDRESSES == 'TRUE')
+{
+	if (ISSET($_SERVER['REMOTE_ADDR'])) { $g_strIPAddress = $_SERVER['REMOTE_ADDR']; }
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') 
 {

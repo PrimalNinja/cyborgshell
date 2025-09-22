@@ -1,8 +1,5 @@
 <?php
 
-// actions
-define("ACTION_INVALIDATE", "invalidate");
-
 // messages
 define("MSG_ABOUTUPDATED", "情報が更新されました。");
 define("MSG_BLOCKEDWORDFOUND", "ブロックされた単語が見つかりました。");

@@ -1,0 +1,105 @@
+{
+  "projectName": "aitest",
+  "files": [
+    {
+      "fn": "aitest_prompt.txt",
+      "mt": "text/javascript",
+      "mte": "text",
+      "ln": null,
+      "pl": "",
+	  "arg": "",
+      "fl": "",
+      "st": ""
+    },
+    {
+      "fn": "aitest_story.txt",
+      "mt": "text/javascript",
+      "mte": "text",
+      "ln": 1,
+      "pl": "chatgpt.xfrm",
+	  "arg": "%PROVIDER%",
+      "fl": "",
+      "st": ""
+    },
+    {
+      "fn": "aitest_english.txt",
+      "mt": "text/javascript",
+      "mte": "text",
+      "ln": 2,
+      "pl": "blocker.xfrm",
+	  "arg": "",
+      "fl": "",
+      "st": ""
+    },
+    {
+      "fn": "aitest_chinese.txt",
+      "mt": "text/javascript",
+      "mte": "text",
+      "ln": 3,
+      "pl": "translate.xfrm",
+	  "arg": "Chinese",
+      "fl": "",
+      "st": ""
+    },
+    {
+      "fn": "aitest_indonesian.txt",
+      "mt": "text/javascript",
+      "mte": "text",
+      "ln": 3,
+      "pl": "translate.xfrm",
+	  "arg": "Indonesian",
+      "fl": "",
+      "st": ""
+    },
+    {
+      "fn": "aitest_japanese.txt",
+      "mt": "text/javascript",
+      "mte": "text",
+      "ln": 3,
+      "pl": "translate.xfrm",
+	  "arg": "Japanese",
+      "fl": "",
+      "st": ""
+    },
+    {
+      "fn": "aitest_tagalog.txt",
+      "mt": "text/javascript",
+      "mte": "text",
+      "ln": 3,
+      "pl": "translate.xfrm",
+	  "arg": "Tagalog",
+      "fl": "",
+      "st": ""
+    },
+    {
+      "fn": "chatgpt.xfrm",
+      "mt": "text/javascript transformer",
+      "mte": "text",
+      "ln": null,
+      "pl": "",
+	  "arg": "%PROVIDER%",
+      "fl": "",
+      "st": ""
+    },
+    {
+      "fn": "blocker.xfrm",
+      "mt": "text/javascript transformer",
+      "mte": "text",
+      "ln": null,
+      "pl": "",
+	  "arg": "",
+      "fl": "",
+      "st": ""
+    },
+    {
+      "fn": "translate.xfrm",
+      "mt": "text/javascript transformer",
+      "mte": "text",
+      "ln": null,
+      "pl": "",
+	  "arg": "",
+      "fl": "",
+      "st": ""
+    }
+  ]
+}

@@ -1,27 +1,27 @@
-Benvenuto in Open Home Computer JS! (OHCJS)
+Benvenuto in CyborgShell!
 
-OHCJS porta il fascino retrò dei computer domestici sui dispositivi moderni, permettendoti di creare, programmare e collaborare ovunque, in qualsiasi momento. Con OHCJS, puoi:
+CyborgShell porta il fascino retrò dei computer domestici sui dispositivi moderni, permettendoti di creare, programmare e collaborare ovunque, in qualsiasi momento. Con CyborgShell, puoi:
 
 - Creare un account e accedere su più dispositivi
 - Programmare in JavaScript, da solo o in team
 - Memorizzare i tuoi programmi in "spazi" personalizzati
 
-Ispirato alla semplicità dei computer domestici a 8 bit, OHCJS mira a ricreare l'esperienza immediata e senza fronzoli del computing classico. Registrati, accedi e inizia a programmare in pochi secondi!
+Ispirato alla semplicità dei computer domestici a 8 bit, CyborgShell mira a ricreare l'esperienza immediata e senza fronzoli del computing classico. Registrati, accedi e inizia a programmare in pochi secondi!
 
-In OHCJS, il tuo "spazio" è la tua area di archiviazione privata, accessibile solo a te. Puoi anche esplorare lo spazio pubblico, dove puoi creare, condividere e sperimentare con gli altri.
+In CyborgShell, il tuo "spazio" è la tua area di archiviazione privata, accessibile solo a te. Puoi anche esplorare lo spazio pubblico, dove puoi creare, condividere e sperimentare con gli altri.
 
-La condivisione è una funzione chiave in OHCJS. Proprio come scambiare dischetti negli anni '80, puoi condividere il tuo spazio con altri, e viceversa. Questo semplice modello di condivisione consente vari scenari:
+La condivisione è una funzione chiave in CyborgShell. Proprio come scambiare dischetti negli anni '80, puoi condividere il tuo spazio con altri, e viceversa. Questo semplice modello di condivisione consente vari scenari:
 
 - Insegnamento: Condividi spazi con studenti per un apprendimento guidato
 - Lavoro di squadra: Collabora a progetti in spazi di team condivisi
 - Amicizia: Condividi reciprocamente spazi con amici fidati
 
-Licenza
-
-Open Home Computer JS (OHCJS) [github.com/PrimalNinja/ohcjs] è rilasciato sotto la licenza software MIT, perché "condividere è prendersi cura."
-
-Contatta PrimalNinja se desideri considerare altre opzioni di licenza.
+CyborgShell [github.com/PrimalNinja/cyborgshell] viene rilasciato sotto la licenza software MIT, poiché "condividere è prendersi cura".
 
 Chi Siamo
 
-OHCJS è orgogliosamente sviluppato da PrimalNinja di Cyborg Unicorn Pty Ltd.
+Siamo basati in Australia e gestiamo un paio di aziende software che producono software per importanti aziende di trasporto, oltre a software in altri settori. Inoltre, sviluppiamo anche software per dispositivi mobili e computer retro. Parte del nostro lavoro è contrattato a noi e venduto con marchi di altre aziende, e parte la rilasciamo con i nostri marchi.
+
+CyborgShell è orgogliosamente sviluppato da PrimalNinja di Cyborg Unicorn Pty Ltd e Mitsukibo Pty Ltd, a volte operante come QuickDigital e Retrokibo.
+
+Invia segnalazioni di bug a contact@ questo dominio.

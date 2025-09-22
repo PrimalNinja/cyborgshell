@@ -1,0 +1,434 @@
+function translate_xfrm(objAPI_a, objGlobals_a, strSourceFilename_a, strSourceMimeType_a, strSourceMimeTypeEditor_a, strTargetFilename_a, strRaw_a, arrCode_a, strArgs_a, cb_a)
+{
+	var m_TRANSFORMER = 'translate';	// lowercase for provider settings
+	
+    console.log(m_TRANSFORMER + " plugin called with:");
+    console.log("objAPI_a:", typeof objAPI_a);
+    console.log("objGlobals_a:", typeof objGlobals_a);
+    console.log("strSourceFilename_a:", strSourceFilename_a);
+	console.log("strSourceMimeType_a:", strSourceMimeType_a);
+    console.log("strSourceMimeTypeEditor_a:", strSourceMimeTypeEditor_a);
+    console.log("strTargetFilename_a:", strTargetFilename_a);
+    //console.log("strRaw_a:", strRaw_a);
+    console.log("arrCode_a:", arrCode_a);
+	console.log("strArgs_a:", strArgs_a);
+    console.log("cb_a:", typeof cb_a);
+
+	var m_DEFAULTTIMEOUT = 120;	// in seconds
+
+	var m_EDIT_HEX = "hex";
+	var m_EDIT_TEXT = "text";
+
+    var api = objAPI_a;
+	var globals = objGlobals_a;
+    
+	var m_strLanguage = strArgs_a;
+	var m_strRaw = strRaw_a;
+	
+	var m_strOverrideProvider = null;
+	var m_strOverrideSession = null;
+	var m_strProcessedArgs = strArgs_a;
+
+	if (strArgs_a && strArgs_a.trim().length > 0) 
+	{
+		var parts = strArgs_a.trim().split(' ');
+		
+		// First word is always provider when args provided
+		m_strOverrideProvider = parts[0];
+		
+		// Check if second part is session (ends with colon)
+		if (parts.length > 1 && parts[1].endsWith(':')) 
+		{
+			m_strOverrideSession = parts[1].slice(0, -1); // remove colon
+			m_strProcessedArgs = parts.slice(2).join(' '); // rest is prompt
+		} 
+		else 
+		{
+			m_strProcessedArgs = parts.slice(1).join(' '); // rest is prompt
+		}
+		
+		// Update m_strArgs to be the processed prompt only
+		m_strArgs = m_strProcessedArgs;
+	}
+
+	// helpers
+
+	function addToProviderQueue(strProvider_a, fnExecution_a) 
+	{
+		// Initialize global queue structure
+		if (!globals.providerQueues) 
+		{
+			globals.providerQueues = {};
+		}
+		
+		if (!globals.providerQueues[strProvider_a]) 
+		{
+			globals.providerQueues[strProvider_a] = {
+				queue: [],
+				processing: false
+			};
+		}
+		
+		var objQueue = globals.providerQueues[strProvider_a];
+		
+		// Add to queue
+		objQueue.queue.push(fnExecution_a);
+		
+		// Process if not already processing
+		if (!objQueue.processing) 
+		{
+			processNextInQueue(strProvider_a);
+		}
+	}
+
+	function processNextInQueue(strProvider_a) 
+	{
+		var objQueue = globals.providerQueues[strProvider_a];
+		
+		if (objQueue.queue.length === 0) 
+		{
+			objQueue.processing = false;
+			return;
+		}
+		
+		objQueue.processing = true;
+		var fnNext = objQueue.queue.shift();
+		
+		// Execute with completion callback
+		fnNext(function() 
+		{
+			// After completion, process next with optional delay
+			setTimeout(function() 
+			{
+				processNextInQueue(strProvider_a);
+			}, 500); // 500ms delay for rate limiting
+		});
+	}
+
+	function toBoolean(str_a) 
+	{
+		var strResult = str_a;
+		if (strResult === undefined || strResult === null) { strResult = 'N'; }
+		
+		strResult = strResult.toUpperCase();
+		
+		return (strResult === 'Y' || strResult === 'YES' || strResult === 'T' || strResult === 'TRUE' || 
+				strResult === '1' || strResult === 'ON' || strResult === 'ENABLE' || strResult === 'ENABLED');
+	}
+
+	// AI logic
+	
+    function invokeAI(strProvider_a, strAPIKey_a, strEndpoint_a, strFlavour_a, strModel_a, strParallel_a, strMaxTokens_a, strTemperature_a, strProxy_a, cb_a)
+    {
+		var blnParallel = toBoolean(strParallel_a);
+		
+		function executeTransform(cbComplete_a) 
+		{
+			// defaults
+			var strFlavour = strFlavour_a;
+			if (!strFlavour || strFlavour.length === 0) { strFlavour = "chatgpt"; }
+
+			var strMaxTokens = strMaxTokens_a;
+			if (!strMaxTokens || strMaxTokens.length === 0) { strMaxTokens = "2000"; }
+
+			var strTemperature = strTemperature_a;
+			if (!strTemperature || strTemperature.length === 0) { strTemperature = "0.7"; }
+				
+			var strProxy = strProxy_a;
+			if (!strProxy || strProxy.length === 0) { strProxy = ""; }
+			
+			var strEndpoint = strEndpoint_a;
+			
+			if (strProxy.length > 0)
+			{
+				strEndpoint = strProxy + strEndpoint;
+			}
+			
+			var strPrompt = "Please translate this text into " + m_strLanguage + ", do not include any explanation or markup unless explicitly asked for:\n\n" + m_strRaw;
+			
+			function callAI(strPrompt_a, cbInternal_a)
+			{
+				var arrMessages = [
+					{
+						role: 'user',
+						content: strPrompt_a
+					}
+				];
+
+				var objFlavour;
+				var objHeaders;
+				var objPayload;
+				if (strFlavour.toLowerCase() === 'claude')
+				{
+					objPayload = {
+						model: strModel_a,
+						max_tokens: parseInt(strMaxTokens, 10),
+						temperature: parseFloat(strTemperature),
+						messages: arrMessages
+					};
+					
+					objHeaders = {
+						'x-api-key': strAPIKey_a,
+						'Content-Type': 'application/json',
+						'anthropic-version': '2023-06-01',
+						'anthropic-dangerous-direct-browser-access': 'true'
+					};
+					
+					objFlavour = {
+						url: strEndpoint,
+						method: 'POST',
+						headers: objHeaders,
+						data: JSON.stringify(objPayload),
+						timeout: (m_DEFAULTTIMEOUT * 1000)
+					};
+				}
+				else if (strFlavour.toLowerCase() === 'gemini') 
+				{
+					objPayload = {
+						"contents": [
+							{
+								"role": "user",
+								"parts": [
+									{
+										"text": strPrompt_a
+									}
+								]
+							}
+						],
+						// Optional configuration can be added here
+						"generationConfig": {
+							"maxOutputTokens": parseInt(strMaxTokens, 10),
+							"temperature": parseFloat(strTemperature)
+						}
+					};
+					
+					// Correct header syntax
+					objHeaders = {
+						'Content-Type': 'application/json'
+					};
+					
+					strEndpoint = strEndpoint + '?key=' + strAPIKey_a;
+
+					objFlavour = {
+						url: strEndpoint,
+						method: 'POST',
+						headers: objHeaders,
+						data: JSON.stringify(objPayload),
+						timeout: (m_DEFAULTTIMEOUT * 1000),
+						dataType: 'json'
+					};
+				}
+				else
+				{
+					objPayload = {
+						model: strModel_a,
+						max_tokens: parseInt(strMaxTokens, 10),
+						temperature: parseFloat(strTemperature),
+						messages: arrMessages
+					};
+					
+					objHeaders = {
+						'Content-Type': 'application/json'
+					};
+
+					if (strAPIKey_a !== null && strAPIKey_a.length > 0) 
+					{
+						objHeaders['Authorization'] = 'Bearer ' + strAPIKey_a;
+					}	
+					
+					objFlavour = {
+						url: strEndpoint,
+						method: 'POST',
+						headers: objHeaders,
+						data: JSON.stringify(objPayload),
+						timeout: (m_DEFAULTTIMEOUT * 1000)
+					};
+				}
+				
+				var strResponse;
+				$.ajax(objFlavour).done(function(objResponse_a) 
+				{
+					if (strFlavour.toLowerCase() === 'claude') 
+					{
+						if (objResponse_a.content && objResponse_a.content.length > 0) 
+						{
+							strResponse = objResponse_a.content[0].text;
+							cbInternal_a(null, strResponse);
+						}
+						else 
+						{
+							cbInternal_a('No response from ' + strProvider_a, null);
+						}
+					}
+					else if (strFlavour.toLowerCase() === 'gemini')
+					{
+						// Gemini response handling
+						if (objResponse_a.candidates && objResponse_a.candidates.length > 0 && 
+							objResponse_a.candidates[0].content && 
+							objResponse_a.candidates[0].content.parts && 
+							objResponse_a.candidates[0].content.parts.length > 0)
+						{
+							strResponse = objResponse_a.candidates[0].content.parts[0].text;
+							cbInternal_a(null, strResponse);
+						}
+						else
+						{
+							cbInternal_a('No response from ' + strProvider_a, null);
+						}
+					}
+					else 
+					{
+						if (objResponse_a.choices && objResponse_a.choices.length > 0) 
+						{
+							strResponse = objResponse_a.choices[0].message.content;
+							cbInternal_a(null, strResponse);
+						} 
+						else 
+						{
+							cbInternal_a('No response from ' + strProvider_a, null);
+						}
+					}
+				}).fail(function(objXHR_a, strStatus_a, strError_a) 
+				{
+					var strErrorMessage = 'AI API error: ';
+					
+					if (objXHR_a.responseJSON && objXHR_a.responseJSON.error) 
+					{
+						strErrorMessage += objXHR_a.responseJSON.error.message;
+					} 
+					else if (strStatus_a === 'timeout') 
+					{
+						strErrorMessage += 'Request timed out';
+					} 
+					else 
+					{
+						strErrorMessage += strStatus_a + ' - ' + strError_a;
+					}
+					
+					cbInternal_a(strErrorMessage, null);
+				});
+			}
+			
+			if (m_strRaw && m_strRaw.trim().length > 0)
+			{
+				callAI(strPrompt, function(strError_a, strResponse_a)
+				{
+					if (strError_a)
+					{
+						if ($.isFunction(cb_a))
+						{
+							cb_a({
+								mte: m_EDIT_TEXT,
+								raw: m_strRaw,
+								cd: null,
+								message: '',
+								error: strError_a
+							});
+						}
+					}
+					else
+					{
+						if ($.isFunction(cb_a))
+						{
+							cb_a({
+								mte: m_EDIT_TEXT,
+								raw: strResponse_a,
+								cd: null,
+								message: strSourceFilename_a + ' translated to ' + m_strLanguage + ' via ' + strProvider_a,
+								error: ''
+							});
+						}
+					}
+
+					if ($.isFunction(cbComplete_a)) 
+					{
+						cbComplete_a();
+					}
+				});
+			}
+			else
+			{
+				// No input to translate
+				if ($.isFunction(cb_a))
+				{
+					cb_a({
+						mte: m_EDIT_TEXT,
+						raw: '',
+						cd: null,
+						message: 'No content to translate',
+						error: ''
+					});
+				}
+				
+				// Signal completion for queue processing
+				if ($.isFunction(cbComplete_a)) 
+				{
+					cbComplete_a();
+				}
+			}
+		}
+
+		if (blnParallel) 
+		{
+			// Direct execution (parallel) - not recommended for speech
+			executeTransform();
+		} 
+		else 
+		{
+			// Queue execution (sequential) - recommended for speech
+			addToProviderQueue(strProvider_a, executeTransform);
+		}
+    }
+
+    function loadMoreConfig(strProvider_a)
+    {
+        // Load provider-specific configs
+        api.loadLocalData(strProvider_a + '-apikey', function(strAPIKey_a) 
+        {
+            api.loadLocalData(strProvider_a + '-endpoint', function(strEndpoint_a) 
+            {
+				api.loadLocalData(strProvider_a + '-flavour', function(strFlavour_a) 
+				{
+					api.loadLocalData(strProvider_a + '-model', function(strModel_a) 
+					{
+						api.loadLocalData(strProvider_a + '-parallel', function(strParallel_a) 
+						{
+							api.loadLocalData(strProvider_a + '-maxtokens', function(strMaxTokens_a) 
+							{
+								api.loadLocalData(strProvider_a + '-temperature', function(strTemperature_a) 
+								{
+									api.loadLocalData(strProvider_a + '-proxy', function(strProxy_a) 
+									{
+										if ((strProvider_a !== null && strProvider_a.length > 0) &&
+											(strEndpoint_a !== null && strEndpoint_a.length > 0) &&
+											(strModel_a !== null && strModel_a.length > 0))
+										{
+											invokeAI(strProvider_a, strAPIKey_a, strEndpoint_a, strFlavour_a, strModel_a, strParallel_a, strMaxTokens_a, strTemperature_a, strProxy_a, cb_a);
+										} 
+										else 
+										{
+											api.errorOutput('Transformer ' + m_TRANSFORMER + ' is not configured for provider: ' + strProvider_a);
+										}
+									});
+								});
+							});
+						});
+					});
+				});
+            });
+        });
+    }
+
+	api.loadLocalData(m_TRANSFORMER + '-provider', function(strProvider_a) 
+	{
+		if (m_strOverrideProvider)
+		{
+			m_strOverrideProvider = m_strOverrideProvider.replace(/%PROVIDER%/g, strProvider_a);
+			loadMoreConfig(m_strOverrideProvider);
+		}
+		else
+		{
+			loadMoreConfig(strProvider_a);
+		}
+	});
+}

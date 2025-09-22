@@ -1,27 +1,27 @@
-欢迎来到 Open Home Computer JS! (OHCJS)
+欢迎来到 CyborgShell!
 
-OHCJS 将家庭计算机的复古魅力带到现代设备，让您随时随地创建、编码和协作。使用 OHCJS，您可以：
+CyborgShell 将家庭计算机的复古魅力带到现代设备，让您随时随地创建、编码和协作。使用 CyborgShell，您可以：
 
 - 在多个设备上创建账户并登录
 - 独自或与团队一起使用JS编程
 - 在个性化的“空间”中存储您的程序
 
-OHCJS 受到 8 位家庭计算机简约设计的启发，旨在重现经典计算的即开即用、无忧体验。注册、登录，并在几秒钟内开始编码！
+CyborgShell 受到 8 位家庭计算机简约设计的启发，旨在重现经典计算的即开即用、无忧体验。注册、登录，并在几秒钟内开始编码！
 
-在 OHCJS 中，您的“空间”是您自己的私人存储区域，仅您可以访问。您还可以探索公共空间，在那里与他人一起创建、分享和实验。
+在 CyborgShell 中，您的“空间”是您自己的私人存储区域，仅您可以访问。您还可以探索公共空间，在那里与他人一起创建、分享和实验。
 
-分享是 OHCJS 的一项关键功能。就像 80 年代交换软盘一样，您可以与他人共享您的空间，反之亦然。这种简单的共享模型使各种场景成为可能：
+分享是 CyborgShell 的一项关键功能。就像 80 年代交换软盘一样，您可以与他人共享您的空间，反之亦然。这种简单的共享模型使各种场景成为可能：
 
 - 教学：与学生共享空间以进行指导学习
 - 团队合作：在共享团队空间中协作项目
 - 友谊：与值得信赖的朋友互相分享空间
 
-许可证
-
-Open Home Computer JS (OHCJS) [github.com/PrimalNinja/ohcjs] 依据 MIT 软件许可证发布，因为“分享就是关心”。
-
-如果您希望考虑其他许可选项，请联系 PrimalNinja。
+CyborgShell [github.com/PrimalNinja/cyborgshell]在MIT软件许可下发布，这是因为“分享即是关心”。
 
 关于我们
 
-OHCJS 由 Cyborg Unicorn Pty Ltd 的 PrimalNinja 自豪地开发。
+我们位于澳大利亚，经营几家软件公司，为领先的货运公司以及其他行业生产软件。此外，我们还开发移动设备和复古计算机的软件。我们的部分工作是承包给我们的，并以其他公司的品牌进行白标处理，部分则以我们自己的品牌发布。
+
+CyborgShell 由 Cyborg Unicorn Pty Ltd 和 Mitsukibo Pty Ltd 的 PrimalNinja 自豪开发，有时以 QuickDigital 和 Retrokibo 的名义交易。
+
+请将错误报告发送至 contact@此域名。

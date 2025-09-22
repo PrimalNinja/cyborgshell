@@ -1,0 +1,165 @@
+{
+	"projectName": "robust-statistical-analysis-fixed",
+	"files": [
+		{
+			"fn": "data-input",
+			"mt": "text/javascript",
+			"mte": "text",
+			"ln": null,
+			"pl": "",
+			"arg": "",
+			"fl": "",
+			"st": ""
+		},
+		{
+			"fn": "raw-dataset",
+			"mt": "text/javascript",
+			"mte": "text",
+			"ln": 1,
+			"pl": "chatgpt.xfrm",
+			"arg": "openai generate the requested dataset and output as JSON array",
+			"fl": "",
+			"st": ""
+		},
+		{
+			"fn": "basic-statistics",
+			"mt": "text/javascript",
+			"mte": "text",
+			"ln": 2,
+			"pl": "chatgpt.xfrm",
+			"arg": "openai calculate mean, median, mode, standard deviation, variance",
+			"fl": "",
+			"st": ""
+		},
+		{
+			"fn": "outlier-analysis",
+			"mt": "text/javascript",
+			"mte": "text",
+			"ln": 2,
+			"pl": "chatgpt.xfrm",
+			"arg": "openai perform outlier detection using IQR method",
+			"fl": "",
+			"st": ""
+		},
+		{
+			"fn": "frequency-distribution",
+			"mt": "text/javascript",
+			"mte": "text",
+			"ln": 2,
+			"pl": "chatgpt.xfrm",
+			"arg": "openai create frequency distribution with 10 bins",
+			"fl": "",
+			"st": ""
+		},
+		{
+			"fn": "regression-analysis",
+			"mt": "text/javascript",
+			"mte": "text",
+			"ln": 2,
+			"pl": "chatgpt.xfrm",
+			"arg": "openai generate linear regression analysis",
+			"fl": "",
+			"st": ""
+		},
+		{
+			"fn": "latex-statistics",
+			"mt": "text/javascript",
+			"mte": "text",
+			"ln": 3,
+			"pl": "chatgpt.xfrm",
+			"arg": "openai convert statistics to LaTeX format",
+			"fl": "",
+			"st": ""
+		},
+		{
+			"fn": "python-code",
+			"mt": "text/javascript",
+			"mte": "text",
+			"ln": 3,
+			"pl": "chatgpt.xfrm",
+			"arg": "openai create Python code for statistical analysis",
+			"fl": "",
+			"st": ""
+		},
+		{
+			"fn": "r-visualization",
+			"mt": "text/javascript",
+			"mte": "text",
+			"ln": 6,
+			"pl": "chatgpt.xfrm",
+			"arg": "openai generate R code for visualization plots",
+			"fl": "",
+			"st": ""
+		},
+		{
+			"fn": "comprehensive-report",
+			"mt": "text/javascript",
+			"mte": "text",
+			"ln": 7,
+			"pl": "chatgpt.xfrm",
+			"arg": "openai create comprehensive statistical report with LaTeX formulas and interpretation",
+			"fl": "",
+			"st": ""
+		},
+		{
+			"fn": "report-copy",
+			"mt": "text/javascript",
+			"mte": "text",
+			"ln": 10,
+			"pl": "passthrough.xfrm",
+			"arg": "",
+			"fl": "",
+			"st": ""
+		},
+		{
+			"fn": "quality-assessment",
+			"mt": "text/javascript",
+			"mte": "text",
+			"ln": 11,
+			"pl": "chatgpt.xfrm",
+			"arg": "openai assess the quality of this report on a scale of 1-10 and explain why",
+			"fl": "",
+			"st": ""
+		},
+		{
+			"fn": "quality-gate",
+			"mt": "text/javascript",
+			"mte": "text",
+			"ln": 12,
+			"pl": "chatgpt.xfrm",
+			"arg": "openai session:gate - read the quality score from the input. If the score is 8 or higher, output the complete report. If the score is less than 8, output exactly: 'BLOCKED - Quality score too low for publication'",
+			"fl": "",
+			"st": ""
+		},
+		{
+			"fn": "final-publication",
+			"mt": "text/javascript",
+			"mte": "text",
+			"ln": 13,
+			"pl": "chatgpt.xfrm",
+			"arg": "openai if input contains 'BLOCKED', output a template. Otherwise, compile the statistical analysis into a publication-ready academic paper format using the actual data and results",
+			"fl": "",
+			"st": ""
+		},
+		{
+			"fn": "chatgpt.xfrm",
+			"mt": "text/javascript transformer",
+			"mte": "text",
+			"ln": null,
+			"pl": "",
+			"arg": "",
+			"fl": "",
+			"st": ""
+		},
+		{
+			"fn": "passthrough.xfrm",
+			"mt": "text/javascript transformer",
+			"mte": "text",
+			"ln": null,
+			"pl": "",
+			"arg": "",
+			"fl": "",
+			"st": ""
+		}
+	]
+}

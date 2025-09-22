@@ -1,0 +1,387 @@
+// example usage: 
+//	link drop speak accent:en-us
+//	link drop speak accent:en-au
+function speak_xfrm(objAPI_a, objGlobals_a, strSourceFilename_a, strSourceMimeType_a, strSourceMimeTypeEditor_a, strTargetFilename_a, strRaw_a, arrCode_a, strArgs_a, cb_a)
+{
+	var m_TRANSFORMER = 'speak';
+	
+	console.log(m_TRANSFORMER + " plugin called with:");
+	console.log("objAPI_a:", typeof objAPI_a);
+	console.log("objGlobals_a:", typeof objGlobals_a);
+    console.log("strSourceFilename_a:", strSourceFilename_a);
+	console.log("strSourceMimeType_a:", strSourceMimeType_a);
+    console.log("strSourceMimeTypeEditor_a:", strSourceMimeTypeEditor_a);
+	console.log("strTargetFilename_a:", strTargetFilename_a);
+	console.log("arrCode_a:", arrCode_a);
+	console.log("strArgs_a:", strArgs_a);
+	console.log("cb_a:", typeof cb_a);
+
+	var m_EDIT_HEX = "hex";
+	var m_EDIT_TEXT = "text";
+
+	var api = objAPI_a;
+	var globals = objGlobals_a;
+	
+	var m_strArgs = strArgs_a;
+	var m_strRaw = strRaw_a;
+	var m_arrCode = arrCode_a;
+
+	// helpers 
+	
+	function addToProviderQueue(strProvider_a, fnExecution_a) 
+	{
+		// Initialize global queue structure
+		if (!globals.providerQueues) 
+		{
+			globals.providerQueues = {};
+		}
+		
+		if (!globals.providerQueues[strProvider_a]) 
+		{
+			globals.providerQueues[strProvider_a] = {
+				queue: [],
+				processing: false
+			};
+		}
+		
+		var objQueue = globals.providerQueues[strProvider_a];
+		
+		// Add to queue
+		objQueue.queue.push(fnExecution_a);
+		
+		// Process if not already processing
+		if (!objQueue.processing) 
+		{
+			processNextInQueue(strProvider_a);
+		}
+	}
+
+	function processNextInQueue(strProvider_a) 
+	{
+		var objQueue = globals.providerQueues[strProvider_a];
+		
+		if (objQueue.queue.length === 0) 
+		{
+			objQueue.processing = false;
+			return;
+		}
+		
+		objQueue.processing = true;
+		var fnNext = objQueue.queue.shift();
+		
+		// Execute with completion callback
+		fnNext(function() 
+		{
+			// After completion, process next with optional delay
+			setTimeout(function() 
+			{
+				processNextInQueue(strProvider_a);
+			}, 500); // 500ms delay for rate limiting
+		});
+	}
+
+	function toBoolean(str_a) 
+	{
+		var strResult = str_a;
+		if (strResult === undefined || strResult === null) { strResult = 'N'; }
+		
+		strResult = strResult.toUpperCase();
+		
+		return (strResult === 'Y' || strResult === 'YES' || strResult === 'T' || strResult === 'TRUE' || 
+				strResult === '1' || strResult === 'ON' || strResult === 'ENABLE' || strResult === 'ENABLED');
+	}
+
+	// Speech synthesis helpers
+
+	function speakText(strText_a, strAccent_a, cb_a)
+	{
+		if (!('speechSynthesis' in window))
+		{
+			cb_a('Speech synthesis not supported in this browser');
+			return;
+		}
+
+		if (strText_a.trim().length === 0)
+		{
+			cb_a(null);
+			return;
+		}
+
+		function doSpeak()
+		{
+			var objUtterance = new SpeechSynthesisUtterance(strText_a.trim());
+			
+			if (strAccent_a && strAccent_a.length > 0)
+			{
+				var arrVoices = speechSynthesis.getVoices();
+				console.log('Available voices:', arrVoices.length); // DEBUG
+				
+				for (var intI = 0; intI < arrVoices.length; intI++)
+				{
+					console.log('Voice:', arrVoices[intI].lang, arrVoices[intI].name); // DEBUG
+					if (arrVoices[intI].lang.toLowerCase() === strAccent_a.toLowerCase())
+					{
+						objUtterance.voice = arrVoices[intI];
+						console.log('Selected voice:', arrVoices[intI].name); // DEBUG
+						break;
+					}
+				}
+			}
+
+			objUtterance.rate = 0.8;
+			objUtterance.pitch = 1.2;
+			objUtterance.volume = 1.0;
+
+			objUtterance.onend = function()
+			{
+				cb_a(null);
+			};
+
+			objUtterance.onerror = function(objEvent_a)
+			{
+				cb_a('Speech synthesis error: ' + objEvent_a.error);
+			};
+
+			speechSynthesis.speak(objUtterance);
+		}
+
+		// Check if voices are loaded
+		var arrVoices = speechSynthesis.getVoices();
+		if (arrVoices.length === 0)
+		{
+			// Voices not loaded yet, wait for them
+			speechSynthesis.addEventListener('voiceschanged', function()
+			{
+				doSpeak();
+			}, { once: true });
+		}
+		else
+		{
+			doSpeak();
+		}
+	}
+
+	function invokeSpeakArgs(strProvider_a, strParallel_a, cb_a)
+	{
+		var blnParallel = toBoolean(strParallel_a);
+		
+		function executeTransform(cbComplete_a) 
+		{
+			// Parse arguments for speech options
+			var strAccent = null;
+			var arrParts = m_strArgs.split(' ');
+			
+			for (var intI = 0; intI < arrParts.length; intI++)
+			{
+				var strPart = arrParts[intI];
+				if (strPart.indexOf('accent:') === 0)
+				{
+					strAccent = strPart.substring(7);
+				}
+			}
+
+			// Speak the entire file content with the specified options
+			speakText(m_strRaw, strAccent, function(strError_a)
+			{
+				cb_a({
+					mte: m_EDIT_TEXT,
+					raw: strError_a ? ('Error: ' + strError_a) : m_strRaw,
+					cd: null,
+					message: strError_a ? '' : 'File content spoken with voice synthesis',
+					error: strError_a || ''
+				});
+				
+				// Signal completion for queue processing
+				if ($.isFunction(cbComplete_a)) 
+				{
+					cbComplete_a();
+				}
+			});
+		}
+		
+		if (blnParallel) 
+		{
+			// Direct execution (parallel) - not recommended for speech
+			executeTransform();
+		} 
+		else 
+		{
+			// Queue execution (sequential) - recommended for speech
+			addToProviderQueue(strProvider_a, executeTransform);
+		}
+	}
+
+	function invokeSpeakScan(strProvider_a, strParallel_a, cb_a)
+	{
+		var blnParallel = toBoolean(strParallel_a);
+		
+		function executeTransform(cbComplete_a) 
+		{
+			var arrLines = m_strRaw.split('\n');
+			
+			// FIRST SCAN: Collect speech blocks
+			var arrSpeechBlocks = [];
+			var blnInSpeech = false;
+			var strCurrentSpeech = '';
+			var strCurrentOptions = '';
+			var intI;
+			var strLine;
+			var strTrimmedLine;
+			
+			for (intI = 0; intI < arrLines.length; intI++)
+			{
+				strLine = arrLines[intI];
+				strTrimmedLine = strLine.trim();
+				
+				if (strTrimmedLine.startsWith('SPEAK START'))
+				{
+					strCurrentOptions = strTrimmedLine.substring(11).trim(); // Get options after "SPEAK START"
+					blnInSpeech = true;
+					strCurrentSpeech = '';
+				}
+				else if (strTrimmedLine === 'SPEAK END')
+				{
+					if (blnInSpeech)
+					{
+						arrSpeechBlocks.push({
+							text: strCurrentSpeech.trim(),
+							options: strCurrentOptions
+						});
+						blnInSpeech = false;
+						strCurrentSpeech = '';
+						strCurrentOptions = '';
+					}
+				}
+				else if (blnInSpeech)
+				{
+					if (strCurrentSpeech.length > 0)
+					{
+						strCurrentSpeech += '\n';
+					}
+					strCurrentSpeech += strLine;
+				}
+			}
+
+			// SECOND SCAN: Build result without SPEAK commands, speak the blocks
+			var arrResult = [];
+			blnInSpeech = false;
+			
+			for (intI = 0; intI < arrLines.length; intI++)
+			{
+				strLine = arrLines[intI];
+				strTrimmedLine = strLine.trim();
+				
+				if (strTrimmedLine.startsWith('SPEAK START'))
+				{
+					blnInSpeech = true;
+				}
+				else if (strTrimmedLine === 'SPEAK END')
+				{
+					blnInSpeech = false;
+				}
+				else if (!blnInSpeech)
+				{
+					// Keep lines that are not inside SPEAK blocks
+					arrResult.push(strLine);
+				}
+				// Skip lines inside SPEAK blocks in the output
+			}
+
+			if (arrSpeechBlocks.length === 0)
+			{
+				// No speech blocks found, return original content
+				cb_a({
+					raw: m_strRaw,
+					cd: m_arrCode,
+					message: '',
+					error: ''
+				});
+				
+				// Signal completion for queue processing
+				if ($.isFunction(cbComplete_a)) 
+				{
+					cbComplete_a();
+				}
+				return;
+			}
+			
+			// Process speech blocks sequentially
+			var intCurrentBlockIndex = 0;
+			function processNextBlock()
+			{
+				if (intCurrentBlockIndex >= arrSpeechBlocks.length)
+				{
+					// All blocks processed, return final result
+					var strFinalResult = arrResult.join('\n');
+					
+					cb_a({
+						mte: m_EDIT_TEXT,
+						raw: strFinalResult,
+						cd: null,
+						message: 'Spoke ' + arrSpeechBlocks.length + ' text block(s)',
+						error: ''
+					});
+					
+					// Signal completion for queue processing
+					if ($.isFunction(cbComplete_a)) 
+					{
+						cbComplete_a();
+					}
+					return;
+				}
+				
+				var objCurrentBlock = arrSpeechBlocks[intCurrentBlockIndex];
+				
+				// Parse options for this block
+				var strAccent = null;
+
+				// Parse arguments for voice settings
+				var arrParts = m_strArgs.split(' ');
+				
+				for (var intI = 0; intI < arrParts.length; intI++)
+				{
+					var strPart = arrParts[intI];
+					if (strPart.indexOf('accent:') === 0)
+					{
+						strAccent = strPart.substring(7);
+					}
+				}
+				
+				speakText(objCurrentBlock.text, strAccent, function(strError_a)
+				{
+					if (strError_a)
+					{
+						// Continue processing even on error
+						console.log('Speech error for block ' + intCurrentBlockIndex + ': ' + strError_a);
+					}
+					
+					intCurrentBlockIndex++;
+					processNextBlock();
+				});
+			}
+			
+			processNextBlock();
+		}
+
+		if (blnParallel) 
+		{
+			// Direct execution (parallel) - not recommended for speech
+			executeTransform();
+		} 
+		else 
+		{
+			// Queue execution (sequential) - recommended for speech
+			addToProviderQueue(strProvider_a, executeTransform);
+		}
+	}
+
+	// Main execution
+	if (m_strArgs !== null && m_strArgs.length > 0)
+	{
+		invokeSpeakArgs(strProvider_a, "N", cb_a);
+	}
+	else
+	{
+		invokeSpeakScan(strProvider_a, "N", cb_a);
+	}
+}

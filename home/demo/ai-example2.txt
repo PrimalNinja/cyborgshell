@@ -1,0 +1,113 @@
+Example 2 - chatgpt language translation usage
+=========
+
+project load aitest					<-- load the already setup project for this example
+File loaded: aitest_prompt.txt
+File loaded: aitest_story.txt
+File loaded: aitest_english.txt
+File loaded: aitest_chinese.txt
+File loaded: aitest_indonesian.txt
+File loaded: aitest_japanese.txt
+File loaded: aitest_tagalog.txt
+File loaded: chatgpt.xfrm
+File loaded: null.xfrm
+File loaded: translate.xfrm
+Project loaded: aitest
+Ready
+files								<-- list the files loaded with the project
+Project name: aitest
+Project filename: aitest.prj
+Files:
+  0    Run Space 0 bytes/0 lines (text/javascript:text)
+  1 *  aitest_prompt.txt 177 bytes/4 lines (text/javascript:text)
+  2  D aitest_story.txt 0 bytes/0 lines (text/javascript:text) Linked to 1:chatgpt.xfrm:
+  3    aitest_english.txt 1548 bytes/5 lines (text/javascript:text) Linked to 2:null.xfrm:
+  4    aitest_chinese.txt 479 bytes/5 lines (text/javascript:text) Linked to 2:translate.xfrm:Chinese
+  5    aitest_indonesian.txt 1773 bytes/5 lines (text/javascript:text) Linked to 2:translate.xfrm:Indonesian
+  6    aitest_japanese.txt 695 bytes/5 lines (text/javascript:text) Linked to 2:translate.xfrm:Japanese
+  7    aitest_tagalog.txt 1919 bytes/5 lines (text/javascript:text) Linked to 2:translate.xfrm:Tagalog
+  8    chatgpt.xfrm [PLUGIN] 12933 bytes/476 lines (text/javascript transformer:text)
+  9    null.xfrm [PLUGIN] 543 bytes/20 lines (text/javascript transformer:text)
+ 10    translate.xfrm [PLUGIN] 2779 bytes/112 lines (text/javascript transformer:text)
+
+* current file, D dirty file
+Ready
+10									<-- remove line 10 which is the AI IGNORE statement and watch it go!
+Ready
+ChatGPT processed 1 prompt(s)
+Text translated to Chinese
+Text translated to Indonesian
+Text translated to Tagalog
+Text translated to Japanese
+files								<-- list the files again, some are now dirty
+Project name: aitest
+Project filename: aitest.prj
+Files:
+  0    Run Space 0 bytes/0 lines (text/javascript:text)
+  1 *D aitest_prompt.txt 164 bytes/3 lines (text/javascript:text)
+  2  D aitest_story.txt 1498 bytes/5 lines (text/javascript:text) Linked to 1:chatgpt.xfrm:
+  3  D aitest_english.txt 1502 bytes/5 lines (text/javascript:text) Linked to 2:null.xfrm:
+  4  D aitest_chinese.txt 441 bytes/5 lines (text/javascript:text) Linked to 2:translate.xfrm:Chinese
+  5  D aitest_indonesian.txt 1686 bytes/5 lines (text/javascript:text) Linked to 2:translate.xfrm:Indonesian
+  6  D aitest_japanese.txt 612 bytes/5 lines (text/javascript:text) Linked to 2:translate.xfrm:Japanese
+  7  D aitest_tagalog.txt 1919 bytes/5 lines (text/javascript:text) Linked to 2:translate.xfrm:Tagalog
+  8    chatgpt.xfrm [PLUGIN] 12933 bytes/476 lines (text/javascript transformer:text)
+  9    null.xfrm [PLUGIN] 543 bytes/20 lines (text/javascript transformer:text)
+ 10    translate.xfrm [PLUGIN] 2779 bytes/112 lines (text/javascript transformer:text)
+
+* current file, D dirty file
+Ready
+file 2								<-- change to file 2
+Ready
+list								<-- list it
+     10	Whiskers, a tiny gray kitten with bright green eyes, found herself wandering far from her cozy home one sunny afternoon. Chasing after a fluttering butterfly, she didn’t notice how deep into the garden she had ventured. The butterfly danced just out of reach, leading her through tall grass and vibrant flowers until the familiar sights of her neighborhood faded away. When the butterfly finally disappeared, Whiskers looked around, her heart pounding as she realized she was lost.
+     20	
+     30	Determined to find her way back, Whiskers began her journey, her little paws padding softly on the ground. She asked a wise old tortoise resting nearby for directions, but he only chuckled and reminded her that sometimes, the heart knows the way better than any map. Encouraged, she pressed on, following the scent of her favorite treats wafting through the air. Along the way, she encountered friendly creatures—a chirpy robin who offered her a few breadcrumbs and a gentle dog who shared stories of their own adventures. Each encounter gave her hope and strength, and she felt less alone.
+     40	
+     50	As dusk began to settle, painting the sky in hues of orange and pink, Whiskers climbed a small hill and spotted her home in the distance. With renewed energy, she dashed down, her heart racing with joy. As she reached the familiar doorway, she mewed softly, her tiny voice barely audible. The door swung open, and her owner, a little girl with a worried expression, scooped her up into a warm embrace. Safe and sound, Whiskers purred contentedly, grateful for the adventure that had led her back to where she truly belonged.
+Ready
+file 3								<-- change to file 3 (our english copy)
+Ready
+list								<-- list it
+     10	Whiskers, a tiny gray kitten with bright green eyes, found herself wandering far from her cozy home one sunny afternoon. Chasing after a fluttering butterfly, she didn’t notice how deep into the garden she had ventured. The butterfly danced just out of reach, leading her through tall grass and vibrant flowers until the familiar sights of her neighborhood faded away. When the butterfly finally disappeared, Whiskers looked around, her heart pounding as she realized she was lost.
+     20	
+     30	Determined to find her way back, Whiskers began her journey, her little paws padding softly on the ground. She asked a wise old tortoise resting nearby for directions, but he only chuckled and reminded her that sometimes, the heart knows the way better than any map. Encouraged, she pressed on, following the scent of her favorite treats wafting through the air. Along the way, she encountered friendly creatures—a chirpy robin who offered her a few breadcrumbs and a gentle dog who shared stories of their own adventures. Each encounter gave her hope and strength, and she felt less alone.
+     40	
+     50	As dusk began to settle, painting the sky in hues of orange and pink, Whiskers climbed a small hill and spotted her home in the distance. With renewed energy, she dashed down, her heart racing with joy. As she reached the familiar doorway, she mewed softly, her tiny voice barely audible. The door swung open, and her owner, a little girl with a worried expression, scooped her up into a warm embrace. Safe and sound, Whiskers purred contentedly, grateful for the adventure that had led her back to where she truly belonged.
+Ready
+file 4								<-- change to file 4
+Ready
+list								<-- list it
+     10	小猫胡须是一只微小的灰色小猫，拥有明亮的绿色眼睛。一个阳光明媚的下午，她发现自己远离了温馨的家。她追逐着一只翩翩起舞的蝴蝶，完全没有注意到自己已经深入花园。那只蝴蝶在她的视线之外翩翩起舞，带她穿过高高的草丛和五彩缤纷的花朵，直到她熟悉的邻里景象渐渐消失。当蝴蝶最终消失时，胡须环顾四周，心脏怦怦直跳，意识到自己迷路了。
+     20	
+     30	胡须决心找到回家的路，开始了她的旅程，小爪子轻轻地踩在地上。她向旁边休息的一只聪明的老乌龟询问方向，但乌龟只是轻声笑了笑，提醒她有时心灵比任何地图都更知道方向。受到鼓舞，她继续前行，顺着空气中飘来的她最喜欢的零食的香味。一路上，她遇到了友好的生物——一只叽叽喳喳的知更鸟给了她几块面包屑，还有一只温柔的狗狗分享了自己的冒险故事。每一次相遇都给了她希望和力量，让她感到不再孤单。
+     40	
+     50	当黄昏降临，天空被涂抹成橙色和粉色的色调时，胡须爬上一个小山丘，远远地看到了自己的家。她重新获得了力量，欢快地冲下山，心中充满了喜悦。当她到达熟悉的门口时，她轻声喵喵叫，微弱的声音几乎听不见。门打开了，她的主人，一个神情担忧的小女孩，将她揽入温暖的怀抱。安全无恙的胡须满足地呼噜着，感激这次冒险让她回到了真正属于她的地方。
+Ready
+file 5								<-- change to file 5
+Ready
+list								<-- list it
+     10	Whiskers, seekor anak kucing abu-abu kecil dengan mata hijau cerah, mendapati dirinya menjelajahi jauh dari rumahnya yang nyaman pada suatu sore yang cerah. Mengejar kupu-kupu yang bergetar, dia tidak menyadari seberapa dalam dia telah memasuki taman. Kupu-kupu itu menari tepat di luar jangkauan, membawanya melalui rumput tinggi dan bunga-bunga cerah hingga pemandangan akrab di lingkungannya memudar. Ketika kupu-kupu itu akhirnya menghilang, Whiskers melihat sekeliling, jantungnya berdebar ketika dia menyadari bahwa dia tersesat.
+     20	
+     30	Bertekad untuk menemukan jalan pulang, Whiskers memulai perjalanannya, kaki kecilnya menginjak lembut di tanah. Dia bertanya kepada seekor kura-kura tua yang bijaksana yang sedang beristirahat di dekatnya untuk petunjuk arah, tetapi dia hanya tertawa dan mengingatkannya bahwa kadang-kadang, hati tahu jalan lebih baik daripada peta mana pun. Termotivasi, dia terus melangkah, mengikuti aroma camilan kesukaannya yang melayang di udara. Sepanjang jalan, dia menemui makhluk-makhluk ramah—seekor robin yang ceria yang menawarkan beberapa remah roti dan seekor anjing lembut yang berbagi cerita tentang petualangan mereka sendiri. Setiap pertemuan memberinya harapan dan kekuatan, dan dia merasa kurang sendirian.
+     40	
+     50	Saat senja mulai turun, melukis langit dengan nuansa oranye dan merah muda, Whiskers mendaki sebuah bukit kecil dan melihat rumahnya di kejauhan. Dengan energi yang diperbarui, dia berlari turun, jantungnya berdebar penuh kegembiraan. Ketika dia mencapai pintu yang akrab, dia mengeong pelan, suaranya yang kecil hampir tidak terdengar. Pintu itu terbuka, dan pemiliknya, seorang gadis kecil dengan ekspresi khawatir, mengangkatnya ke dalam pelukan hangat. Aman dan nyaman, Whiskers menggeram puas, bersyukur atas petualangan yang membawanya kembali ke tempat di mana dia benar-benar berada.
+Ready
+file 6								<-- change to file 6
+Ready
+list								<-- list it
+     10	ウィスカーズは、明るい緑色の目を持つ小さな灰色の子猫で、ある晴れた午後、快適な家から遠く離れていることに気づきました。舞い上がる蝶を追いかけているうちに、庭の奥深くまで進んでしまったことに気づきませんでした。蝶は手の届かないところで舞い、背の高い草や鮮やかな花々を通り抜けるように彼女を導き、やがて彼女の住んでいる地域の見慣れた景色は遠くなってしまいました。蝶がようやく姿を消したとき、ウィスカーズは周りを見回し、自分が迷子になっていることに気づいて心臓がドキドキしました。
+     20	
+     30	帰り道を見つける決意を固めたウィスカーズは、小さな足で静かに地面を踏みしめながら旅を始めました。近くで休んでいた賢い老亀に道を尋ねましたが、彼はただ笑って、時には心が地図よりも道をよく知っていることを思い出させてくれました。勇気づけられた彼女は、空気中に漂うお気に入りのおやつの香りを追いかけ続けました。その途中、彼女は友好的な生き物たちに出会いました。元気なロビンがいくつかのパンくずを提供してくれたり、優しい犬が自分の冒険の話を共有してくれたりしました。どの出会いも彼女に希望と力を与え、孤独感が和らぎました。
+     40	
+     50	夕暮れが近づくにつれ、空はオレンジ色やピンク色に染まっていきました。ウィスカーズは小さな丘を登り、遠くに自分の家を見つけました。新たなエネルギーを得て彼女は駆け下り、喜びで心臓が高鳴りました。見慣れた玄関にたどり着くと、彼女はかすかな声で鳴きました。ドアが開くと、心配そうな表情をした小さな女の子が彼女を温かく抱きしめてくれました。安全で安心できる場所に戻ったウィスカーズは、満足げに喉を鳴らし、彼女を本当に帰るべき場所に導いてくれた冒険に感謝しました。
+Ready
+file 7								<-- change to file 7
+Ready
+list								<-- list it
+     10	Si Whiskers, isang munting gray na kuting na may maliwanag na berdeng mata, ay napadpad nang malayo mula sa kanyang komportableng tahanan isang maaraw na hapon. Habang hinahabol ang isang lumilipad na paru-paro, hindi niya napansin kung gaano siya kalalim na napasok sa hardin. Ang paru-paro ay sumasayaw sa labas ng kanyang abot, pinangunahan siya sa mga matataas na damo at makukulay na bulaklak hanggang sa ang pamilyar na tanawin ng kanyang lugar ay unti-unting nawala. Nang sa wakas ay nawala ang paru-paro, tumingin si Whiskers sa paligid, ang kanyang puso ay mabilis na tum beating habang napagtanto niyang siya ay naligaw.
+     20	
+     30	Nakatakdang makahanap ng daan pabalik, sinimulan ni Whiskers ang kanyang paglalakbay, ang kanyang munting mga paa ay dahan-dahang tumapak sa lupa. Nagtanong siya sa isang matalinong luma na pagong na nagpapahinga malapit para sa direksyon, ngunit siya ay napatawa lamang at pinaalalahanan siya na minsan, ang puso ay mas alam ang daan kaysa sa anumang mapa. Sa kanyang mga natanggap na lakas, nagpatuloy siya, sinusundan ang amoy ng kanyang paboritong meryenda na umaabot sa hangin. Sa daan, nakatagpo siya ng mga kaibigang nilalang—isang masiglang robin na nag-alok sa kanya ng ilang piraso ng tinapay at isang banayad na aso na nagbahagi ng mga kwento ng kanilang sariling mga pakikipagsapalaran. Bawat pagkikita ay nagbigay sa kanya ng pag-asa at lakas, at siya ay nakaramdam ng kaunting hindi nag-iisa.
+     40	
+     50	Habang ang dapithapon ay nagsisimulang bumaba, kulay kahel at rosas ang nililok sa langit, umakyat si Whiskers sa isang maliit na burol at nakita ang kanyang tahanan sa distansya. Sa muling pag-akyat ng kanyang enerhiya, siya ay nagmamadaling bumaba, ang kanyang puso ay tumatalon sa saya. Nang marating niya ang pamilyar na pintuan, siya ay humuni ng mahinahon, ang kanyang munting boses ay halos hindi marinig. Bumukas ang pinto, at ang kanyang may-ari, isang maliit na batang babae na may nag-aalala na ekspresyon, ay niyakap siya sa isang mainit na yakap. Ligtas at maayos, umuungol si Whiskers ng masaya, mapagpasalamat sa pakikipagsapalaran na nagdala sa kanya pabalik sa kung saan siya tunay na nabibilang.
+Ready

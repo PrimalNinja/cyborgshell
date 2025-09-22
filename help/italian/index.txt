@@ -1,4 +1,4 @@
-Benvenuto in Home Computer JS!
+Benvenuto in CyborgShell!
 
 Questa guida di aiuto ti accompagnerà attraverso i vari comandi e funzionalità disponibili.
 

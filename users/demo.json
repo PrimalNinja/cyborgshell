@@ -1,0 +1,39 @@
+{
+	"jsonversion": 1,
+	"username": "demo",
+	"password": "$2y$10$bKmQ5fb5ZZbt5qntoZ3Rrei3SdMQgD2FdHJwnRPQcvvl6CDBCE.W6",
+	"alias": "Demo",
+	"emailaddress": "",
+	"about": "",
+	"datetime": "2025-07-28 03:41:46",
+	"issysadmin": false,
+	"isadmin": false,
+	"isactive": true,
+	"isonline": false,
+	"userkey": "demo",
+	"devicekeys": [],
+	"sharekeys": [
+		{
+			"key": "demoshare",
+			"alias": "demoshare",
+			"datetime": "2025-07-28 03:42:22",
+			"isactive": true
+		}
+	],
+	"shares": [
+	],
+	"spaces": [
+		{
+			"key": "home",
+			"alias": "",
+			"datetime": "2025-07-28 03:41:46",
+			"isactive": true
+		},
+		{
+			"key": "public",
+			"alias": "",
+			"datetime": "2025-07-28 03:41:46",
+			"isactive": true
+		}
+	]
+}

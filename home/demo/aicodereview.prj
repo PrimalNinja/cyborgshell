@@ -1,0 +1,35 @@
+{
+	"projectName": "",
+	"files": [
+		{
+			"fn": "Unnamed File",
+			"mt": "text/javascript",
+			"mte": "text",
+			"ln": null,
+			"pl": "",
+			"arg": "",
+			"fl": "",
+			"st": ""
+		},
+		{
+			"fn": "Unnamed File",
+			"mt": "text/javascript",
+			"mte": "text",
+			"ln": 1,
+			"pl": "chatgpt.xfrm",
+			"arg": "%PROVIDER% please write a quick overview of what this code does",
+			"fl": "",
+			"st": ""
+		},
+		{
+			"fn": "chatgpt.xfrm",
+			"mt": "text/javascript transformer",
+			"mte": "text",
+			"ln": null,
+			"pl": "",
+			"arg": "%PROVIDER%",
+			"fl": "",
+			"st": ""
+		}
+	]
+}

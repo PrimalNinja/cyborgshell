@@ -1,0 +1,150 @@
+/* Bootstrap overrides for CyborgShell */
+body { 
+    background: blue !important; 
+    color: yellow !important; 
+    height: 800px; 
+    margin: 0 !important;
+    overflow: hidden !important; 
+    padding: 0 !important;
+}
+
+body > div:first-child {
+    box-sizing: border-box;
+    height: auto;
+    margin-bottom: 0;
+    padding: 10px;
+}
+
+hr { 
+    border-color: yellow !important; 
+    height: 1px !important;
+    margin: 0 !important; 
+    opacity: 1 !important; 
+}
+
+hr:first-of-type {
+    margin-bottom: 10px !important;
+    margin-top: 0;
+}
+
+hr:last-of-type {
+    bottom: 48px !important;
+    left: 0 !important;
+	margin-bottom: -10px !important; 
+    position: fixed !important;
+    right: 0 !important;
+    width: 100% !important;
+}
+
+/* CyborgShell styles */
+::selection { 
+    background-color: #FFD700; 
+    color: #000; 
+}
+
+a { 
+    color: cyan; 
+    font-family: monospace; 
+    font-size: 16px;
+    font-weight: bold; 
+}
+
+.dragover-highlight { 
+    background-color: grey; 
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5); 
+    xborder: 2px solid #007bff; 
+}
+
+.gs-clicommand { 
+    background: blue; 
+    border: none; 
+    box-sizing: border-box; 
+    color: yellow; 
+    font-family: monospace; 
+    font-size: 16px; 
+    font-weight: bold; 
+    outline: none; 
+    overflow: hidden; 
+    width: 100%; 
+}
+
+.gs-clicontainer { 
+    height: 99%; 
+    overflow-x: hidden; 
+    overflow-y: auto; 
+    padding-bottom: 5px;
+    padding-top: 5px;
+    width: 100%; 
+}
+
+.gs-clicontent { 
+    box-sizing: border-box;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    width: 100%; 
+}
+
+.gs-clidesktop { 
+    display: flex; 
+    flex-direction: column; 
+    height: calc(100vh - 94px); 
+}
+
+.gs-ocr-container { 
+    display: none; 
+}
+
+.gs-clioutput { 
+    font-family: monospace; 
+    font-size: 16px; 
+    font-weight: bold; 
+    overflow: hidden; 
+    tab-size: 4; 
+    white-space: pre-wrap; 
+    width: 100%; 
+}
+
+.gs-clitaskbar { 
+    font-family: monospace; 
+    font-size: 16px; 
+    font-weight: bold; 
+	margin-top: 5px;
+    overflow: hidden; 
+	padding-left: 10px;
+    tab-size: 4; 
+    white-space: pre-wrap; 
+    width: 100%; 
+}
+
+.rtli { 
+    text-align: right; 
+}
+
+.rtlo { 
+    direction: rtl; 
+    unicode-bidi: bidi-override; 
+}
+
+@media only screen and (max-width: 650px) { 
+    .gs-clicontainer { 
+        height: 90%; 
+        padding-left: 3mm;
+        padding-right: 3mm;
+	} 
+	
+    .gs-clitaskbar {
+        position: fixed;
+        bottom: 0;          
+        left: 0;
+        right: 0;
+        background: blue;
+        z-index: 1000;
+    }
+}
+
+@media only screen and (max-height: 650px) { 
+    .gs-clicontainer { 
+        height: 85%; 
+    } 
+}
+

@@ -1,0 +1,106 @@
+
+PC CHROME:
+
+	Benchmark Results:
+	---------------------
+	Prime Numbers Generated: 9592
+	Prime Numbers Time: 6ms
+	Matrix Multiplication Time: 4ms
+	Fibonacci Sequence Time: 1ms
+	Sorting Algorithm Time: 2ms
+	Regex Pattern Matching Time: 0ms
+	Object Property Access Time: 4ms
+	Array Iteration Time: 0ms
+	String Concatenation Time: 0ms
+	Math Operations Time: 1ms
+	
+PC EDGE:
+
+	Benchmark Results:
+	---------------------
+	Prime Numbers Generated: 9592
+	Prime Numbers Time: 7ms
+	Matrix Multiplication Time: 4ms
+	Fibonacci Sequence Time: 1ms
+	Sorting Algorithm Time: 4ms
+	Regex Pattern Matching Time: 0ms
+	Object Property Access Time: 5ms
+	Array Iteration Time: 0ms
+	String Concatenation Time: 0ms
+	Math Operations Time: 1ms
+	
+PC FIREFOX:
+
+	Benchmark Results:
+	---------------------
+	Prime Numbers Generated: 9592
+	Prime Numbers Time: 8ms
+	Matrix Multiplication Time: 5ms
+	Fibonacci Sequence Time: 1ms
+	Sorting Algorithm Time: 4ms
+	Regex Pattern Matching Time: 0ms
+	Object Property Access Time: 5ms
+	Array Iteration Time: 1ms
+	String Concatenation Time: 0ms
+	Math Operations Time: 1ms
+	
+PC OPERA:
+
+	Benchmark Results:
+	---------------------
+	Prime Numbers Generated: 9592
+	Prime Numbers Time: 8ms
+	Matrix Multiplication Time: 5ms
+	Fibonacci Sequence Time: 1ms
+	Sorting Algorithm Time: 4ms
+	Regex Pattern Matching Time: 0ms
+	Object Property Access Time: 5ms
+	Array Iteration Time: 1ms
+	String Concatenation Time: 0ms
+	Math Operations Time: 1ms
+
+GALAXY NOTE 20 PHONE CHROME:
+
+	Benchmark Results:
+	---------------------
+	Prime Numbers Generated: 9592
+	Prime Numbers Time: 41ms
+	Matrix Multiplication Time: 16ms
+	Fibonacci Sequence Time: 1ms
+	Sorting Algorithm Time: 8ms
+	Regex Pattern Matching Time: 0ms
+	Object Property Access Time: 12ms
+	Array Iteration Time: 1ms
+	String Concatenation Time: 0ms
+	Math Operations Time: 2ms
+
+GALAXY NOTE 20 PHONE 'BROWSER':
+
+	Benchmark Results:
+	---------------------
+	Prime Numbers Generated: 9592
+	Prime Numbers Time: 31ms
+	Matrix Multiplication Time: 16ms
+	Fibonacci Sequence Time: 1ms
+	Sorting Algorithm Time: 12ms
+	Regex Pattern Matching Time: 3ms
+	Object Property Access Time: 17ms
+	Array Iteration Time: 8ms
+	String Concatenation Time: 0ms
+	Math Operations Time: 3ms
+
+XBOX ONE EDGE:
+
+	Benchmark Results:
+	---------------------
+	Prime Numbers Generated: 9592
+	Prime Numbers Time: 68ms
+	Matrix Multiplication Time: 40ms
+	Fibonacci Sequence Time: 3ms
+	Sorting Algorithm Time: 18ms
+	Regex Pattern Matching Time: 1ms
+	Object Property Access Time: 31ms
+	Array Iteration Time: 5ms
+	String Concatenation Time: 1ms
+	Math Operations Time: 7ms
+

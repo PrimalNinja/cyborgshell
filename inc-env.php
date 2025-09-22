@@ -1,28 +1,37 @@
 <?php
 
 //?commandline=grant&p1=67c48dfb112f78-85899685
-define("ENABLEGET", "FALSE");	// useful for debugging
+define("ENABLEGET", "TRUE");	// useful for debugging
 define("RELEASEDIRSUFFIX", "");	// e.g. the JS folder should be renamed with this suffix to prevent cashing issues when deploying updates
 define("MINIFIED", "FALSE");	// can be TRUE or FALSE, to use the minified versions vs the unminified
 
 // environment constants
-define("APPNAME", "Open Home Computer JS");
-define("VERSION", "v1.0 RC9");
-define("BUILD", "Build 20250325");
+define("APPNAME", "CyborgShell");
+define("VERSION", "v1.0");
+define("BUILD", "Build 20250725");
 define("AUTHOR", "By PrimalNinja 2025");
 define("PASSWORDMINIMUMLENGTH", 8);
 
 define("JSONVERSION", 1);		// the current user file JSON version
 
-define("SYSTEM_DIRNAME", "system");		// system files go in here
-define("LANGUAGE_DIRNAME", "languages");// langauge files go in here
 define("HELP_DIRNAME", "help");			// help files go in here
+define("LANGUAGE_DIRNAME", "languages");// langauge files go in here
+define("SYSTEM_DIRNAME", "system");		// system files go in here
 define("USERS_DIRNAME", "users");		// this is where user data is stored
-define("PUBLIC_DIRNAME", "public");		// this is the public home dir
-define("HOME_DIRNAME", "home");			// user home dirs are below here
 
+define("DEMO_USERKEY", "demo");			// the demo user key
+define("PUBLIC_USERKEY", "public");		// the public user key
+
+define("DEMO_DIRNAME", "demo");			// user demo dirs are below here
+define("HOME_DIRNAME", "home");			// user home dirs are below here
+define("PUBLIC_DIRNAME", "public");		// this is the public home dir
+
+define("DEMO_SPACENAME", "demo");		// this is the name of the demo space
 define("HOME_SPACENAME", "home");		// this is the name of the public space
 define("PUBLIC_SPACENAME", "public");	// this is the name of the public space
+
+define("ENABLEIPADDRESSES", "FALSE");	// can be TRUE or FALSE, to enable IP address collection for the user's benefit
+define("ENABLEAGENTS", "FALSE");		// can be TRUE or FALSE, to enable Agent collection for the user's benefit
 
 $g_strMinifiedSuffix = "";
 if (MINIFIED == "TRUE")
@@ -30,7 +39,7 @@ if (MINIFIED == "TRUE")
 	$g_strMinifiedSuffix = ".min";
 }
 
-//$strDataRoot = '/home/blah/hcjs';	// server deploy
+//$strDataRoot = '/home/cyborgshell/cyborgshell';	// server deploy
 $strDataRoot = __DIR__;					// dev 
 
 error_reporting(0);

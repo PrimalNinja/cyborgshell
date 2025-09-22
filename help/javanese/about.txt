@@ -1,27 +1,27 @@
-Selamat datang di Open Home Computer JS! (OHCJS)
+Selamat datang di CyborgShell!
 
-OHCJS membawa pesona retro komputer rumah ke perangkat modern, memungkinkan Anda untuk membuat, mengkode, dan berkolaborasi di mana saja, kapan saja. Dengan OHCJS, Anda dapat:
+CyborgShell membawa pesona retro komputer rumah ke perangkat modern, memungkinkan Anda untuk membuat, mengkode, dan berkolaborasi di mana saja, kapan saja. Dengan CyborgShell, Anda dapat:
 
 - Membuat akun dan masuk di beberapa perangkat
 - Mengkode dalam JS, sendiri atau dalam tim
 - Menyimpan program Anda di "ruang" yang dipersonalisasi
 
-Terinspirasi oleh kesederhanaan komputer rumah 8-bit, OHCJS bertujuan untuk menciptakan pengalaman komputasi klasik yang instan dan tanpa ribet. Daftar, masuk, dan mulai mengkode dalam hitungan detik!
+Terinspirasi oleh kesederhanaan komputer rumah 8-bit, CyborgShell bertujuan untuk menciptakan pengalaman komputasi klasik yang instan dan tanpa ribet. Daftar, masuk, dan mulai mengkode dalam hitungan detik!
 
-Di OHCJS, "ruang" Anda adalah area penyimpanan pribadi Anda sendiri, yang hanya dapat diakses oleh Anda. Anda juga dapat menjelajahi ruang publik, di mana Anda dapat membuat, berbagi, dan bereksperimen dengan orang lain.
+Di CyborgShell, "ruang" Anda adalah area penyimpanan pribadi Anda sendiri, yang hanya dapat diakses oleh Anda. Anda juga dapat menjelajahi ruang publik, di mana Anda dapat membuat, berbagi, dan bereksperimen dengan orang lain.
 
-Berbagi adalah fitur kunci di OHCJS. Sama seperti menukar disk floppy di tahun 80-an, Anda dapat berbagi ruang Anda dengan orang lain, dan sebaliknya. Model berbagi sederhana ini memungkinkan berbagai skenario:
+Berbagi adalah fitur kunci di CyborgShell. Sama seperti menukar disk floppy di tahun 80-an, Anda dapat berbagi ruang Anda dengan orang lain, dan sebaliknya. Model berbagi sederhana ini memungkinkan berbagai skenario:
 
 - Mengajar: Bagikan ruang dengan siswa untuk pembelajaran terpandu
 - Kerja Tim: Berkolaborasi dalam proyek di ruang tim yang dibagikan
 - Persahabatan: Saling berbagi ruang dengan teman terpercaya
 
-Lisensi
-
-Open Home Computer JS (OHCJS) [github.com/PrimalNinja/ohcjs] dirilis di bawah lisensi perangkat lunak MIT, karena "berbagi adalah peduli."
-
-Hubungi PrimalNinja jika Anda ingin mempertimbangkan opsi lisensi lainnya.
+CyborgShell [github.com/PrimalNinja/cyborgshell] dikeluarkan di bawah lisensi perangkat lunak MIT, karena "berbagi adalah merawat."
 
 Tentang Kami
 
-OHCJS dengan Bangga Dikembangkan oleh PrimalNinja dari Cyborg Unicorn Pty Ltd.
+Kami berbasis di Australia dan mengoperasikan beberapa perusahaan perangkat lunak yang memproduksi perangkat lunak untuk perusahaan pengiriman terkemuka serta perangkat lunak di industri lainnya. Selain itu, kami juga mengembangkan perangkat lunak untuk perangkat seluler dan komputer retro. Beberapa pekerjaan kami dikontrak kepada kami dan diberi label putih untuk perusahaan lain, dan beberapa kami rilis di bawah merek kami sendiri.
+
+CyborgShell dengan Bangga Dikembangkan oleh PrimalNinja dari Cyborg Unicorn Pty Ltd dan Mitsukibo Pty Ltd, terkadang berdagang sebagai QuickDigital dan Retrokibo.
+
+Kirim laporan bug ke contact@ domain ini.

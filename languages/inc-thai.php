@@ -1,10 +1,5 @@
 <?php
 
-// actions
-define("ACTION_INVALIDATE", "invalidate");
-define("ACTION_LTR", "ltr");
-define("ACTION_RTL", "rtl");
-
 // messages
 define("MSG_ABOUTUPDATED", "ข้อมูลได้รับการอัปเดตแล้ว.");
 define("MSG_BLOCKEDWORDFOUND", "พบคำที่ถูกบล็อก.");

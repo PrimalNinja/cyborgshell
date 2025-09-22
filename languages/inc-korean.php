@@ -1,10 +1,5 @@
 <?php
 
-// actions
-define("ACTION_INVALIDATE", "invalidate");
-define("ACTION_LTR", "ltr");
-define("ACTION_RTL", "rtl");
-
 // messages
 define("MSG_ABOUTUPDATED", "정보가 업데이트되었습니다.");
 define("MSG_BLOCKEDWORDFOUND", "차단된 단어가 발견되었습니다.");

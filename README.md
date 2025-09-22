@@ -1,6 +1,6 @@
-# Open Home Computer JS - JavaScript Development Environment
+# CyborgShell - JavaScript Development Environment
 
-Welcome to Open Home Computer JS! (OHCJS)
+Welcome to CyborgShell!
 
 RELEASE CANDIDATE 9
 
@@ -17,34 +17,34 @@ RELEASE CANDIDATE 7
 - added multiple file support within the editor, API now has load and save functions - but I haven't updated the documentation for the API yet, not sure how I want to document the API yet.
 - added saveall command and ability to drag one or more files into the editor from your PC.
 
-OHCJS brings the retro charm of home computers to modern devices, allowing you to create, code, and collaborate anywhere, anytime. With OHCJS, you can:
+CyborgShell brings the retro charm of home computers to modern devices, allowing you to create, code, and collaborate anywhere, anytime. With CyborgShell, you can:
 
 - Create an account and login on multiple devices
 - Code in JavaScript, alone or in teams, on your PC, your phone or your XBox One
 - Store your programs in personalized "spaces"
 - Let AI Agents join your team and work with you - not just coding btw.
 
-Inspired by the simplicity of 8-bit home computers, OHCJS aims to recreate the instant-on, fuss-free experience of classic computing. Register, login, and start coding in seconds!
+Inspired by the simplicity of 8-bit home computers, CyborgShell aims to recreate the instant-on, fuss-free experience of classic computing. Register, login, and start coding in seconds!
 
-In OHCJS, your "space" is your own private storage area, accessible only to you. You can also explore the public space, where you can create, share, and experiment with others.
+In CyborgShell, your "space" is your own private storage area, accessible only to you. You can also explore the public space, where you can create, share, and experiment with others.
 
-Sharing is a key feature in OHCJS. Just like swapping floppy disks in the 80s, you can share your space with others, and vice versa. This simple sharing model enables various scenarios:
+Sharing is a key feature in CyborgShell. Just like swapping floppy disks in the 80s, you can share your space with others, and vice versa. This simple sharing model enables various scenarios:
 
 - Teaching: Share spaces with students for guided learning
 - Teamwork: Collaborate on projects in shared team spaces
 - Friendship: Mutually share spaces with trusted friends
 
-A live Environment based on OHCJS is located at http://8bitology.com/.
+A live Environment based on CyborgShell is located at http://cyborgshell.com/.
 
 License
 
-Open Home Computer JS is released under the MIT software license, because "sharing is caring."
+CyborgShell is released under the MIT software license, because "sharing is caring."
 
 Contact PrimalNinja if would like to consider other licensing options.
 
 About Us
 
-OHCJS is Proudly Developed by the PrimalNinja of Cyborg Unicorn Pty Ltd.
+CyborgShell is Proudly Developed by the PrimalNinja of Cyborg Unicorn Pty Ltd.
 
 Instructions and Deployment
 

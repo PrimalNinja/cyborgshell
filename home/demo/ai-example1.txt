@@ -1,0 +1,74 @@
+Example 1 - chatgpt transformer plugin SESSION usage:
+=========
+
+Reset with F5:
+
+(paste the below into CyborgShell after you have configured API Keys - ideally through a proxy of yours)
+
+AI SESSION CLEAR database
+AI SESSION CLEAR primes
+// Database schema documentation
+AI SESSION START database
+The user table has: id, email, password_hash, created_at
+The posts table has: id, user_id, title, content, published_at
+Foreign key: posts.user_id → users.id
+AI SESSION END database
+AI SESSION START primes
+when i ask for a list of primes, can you list them in descending order
+AI SESSION END primes
+// Some other content here...
+var connectionString = "postgres://...";
+// Generate a query
+AI PROMPT START database Create a SQL query to get all posts by a user
+Given a user email, get all their published posts with titles
+AI PROMPT END database
+// Later, generate another query that benefits from ALL the accumulated context
+AI PROMPT START database Create a query for post comments with user info
+Get all comments for a specific post including commenter names
+AI PROMPT END database
+// More documentation
+AI SESSION START database
+The comments table has: id, post_id, user_id, content, created_at
+Foreign key: comments.post_id → posts.id, comments.user_id → users.id
+AI SESSION END database
+AI PROMPT START primes
+please list the first 10 prime numbers
+AI PROMPT END primes
+
+(paste only above here)
+
+Ready
+link 2 1 chatgpt					<-- type this
+ChatGPT processed 3 prompt(s)
+Ready
+file 2								<-- type this
+Ready
+list								<-- type this
+     10	
+     20	// Database schema documentation
+     30	The user table has: id, email, password_hash, created_at
+     40	The posts table has: id, user_id, title, content, published_at
+     50	Foreign key: posts.user_id → users.id
+     60	
+     70	when i ask for a list of primes, can you list them in descending order
+     80	
+     90	// Some other content here...
+    100	var connectionString = "postgres://...";
+    110	
+    120	// Generate a query
+    130	SELECT title
+    140	FROM posts
+    150	WHERE user_id = (SELECT id FROM users WHERE email = 'user_email')
+    160	AND published_at IS NOT NULL;
+    170	
+    180	// Later, generate another query that benefits from ALL the accumulated context
+    190	SELECT comments.content, users.email
+    200	FROM comments
+    210	JOIN users ON comments.user_id = users.id
+    220	WHERE comments.post_id = 'specific_post_id';
+    230	
+    240	// More documentation
+    250	The comments table has: id, post_id, user_id, content, created_at
+    260	Foreign key: comments.post_id → posts.id, comments.user_id → users.id
+    270	
+    280	29, 23, 19, 17, 13, 11, 7, 5, 3, 2

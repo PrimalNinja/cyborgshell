@@ -1,4 +1,4 @@
-Welkom bij Home Computer JS!
+Welkom bij CyborgShell!
 
 Deze helpgids leidt je door de verschillende commando's en functies die beschikbaar zijn.
 

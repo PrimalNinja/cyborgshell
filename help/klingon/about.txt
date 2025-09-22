@@ -1,27 +1,27 @@
-Welcome to Open Home Computer JS! (OHCJS)
+Welcome to CyborgShell!
 
-OHCJS brings the retro charm of home computers to modern devices, allowing you to create, code, and collaborate anywhere, anytime. With OHCJS, you can:
+CyborgShell brings the retro charm of home computers to modern devices, allowing you to create, code, and collaborate anywhere, anytime. With CyborgShell, you can:
 
 - Create an account and login on multiple devices
 - Code in JavaScript, alone or in teams
 - Store your programs in personalized "spaces"
 
-Inspired by the simplicity of 8-bit home computers, OHCJS aims to recreate the instant-on, fuss-free experience of classic computing. Register, login, and start coding in seconds!
+Inspired by the simplicity of 8-bit home computers, CyborgShell aims to recreate the instant-on, fuss-free experience of classic computing. Register, login, and start coding in seconds!
 
-In OHCJS, your "space" is your own private storage area, accessible only to you. You can also explore the public space, where you can create, share, and experiment with others.
+In CyborgShell, your "space" is your own private storage area, accessible only to you. You can also explore the public space, where you can create, share, and experiment with others.
 
-Sharing is a key feature in OHCJS. Just like swapping floppy disks in the 80s, you can share your space with others, and vice versa. This simple sharing model enables various scenarios:
+Sharing is a key feature in CyborgShell. Just like swapping floppy disks in the 80s, you can share your space with others, and vice versa. This simple sharing model enables various scenarios:
 
 - Teaching: Share spaces with students for guided learning
 - Teamwork: Collaborate on projects in shared team spaces
 - Friendship: Mutually share spaces with trusted friends
 
-License
-
-Open Home Computer JS (OHCJS) [github.com/PrimalNinja/ohcjs] is released under the MIT software license, because "sharing is caring."
-
-Contact PrimalNinja if would like to consider other licensing options.
+CyborgShell [github.com/PrimalNinja/cyborgshell] which is released under the MIT software license, because "sharing is caring."
 
 About Us
 
-OHCJS is Proudly Developed by the PrimalNinja of Cyborg Unicorn Pty Ltd.
+We are based in Australia and operate a couple of software companies that produce software for leading freight companies as well as software in other industries. In addition we also develop software for mobile devices and retro computers. Some of our work is contracted to us and whitelabelled to other companies, and some we release under our own brands.
+
+CyborgShell is Proudly Developed by the PrimalNinja of Cyborg Unicorn Pty Ltd and Mitsukibo Pty Ltd, sometimes trading as QuickDigital and Retrokibo.
+
+Send bug reports to contact@ this domain.

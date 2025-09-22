@@ -3,6 +3,7 @@
 session_start();
 
 require_once('inc-env.php');
+require_once('inc-constants.php');
 require_once('inc-utils.php');
 require_once('inc-initialisation.php');
 

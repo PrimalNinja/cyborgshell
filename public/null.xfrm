@@ -1,0 +1,26 @@
+function null_xfrm(objAPI_a, objGlobals_a, strSourceFilename_a, strSourceMimeType_a, strSourceMimeTypeEditor_a, strTargetFilename_a, strRaw_a, arrCode_a, strArgs_a, cb_a)
+{
+	var m_TRANSFORMER = 'null';	// lowercase for provider settings
+	
+    console.log(m_TRANSFORMER + " plugin called with:");
+    console.log("objAPI_a:", typeof objAPI_a);
+    console.log("objGlobals_a:", typeof objGlobals_a);
+    console.log("strSourceFilename_a:", strSourceFilename_a);
+	console.log("strSourceMimeType_a:", strSourceMimeType_a);
+    console.log("strSourceMimeTypeEditor_a:", strSourceMimeTypeEditor_a);
+    console.log("strTargetFilename_a:", strTargetFilename_a);
+    //console.log("strRaw_a:", strRaw_a);
+    console.log("arrCode_a:", arrCode_a);
+	console.log("strArgs_a:", strArgs_a);
+    console.log("cb_a:", typeof cb_a);
+
+	var api = objAPI_a;
+	var globals = objGlobals_a;
+	
+	cb_a({
+		raw: null,
+		cd: null,
+		message: strSourceFilename_a + ' nulls',
+		error: ''
+	});
+}

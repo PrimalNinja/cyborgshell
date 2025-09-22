@@ -1,0 +1,55 @@
+{
+	"projectName": "",
+	"files": [
+		{
+			"fn": "coder.js",
+			"mt": "text/javascript",
+			"mte": "text",
+			"ln": 2,
+			"pl": "passthrough.xfrm",
+			"arg": "",
+			"fl": "",
+			"st": ""
+		},
+		{
+			"fn": "coderai.js",
+			"mt": "text/javascript",
+			"mte": "text",
+			"ln": 1,
+			"pl": "chatgpt.xfrm",
+			"arg": "%PROVIDER% process the file prompts start with # or // #",
+			"fl": "",
+			"st": ""
+		},
+		{
+			"fn": "coderbackup.js",
+			"mt": "text/javascript",
+			"mte": "text",
+			"ln": 1,
+			"pl": "passthrough.xfrm",
+			"arg": "",
+			"fl": "",
+			"st": ""
+		},
+		{
+			"fn": "passthrough.xfrm",
+			"mt": "text/javascript transformer",
+			"mte": "text",
+			"ln": null,
+			"pl": "",
+			"arg": "",
+			"fl": "",
+			"st": ""
+		},
+		{
+			"fn": "chatgpt.xfrm",
+			"mt": "text/javascript transformer",
+			"mte": "text",
+			"ln": null,
+			"pl": "",
+			"arg": "%PROVIDER%",
+			"fl": "",
+			"st": ""
+		}
+	]
+}

@@ -1,4 +1,4 @@
-Vítejte v Home Computer JS!
+Vítejte v CyborgShell!
 
 Tato příručka vám pomůže seznámit se s různými příkazy a funkcemi, které jsou k dispozici.
 

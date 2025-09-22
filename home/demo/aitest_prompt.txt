@@ -1,0 +1,4 @@
+AI IGNORE
+AI SESSION CLEAR story
+AI PROMPT START story write me a 3 paragraph story about a little kitten that got lost and tried to find it's way home.
+AI PROMPT END story

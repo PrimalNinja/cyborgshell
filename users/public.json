@@ -1,0 +1,46 @@
+{
+	"jsonversion": 1,
+	"username": "public",
+	"password": "",
+	"alias": "Public",
+	"emailaddress": "",
+	"about": "The Public Area",
+	"datetime": "2025-03-03 17:55:51",
+	"issysadmin": false,
+	"isadmin": false,
+	"isactive": true,
+	"isonline": false,
+	"userkey": "public",
+	"devicekeys": [
+	],
+	"sharekeys": [
+	],
+	"shares": [
+		{
+			"key": "demoshare",
+			"alias": "demoshare",
+			"datetime": "2025-07-28 03:42:22",
+			"isactive": true
+		}
+	],
+	"spaces": [
+		{
+			"key": "home",
+			"alias": "",
+			"datetime": "2025-03-03 17:55:51",
+			"isactive": true
+		},
+		{
+			"key": "public",
+			"alias": "",
+			"datetime": "2025-03-03 17:55:51",
+			"isactive": true
+		},
+		{
+			"key": "demo",
+			"alias": "demo",
+			"datetime": "2025-04-08 16:24:32",
+			"isactive": true
+		}
+	]
+}

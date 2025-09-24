@@ -1,4 +1,4 @@
-# CyborgShell - JavaScript Development Environment
+# CyborgShell - AI-Agent-First Collaboration/Orchestration/JavaScript Development Environment
 
 Welcome to CyborgShell!
 

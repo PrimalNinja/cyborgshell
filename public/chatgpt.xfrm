@@ -424,6 +424,7 @@ function chatgpt_xfrm(objAPI_a, objGlobals_a, strSourceFilename_a, strSourceMime
 			var strSessionContext = '';
 			if (m_strOverrideSession) 
 			{
+console.log('session:' + m_strOverrideSession);
 				var intPromptSize = m_strArgs.length + 100; // rough estimate
 				var intAvailableSpace = m_MAXPROMPTSIZE - intPromptSize;
 				strSessionContext = getSessionContext(m_strOverrideSession, intAvailableSpace);
@@ -443,10 +444,12 @@ function chatgpt_xfrm(objAPI_a, objGlobals_a, strSourceFilename_a, strSourceMime
 			
 			invokeChatGPT(strProvider_a, strAPIKey_a, strEndpoint_a, strFlavour_a, strModel_a, strMaxTokens_a, strTemperature_a, strProxy_a, strPrompt, strSessionContext, function(strError_a, strResponse_a) 
 			{
-				if (m_strOverrideSession && !strError_a) 
+				var strSessionToSave = m_strOverrideSession || 'default';
+				
+				if (strSessionToSave && !strError_a) 
 				{
-					addToSession(m_strOverrideSession, 'PROMPT: ' + strPrompt);
-					addToSession(m_strOverrideSession, 'RESPONSE: ' + strResponse_a);
+					addToSession(strSessionToSave, 'PROMPT: ' + strPrompt);
+					addToSession(strSessionToSave, 'RESPONSE: ' + strResponse_a);
 				}
 				
 				if ($.isFunction(cb_a))

@@ -161,10 +161,8 @@ function speak_xfrm(objAPI_a, objGlobals_a, strSourceFilename_a, strSourceMimeTy
 		}
 	}
 
-	function invokeSpeakArgs(strProvider_a, strParallel_a, cb_a)
+	function invokeSpeakArgs(strProvider_a, cb_a)
 	{
-		var blnParallel = toBoolean(strParallel_a);
-		
 		function executeTransform(cbComplete_a) 
 		{
 			// Parse arguments for speech options
@@ -199,22 +197,12 @@ function speak_xfrm(objAPI_a, objGlobals_a, strSourceFilename_a, strSourceMimeTy
 			});
 		}
 		
-		if (blnParallel) 
-		{
-			// Direct execution (parallel) - not recommended for speech
-			executeTransform();
-		} 
-		else 
-		{
-			// Queue execution (sequential) - recommended for speech
-			addToProviderQueue(strProvider_a, executeTransform);
-		}
+		// Queue execution (sequential) - recommended for speech
+		addToProviderQueue(strProvider_a, executeTransform);
 	}
 
-	function invokeSpeakScan(strProvider_a, strParallel_a, cb_a)
+	function invokeSpeakScan(strProvider_a, cb_a)
 	{
-		var blnParallel = toBoolean(strParallel_a);
-		
 		function executeTransform(cbComplete_a) 
 		{
 			var arrLines = m_strRaw.split('\n');
@@ -363,25 +351,17 @@ function speak_xfrm(objAPI_a, objGlobals_a, strSourceFilename_a, strSourceMimeTy
 			processNextBlock();
 		}
 
-		if (blnParallel) 
-		{
-			// Direct execution (parallel) - not recommended for speech
-			executeTransform();
-		} 
-		else 
-		{
-			// Queue execution (sequential) - recommended for speech
-			addToProviderQueue(strProvider_a, executeTransform);
-		}
+		// Queue execution (sequential) - recommended for speech
+		addToProviderQueue(strProvider_a, executeTransform);
 	}
 
 	// Main execution
 	if (m_strArgs !== null && m_strArgs.length > 0)
 	{
-		invokeSpeakArgs(strProvider_a, "N", cb_a);
+		invokeSpeakArgs("SPEAK", cb_a);
 	}
 	else
 	{
-		invokeSpeakScan(strProvider_a, "N", cb_a);
+		invokeSpeakScan("SPEAK", cb_a);
 	}
 }

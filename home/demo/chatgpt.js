@@ -78,39 +78,39 @@ function chatgpt(strPrompt_a)
 		}
 		
 		// Initialize session storage
-		if (!api.globals) 
+		if (!globals) 
 		{
-			api.globals = {};
+			globals = {};
 		}
 		
-		if (!api.globals.chatgpt) 
+		if (!globals.chatgpt) 
 		{
-			api.globals.chatgpt = {};
+			globals.chatgpt = {};
 		}
 		
-		if (!api.globals.chatgpt.sessions) 
+		if (!globals.chatgpt.sessions) 
 		{
-			api.globals.chatgpt.sessionsize = 0;
-			api.globals.chatgpt.sessions = {};
+			globals.chatgpt.sessionsize = 0;
+			globals.chatgpt.sessions = {};
 		}
 		
 		function addToSession(strSessionID_a, strText_a) 
 		{
-			if (!api.globals.chatgpt.sessions[strSessionID_a]) 
+			if (!globals.chatgpt.sessions[strSessionID_a]) 
 			{
-				api.globals.chatgpt.sessions[strSessionID_a] = [];
+				globals.chatgpt.sessions[strSessionID_a] = [];
 			}
 			
-			var arrSession = api.globals.chatgpt.sessions[strSessionID_a];
+			var arrSession = globals.chatgpt.sessions[strSessionID_a];
 			var intTextSize = strText_a.length * 2; // 2 bytes per character (UTF-16)
 			var intMaxSizeBytes = m_MAXSESSIONSIZE * 1024 * 1024; // Convert MB to bytes
 			
 			// Add new text
 			arrSession.push(strText_a);
-			api.globals.chatgpt.sessionsize += intTextSize;
+			globals.chatgpt.sessionsize += intTextSize;
 			
 			// Remove oldest entries if we exceed the total size limit
-			while (api.globals.chatgpt.sessionsize > intMaxSizeBytes) 
+			while (globals.chatgpt.sessionsize > intMaxSizeBytes) 
 			{
 				var blnRemovedAny = false;
 				
@@ -118,9 +118,9 @@ function chatgpt(strPrompt_a)
 				var strOldestSessionID = null;
 				var intOldestIndex = -1;
 				
-				for (var strSessionKey in api.globals.chatgpt.sessions) 
+				for (var strSessionKey in globals.chatgpt.sessions) 
 				{
-					var arrCurrentSession = api.globals.chatgpt.sessions[strSessionKey];
+					var arrCurrentSession = globals.chatgpt.sessions[strSessionKey];
 					if (arrCurrentSession.length > 0) 
 					{
 						if (strOldestSessionID === null || intOldestIndex === -1) 
@@ -132,17 +132,17 @@ function chatgpt(strPrompt_a)
 				}
 				
 				// Remove the oldest entry
-				if (strOldestSessionID && api.globals.chatgpt.sessions[strOldestSessionID].length > 0) 
+				if (strOldestSessionID && globals.chatgpt.sessions[strOldestSessionID].length > 0) 
 				{
-					var strRemovedText = api.globals.chatgpt.sessions[strOldestSessionID].shift();
+					var strRemovedText = globals.chatgpt.sessions[strOldestSessionID].shift();
 					var intRemovedSize = strRemovedText.length * 2;
-					api.globals.chatgpt.sessionsize -= intRemovedSize;
+					globals.chatgpt.sessionsize -= intRemovedSize;
 					blnRemovedAny = true;
 					
 					// Clean up empty sessions
-					if (api.globals.chatgpt.sessions[strOldestSessionID].length === 0) 
+					if (globals.chatgpt.sessions[strOldestSessionID].length === 0) 
 					{
-						delete api.globals.chatgpt.sessions[strOldestSessionID];
+						delete globals.chatgpt.sessions[strOldestSessionID];
 					}
 				}
 				
@@ -157,9 +157,9 @@ function chatgpt(strPrompt_a)
 		{
 			var strResult = '';
 			
-			if (api.globals.chatgpt.sessions[strSessionID_a]) 
+			if (globals.chatgpt.sessions[strSessionID_a]) 
 			{
-				var arrSession = api.globals.chatgpt.sessions[strSessionID_a];
+				var arrSession = globals.chatgpt.sessions[strSessionID_a];
 				var strContext = '';
 				
 				for (var intI = arrSession.length - 1; intI >= 0; intI--) 
@@ -192,13 +192,13 @@ function chatgpt(strPrompt_a)
 			{
 				// Clear specific session
 				strSessionID = arrWords[1];
-				if (api.globals.chatgpt.sessions[strSessionID]) 
+				if (globals.chatgpt.sessions[strSessionID]) 
 				{
-					for (intJ = 0; intJ < api.globals.chatgpt.sessions[strSessionID].length; intJ++) 
+					for (intJ = 0; intJ < globals.chatgpt.sessions[strSessionID].length; intJ++) 
 					{
-						api.globals.chatgpt.sessionsize -= api.globals.chatgpt.sessions[strSessionID][intJ].length * 2;
+						globals.chatgpt.sessionsize -= globals.chatgpt.sessions[strSessionID][intJ].length * 2;
 					}
-					api.globals.chatgpt.sessions[strSessionID] = [];
+					globals.chatgpt.sessions[strSessionID] = [];
 					api.print('Session "' + strSessionID + '" cleared.');
 				}
 				else
@@ -209,15 +209,15 @@ function chatgpt(strPrompt_a)
 			else
 			{
 				// Clear all sessions
-				for (objSession in api.globals.chatgpt.sessions) 
+				for (objSession in globals.chatgpt.sessions) 
 				{
-					if (api.globals.chatgpt.sessions.hasOwnProperty(objSession)) 
+					if (globals.chatgpt.sessions.hasOwnProperty(objSession)) 
 					{
-						for (intJ = 0; intJ < api.globals.chatgpt.sessions[objSession].length; intJ++) 
+						for (intJ = 0; intJ < globals.chatgpt.sessions[objSession].length; intJ++) 
 						{
-							api.globals.chatgpt.sessionsize -= api.globals.chatgpt.sessions[objSession][intJ].length * 2;
+							globals.chatgpt.sessionsize -= globals.chatgpt.sessions[objSession][intJ].length * 2;
 						}
-						api.globals.chatgpt.sessions[objSession] = [];
+						globals.chatgpt.sessions[objSession] = [];
 					}
 				}
 				api.print('All sessions cleared.');
@@ -236,11 +236,11 @@ function chatgpt(strPrompt_a)
 			{
 				// Save specific session
 				strSessionID = arrWords[1];
-				if (api.globals.chatgpt.sessions[strSessionID]) 
+				if (globals.chatgpt.sessions[strSessionID]) 
 				{
 					var objSessionData = {
-						session: api.globals.chatgpt.sessions[strSessionID],
-						size: api.globals.chatgpt.sessions[strSessionID].reduce(function(intTotal_a, objEntry_a) 
+						session: globals.chatgpt.sessions[strSessionID],
+						size: globals.chatgpt.sessions[strSessionID].reduce(function(intTotal_a, objEntry_a) 
 						{
 							return intTotal_a + (objEntry_a.length * 2);
 						}, 0)
@@ -272,8 +272,8 @@ function chatgpt(strPrompt_a)
 			{
 				// Save all sessions
 				var objAllSessions = {
-					sessions: api.globals.chatgpt.sessions,
-					totalSize: api.globals.chatgpt.sessionsize
+					sessions: globals.chatgpt.sessions,
+					totalSize: globals.chatgpt.sessionsize
 				};
 				
 				api.saveFile('chatgpt-all-sessions.json', JSON.stringify(objAllSessions), function(objResponse_a) 
@@ -312,18 +312,18 @@ function chatgpt(strPrompt_a)
 							if (objData && objData.session) 
 							{
 								// Remove current session size if it exists
-								if (api.globals.chatgpt.sessions[strSessionID]) 
+								if (globals.chatgpt.sessions[strSessionID]) 
 								{
-									var intOldSize = api.globals.chatgpt.sessions[strSessionID].reduce(function(intTotal_a, objEntry_a) 
+									var intOldSize = globals.chatgpt.sessions[strSessionID].reduce(function(intTotal_a, objEntry_a) 
 									{
 										return intTotal_a + (objEntry_a.length * 2);
 									}, 0);
-									api.globals.chatgpt.sessionsize -= intOldSize;
+									globals.chatgpt.sessionsize -= intOldSize;
 								}
 								
 								// Load new session
-								api.globals.chatgpt.sessions[strSessionID] = objData.session;
-								api.globals.chatgpt.sessionsize += objData.size;
+								globals.chatgpt.sessions[strSessionID] = objData.session;
+								globals.chatgpt.sessionsize += objData.size;
 								api.print('Session "' + strSessionID + '" loaded.');
 							} 
 							else 
@@ -359,8 +359,8 @@ function chatgpt(strPrompt_a)
 							var objData = JSON.parse(objResponse_a.content);
 							if (objData && objData.sessions) 
 							{
-								api.globals.chatgpt.sessions = objData.sessions;
-								api.globals.chatgpt.sessionsize = objData.totalSize;
+								globals.chatgpt.sessions = objData.sessions;
+								globals.chatgpt.sessionsize = objData.totalSize;
 								api.print('All sessions loaded.');
 							} 
 							else 
@@ -390,12 +390,12 @@ function chatgpt(strPrompt_a)
 		if (strCommand === 'sessions')
 		{
 			var arrSessionList = [];
-			for (objSession in api.globals.chatgpt.sessions) 
+			for (objSession in globals.chatgpt.sessions) 
 			{
-				if (api.globals.chatgpt.sessions.hasOwnProperty(objSession) && api.globals.chatgpt.sessions[objSession].length > 0) 
+				if (globals.chatgpt.sessions.hasOwnProperty(objSession) && globals.chatgpt.sessions[objSession].length > 0) 
 				{
 					// Calculate session size
-					var intSessionSize = api.globals.chatgpt.sessions[objSession].reduce(function(intTotal_a, objEntry_a) 
+					var intSessionSize = globals.chatgpt.sessions[objSession].reduce(function(intTotal_a, objEntry_a) 
 					{
 						return intTotal_a + (objEntry_a.length * 2); // 2 bytes per character (UTF-16)
 					}, 0);
@@ -415,7 +415,7 @@ function chatgpt(strPrompt_a)
 						strSize = Math.round(intSessionSize / (1024 * 1024)) + ' MB';
 					}
 					
-					arrSessionList.push(objSession + ' (' + api.globals.chatgpt.sessions[objSession].length + ' entries, ' + strSize + ')');
+					arrSessionList.push(objSession + ' (' + globals.chatgpt.sessions[objSession].length + ' entries, ' + strSize + ')');
 				}
 			}
 			
@@ -425,17 +425,17 @@ function chatgpt(strPrompt_a)
 				
 				// Show total usage
 				var strTotalSize = '';
-				if (api.globals.chatgpt.sessionsize < 1024) 
+				if (globals.chatgpt.sessionsize < 1024) 
 				{
-					strTotalSize = api.globals.chatgpt.sessionsize + ' bytes';
+					strTotalSize = globals.chatgpt.sessionsize + ' bytes';
 				}
-				else if (api.globals.chatgpt.sessionsize < 1024 * 1024) 
+				else if (globals.chatgpt.sessionsize < 1024 * 1024) 
 				{
-					strTotalSize = Math.round(api.globals.chatgpt.sessionsize / 1024) + ' KB';
+					strTotalSize = Math.round(globals.chatgpt.sessionsize / 1024) + ' KB';
 				}
 				else 
 				{
-					strTotalSize = Math.round(api.globals.chatgpt.sessionsize / (1024 * 1024)) + ' MB';
+					strTotalSize = Math.round(globals.chatgpt.sessionsize / (1024 * 1024)) + ' MB';
 				}
 				
 				api.print('Total memory usage: ' + strTotalSize + ' of 256 MB');
@@ -681,10 +681,11 @@ console.log('3');
 			
 			// Get session context if available
 			var strSessionContext = '';
-			if (strSessionID && strSessionID !== 'null' && intAvailableSpace > 0) 
+			if (strSessionID && strSessionID !== 'null' && intAvailableSpace > 0)
 			{
 				strSessionContext = getSessionContext(strSessionID, intAvailableSpace);
 			}
+console.log('session:' + strSessionID);
 			
 			callChatGPT(strActualPrompt, strSessionContext, function(strError_a, strResponse_a)
 			{

@@ -1938,7 +1938,7 @@ console.log('plugin already loaded');
 					m_arrFiles[m_intCurrentFile].dt = true;
 				}
 
-				 updateFileStats(m_intCurrentFile);
+				updateFileStats(m_intCurrentFile);
 				updateLinkedFiles(m_intCurrentFile);
 				ready('cmdAddReplaceDeleteLine', blnSuppressReady_a);
 			}
@@ -1948,7 +1948,7 @@ console.log('plugin already loaded');
 				m_arrFiles[m_intCurrentFile].cd.splice(intLineIndex, 1);
 				m_arrFiles[m_intCurrentFile].dt = true;
 
-				 updateFileStats(m_intCurrentFile);
+				updateFileStats(m_intCurrentFile);
 				updateLinkedFiles(m_intCurrentFile);
 				ready('cmdAddReplaceDeleteLine', blnSuppressReady_a);
 			}
@@ -3097,13 +3097,15 @@ console.log('plugin already loaded');
 				errorOutput("Invalid file number.");
 				ready('cmdTouch');
 			}
-			else if (intFile > m_intFiles)
+			else if (intFile >= m_intFiles)
 			{
 				errorOutput("File does not exist.");
 				ready('cmdTouch');
 			}
 			else
 			{
+				m_arrFiles[intFile].dt = true; 
+				
 				// Update file stats and trigger cascade
 				updateFileStats(intFile);
 				updateLinkedFiles(intFile);

@@ -1,6 +1,68 @@
+var m_LOCALSTORAGEPREFIX = "cyborgshell-";
+var m_LOCALSTORAGECONFIG = "config-";
+
 var m_strCharacterName = '';
 var m_strSessionID = '';	// for a forced sessionid
 var m_strScenario = '';
+
+var m_strProvider = '';
+var m_strAPIKey = '';
+var m_strEndpoint = '';
+var m_strFlavour = '';
+var m_strModel = '';
+var m_strMaxTokens = '';
+var m_strTemperature = '';
+var m_strProxy = '';
+var m_strJSONBearer = '';
+
+function loadProviderSettings(strProvider_a, cb_a)
+{
+	// Load provider-specific configs
+	api.loadLocalData(strProvider_a + '-apikey', function(strAPIKey_a)
+	{
+		api.loadLocalData(strProvider_a + '-endpoint', function(strEndpoint_a)
+		{
+			api.loadLocalData(strProvider_a + '-flavour', function(strFlavour_a)
+			{
+				api.loadLocalData(strProvider_a + '-model', function(strModel_a)
+				{
+					api.loadLocalData(strProvider_a + '-maxtokens', function(strMaxTokens_a)
+					{
+						api.loadLocalData(strProvider_a + '-temperature', function(strTemperature_a)
+						{
+							api.loadLocalData(strProvider_a + '-proxy', function(strProxy_a)
+							{
+								api.loadLocalData(strProvider_a + '-jsonbearer', function(strJSONBearer_a)
+								{
+									if ((strProvider_a !== null && strProvider_a.length > 0) &&
+									(strEndpoint_a !== null && strEndpoint_a.length > 0) &&
+									(strModel_a !== null && strModel_a.length > 0))
+									{
+										m_strProvider = strProvider_a;
+										m_strAPIKey = strAPIKey_a;
+										m_strEndpoint = strEndpoint_a;
+										m_strFlavour = strFlavour_a;
+										m_strModel = strModel_a;
+										m_strMaxTokens = strMaxTokens_a;
+										m_strTemperature = strTemperature_a;
+										m_strProxy = strProxy_a;
+										m_strJSONBearer = strJSONBearer_a;
+
+										cb_a();
+									}
+									else
+									{
+										api.errorOutput("The provider '" + m_PROVIDER + "' is not configured.");
+									}
+								});
+							});
+						});
+					});
+				});
+			});
+		});
+	});
+}
 
 function getRandomEntry(arr_a)
 {
@@ -31,7 +93,7 @@ function chatgpt(strPrompt_a)
 
 	var m_DEBUGPROMPT = false;
 
-	function startChatGPTInteractive(strProvider_a, strAPIKey_a, strEndpoint_a, strFlavour_a, strModel_a, strMaxTokens_a, strTemperature_a, strProxy_a)
+	function startChatGPTInteractive()
 	{
 		var blnAgain = true;
 		var strPrompt = m_strSessionID + ": We are going to play a roleplaying game. The player character is " + m_strCharacterName + ". The scenario is: '" + m_strScenario + "'. You are to be the game master and are to refer the player character by " + m_strCharacterName + " or 'you'.  You don't need to indicate it's their turn - but you can suggest options and ask what they would like to do. Make the story exciting with lots of items, puzzles and NPCs, within the realm of the provided scenario. It is not multiple choice but make some options obvious. You don't need to limit the player to those options.";
@@ -66,7 +128,7 @@ function chatgpt(strPrompt_a)
 					api.print(' ');
 				}
 
-				invokeChatGPT(strProvider_a, strAPIKey_a, strEndpoint_a, strFlavour_a, strModel_a, strMaxTokens_a, strTemperature_a, strProxy_a, strPrompt, function()
+				invokeChatGPT(strPrompt, function()
 				{
 					input();
 				});
@@ -76,22 +138,22 @@ function chatgpt(strPrompt_a)
 		again();
 	}
 
-	function invokeChatGPT(strProvider_a, strAPIKey_a, strEndpoint_a, strFlavour_a, strModel_a, strMaxTokens_a, strTemperature_a, strProxy_a, strPrompt_a, cb_a)
+	function invokeChatGPT(strPrompt_a, cb_a)
 	{
 		// defaults
-		var strFlavour = strFlavour_a;
+		var strFlavour = m_strFlavour;
 		if (!strFlavour || strFlavour.length === 0) { strFlavour = "chatgpt"; }
 
-		var strMaxTokens = strMaxTokens_a;
+		var strMaxTokens = m_strMaxTokens;
 		if (!strMaxTokens || strMaxTokens.length === 0) { strMaxTokens = "2000"; }
 
-		var strTemperature = strTemperature_a;
+		var strTemperature = m_strTemperature;
 		if (!strTemperature || strTemperature.length === 0) { strTemperature = "0.7"; }
 
-		var strProxy = strProxy_a;
+		var strProxy = m_strProxy;
 		if (!strProxy || strProxy.length === 0) { strProxy = ""; }
 
-		var strEndpoint = strEndpoint_a;
+		var strEndpoint = m_strEndpoint;
 
 		if (strProxy.length > 0)
 		{
@@ -408,6 +470,156 @@ function chatgpt(strPrompt_a)
 			return;
 		}
 
+		var strConfigKey = '';
+		var strFilename = '';
+		var strKey = '';
+		var strServiceName = '';
+
+		if (strCommand === 'service')
+		{
+			if (arrWords.length > 1)
+			{
+				// Switch to specified service
+				var strNewService = arrWords[1];
+				
+				api.print('Switching to service: ' + strNewService);
+				
+				// Load the service (which loads its provider settings)
+				loadProviderSettings(strNewService, function()
+				{
+					// m_* variables already updated by loadProviderSettings
+					api.print('Service switched to: ' + strNewService);
+					api.print('Provider: ' + m_strProvider);
+					api.print('Endpoint: ' + m_strEndpoint);
+					api.print('Model: ' + m_strModel);
+					api.print('Flavour: ' + (m_strFlavour || 'chatgpt'));
+					
+					if ($.isFunction(cb_a))
+					{
+						cb_a();
+					}
+				});
+			}
+			else
+			{
+				// Show current service - need to determine which service is active
+				// by checking which service points to the current provider
+				var strCurrentService = '';
+				
+				// Find which service is currently using this provider
+				for (intI = 0; intI < localStorage.length; intI++)
+				{
+					strKey = localStorage.key(intI);
+					if (typeof strKey === 'string' && strKey.length > 0 && strKey.startsWith(m_LOCALSTORAGEPREFIX))
+					{
+						strFilename = strKey.substring(m_LOCALSTORAGEPREFIX.length);
+						if (strFilename.startsWith(m_LOCALSTORAGECONFIG))
+						{
+							strConfigKey = strFilename.substring(m_LOCALSTORAGECONFIG.length);
+							
+							// Check if this ends with '-provider'
+							if (strConfigKey.endsWith('-provider'))
+							{
+								strServiceName = strConfigKey.substring(0, strConfigKey.length - 9);
+								var strData = localStorage.getItem(strKey);
+								try
+								{
+									var strProviderValue = JSON.parse(strData);
+									if (strProviderValue === m_strProvider)
+									{
+										strCurrentService = strServiceName;
+										break;
+									}
+								}
+								catch (e)
+								{
+									// Handle non-JSON values
+									if (strData === m_strProvider)
+									{
+										strCurrentService = strServiceName;
+										break;
+									}
+								}
+							}
+						}
+					}
+				}
+				
+				api.print('Current service: ' + (strCurrentService || 'unknown'));
+				api.print('Provider: ' + m_strProvider);
+				api.print('Endpoint: ' + m_strEndpoint);
+				api.print('Model: ' + m_strModel);
+				api.print('Flavour: ' + (m_strFlavour || 'chatgpt'));
+				api.print('Max Tokens: ' + (m_strMaxTokens || '2000'));
+				api.print('Temperature: ' + (m_strTemperature || '0.7'));
+				api.print('Proxy: ' + (m_strProxy || 'none'));
+				api.print('JSON Bearer: ' + (m_strJSONBearer || 'N'));
+				
+				if ($.isFunction(cb_a))
+				{
+					cb_a();
+				}
+			}
+			return;
+		}
+
+		if (strCommand === 'services')
+		{
+			api.print('Loading configured services...');
+			
+			var objServices = {}; // Use object as a set for uniqueness
+			
+			// Scan localStorage for all config-<service>-endpoint entries
+			// Format: cyborgshell-config-<service>-endpoint
+			for (intI = 0; intI < localStorage.length; intI++)
+			{
+				strKey = localStorage.key(intI);
+				if (typeof strKey === 'string' && strKey.length > 0 && strKey.startsWith(m_LOCALSTORAGEPREFIX))
+				{
+					strFilename = strKey.substring(m_LOCALSTORAGEPREFIX.length);
+					if (strFilename.startsWith(m_LOCALSTORAGECONFIG))
+					{
+						strConfigKey = strFilename.substring(m_LOCALSTORAGECONFIG.length);
+						
+						// Check if this ends with '-endpoint'
+						// strConfigKey format: <service>-endpoint
+						if (strConfigKey.endsWith('-endpoint'))
+						{
+							// Extract the service name (everything before '-endpoint')
+							strServiceName = strConfigKey.substring(0, strConfigKey.length - 9); // 9 = '-endpoint'.length
+							objServices[strServiceName] = true; // Add to set
+						}
+					}
+				}
+			}
+			
+			// Convert object keys to array
+			var arrServices = [];
+			for (var strService in objServices)
+			{
+				if (objServices.hasOwnProperty(strService))
+				{
+					arrServices.push(strService);
+				}
+			}
+			
+			if (arrServices.length > 0)
+			{
+				arrServices.sort();
+				api.print('Configured services: ' + arrServices.join(', '));
+			}
+			else
+			{
+				api.print('No services configured. Use csconfig to add services.');
+			}
+			
+			if ($.isFunction(cb_a))
+			{
+				cb_a();
+			}
+			return;
+		}
+
 		if (strCommand === 'sessions')
 		{
 			var arrSessionList = [];
@@ -515,15 +727,19 @@ function chatgpt(strPrompt_a)
 			if (strFlavour.toLowerCase() === 'claude')
 			{
 				objPayload = {
-					bearer: strAPIKey_a,		// <-- avoid CORS problems
-					model: strModel_a,
+					model: m_strModel,
 					max_tokens: parseInt(strMaxTokens, 10),
 					temperature: parseFloat(strTemperature),
 					messages: arrMessages
 				};
 
+				if (toBoolean(m_strJSONBearer))
+				{
+					objPayload.bearer = m_strAPIKey;		// <-- avoid CORS problems
+				}
+
 				objHeaders = {
-					'x-api-key': strAPIKey_a,
+					'x-api-key': m_strAPIKey,
 					'Content-Type': 'application/json',
 					'anthropic-version': '2023-06-01',
 					'anthropic-dangerous-direct-browser-access': 'true'
@@ -562,7 +778,7 @@ function chatgpt(strPrompt_a)
 					'Content-Type': 'application/json'
 				};
 
-				strEndpoint = strEndpoint + '?key=' + strAPIKey_a;
+				strEndpoint = strEndpoint + '?key=' + m_strAPIKey;
 
 				objFlavour = {
 					url: strEndpoint,
@@ -576,20 +792,24 @@ function chatgpt(strPrompt_a)
 			else
 			{
 				objPayload = {
-					bearer: strAPIKey_a,		// <-- avoid CORS problems
-					model: strModel_a,
+					model: m_strModel,
 					max_tokens: parseInt(strMaxTokens, 10),
 					temperature: parseFloat(strTemperature),
 					messages: arrMessages
 				};
 
+				if (toBoolean(m_strJSONBearer))
+				{
+					objPayload.bearer = m_strAPIKey;		// <-- avoid CORS problems
+				}
+
 				objHeaders = {
 					'Content-Type': 'application/json'
 				};
 
-				if (strAPIKey_a !== null && strAPIKey_a.length > 0)
+				if (m_strAPIKey !== null && m_strAPIKey.length > 0)
 				{
-					objHeaders['Authorization'] = 'Bearer ' + strAPIKey_a;
+					objHeaders['Authorization'] = 'Bearer ' + m_strAPIKey;
 				}
 
 				objFlavour = {
@@ -613,25 +833,52 @@ function chatgpt(strPrompt_a)
 					}
 					else
 					{
-						cbInternal_a('No response from ' + strProvider_a, null);
+						cbInternal_a('No response from ' + m_strProvider, null);
 					}
 				}
-				else if (strFlavour.toLowerCase() === 'gemini')
-				{
-					// Gemini response handling
-					if (objResponse_a.candidates && objResponse_a.candidates.length > 0 &&
-					objResponse_a.candidates[0].content &&
-					objResponse_a.candidates[0].content.parts &&
-					objResponse_a.candidates[0].content.parts.length > 0)
-					{
-						strResponse = objResponse_a.candidates[0].content.parts[0].text;
-						cbInternal_a(null, strResponse);
-					}
-					else
-					{
-						cbInternal_a('No response from ' + strProvider_a, null);
-					}
-				}
+else if (strFlavour.toLowerCase() === 'gemini')
+{
+    console.log('Gemini response:', objResponse_a);
+    
+    // Gemini 2.5+ response handling
+    // New format: candidates[0].content.parts[0].text
+    // OR: candidates[0].text (direct text property)
+    if (objResponse_a.candidates && objResponse_a.candidates.length > 0)
+    {
+        var objCandidate = objResponse_a.candidates[0];
+        
+        // Try new format: content.parts[0].text
+        if (objCandidate.content && 
+            objCandidate.content.parts && 
+            objCandidate.content.parts.length > 0 &&
+            objCandidate.content.parts[0].text)
+        {
+            strResponse = objCandidate.content.parts[0].text;
+            cbInternal_a(null, strResponse);
+        }
+        // Try alternate format: direct text property
+        else if (objCandidate.text)
+        {
+            strResponse = objCandidate.text;
+            cbInternal_a(null, strResponse);
+        }
+        // Try message property
+        else if (objCandidate.message && objCandidate.message.content)
+        {
+            strResponse = objCandidate.message.content;
+            cbInternal_a(null, strResponse);
+        }
+        else
+        {
+            console.error('Gemini unexpected format:', objCandidate);
+            cbInternal_a('No response from ' + m_strProvider + ' - unexpected format', null);
+        }
+    }
+    else
+    {
+        cbInternal_a('No response from ' + m_strProvider, null);
+    }
+}
 				else
 				{
 					if (objResponse_a.choices && objResponse_a.choices.length > 0)
@@ -641,205 +888,191 @@ function chatgpt(strPrompt_a)
 					}
 					else
 					{
-						cbInternal_a('No response from ' + strProvider_a, null);
+						cbInternal_a('No response from ' + m_strProvider, null);
 					}
 				}
-				}).fail(function(objXHR_a, strStatus_a, strError_a)
-				{
-					var strErrorMessage = strProvider_a + ' API error: ';
-
-					if (objXHR_a.responseJSON && objXHR_a.responseJSON.error)
-					{
-						strErrorMessage += objXHR_a.responseJSON.error.message;
-					}
-					else if (strStatus_a === 'timeout')
-					{
-						strErrorMessage += 'Request timed out';
-					}
-					else
-					{
-						strErrorMessage += strStatus_a + ' - ' + strError_a;
-					}
-
-					cbInternal_a(strErrorMessage, null);
-				});
-			}
-
-			if (strActualPrompt && strActualPrompt.trim().length > 0)
+			}).fail(function(objXHR_a, strStatus_a, strError_a)
 			{
-				// Calculate available space for session context
-				var intPromptSize = strActualPrompt.length;
-				var intAvailableSpace = m_MAXPROMPTSIZE - intPromptSize;
+				var strErrorMessage = m_strProvider + ' API error: ';
 
-				// Get session context if available
-				var strSessionContext = '';
-				if (strSessionID && strSessionID !== 'null' && intAvailableSpace > 0)
+				if (objXHR_a.responseJSON && objXHR_a.responseJSON.error)
 				{
-					strSessionContext = getSessionContext(strSessionID, intAvailableSpace);
+					strErrorMessage += objXHR_a.responseJSON.error.message;
+				}
+				else if (strStatus_a === 'timeout')
+				{
+					strErrorMessage += 'Request timed out';
+				}
+				else
+				{
+					strErrorMessage += strStatus_a + ' - ' + strError_a;
 				}
 
-				callChatGPT(strActualPrompt, strSessionContext, function(strError_a, strResponse_a)
-				{
-					if (strError_a)
-					{
-						api.print('Error: ' + strError_a);
-					}
-					else
-					{
-						api.print(strResponse_a);
+				cbInternal_a(strErrorMessage, null);
+			});
+		}
 
-						// Add the prompt and response to the session for future context
-						if (strSessionID && strSessionID !== 'null')
-						{
-							addToSession(strSessionID, 'USER: ' + strActualPrompt);
-							addToSession(strSessionID, 'ASSISTANT: ' + strResponse_a);
-						}
-					}
+		if (strActualPrompt && strActualPrompt.trim().length > 0)
+		{
+			// Calculate available space for session context
+			var intPromptSize = strActualPrompt.length;
+			var intAvailableSpace = m_MAXPROMPTSIZE - intPromptSize;
 
-					if ($.isFunction(cb_a))
-					{
-						cb_a();
-					}
-				});
-			}
-			else
+			// Get session context if available
+			var strSessionContext = '';
+			if (strSessionID && strSessionID !== 'null' && intAvailableSpace > 0)
 			{
-				api.print('Usage: chatgpt [<sessionid>:] <prompt>');
-				api.print('       chatgpt clear <sessionid>');
-				api.print('       chatgpt sessions');
-				api.print('       chatgpt save <sessionid>');
-				api.print('       chatgpt load <sessionid>');
-				api.print(' ');
-				api.print('Examples:');
-				api.print('  chatgpt remember the number 5');
-				api.print('  chatgpt what number did I tell you to remember?');
-				api.print('  chatgpt math: solve 2+2');
-				api.print('  chatgpt math: what is the square root of that?');
-				api.print('  chatgpt clear math');
-				api.print('  chatgpt sessions');
-				api.print('  chatgpt save');
-				api.print('  chatgpt save math');
-				api.print('  chatgpt load');
-				api.print('  chatgpt load math');
-				api.print(' ');
-				api.print('Interactive Mode:');
-				api.print("  If you are in interactive mode, you can ommit 'chatgpt ' from the commands above.");
-				api.print("  Type 'x' to exit");
+				strSessionContext = getSessionContext(strSessionID, intAvailableSpace);
+			}
+
+			callChatGPT(strActualPrompt, strSessionContext, function(strError_a, strResponse_a)
+			{
+				if (strError_a)
+				{
+					api.print('Error: ' + strError_a);
+				}
+				else
+				{
+					api.print(strResponse_a);
+
+					// Add the prompt and response to the session for future context
+					if (strSessionID && strSessionID !== 'null')
+					{
+						addToSession(strSessionID, 'USER: ' + strActualPrompt);
+						addToSession(strSessionID, 'ASSISTANT: ' + strResponse_a);
+					}
+				}
 
 				if ($.isFunction(cb_a))
 				{
 					cb_a();
 				}
+			});
+		}
+		else
+		{
+			api.print('Usage: chatgpt [<sessionid>:] <prompt>');
+			api.print('       chatgpt clear <sessionid>');
+			api.print('       chatgpt sessions');
+			api.print('       chatgpt save <sessionid>');
+			api.print('       chatgpt load <sessionid>');
+			api.print('       chatgpt services');
+			api.print('       chatgpt service <service>');
+			api.print(' ');
+			api.print('Examples:');
+			api.print('  chatgpt remember the number 5');
+			api.print('  chatgpt what number did I tell you to remember?');
+			api.print('  chatgpt math: solve 2+2');
+			api.print('  chatgpt math: what is the square root of that?');
+			api.print('  chatgpt clear math');
+			api.print('  chatgpt sessions');
+			api.print('  chatgpt save');
+			api.print('  chatgpt save math');
+			api.print('  chatgpt load');
+			api.print('  chatgpt load math');
+			api.print(' ');
+			api.print('Interactive Mode:');
+			api.print("  If you are in interactive mode, you can ommit 'chatgpt ' from the commands above.");
+			api.print("  Type 'x' to exit");
+
+			if ($.isFunction(cb_a))
+			{
+				cb_a();
 			}
 		}
-
-		api.loadLocalData(m_PROVIDER + '-provider', function(strProvider_a)
-		{
-			// Load provider-specific configs
-			api.loadLocalData(strProvider_a + '-apikey', function(strAPIKey_a)
-			{
-				api.loadLocalData(strProvider_a + '-endpoint', function(strEndpoint_a)
-				{
-					api.loadLocalData(strProvider_a + '-flavour', function(strFlavour_a)
-					{
-						api.loadLocalData(strProvider_a + '-model', function(strModel_a)
-						{
-							api.loadLocalData(strProvider_a + '-maxtokens', function(strMaxTokens_a)
-							{
-								api.loadLocalData(strProvider_a + '-temperature', function(strTemperature_a)
-								{
-									api.loadLocalData(strProvider_a + '-proxy', function(strProxy_a)
-									{
-										if ((strProvider_a !== null && strProvider_a.length > 0) &&
-										(strEndpoint_a !== null && strEndpoint_a.length > 0) &&
-										(strModel_a !== null && strModel_a.length > 0))
-										{
-											if (strPrompt_a.length > 0)
-											{
-												invokeChatGPT(strProvider_a, strAPIKey_a, strEndpoint_a, strFlavour_a, strModel_a, strMaxTokens_a, strTemperature_a, strProxy_a, strPrompt_a);
-											}
-											else
-											{
-												startChatGPTInteractive(strProvider_a, strAPIKey_a, strEndpoint_a, strFlavour_a, strModel_a, strMaxTokens_a, strTemperature_a, strProxy_a);
-											}
-										}
-										else
-										{
-											api.errorOutput("The provider '" + m_PROVIDER + "' is not configured.");
-										}
-									});
-								});
-							});
-						});
-					});
-				});
-			});
-		});
 	}
 
-	var m_arrDefaultScenarios =
-	[
-		"You're a warrior seeking treasure in a dragon's lair deep within an ancient dungeon.",
-		"As a space pilot, your ship crashed on an alien world. Find fuel to escape before the hostile natives arrive.",
-		"You're a detective investigating mysterious disappearances in a fog-shrouded Victorian city.",
-		"A tiny ant on a quest to find the legendary Sugar Crystal that can save your colony from winter.",
-		"You're a hacker in 2087 trying to uncover corporate secrets hidden in a virtual reality maze.",
-		"As a ghost, you must solve your own murder before you fade away forever.",
-		"You're a pirate captain searching for the lost island where your crew was marooned.",
-		"A robot janitor discovers the space station's crew has vanished. Investigate what happened.",
-		"You're a wizard's apprentice who accidentally released demons from a forbidden spellbook.",
-		"As a time traveler, you're stuck in medieval times and must find the parts to repair your machine.",
-		"You're a survivor in a zombie apocalypse looking for other humans in the abandoned city.",
-		"A curious cat who can speak must help solve the mystery of the missing neighborhood pets.",
-		"You're a steampunk inventor whose rival stole your greatest creation. Get it back.",
-		"As an alien ambassador, navigate Earth's politics to prevent an interplanetary war.",
-		"You're trapped in a haunted mansion and must find the source of the supernatural disturbances.",
-		"A sentient tree trying to save the forest from loggers by awakening other plant life.",
-		"You're a samurai seeking vengeance against the ninja clan that destroyed your village.",
-		"As a deep-sea explorer, you've discovered an underwater city with dark secrets.",
-		"You're a superhero who lost their powers and must save the city using only wit and gadgets.",
-		"A shapeshifter trying to infiltrate a secret society to uncover their evil plans."
-	];
-
-	var m_arrDefaultNames = [
-		"Aria", "Zhen", "Kai", "Nova", "Raven", "Atlas", "Luna", "Phoenix", "Sage", "Storm",
-		"Alex", "Jordan", "Taylor", "Casey", "River", "Skye", "Ash", "Rowan", "Quinn", "Cedar",
-		"Zara", "Orion", "Lyra", "Vex", "Echo", "Blaze", "Iris", "Reed", "Vale", "Wren",
-		"Akira", "Yuki", "Hana", "Kenji", "Ren", "Sora", "Noa", "Mika", "Taro", "Kira",
-		"Anya", "Boris", "Dimitri", "Elena", "Igor", "Katya", "Mikhail", "Olga", "Pavel", "Vera",
-		"Amara", "Ezra", "Izar", "Nyx", "Cyrus", "Dara", "Enzo", "Freya", "Gaia", "Hale",
-		"Indira", "Jin", "Koda", "Lexa", "Magnus", "Naia", "Onyx", "Pax", "Quin", "Rhea",
-		"Silas", "Thea", "Uma", "Vega", "Wilder", "Xara", "Yara", "Zoe", "Ajax", "Brix",
-		"Cleo", "Dex", "Ember", "Fox", "Gray", "Haven", "Jax", "Knox", "Lux", "Max", "Beowulf",
-		"Neo", "Ori", "Pike", "Rook", "Sol", "Trek", "Vale", "Wade", "Xen", "York", "Zed"
-	];
-
-	var m_strDefaultScenario = getRandomEntry(m_arrDefaultScenarios);
-	var m_strDefaultCharacterName = getRandomEntry(m_arrDefaultNames);
-
-	api.print('Enter a brief summary describing your ideal RPG game. Suggest a main plot or goal, specify the type of character you’d like to play, and describe the setting or world for your adventure. Feel free to mention any special themes, challenges, or story elements you’d like to see included in your game.');
-	api.print(' ');
-
-	api.input(m_strDefaultScenario, function(strScenario_a)
+	function toBoolean(str_a)
 	{
-		if (strScenario_a.length > 0)
+		var strResult = str_a;
+		if (strResult === undefined || strResult === null) { strResult = 'N'; }
+
+		strResult = strResult.toUpperCase();
+
+		return (strResult === 'Y' || strResult === 'YES' || strResult === 'T' || strResult === 'TRUE' ||
+		strResult === '1' || strResult === 'ON' || strResult === 'ENABLE' || strResult === 'ENABLED');
+	}
+
+	api.loadLocalData(m_PROVIDER + '-provider', function(strProvider_a)
+	{
+		api.print('Provider: ' + strProvider_a);
+		loadProviderSettings(strProvider_a, function()
 		{
-			api.print(strScenario_a);
-			m_strScenario = strScenario_a;
-
-			api.print("Enter your character's name:");
-			api.input(m_strDefaultCharacterName, function(strCharacterName_a)
+			if (strPrompt_a.length > 0)
 			{
-				if (strCharacterName_a.length > 0)
-				{
-					api.print(strCharacterName_a);
-					api.print(' ');
-
-					m_strCharacterName = strCharacterName_a;
-					m_strSessionID = toSessionID(m_strCharacterName);
-
-					chatgpt(api.commandline.slice(2).join(' '));
-				}
-			});
-		}
+				invokeChatGPT(strPrompt_a);
+			}
+			else
+			{
+				startChatGPTInteractive();
+			}
+		});
 	});
+}
+
+var m_arrDefaultScenarios =
+[
+	"You're a warrior seeking treasure in a dragon's lair deep within an ancient dungeon.",
+	"As a space pilot, your ship crashed on an alien world. Find fuel to escape before the hostile natives arrive.",
+	"You're a detective investigating mysterious disappearances in a fog-shrouded Victorian city.",
+	"A tiny ant on a quest to find the legendary Sugar Crystal that can save your colony from winter.",
+	"You're a hacker in 2087 trying to uncover corporate secrets hidden in a virtual reality maze.",
+	"As a ghost, you must solve your own murder before you fade away forever.",
+	"You're a pirate captain searching for the lost island where your crew was marooned.",
+	"A robot janitor discovers the space station's crew has vanished. Investigate what happened.",
+	"You're a wizard's apprentice who accidentally released demons from a forbidden spellbook.",
+	"As a time traveler, you're stuck in medieval times and must find the parts to repair your machine.",
+	"You're a survivor in a zombie apocalypse looking for other humans in the abandoned city.",
+	"A curious cat who can speak must help solve the mystery of the missing neighborhood pets.",
+	"You're a steampunk inventor whose rival stole your greatest creation. Get it back.",
+	"As an alien ambassador, navigate Earth's politics to prevent an interplanetary war.",
+	"You're trapped in a haunted mansion and must find the source of the supernatural disturbances.",
+	"A sentient tree trying to save the forest from loggers by awakening other plant life.",
+	"You're a samurai seeking vengeance against the ninja clan that destroyed your village.",
+	"As a deep-sea explorer, you've discovered an underwater city with dark secrets.",
+	"You're a superhero who lost their powers and must save the city using only wit and gadgets.",
+	"A shapeshifter trying to infiltrate a secret society to uncover their evil plans."
+];
+
+var m_arrDefaultNames = [
+	"Aria", "Zhen", "Kai", "Nova", "Raven", "Atlas", "Luna", "Phoenix", "Sage", "Storm",
+	"Alex", "Jordan", "Taylor", "Casey", "River", "Skye", "Ash", "Rowan", "Quinn", "Cedar",
+	"Zara", "Orion", "Lyra", "Vex", "Echo", "Blaze", "Iris", "Reed", "Vale", "Wren",
+	"Akira", "Yuki", "Hana", "Kenji", "Ren", "Sora", "Noa", "Mika", "Taro", "Kira",
+	"Anya", "Boris", "Dimitri", "Elena", "Igor", "Katya", "Mikhail", "Olga", "Pavel", "Vera",
+	"Amara", "Ezra", "Izar", "Nyx", "Cyrus", "Dara", "Enzo", "Freya", "Gaia", "Hale",
+	"Indira", "Jin", "Koda", "Lexa", "Magnus", "Naia", "Onyx", "Pax", "Quin", "Rhea",
+	"Silas", "Thea", "Uma", "Vega", "Wilder", "Xara", "Yara", "Zoe", "Ajax", "Brix",
+	"Cleo", "Dex", "Ember", "Fox", "Gray", "Haven", "Jax", "Knox", "Lux", "Max", "Beowulf",
+	"Neo", "Ori", "Pike", "Rook", "Sol", "Trek", "Vale", "Wade", "Xen", "York", "Zed"
+];
+
+var m_strDefaultScenario = getRandomEntry(m_arrDefaultScenarios);
+var m_strDefaultCharacterName = getRandomEntry(m_arrDefaultNames);
+
+api.print('Enter a brief summary describing your ideal RPG game. Suggest a main plot or goal, specify the type of character you’d like to play, and describe the setting or world for your adventure. Feel free to mention any special themes, challenges, or story elements you’d like to see included in your game.');
+api.print(' ');
+
+api.input(m_strDefaultScenario, function(strScenario_a)
+{
+	if (strScenario_a.length > 0)
+	{
+		api.print(strScenario_a);
+		m_strScenario = strScenario_a;
+
+		api.print("Enter your character's name:");
+		api.input(m_strDefaultCharacterName, function(strCharacterName_a)
+		{
+			if (strCharacterName_a.length > 0)
+			{
+				api.print(strCharacterName_a);
+				api.print(' ');
+
+				m_strCharacterName = strCharacterName_a;
+				m_strSessionID = toSessionID(m_strCharacterName);
+
+				chatgpt(api.commandline.slice(2).join(' '));
+			}
+		});
+	}
+});

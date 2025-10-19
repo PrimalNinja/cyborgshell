@@ -1,4 +1,4 @@
-var m_arrConfigKeys = ["flavour", "apikey", "endpoint", "model", "parallel", "maxtokens", "temperature", "proxy"];
+var m_arrConfigKeys = ["flavour", "apikey", "endpoint", "model", "parallel", "maxtokens", "temperature", "proxy", "jsonbearer"];
 var m_objConfigVals = {};
 var m_intConfigKeyIndex = 0;
 var m_objLang = {};

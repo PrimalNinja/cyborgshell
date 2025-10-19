@@ -32,6 +32,17 @@ function chatgpt_xfrm(objAPI_a, objGlobals_a, strSourceFilename_a, strSourceMime
 	var m_strOverrideSession = null;
 	var m_strProcessedArgs = strArgs_a;
 
+	var m_strProvider = '';
+	var m_strAPIKey = '';
+	var m_strEndpoint = '';
+	var m_strFlavour = '';
+	var m_strModel = '';
+	var m_strParallel = '';
+	var m_strMaxTokens = '';
+	var m_strTemperature = '';
+	var m_strProxy = '';
+	var m_strJSONBearer = '';
+	
 	if (strArgs_a && strArgs_a.trim().length > 0)
 	{
 		var parts = strArgs_a.trim().split(' ');
@@ -56,7 +67,60 @@ function chatgpt_xfrm(objAPI_a, objGlobals_a, strSourceFilename_a, strSourceMime
 
 	// helpers
 
-	function addToProviderQueue(strProvider_a, fnExecution_a)
+	function loadProviderSettings(strProvider_a, cb_a)
+	{
+		// Load provider-specific configs
+		api.loadLocalData(strProvider_a + '-apikey', function(strAPIKey_a)
+		{
+			api.loadLocalData(strProvider_a + '-endpoint', function(strEndpoint_a)
+			{
+				api.loadLocalData(strProvider_a + '-flavour', function(strFlavour_a)
+				{
+					api.loadLocalData(strProvider_a + '-model', function(strModel_a)
+					{
+						api.loadLocalData(strProvider_a + '-parallel', function(strParallel_a)
+						{
+							api.loadLocalData(strProvider_a + '-maxtokens', function(strMaxTokens_a)
+							{
+								api.loadLocalData(strProvider_a + '-temperature', function(strTemperature_a)
+								{
+									api.loadLocalData(strProvider_a + '-proxy', function(strProxy_a)
+									{
+										api.loadLocalData(strProvider_a + '-jsonbearer', function(strJSONBearer_a)
+										{
+											if ((strProvider_a !== null && strProvider_a.length > 0) &&
+											(strEndpoint_a !== null && strEndpoint_a.length > 0) &&
+											(strModel_a !== null && strModel_a.length > 0))
+											{
+												m_strProvider = strProvider_a;
+												m_strAPIKey = strAPIKey_a;
+												m_strEndpoint = strEndpoint_a;
+												m_strFlavour = strFlavour_a;
+												m_strModel = strModel_a;
+												m_strParallel = strParallel_a;
+												m_strMaxTokens = strMaxTokens_a;
+												m_strTemperature = strTemperature_a;
+												m_strProxy = strProxy_a;
+												m_strJSONBearer = strJSONBearer_a;
+
+												cb_a();
+											}
+											else
+											{
+												api.errorOutput('Transformer ' + m_TRANSFORMER + ' is not configured for provider: ' + strProvider_a);
+											}
+										});
+									});
+								});
+							});
+						});
+					});
+				});
+			});
+		});
+	}
+
+	function addToProviderQueue(fnExecution_a)
 	{
 		// Initialize global queue structure
 		if (!globals.providerQueues)
@@ -64,15 +128,15 @@ function chatgpt_xfrm(objAPI_a, objGlobals_a, strSourceFilename_a, strSourceMime
 			globals.providerQueues = {};
 		}
 
-		if (!globals.providerQueues[strProvider_a])
+		if (!globals.providerQueues[m_strProvider])
 		{
-			globals.providerQueues[strProvider_a] = {
+			globals.providerQueues[m_strProvider] = {
 				queue: [],
 				processing: false
 			};
 		}
 
-		var objQueue = globals.providerQueues[strProvider_a];
+		var objQueue = globals.providerQueues[m_strProvider];
 
 		// Add to queue
 		objQueue.queue.push(fnExecution_a);
@@ -80,7 +144,7 @@ function chatgpt_xfrm(objAPI_a, objGlobals_a, strSourceFilename_a, strSourceMime
 		// Process if not already processing
 		if (!objQueue.processing)
 		{
-			processNextInQueue(strProvider_a);
+			processNextInQueue();
 		}
 	}
 
@@ -145,9 +209,9 @@ function chatgpt_xfrm(objAPI_a, objGlobals_a, strSourceFilename_a, strSourceMime
 		}
 	}
 
-	function processNextInQueue(strProvider_a)
+	function processNextInQueue()
 	{
-		var objQueue = globals.providerQueues[strProvider_a];
+		var objQueue = globals.providerQueues[m_strProvider];
 
 		if (objQueue.queue.length === 0)
 		{
@@ -164,7 +228,7 @@ function chatgpt_xfrm(objAPI_a, objGlobals_a, strSourceFilename_a, strSourceMime
 			// After completion, process next with optional delay
 			setTimeout(function()
 			{
-				processNextInQueue(strProvider_a);
+				processNextInQueue();
 			}, 500); // 500ms delay for rate limiting
 		});
 	}
@@ -207,22 +271,22 @@ function chatgpt_xfrm(objAPI_a, objGlobals_a, strSourceFilename_a, strSourceMime
 
 	// call chatgpt
 
-	function invokeChatGPT(strProvider_a, strAPIKey_a, strEndpoint_a, strFlavour_a, strModel_a, strMaxTokens_a, strTemperature_a, strProxy_a, strPrompt_a, strSessionContext_a, cbInternal_a)
+	function invokeChatGPT(strPrompt_a, strSessionContext_a, cbInternal_a)
 	{
 		// defaults
-		var strFlavour = strFlavour_a;
+		var strFlavour = m_strFlavour;
 		if (!strFlavour || strFlavour.length === 0) { strFlavour = "chatgpt"; }
 
-		var strMaxTokens = strMaxTokens_a;
+		var strMaxTokens = m_strMaxTokens;
 		if (!strMaxTokens || strMaxTokens.length === 0) { strMaxTokens = "2000"; }
 
-		var strTemperature = strTemperature_a;
+		var strTemperature = m_strTemperature;
 		if (!strTemperature || strTemperature.length === 0) { strTemperature = "0.7"; }
 
-		var strProxy = strProxy_a;
+		var strProxy = m_strProxy;
 		if (!strProxy || strProxy.length === 0) { strProxy = ""; }
 
-		var strEndpoint = strEndpoint_a;
+		var strEndpoint = m_strEndpoint;
 
 		if (strProxy.length > 0)
 		{
@@ -250,15 +314,19 @@ function chatgpt_xfrm(objAPI_a, objGlobals_a, strSourceFilename_a, strSourceMime
 		if (strFlavour.toLowerCase() === 'claude')
 		{
 			objPayload = {
-				bearer: strAPIKey_a,		// <-- avoid CORS problems
-				model: strModel_a,
+				model: m_strModel,
 				max_tokens: parseInt(strMaxTokens, 10),
 				temperature: parseFloat(strTemperature),
 				messages: arrMessages
 			};
 
+			if (toBoolean(m_strJSONBearer))
+			{
+				objPayload.bearer = m_strAPIKey;		// <-- avoid CORS problems
+			}
+
 			objHeaders = {
-				'x-api-key': strAPIKey_a,
+				'x-api-key': m_strAPIKey,
 				'Content-Type': 'application/json',
 				'anthropic-version': '2023-06-01',
 				'anthropic-dangerous-direct-browser-access': 'true'
@@ -302,7 +370,7 @@ function chatgpt_xfrm(objAPI_a, objGlobals_a, strSourceFilename_a, strSourceMime
 				'Content-Type': 'application/json'
 			};
 
-			strEndpoint = strEndpoint + '?key=' + strAPIKey_a;
+			strEndpoint = strEndpoint + '?key=' + m_strAPIKey;
 
 			objFlavour = {
 				url: strEndpoint,
@@ -316,20 +384,24 @@ function chatgpt_xfrm(objAPI_a, objGlobals_a, strSourceFilename_a, strSourceMime
 		else
 		{
 			objPayload = {
-				bearer: strAPIKey_a,		// <-- avoid CORS problems
-				model: strModel_a,
+				model: m_strModel,
 				max_tokens: parseInt(strMaxTokens, 10),
 				temperature: parseFloat(strTemperature),
 				messages: arrMessages
 			};
 
+			if (toBoolean(m_strJSONBearer))
+			{
+				objPayload.bearer = m_strAPIKey;		// <-- avoid CORS problems
+			}
+
 			objHeaders = {
 				'Content-Type': 'application/json'
 			};
 
-			if (strAPIKey_a !== null && strAPIKey_a.length > 0)
+			if (m_strAPIKey !== null && m_strAPIKey.length > 0)
 			{
-				objHeaders['Authorization'] = 'Bearer ' + strAPIKey_a;
+				objHeaders['Authorization'] = 'Bearer ' + m_strAPIKey;
 			}
 
 			objFlavour = {
@@ -353,25 +425,52 @@ function chatgpt_xfrm(objAPI_a, objGlobals_a, strSourceFilename_a, strSourceMime
 				}
 				else
 				{
-					cbInternal_a('No response from ' + strProvider_a, null);
+					cbInternal_a('No response from ' + m_strProvider, null);
 				}
 			}
-			else if (strFlavour.toLowerCase() === 'gemini')
-			{
-				// Gemini response handling
-				if (objResponse_a.candidates && objResponse_a.candidates.length > 0 &&
-				objResponse_a.candidates[0].content &&
-				objResponse_a.candidates[0].content.parts &&
-				objResponse_a.candidates[0].content.parts.length > 0)
-				{
-					strResponse = objResponse_a.candidates[0].content.parts[0].text;
-					cbInternal_a(null, strResponse);
-				}
-				else
-				{
-					cbInternal_a('No response from ' + strProvider_a, null);
-				}
-			}
+else if (strFlavour.toLowerCase() === 'gemini')
+{
+    console.log('Gemini response:', objResponse_a);
+    
+    // Gemini 2.5+ response handling
+    // New format: candidates[0].content.parts[0].text
+    // OR: candidates[0].text (direct text property)
+    if (objResponse_a.candidates && objResponse_a.candidates.length > 0)
+    {
+        var objCandidate = objResponse_a.candidates[0];
+        
+        // Try new format: content.parts[0].text
+        if (objCandidate.content && 
+            objCandidate.content.parts && 
+            objCandidate.content.parts.length > 0 &&
+            objCandidate.content.parts[0].text)
+        {
+            strResponse = objCandidate.content.parts[0].text;
+            cbInternal_a(null, strResponse);
+        }
+        // Try alternate format: direct text property
+        else if (objCandidate.text)
+        {
+            strResponse = objCandidate.text;
+            cbInternal_a(null, strResponse);
+        }
+        // Try message property
+        else if (objCandidate.message && objCandidate.message.content)
+        {
+            strResponse = objCandidate.message.content;
+            cbInternal_a(null, strResponse);
+        }
+        else
+        {
+            console.error('Gemini unexpected format:', objCandidate);
+            cbInternal_a('No response from ' + m_strProvider + ' - unexpected format', null);
+        }
+    }
+    else
+    {
+        cbInternal_a('No response from ' + m_strProvider, null);
+    }
+}
 			else
 			{
 				if (objResponse_a.choices && objResponse_a.choices.length > 0)
@@ -381,35 +480,128 @@ function chatgpt_xfrm(objAPI_a, objGlobals_a, strSourceFilename_a, strSourceMime
 				}
 				else
 				{
-					cbInternal_a('No response from ' + strProvider_a, null);
+					cbInternal_a('No response from ' + m_strProvider, null);
 				}
 			}
-			}).fail(function(objXHR_a, strStatus_a, strError_a)
+		}).fail(function(objXHR_a, strStatus_a, strError_a)
+		{
+			var strErrorMessage = m_strProvider + ' API error: ';
+			if (objXHR_a.responseJSON && objXHR_a.responseJSON.error)
 			{
-				var strErrorMessage = strProvider_a + ' API error: ';
-				if (objXHR_a.responseJSON && objXHR_a.responseJSON.error)
+				strErrorMessage += objXHR_a.responseJSON.error.message;
+			}
+			else if (strStatus_a === 'timeout')
+			{
+				strErrorMessage += 'Request timed out';
+			}
+			else
+			{
+				strErrorMessage += strStatus_a + ' - ' + strError_a;
+			}
+			cbInternal_a(strErrorMessage, null);
+		});
+	}
+
+	// prompt setup
+
+	function invokeChatGPTWithArgs(cb_a)
+	{
+		var blnParallel = toBoolean(m_strParallel);
+
+		// Initialize session storage
+		if (!globals.chatgpt)
+		{
+			globals.chatgpt = {};
+		}
+
+		if (!globals.chatgpt.sessions)
+		{
+			globals.chatgpt.sessionsize = 0;
+			globals.chatgpt.sessions = {};
+		}
+
+		function executeTransform(cbComplete_a)
+		{
+			var strSessionContext = '';
+			if (m_strOverrideSession)
+			{
+				console.log('session:' + m_strOverrideSession);
+				var intPromptSize = m_strArgs.length + 100; // rough estimate
+				var intAvailableSpace = m_MAXPROMPTSIZE - intPromptSize;
+				strSessionContext = getSessionContext(m_strOverrideSession, intAvailableSpace);
+			}
+
+			var strPromptPrefix =
+			"Do not include any explanation." +
+			" Do not use Markdown, code fences, triple backticks, or any markup unless I specifically ask for it." +
+			" Output only plain code." +
+			" " + m_strArgs + " ";
+
+			var strPrompt = strPromptPrefix;
+			if (m_strRaw && m_strRaw.trim().length > 0)
+			{
+				strPrompt += "\n" + m_strRaw;
+			}
+
+			invokeChatGPT(strPrompt, strSessionContext, function(strError_a, strResponse_a)
+			{
+				var strSessionToSave = m_strOverrideSession || 'default';
+
+				if (strSessionToSave && !strError_a)
 				{
-					strErrorMessage += objXHR_a.responseJSON.error.message;
+					addToSession(strSessionToSave, 'PROMPT: ' + strPrompt);
+					addToSession(strSessionToSave, 'RESPONSE: ' + strResponse_a);
 				}
-				else if (strStatus_a === 'timeout')
+
+				if ($.isFunction(cb_a))
 				{
-					strErrorMessage += 'Request timed out';
+					cb_a({
+						mte: m_EDIT_TEXT,
+						raw: strError_a ? ('Error: ' + strError_a) : strResponse_a,
+						cd: null,
+						message: strError_a ? '' : m_strProvider + ' processed argument prompt ' + m_strArgs,
+						error: strError_a || ''
+					});
 				}
-				else
+
+				// Signal completion for queue processing
+				if ($.isFunction(cbComplete_a))
 				{
-					strErrorMessage += strStatus_a + ' - ' + strError_a;
+					cbComplete_a();
 				}
-				cbInternal_a(strErrorMessage, null);
 			});
 		}
 
-		// prompt setup
-
-		function invokeChatGPTWithArgs(strProvider_a, strAPIKey_a, strEndpoint_a, strFlavour_a, strModel_a, strParallel_a, strMaxTokens_a, strTemperature_a, strProxy_a, cb_a)
+		if (blnParallel)
 		{
-			var blnParallel = toBoolean(strParallel_a);
+			// Direct execution (parallel)
+			executeTransform();
+		}
+		else
+		{
+			// Queue execution (sequential)
+			addToProviderQueue(executeTransform);
+		}
+	}
+
+	function invokeChatGPTWithScan(cb_a)
+	{
+		var blnParallel = toBoolean(m_strParallel);
+
+		function executeTransform(cbComplete_a)
+		{
+
+			var strPromptPrefix =
+			"Do not include any explanation." +
+			" Do not use Markdown, code fences, triple backticks, or any markup unless I specifically ask for it." +
+			" Output only plain code.";
 
 			// Initialize session storage
+			if (!globals)
+			{
+				globals = {};
+			}
+
 			if (!globals.chatgpt)
 			{
 				globals.chatgpt = {};
@@ -421,209 +613,255 @@ function chatgpt_xfrm(objAPI_a, objGlobals_a, strSourceFilename_a, strSourceMime
 				globals.chatgpt.sessions = {};
 			}
 
-			function executeTransform(cbComplete_a)
+			var arrLines = m_strRaw.split('\n');
+
+			// FIRST SCAN: Process session commands and collect session data
+			var blnAIIgnore = false;
+			var blnInPromptBlock = false;  // NEW: Track if we're inside a prompt block
+			var blnInSession = false;
+			var intI;
+			var intJ;
+			var strSessionID;
+			var strCurrentSessionID = null;
+			var strLine;
+			var strSessionData = '';
+			var strTrimmedLine;
+
+			for (intI = 0; intI < arrLines.length; intI++)
 			{
-				var strSessionContext = '';
-				if (m_strOverrideSession)
+				strLine = arrLines[intI];
+				strTrimmedLine = strLine.trim();
+
+				if (strTrimmedLine.endsWith('AI IGNORE'))
 				{
-					console.log('session:' + m_strOverrideSession);
-					var intPromptSize = m_strArgs.length + 100; // rough estimate
-					var intAvailableSpace = m_MAXPROMPTSIZE - intPromptSize;
-					strSessionContext = getSessionContext(m_strOverrideSession, intAvailableSpace);
+					blnAIIgnore = true;
 				}
-
-				var strPromptPrefix =
-				"Do not include any explanation." +
-				" Do not use Markdown, code fences, triple backticks, or any markup unless I specifically ask for it." +
-				" Output only plain code." +
-				" " + m_strArgs + " ";
-
-				var strPrompt = strPromptPrefix;
-				if (m_strRaw && m_strRaw.trim().length > 0)
+				else if (strTrimmedLine.indexOf('AI SESSION CLEAR') === 0)
 				{
-					strPrompt += "\n" + m_strRaw;
-				}
-
-				invokeChatGPT(strProvider_a, strAPIKey_a, strEndpoint_a, strFlavour_a, strModel_a, strMaxTokens_a, strTemperature_a, strProxy_a, strPrompt, strSessionContext, function(strError_a, strResponse_a)
-				{
-					var strSessionToSave = m_strOverrideSession || 'default';
-
-					if (strSessionToSave && !strError_a)
+					var tokens = strTrimmedLine.split(' ');
+					if (tokens.length === 3 && tokens[2].length > 0)
 					{
-						addToSession(strSessionToSave, 'PROMPT: ' + strPrompt);
-						addToSession(strSessionToSave, 'RESPONSE: ' + strResponse_a);
+						// AI SESSION CLEAR <blah> - clear single session
+						strSessionID = tokens[2];
+						if (globals.chatgpt.sessions[strSessionID])
+						{
+							for (intJ = 0; intJ < globals.chatgpt.sessions[strSessionID].length; intJ++)
+							{
+								globals.chatgpt.sessionsize -= globals.chatgpt.sessions[strSessionID][intJ].length * 2;
+							}
+							globals.chatgpt.sessions[strSessionID] = [];
+						}
+					}
+					else
+					{
+						// AI SESSION CLEAR - clear all sessions
+						for (var sess in globals.chatgpt.sessions)
+						{
+							if (globals.chatgpt.sessions.hasOwnProperty(sess))
+							{
+								for (intJ = 0; intJ < globals.chatgpt.sessions[sess].length; intJ++)
+								{
+									globals.chatgpt.sessionsize -= globals.chatgpt.sessions[sess][intJ].length * 2;
+								}
+								globals.chatgpt.sessions[sess] = [];
+							}
+						}
+					}
+				}
+				else if (strTrimmedLine.startsWith('AI SESSION START '))
+				{
+					strSessionID = strTrimmedLine.substring(17).trim();
+					strCurrentSessionID = strSessionID;
+					blnInSession = true;
+					strSessionData = '';
+				}
+				else if (strTrimmedLine.startsWith('AI SESSION END '))
+				{
+					strSessionID = strTrimmedLine.substring(15).trim();
+					if (blnInSession && strCurrentSessionID === strSessionID)
+					{
+						blnInSession = false;
+						// Add collected session data to global storage
+						if (strSessionData.trim())
+						{
+							addToSession(strSessionID, strSessionData.trim());
+						}
+						strCurrentSessionID = null;
+						strSessionData = '';
+					}
+				}
+				else if (strTrimmedLine.startsWith('AI PROMPT START '))
+				{
+					if (blnInSession)
+					{
+						blnInPromptBlock = true;  // Mark that we're in a prompt block
+					}
+				}
+				else if (strTrimmedLine.startsWith('AI PROMPT END '))
+				{
+					if (blnInSession && blnInPromptBlock)
+					{
+						blnInPromptBlock = false;  // End of prompt block
+					}
+				}
+				else if (blnInSession && !blnInPromptBlock)
+				{
+					// Only collect session data if we're NOT inside a prompt block
+					if (strSessionData)
+					{
+						strSessionData += '\n';
+					}
+					strSessionData += strLine;
+				}
+			}
+
+			if (blnAIIgnore)
+			{
+				if ($.isFunction(cb_a))
+				{
+					cb_a({
+						raw: null,
+						cd: null,
+						message: '',
+						error: ''
+					});
+				}
+
+				if ($.isFunction(cbComplete_a))
+				{
+					cbComplete_a();
+				}
+				return;
+			}
+
+			// SECOND SCAN: Process ALL prompts (inside and outside sessions)
+			var arrPrompts = [];
+			var arrResult = [];
+			var blnInPrompt = false;
+			var intPromptStartLine = -1;
+			var strCurrentPrompt = '';
+			var strCurrentPromptSessionID = '';
+
+			for (intI = 0; intI < arrLines.length; intI++)
+			{
+				strLine = arrLines[intI];
+				strTrimmedLine = strLine.trim();
+
+				if (strTrimmedLine.startsWith('AI PROMPT START '))
+				{
+					var strRemainder = strTrimmedLine.substring(16);
+					var intSpaceIndex = strRemainder.indexOf(' ');
+
+					if (intSpaceIndex !== -1)
+					{
+						strCurrentPromptSessionID = strRemainder.substring(0, intSpaceIndex);
+						strCurrentPrompt = strRemainder.substring(intSpaceIndex + 1);
+					}
+					else
+					{
+						strCurrentPromptSessionID = strRemainder;
+						strCurrentPrompt = '';
+					}
+
+					blnInPrompt = true;
+					intPromptStartLine = intI;
+					arrResult.push(''); // Placeholder for response
+				}
+				else if (strTrimmedLine.startsWith('AI PROMPT END '))
+				{
+					strSessionID = strTrimmedLine.substring(14).trim();
+
+					if (blnInPrompt && strCurrentPromptSessionID === strSessionID)
+					{
+						arrPrompts.push({
+							prompt: strCurrentPrompt,
+							sessionID: strSessionID,
+							lineIndex: intPromptStartLine
+						});
+						blnInPrompt = false;
+						strCurrentPrompt = '';
+						strCurrentPromptSessionID = '';
+						intPromptStartLine = -1;
+					}
+					// Skip the AI PROMPT END line in output
+				}
+				else if (blnInPrompt)
+				{
+					if (strCurrentPrompt.length > 0)
+					{
+						strCurrentPrompt += '\n';
+					}
+					strCurrentPrompt += strLine;
+				}
+				else if (!strTrimmedLine.startsWith('AI SESSION'))
+				{
+					// Regular line (not a session or prompt command), keep as-is
+					arrResult.push(strLine);
+				}
+				// Skip all AI SESSION and AI PROMPT commands in output
+			}
+
+			if (arrPrompts.length === 0)
+			{
+				// No prompts found, return original content
+				if ($.isFunction(cb_a))
+				{
+					cb_a({
+						raw: m_strRaw,
+						cd: m_arrCode,
+						message: '',
+						error: ''
+					});
+				}
+
+				if ($.isFunction(cbComplete_a))
+				{
+					cbComplete_a();
+				}
+				return;
+			}
+
+			// Process prompts sequentially
+			var intCurrentPromptIndex = 0;
+			var arrResponses = [];
+
+			function processNextPrompt()
+			{
+				if (intCurrentPromptIndex >= arrPrompts.length)
+				{
+					// All prompts processed, build final result
+					var intResponseIndex = 0;
+					var strFinalResult = '';
+
+					for (var intI = 0; intI < arrResult.length; intI++)
+					{
+						if (arrResult[intI] === '')
+						{
+							// This is a placeholder for a response
+							if (intResponseIndex < arrResponses.length)
+							{
+								strFinalResult += arrResponses[intResponseIndex];
+								intResponseIndex++;
+							}
+						}
+						else
+						{
+							strFinalResult += arrResult[intI];
+						}
+
+						if (intI < arrResult.length - 1)
+						{
+							strFinalResult += '\n';
+						}
 					}
 
 					if ($.isFunction(cb_a))
 					{
 						cb_a({
 							mte: m_EDIT_TEXT,
-							raw: strError_a ? ('Error: ' + strError_a) : strResponse_a,
+							raw: strFinalResult,
 							cd: null,
-							message: strError_a ? '' : strProvider_a + ' processed argument prompt ' + m_strArgs,
-							error: strError_a || ''
-						});
-					}
-
-					// Signal completion for queue processing
-					if ($.isFunction(cbComplete_a))
-					{
-						cbComplete_a();
-					}
-				});
-			}
-
-			if (blnParallel)
-			{
-				// Direct execution (parallel)
-				executeTransform();
-			}
-			else
-			{
-				// Queue execution (sequential)
-				addToProviderQueue(strProvider_a, executeTransform);
-			}
-		}
-
-		function invokeChatGPTWithScan(strProvider_a, strAPIKey_a, strEndpoint_a, strFlavour_a, strModel_a, strParallel_a, strMaxTokens_a, strTemperature_a, strProxy_a, cb_a)
-		{
-			var blnParallel = toBoolean(strParallel_a);
-
-			function executeTransform(cbComplete_a)
-			{
-
-				var strPromptPrefix =
-				"Do not include any explanation." +
-				" Do not use Markdown, code fences, triple backticks, or any markup unless I specifically ask for it." +
-				" Output only plain code.";
-
-				// Initialize session storage
-				if (!globals)
-				{
-					globals = {};
-				}
-
-				if (!globals.chatgpt)
-				{
-					globals.chatgpt = {};
-				}
-
-				if (!globals.chatgpt.sessions)
-				{
-					globals.chatgpt.sessionsize = 0;
-					globals.chatgpt.sessions = {};
-				}
-
-				var arrLines = m_strRaw.split('\n');
-
-				// FIRST SCAN: Process session commands and collect session data
-				var blnAIIgnore = false;
-				var blnInPromptBlock = false;  // NEW: Track if we're inside a prompt block
-				var blnInSession = false;
-				var intI;
-				var intJ;
-				var strSessionID;
-				var strCurrentSessionID = null;
-				var strLine;
-				var strSessionData = '';
-				var strTrimmedLine;
-
-				for (intI = 0; intI < arrLines.length; intI++)
-				{
-					strLine = arrLines[intI];
-					strTrimmedLine = strLine.trim();
-
-					if (strTrimmedLine.endsWith('AI IGNORE'))
-					{
-						blnAIIgnore = true;
-					}
-					else if (strTrimmedLine.indexOf('AI SESSION CLEAR') === 0)
-					{
-						var tokens = strTrimmedLine.split(' ');
-						if (tokens.length === 3 && tokens[2].length > 0)
-						{
-							// AI SESSION CLEAR <blah> - clear single session
-							strSessionID = tokens[2];
-							if (globals.chatgpt.sessions[strSessionID])
-							{
-								for (intJ = 0; intJ < globals.chatgpt.sessions[strSessionID].length; intJ++)
-								{
-									globals.chatgpt.sessionsize -= globals.chatgpt.sessions[strSessionID][intJ].length * 2;
-								}
-								globals.chatgpt.sessions[strSessionID] = [];
-							}
-						}
-						else
-						{
-							// AI SESSION CLEAR - clear all sessions
-							for (var sess in globals.chatgpt.sessions)
-							{
-								if (globals.chatgpt.sessions.hasOwnProperty(sess))
-								{
-									for (intJ = 0; intJ < globals.chatgpt.sessions[sess].length; intJ++)
-									{
-										globals.chatgpt.sessionsize -= globals.chatgpt.sessions[sess][intJ].length * 2;
-									}
-									globals.chatgpt.sessions[sess] = [];
-								}
-							}
-						}
-					}
-					else if (strTrimmedLine.startsWith('AI SESSION START '))
-					{
-						strSessionID = strTrimmedLine.substring(17).trim();
-						strCurrentSessionID = strSessionID;
-						blnInSession = true;
-						strSessionData = '';
-					}
-					else if (strTrimmedLine.startsWith('AI SESSION END '))
-					{
-						strSessionID = strTrimmedLine.substring(15).trim();
-						if (blnInSession && strCurrentSessionID === strSessionID)
-						{
-							blnInSession = false;
-							// Add collected session data to global storage
-							if (strSessionData.trim())
-							{
-								addToSession(strSessionID, strSessionData.trim());
-							}
-							strCurrentSessionID = null;
-							strSessionData = '';
-						}
-					}
-					else if (strTrimmedLine.startsWith('AI PROMPT START '))
-					{
-						if (blnInSession)
-						{
-							blnInPromptBlock = true;  // Mark that we're in a prompt block
-						}
-					}
-					else if (strTrimmedLine.startsWith('AI PROMPT END '))
-					{
-						if (blnInSession && blnInPromptBlock)
-						{
-							blnInPromptBlock = false;  // End of prompt block
-						}
-					}
-					else if (blnInSession && !blnInPromptBlock)
-					{
-						// Only collect session data if we're NOT inside a prompt block
-						if (strSessionData)
-						{
-							strSessionData += '\n';
-						}
-						strSessionData += strLine;
-					}
-				}
-
-				if (blnAIIgnore)
-				{
-					if ($.isFunction(cb_a))
-					{
-						cb_a({
-							raw: null,
-							cd: null,
-							message: '',
+							message: 'ChatGPT processed ' + arrPrompts.length + ' prompt(s)',
 							error: ''
 						});
 					}
@@ -635,250 +873,87 @@ function chatgpt_xfrm(objAPI_a, objGlobals_a, strSourceFilename_a, strSourceMime
 					return;
 				}
 
-				// SECOND SCAN: Process ALL prompts (inside and outside sessions)
-				var arrPrompts = [];
-				var arrResult = [];
-				var blnInPrompt = false;
-				var intPromptStartLine = -1;
-				var strCurrentPrompt = '';
-				var strCurrentPromptSessionID = '';
+				var objCurrentPrompt = arrPrompts[intCurrentPromptIndex];
 
-				for (intI = 0; intI < arrLines.length; intI++)
+				// Calculate available space for session context
+				var intPromptSize = (strPromptPrefix + objCurrentPrompt.prompt).length;
+				var intAvailableSpace = m_MAXPROMPTSIZE - intPromptSize;
+
+				// Get session context if available
+				var strSessionContext = '';
+				if (objCurrentPrompt.sessionID && intAvailableSpace > 0)
 				{
-					strLine = arrLines[intI];
-					strTrimmedLine = strLine.trim();
-
-					if (strTrimmedLine.startsWith('AI PROMPT START '))
-					{
-						var strRemainder = strTrimmedLine.substring(16);
-						var intSpaceIndex = strRemainder.indexOf(' ');
-
-						if (intSpaceIndex !== -1)
-						{
-							strCurrentPromptSessionID = strRemainder.substring(0, intSpaceIndex);
-							strCurrentPrompt = strRemainder.substring(intSpaceIndex + 1);
-						}
-						else
-						{
-							strCurrentPromptSessionID = strRemainder;
-							strCurrentPrompt = '';
-						}
-
-						blnInPrompt = true;
-						intPromptStartLine = intI;
-						arrResult.push(''); // Placeholder for response
-					}
-					else if (strTrimmedLine.startsWith('AI PROMPT END '))
-					{
-						strSessionID = strTrimmedLine.substring(14).trim();
-
-						if (blnInPrompt && strCurrentPromptSessionID === strSessionID)
-						{
-							arrPrompts.push({
-								prompt: strCurrentPrompt,
-								sessionID: strSessionID,
-								lineIndex: intPromptStartLine
-							});
-							blnInPrompt = false;
-							strCurrentPrompt = '';
-							strCurrentPromptSessionID = '';
-							intPromptStartLine = -1;
-						}
-						// Skip the AI PROMPT END line in output
-					}
-					else if (blnInPrompt)
-					{
-						if (strCurrentPrompt.length > 0)
-						{
-							strCurrentPrompt += '\n';
-						}
-						strCurrentPrompt += strLine;
-					}
-					else if (!strTrimmedLine.startsWith('AI SESSION'))
-					{
-						// Regular line (not a session or prompt command), keep as-is
-						arrResult.push(strLine);
-					}
-					// Skip all AI SESSION and AI PROMPT commands in output
+					strSessionContext = getSessionContext(objCurrentPrompt.sessionID, intAvailableSpace);
 				}
 
-				if (arrPrompts.length === 0)
+				invokeChatGPT(strPromptPrefix + objCurrentPrompt.prompt, strSessionContext, function(strError_a, strResponse_a)
 				{
-					// No prompts found, return original content
-					if ($.isFunction(cb_a))
+					if (strError_a)
 					{
-						cb_a({
-							raw: m_strRaw,
-							cd: m_arrCode,
-							message: '',
-							error: ''
-						});
+						arrResponses.push('Error: ' + strError_a);
+					}
+					else
+					{
+						arrResponses.push(strResponse_a);
+
+						// Add the prompt and response to the session for future context
+						if (objCurrentPrompt.sessionID)
+						{
+							addToSession(objCurrentPrompt.sessionID, 'PROMPT: ' + objCurrentPrompt.prompt);
+							addToSession(objCurrentPrompt.sessionID, 'RESPONSE: ' + strResponse_a);
+						}
 					}
 
-					if ($.isFunction(cbComplete_a))
-					{
-						cbComplete_a();
-					}
-					return;
-				}
-
-				// Process prompts sequentially
-				var intCurrentPromptIndex = 0;
-				var arrResponses = [];
-
-				function processNextPrompt()
-				{
-					if (intCurrentPromptIndex >= arrPrompts.length)
-					{
-						// All prompts processed, build final result
-						var intResponseIndex = 0;
-						var strFinalResult = '';
-
-						for (var intI = 0; intI < arrResult.length; intI++)
-						{
-							if (arrResult[intI] === '')
-							{
-								// This is a placeholder for a response
-								if (intResponseIndex < arrResponses.length)
-								{
-									strFinalResult += arrResponses[intResponseIndex];
-									intResponseIndex++;
-								}
-							}
-							else
-							{
-								strFinalResult += arrResult[intI];
-							}
-
-							if (intI < arrResult.length - 1)
-							{
-								strFinalResult += '\n';
-							}
-						}
-
-						if ($.isFunction(cb_a))
-						{
-							cb_a({
-								mte: m_EDIT_TEXT,
-								raw: strFinalResult,
-								cd: null,
-								message: 'ChatGPT processed ' + arrPrompts.length + ' prompt(s)',
-								error: ''
-							});
-						}
-
-						if ($.isFunction(cbComplete_a))
-						{
-							cbComplete_a();
-						}
-						return;
-					}
-
-					var objCurrentPrompt = arrPrompts[intCurrentPromptIndex];
-
-					// Calculate available space for session context
-					var intPromptSize = (strPromptPrefix + objCurrentPrompt.prompt).length;
-					var intAvailableSpace = m_MAXPROMPTSIZE - intPromptSize;
-
-					// Get session context if available
-					var strSessionContext = '';
-					if (objCurrentPrompt.sessionID && intAvailableSpace > 0)
-					{
-						strSessionContext = getSessionContext(objCurrentPrompt.sessionID, intAvailableSpace);
-					}
-
-					invokeChatGPT(strProvider_a, strAPIKey_a, strEndpoint_a, strFlavour_a, strModel_a, strMaxTokens_a, strTemperature_a, strProxy_a, strPromptPrefix + objCurrentPrompt.prompt, strSessionContext, function(strError_a, strResponse_a)
-					{
-						if (strError_a)
-						{
-							arrResponses.push('Error: ' + strError_a);
-						}
-						else
-						{
-							arrResponses.push(strResponse_a);
-
-							// Add the prompt and response to the session for future context
-							if (objCurrentPrompt.sessionID)
-							{
-								addToSession(objCurrentPrompt.sessionID, 'PROMPT: ' + objCurrentPrompt.prompt);
-								addToSession(objCurrentPrompt.sessionID, 'RESPONSE: ' + strResponse_a);
-							}
-						}
-
-						intCurrentPromptIndex++;
-						processNextPrompt();
-					});
-				}
-
-				processNextPrompt();
+					intCurrentPromptIndex++;
+					processNextPrompt();
+				});
 			}
 
-			if (blnParallel)
-			{
-				executeTransform();
-			}
-			else
-			{
-				addToProviderQueue(strProvider_a, executeTransform);
-			}
+			processNextPrompt();
 		}
 
-		function loadMoreConfig(strProvider_a)
+		if (blnParallel)
 		{
-			// Load provider-specific configs
-			api.loadLocalData(strProvider_a + '-apikey', function(strAPIKey_a)
+			executeTransform();
+		}
+		else
+		{
+			addToProviderQueue(executeTransform);
+		}
+	}
+
+	api.loadLocalData(m_TRANSFORMER + '-provider', function(strProvider_a)
+	{
+		if (m_strOverrideProvider)
+		{
+			m_strOverrideProvider = m_strOverrideProvider.replace(/%PROVIDER%/g, strProvider_a);
+			loadProviderSettings(m_strOverrideProvider, function()
 			{
-				api.loadLocalData(strProvider_a + '-endpoint', function(strEndpoint_a)
+				api.print('Provider: ' + m_strProvider);
+				if (m_strArgs !== null && m_strArgs.length > 0)
 				{
-					api.loadLocalData(strProvider_a + '-flavour', function(strFlavour_a)
-					{
-						api.loadLocalData(strProvider_a + '-model', function(strModel_a)
-						{
-							api.loadLocalData(strProvider_a + '-parallel', function(strParallel_a)
-							{
-								api.loadLocalData(strProvider_a + '-maxtokens', function(strMaxTokens_a)
-								{
-									api.loadLocalData(strProvider_a + '-temperature', function(strTemperature_a)
-									{
-										api.loadLocalData(strProvider_a + '-proxy', function(strProxy_a)
-										{
-											if ((strProvider_a !== null && strProvider_a.length > 0) &&
-											(strEndpoint_a !== null && strEndpoint_a.length > 0) &&
-											(strModel_a !== null && strModel_a.length > 0))
-											{
-												if (m_strArgs !== null && m_strArgs.length > 0)
-												{
-													invokeChatGPTWithArgs(strProvider_a, strAPIKey_a, strEndpoint_a, strFlavour_a, strModel_a, strParallel_a, strMaxTokens_a, strTemperature_a, strProxy_a, cb_a);
-												}
-												else
-												{
-													invokeChatGPTWithScan(strProvider_a, strAPIKey_a, strEndpoint_a, strFlavour_a, strModel_a, strParallel_a, strMaxTokens_a, strTemperature_a, strProxy_a, cb_a);
-												}
-											}
-											else
-											{
-												api.errorOutput('Transformer ' + m_TRANSFORMER + ' is not configured for provider: ' + strProvider_a);
-											}
-										});
-									});
-								});
-							});
-						});
-					});
-				});
+					invokeChatGPTWithArgs(cb_a);
+				}
+				else
+				{
+					invokeChatGPTWithScan(cb_a);
+				}
 			});
 		}
-
-		api.loadLocalData(m_TRANSFORMER + '-provider', function(strProvider_a)
+		else
 		{
-			if (m_strOverrideProvider)
+			loadProviderSettings(strProvider_a, function()
 			{
-				m_strOverrideProvider = m_strOverrideProvider.replace(/%PROVIDER%/g, strProvider_a);
-				loadMoreConfig(m_strOverrideProvider);
-			}
-			else
-			{
-				loadMoreConfig(strProvider_a);
-			}
-		});
-	}
+				api.print('Provider: ' + m_strProvider);
+				if (m_strArgs !== null && m_strArgs.length > 0)
+				{
+					invokeChatGPTWithArgs(cb_a);
+				}
+				else
+				{
+					invokeChatGPTWithScan(cb_a);
+				}
+			});
+		}
+	});
+}

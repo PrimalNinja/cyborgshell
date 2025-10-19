@@ -1,5 +1,13 @@
 Latest Release Notes.
 
+New Features 20th Oct 2025:
+
+- From within ChatGPT and RPGGPT can now change services on the fly at any time.
+  new commands
+  
+  services				lists currently configured services
+  service <servicename>	changes service to this, i.e. claude, gemini, ollama, openai (or whatever you have configured)
+
 New Features 18th Aug 2025:
 
 - Transformers that use services can now be configured within csconfig to run in parallel or sequential mode.  This is to satisfy some providers usage limits. Hopefully we don't have to artificially slow the system down more.  So providers that require sequential can be sequential, ones that are ok with parallel can be also, they can be mixed and matched.

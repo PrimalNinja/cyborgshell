@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CyborgShell Project Creation Guide</title>
+    <title>CyborgShell - Project Creation Guide</title>
     <style>
         * {
             margin: 0;
@@ -130,42 +130,32 @@
             text-decoration: underline;
         }
         
-        .pattern-box {
+        .highlight-box {
             background: #e8f4f8;
             border-left: 4px solid #3498db;
             padding: 15px;
             margin: 20px 0;
         }
         
-        .example-box {
-            background: #f0f9ff;
-            border: 1px solid #b3d9ff;
-            border-radius: 5px;
-            padding: 20px;
-            margin: 20px 0;
-        }
-        
-        .tip-box {
+        .warning-box {
             background: #fff3cd;
             border-left: 4px solid #ffc107;
             padding: 15px;
             margin: 20px 0;
         }
         
-        .warning-box {
-            background: #f8d7da;
-            border-left: 4px solid #dc3545;
+        .success-box {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
             padding: 15px;
             margin: 20px 0;
         }
         
-        .command {
-            background: #282c34;
-            color: #61dafb;
-            padding: 3px 8px;
-            border-radius: 3px;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 0.9em;
+        .danger-box {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 15px;
+            margin: 20px 0;
         }
         
         table {
@@ -190,6 +180,16 @@
             background: #f9f9f9;
         }
         
+        .checkmark {
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .xmark {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        
         @media print {
             body {
                 background: white;
@@ -200,40 +200,43 @@
                 box-shadow: none;
                 padding: 20px;
             }
-            
-            pre {
-                page-break-inside: avoid;
-            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>CyborgShell Project Creation Guide</h1>
-        
+        <div class="header">
+            <h1>CyborgShell - Project Creation Guide</h1>
+        </div>
+
         <div class="toc">
             <h2>Table of Contents</h2>
             <ul>
                 <li><a href="#overview">Overview</a></li>
-                <li><a href="#structure">Project File Structure</a></li>
-                <li><a href="#concepts">Key Concepts</a></li>
-                <li><a href="#transformers">Available Transformers</a></li>
-                <li><a href="#patterns">Design Patterns</a></li>
-                <li><a href="#examples">Example Projects</a></li>
-                <li><a href="#cli">Command-Line Project Creation</a></li>
-                <li><a href="#best-practices">Best Practices</a></li>
-                <li><a href="#common-patterns">Common Patterns</a></li>
-                <li><a href="#debugging">Debugging Tips</a></li>
-                <li><a href="#advanced">Advanced Techniques</a></li>
-                <li><a href="#formats">File Formats</a></li>
-                <li><a href="#prompts">Tips for AI Prompts</a></li>
+                <li><a href="#project-file-structure">Project File structure</a></li>
+                <li><a href="#key-concepts">Key Concepts</a></li>
+                <li><a href="#available-transformers">Available Transformers</a></li>
+                <li><a href="#design-patterns">Design Patterns</a></li>
+                <li><a href="#example-projects">Example Projects</a></li>
+                <li><a href="#command-line-project-creation">Command-Line Project Creation</a></li>
+				<li><a href="#best-practices">Best Practices</a></li>
+				<li><a href="#common-patterns">Common Patterns</a></li>
+				<li><a href="#debugging-tips">Debugging Tips</a></li>
+				<li><a href="#advanced-techniques">Advanced Techniques</a></li>
+				<li><a href="#file-formats">File Formats</a></li>
+				<li><a href="#tips-for-ai-prompts">Tips for AI Prompts</a></li>
+				<li><a href="#session-management-in-pipelines">Session Management in Pipelines</a></li>
+				<li><a href="#additional-example-projects">Additional Example Projects</a></li>
+				<li><a href="#conclusion">Conclusion</a></li>
             </ul>
         </div>
 
         <h2 id="overview">Overview</h2>
+
         <p>CyborgShell projects are JSON files that define transformer pipelines - directed acyclic graphs (DAGs) where files are nodes and transformers are edges. When a source file becomes "dirty" (modified), all linked transformers execute automatically in cascade.</p>
 
-        <h2 id="structure">Project File Structure</h2>
+        <h2 id="project-file-structure">Project File Structure</h2>
+
         <pre><code>{
   "projectName": "my-project",
   "files": [
@@ -248,217 +251,146 @@
       "st": ""                        // Status
     }
   ]
-}</code></pre>
+}
+</code></pre>
 
-        <h2 id="concepts">Key Concepts</h2>
-        
+        <h2 id="key-concepts">Key Concepts</h2>
+
         <h3>File Indexing</h3>
         <ul>
-            <li>Files are indexed starting at <strong>1</strong> (not 0!)</li>
-            <li>File 0 is reserved for "Run Space"</li>
-            <li>Use <code>ln: null</code> for source files with no input</li>
-            <li>Use <code>ln: 2</code> to link to file index 2</li>
+        <li>Files are indexed starting at **1** (not 0!)</li>
+        <li>File 0 is reserved for "Run Space"</li>
+        <li>Use `ln: null` for source files with no input</li>
+        <li>Use `ln: 2` to link to file index 2</li>
         </ul>
 
         <h3>Multi-Input Links</h3>
         <ul>
-            <li>Single input: <code>"ln": 2</code></li>
-            <li>Multiple inputs: <code>"ln": "2,3,4"</code></li>
-            <li>All input files must be dirty before transformer executes</li>
+        <li>Single input: `"ln": 2`</li>
+        <li>Multiple inputs: `"ln": "2,3,4"`</li>
+        <li>All input files must be dirty before transformer executes</li>
         </ul>
 
         <h3>Transformer Placement</h3>
         <ul>
-            <li>Transformers should be included as files in the project</li>
-            <li>Use <code>"mt": "text/javascript transformer"</code> for transformer files</li>
-            <li>Set <code>"ln": null</code> for transformer files</li>
+        <li>Transformers should be included as files in the project</li>
+        <li>Use `"mt": "text/javascript transformer"` for transformer files</li>
+        <li>Set `"ln": null` for transformer files</li>
         </ul>
 
-        <h2 id="transformers">Available Transformers</h2>
+        <h2 id="available-transformers">Available Transformers</h2>
 
         <h3>AI Transformers</h3>
-        <table>
-            <tr>
-                <th>Transformer</th>
-                <th>Description</th>
-                <th>Arguments</th>
-            </tr>
-            <tr>
-                <td><code>chatgpt.xfrm</code></td>
-                <td>AI processing</td>
-                <td><code>"service prompt"</code> or <code>"service session:id prompt"</code></td>
-            </tr>
-            <tr>
-                <td><code>translate.xfrm</code></td>
-                <td>Translate text</td>
-                <td>target language</td>
-            </tr>
-        </table>
-
-        <div class="tip-box">
-            <strong>ChatGPT Services:</strong> <code>openai</code>, <code>claude</code>, <code>gemini</code>, or <code>%PROVIDER%</code> for configured default
-        </div>
+        <ul>
+        <li>**chatgpt.xfrm** - AI processing (args: `"service prompt"` or `"service session:id prompt"`)</li>
+        <p>  - Services: <code>openai</code>, <code>claude</code>, <code>gemini</code>, or <code>%PROVIDER%</code> for configured default</p>
+        <p>  - Sessions maintain context across calls</p>
+        <p>  - Scan mode: looks for <code>AI PROMPT START/END</code> blocks in source</p>
+        <li>**session.xfrm** - Session management (args: `"sessionname: command [filename]"`)</li>
+        <p>  - Commands: <code>clear</code>, <code>save</code>, <code>load</code>, <code>train</code></p>
+        <p>  - Use for managing ChatGPT sessions in pipelines</p>
+        <p>  - Train with files or other sessions</p>
+        <p>  - See <a href="session-management.md">Session Management Guide</a> for details</p>
+        <li>**translate.xfrm** - Translate text (args: target language)</li>
+        </ul>
 
         <h3>Data Processing</h3>
-        <table>
-            <tr>
-                <th>Transformer</th>
-                <th>Description</th>
-                <th>Arguments</th>
-            </tr>
-            <tr>
-                <td><code>blocker.xfrm</code></td>
-                <td>Stops cascade if input is empty</td>
-                <td>None</td>
-            </tr>
-            <tr>
-                <td><code>null.xfrm</code></td>
-                <td>Discards input, outputs nothing</td>
-                <td>None</td>
-            </tr>
-            <tr>
-                <td><code>passthrough.xfrm</code></td>
-                <td>Direct copy, handles both .raw and .cd, renumbers multi-input</td>
-                <td>None</td>
-            </tr>
-        </table>
+        <ul>
+        <li>**blocker.xfrm** - Stops cascade if input is empty</li>
+        <li>**null.xfrm** - Discards input, outputs nothing</li>
+        <li>**passthrough.xfrm** - Direct copy, handles both .raw and .cd, renumbers multi-input</li>
+        </ul>
 
         <h3>File Transformers</h3>
-        <table>
-            <tr>
-                <th>Transformer</th>
-                <th>Description</th>
-                <th>Arguments</th>
-            </tr>
-            <tr>
-                <td><code>csvmerge.xfrm</code></td>
-                <td>Merge CSVs, skip duplicate headers</td>
-                <td><code>no-headers</code> (optional)</td>
-            </tr>
-            <tr>
-                <td><code>filediff.xfrm</code></td>
-                <td>Line-by-line diff of two files</td>
-				<td>None</td>
-            </tr>
-            <tr>
-                <td><code>filejoin.xfrm</code></td>
-                <td>Concatenate with separator</td>
-                <td>separator (default <code>%NL%</code>)</td>
-            </tr>
-            <tr>
-                <td><code>filestats.xfrm</code></td>
-                <td>Statistics (size, lines, words) for single/multiple files</td>
-				<td>None</td>
-            </tr>
-            <tr>
-                <td><code>jsonmerge.xfrm</code></td>
-                <td>Merge JSON objects (later sources override)</td>
-                <td>None</td>
-            </tr>
-            <tr>
-                <td><code>template.xfrm</code></td>
-                <td>Template substitution using JSON dictionaries</td>
-                <td>None</td>
-            </tr>
-        </table>
+        <ul>
+        <li>**csvmerge.xfrm** - Merge CSVs, skip duplicate headers (args: `no-headers`)</li>
+        <li>**filediff.xfrm** - Line-by-line diff of two files</li>
+        <li>**filejoin.xfrm** - Concatenate with separator (args: separator, default `%NL%`)</li>
+        <li>**filestats.xfrm** - Statistics (size, lines, words) for single/multiple files</li>
+        <li>**jsonmerge.xfrm** - Merge JSON objects (later sources override)</li>
+        <li>**template.xfrm** - Template substitution using JSON dictionaries</li>
+        </ul>
 
         <h3>Other</h3>
-        <table>
-            <tr>
-                <th>Transformer</th>
-                <th>Description</th>
-                <th>Arguments</th>
-            </tr>
-            <tr>
-                <td><code>speak.xfrm</code></td>
-                <td>Text-to-speech</td>
-                <td><code>accent:locale</code> (e.g., <code>accent:en-au</code>)</td>
-            </tr>
-        </table>
+        <ul>
+        <li>**speak.xfrm** - Text-to-speech (args: `accent:locale` e.g., `accent:en-au`)</li>
+        </ul>
 
-        <h2 id="patterns">Design Patterns</h2>
+        <h2 id="design-patterns">Design Patterns</h2>
 
-        <div class="pattern-box">
-            <h3>1. Linear Pipeline</h3>
-            <p>Simple A → B → C flow:</p>
-            <pre><code>File 1: input.txt (ln: null)
+        <h3>1. Linear Pipeline</h3>
+        <p>Simple A → B → C flow:</p>
+        <pre><code>File 1: input.txt (ln: null)
 File 2: processed.txt (ln: 1, pl: chatgpt.xfrm)
-File 3: output.txt (ln: 2, pl: translate.xfrm)</code></pre>
-        </div>
+File 3: output.txt (ln: 2, pl: translate.xfrm)
+</code></pre>
 
-        <div class="pattern-box">
-            <h3>2. Fan-Out (Broadcast)</h3>
-            <p>One source, multiple outputs:</p>
-            <pre><code>File 1: source.txt (ln: null)
+        <h3>2. Fan-Out (Broadcast)</h3>
+        <p>One source, multiple outputs:</p>
+        <pre><code>File 1: source.txt (ln: null)
 File 2: english.txt (ln: 1, pl: passthrough.xfrm)
 File 3: japanese.txt (ln: 1, pl: translate.xfrm, arg: "Japanese")
-File 4: chinese.txt (ln: 1, pl: translate.xfrm, arg: "Chinese")</code></pre>
-        </div>
+File 4: chinese.txt (ln: 1, pl: translate.xfrm, arg: "Chinese")
+</code></pre>
 
-        <div class="pattern-box">
-            <h3>3. Fan-In (Merge)</h3>
-            <p>Multiple sources, one output:</p>
-            <pre><code>File 1: data1.csv (ln: null)
+        <h3>3. Fan-In (Merge)</h3>
+        <p>Multiple sources, one output:</p>
+        <pre><code>File 1: data1.csv (ln: null)
 File 2: data2.csv (ln: null)
 File 3: data3.csv (ln: null)
-File 4: merged.csv (ln: "1,2,3", pl: csvmerge.xfrm)</code></pre>
-        </div>
+File 4: merged.csv (ln: "1,2,3", pl: csvmerge.xfrm)
+</code></pre>
 
-        <div class="pattern-box">
-            <h3>4. Quality Gate</h3>
-            <p>Conditional processing:</p>
-            <pre><code>File 1: content.txt (ln: null)
+        <h3>4. Quality Gate</h3>
+        <p>Conditional processing:</p>
+        <pre><code>File 1: content.txt (ln: null)
 File 2: analysis.txt (ln: 1, pl: chatgpt.xfrm, arg: "openai analyze quality 1-10")
-File 3: gate.txt (ln: 2, pl: chatgpt.xfrm, arg: "openai if score >= 8 output YES else NO")
-File 4: final.txt (ln: 3, pl: blocker.xfrm)</code></pre>
-        </div>
+File 3: gate.txt (ln: 2, pl: chatgpt.xfrm, arg: "openai if score &gt;= 8 output YES else NO")
+File 4: final.txt (ln: 3, pl: blocker.xfrm)
+</code></pre>
 
-        <div class="pattern-box">
-            <h3>5. Multi-Stage Processing</h3>
-            <p>Complex DAG with multiple paths:</p>
-            <pre><code>File 1: input → File 2: process1 → File 5: merge
+        <h3>5. Multi-Stage Processing</h3>
+        <p>Complex DAG with multiple paths:</p>
+        <pre><code>File 1: input → File 2: process1 → File 5: merge
                                    ↗
-File 3: input → File 4: process2 ↗</code></pre>
-        </div>
+File 3: input → File 4: process2 ↗
+</code></pre>
 
-        <div class="pattern-box">
-            <h3>6. Backup Pattern</h3>
-            <p>Preserve original while processing:</p>
-            <pre><code>File 1: working.js (ln: 2, pl: passthrough.xfrm)
+        <h3>6. Backup Pattern</h3>
+        <p>Preserve original while processing:</p>
+        <pre><code>File 1: working.js (ln: 2, pl: passthrough.xfrm)
 File 2: ai-processor.js (ln: 1, pl: chatgpt.xfrm)
-File 3: backup.js (ln: 1, pl: passthrough.xfrm)</code></pre>
-        </div>
+File 3: backup.js (ln: 1, pl: passthrough.xfrm)
+</code></pre>
 
-        <h2 id="examples">Example Projects</h2>
+        <h2 id="example-projects">Example Projects</h2>
 
-        <div class="example-box">
-            <h3>Example 1: AI Coder (aicoder.prj)</h3>
-            <p>AI-assisted code generation with automatic backup.</p>
-            
-            <h4>Flow:</h4>
-            <pre><code>#1 coder.js (write code/prompts) → passthrough → #3 coderbackup.js (safety backup)
+        <h3>Example 1: AI Coder (aicoder.prj)</h3>
+        <p>AI-assisted code generation with automatic backup.</p>
+
+        <p><strong>Flow:</strong></p>
+        <pre><code>#1 coder.js (write code/prompts) → passthrough → #3 coderbackup.js (safety backup)
     ↓
 chatgpt (AI processes)
     ↓ 
 #2 coderai.js
     ↓
-passthrough → back to coder.js</code></pre>
+passthrough → back to coder.js
+</code></pre>
 
-            <h4>Usage:</h4>
-            <ol>
-                <li>Type <code>10 # make a fibonacci function</code> in coder.js</li>
-                <li>AI generates code</li>
-                <li>Type <code>run</code> to execute</li>
-                <li>Original preserved in coderbackup.js</li>
-            </ol>
-        </div>
+        <p><strong>Usage:</strong></p>
+        <ol>
+        <li>Type `10 # make a fibonacci function` in coder.js</li>
+        <li>AI generates code</li>
+        <li>Type `run` to execute</li>
+        <li>Original preserved in coderbackup.js</li>
+        </ol>
 
-        <div class="example-box">
-            <h3>Example 2: Multi-Language Translation (aitranslate.prj)</h3>
-            <p>Generate content and translate to multiple languages simultaneously.</p>
-            
-            <h4>Flow:</h4>
-            <pre><code>#1 aitest_prompt.txt (user prompt)
+        <h3>Example 2: Multi-Language Translation (aitranslate.prj)</h3>
+        <p>Generate content and translate to multiple languages simultaneously.</p>
+
+        <p><strong>Flow:</strong></p>
+        <pre><code>#1 aitest_prompt.txt (user prompt)
     ↓
 chatgpt
     ↓
@@ -470,15 +402,14 @@ blocker (quality check)
     ├→ translate → #4 aitest_chinese.txt
     ├→ translate → #5 aitest_indonesian.txt
     ├→ translate → #6 aitest_japanese.txt
-    └→ translate → #7 aitest_tagalog.txt</code></pre>
-        </div>
+    └→ translate → #7 aitest_tagalog.txt
+</code></pre>
 
-        <div class="example-box">
-            <h3>Example 3: Statistical Analysis Pipeline (stat-analysis.prj)</h3>
-            <p>Multi-stage research workflow with quality gate.</p>
-            
-            <h4>Flow:</h4>
-            <pre><code>#1 data-input (user request)
+        <h3>Example 3: Statistical Analysis Pipeline (stat-analysis.prj)</h3>
+        <p>Multi-stage research workflow with quality gate.</p>
+
+        <p><strong>Flow:</strong></p>
+        <pre><code>#1 data-input (user request)
     ↓
 chatgpt
     ↓
@@ -494,41 +425,39 @@ chatgpt
                                                            ↓
                                                       quality-gate
                                                            ↓
-                                                    # final-publication</code></pre>
+                                                    # final-publication
+</code></pre>
 
-            <div class="tip-box">
-                <strong>Quality Gate:</strong> Report only publishes if AI self-assessment scores ≥8/10.
-            </div>
-        </div>
+        <p><strong>Quality Gate:</strong> Report only publishes if AI self-assessment scores ≥8/10.</p>
 
-        <h2 id="cli">Command-Line Project Creation</h2>
+        <h2 id="command-line-project-creation">Command-Line Project Creation</h2>
 
         <h3>Setup Pattern</h3>
+
         <p>Before creating links, set up your file structure:</p>
+
         <pre><code>file 10              # Creates files 1-10, goes to file 10
-file 1               # Return to file 1</code></pre>
+file 1               # Return to file 1
+</code></pre>
 
         <p>This creates 10 empty working files. Transformers will automatically load from file 11 onward when referenced.</p>
 
-        <div class="tip-box">
-            <strong>Mental Model:</strong>
-            <ul>
-                <li>Files 1-10: Your working files (data, inputs, outputs)</li>
-                <li>Files 11+: Transformers (automatically loaded when used)</li>
-            </ul>
-        </div>
+        <p><strong>Mental Model:</strong></p>
+        <li>Files 1-10: Your working files (data, inputs, outputs)</li>
+        <li>Files 11+: Transformers (automatically loaded when used)</li>
+        </ul>
 
         <h3>Project Management Commands</h3>
+
         <pre><code>project save myproject     # Saves as myproject.prj
-project load myproject     # Loads myproject.prj</code></pre>
+project load myproject     # Loads myproject.prj
+</code></pre>
 
-        <div class="warning-box">
-            <strong>Note:</strong> <code>.prj</code> extension is automatic - don't include it in the name.
-        </div>
+        <p>Note: <code>.prj</code> extension is automatic - don't include it in the name.</p>
 
-        <div class="example-box">
-            <h3>Example: Creating AI Coder Project</h3>
-            <pre><code># Setup
+        <h3>Example: Creating AI Coder Project</h3>
+
+        <pre><code># Setup
 file 3
 file 1
 
@@ -548,12 +477,12 @@ link 1 2 passthrough
 files
 
 # Save
-project save aicoder</code></pre>
-        </div>
+project save aicoder
+</code></pre>
 
-        <div class="example-box">
-            <h3>Example: Creating Translation Pipeline</h3>
-            <pre><code># Setup files
+        <h3>Example: Creating Translation Pipeline</h3>
+
+        <pre><code># Setup files
 file 7
 file 1
 
@@ -584,12 +513,12 @@ link 7 3 translate Tagalog
 files
 
 # Save
-project save aitranslate</code></pre>
-        </div>
+project save aitranslate
+</code></pre>
 
-        <div class="example-box">
-            <h3>Example: Creating Code Review Pipeline</h3>
-            <pre><code># Setup
+        <h3>Example: Creating Code Review Pipeline</h3>
+
+        <pre><code># Setup
 file 5
 file 1
 
@@ -614,8 +543,140 @@ link 5 2,3,4 chatgpt openai compile a comprehensive code review report with the 
 files
 
 # Save
-project save code-review</code></pre>
-        </div>
+project save code-review
+</code></pre>
+
+        <h3>Example: Creating Document Merge Project</h3>
+
+        <pre><code># Setup
+file 7
+file 1
+
+# Name files
+filename version-a.txt
+file 2
+filename version-b.txt
+file 3
+filename version-c.txt
+file 4
+filename diff-a-b.txt
+file 5
+filename diff-b-c.txt
+file 6
+filename merged-all.txt
+file 7
+filename conflict-resolution.txt
+
+# Create links (multi-input)
+file 4
+link 1,2 4 filediff
+file 5
+link 2,3 5 filediff
+file 6
+link 1,2,3 6 filejoin %NL%%NL%--- NEXT VERSION ---%NL%%NL%
+file 7
+link 4,5 7 chatgpt openai analyze these diffs and suggest how to resolve conflicts, then create a merged version
+
+# Save
+project save document-merge
+</code></pre>
+
+        <h3>Example: Creating Quality Gate Pipeline</h3>
+
+        <pre><code># Setup
+file 7
+file 1
+
+# Name files
+filename raw-data.csv
+file 2
+filename validation-report.txt
+file 3
+filename stats-summary.txt
+file 4
+filename cleaned-data.csv
+file 5
+filename quality-check.txt
+file 6
+filename approved-data.csv
+file 7
+filename final-report.md
+
+# Create pipeline with quality gate
+file 2
+link 1 2 chatgpt openai analyze this CSV for data quality issues: missing values, duplicates, outliers, format errors
+file 3
+link 1 3 filestats
+file 4
+link 1 4 chatgpt openai clean the data: remove duplicates, fill missing values appropriately, fix formatting
+file 5
+link 4 5 chatgpt openai verify the cleaned data quality and assign a score 1-10
+file 6
+link 5 6 blocker
+file 7
+link 2,3,5 7 chatgpt openai create a data quality report with validation results, statistics, and final quality score
+
+# Save
+project save data-validation
+</code></pre>
+
+        <h3>Tips for Command-Line Creation</h3>
+
+        <ol>
+        <li>**Plan your file count**: Count total files needed (inputs + outputs + intermediates)</li>
+        <li>**Use file X to pre-create**: `file 15` creates 15 files instantly</li>
+        <li>**Name as you go**: Switch to each file and use `filename` command</li>
+        <li>**Link from target**: Go to the target file, then create the link</li>
+        <li>**Multi-input links**: Use commas without spaces: `link 1,2,3 5 transformer`</li>
+        <li>**Test incrementally**: Create a few links, test, then continue</li>
+        <li>**Save often**: Use `project save` after major changes</li>
+        </ol>
+
+        <h3>Quick Reference</h3>
+
+        <pre><code># File Management
+file N                    # Create N files, go to file N
+file X                    # Switch to file X
+files                     # List all files (shows D for dirty)
+filename name.ext         # Name current file
+
+# Linking
+link SOURCE TARGET plugin args       # Single input
+link SRC1,SRC2 TARGET plugin args    # Multi-input (NO SPACES!)
+
+# Projects
+project save name         # Save as name.prj
+project load name         # Load name.prj
+project name "My Project" # Set project display name
+
+# Saving
+saveall                   # Save all dirty (D) files at once
+
+# Viewing
+list                      # Show current file content
+type filename             # View file without loading
+</code></pre>
+
+        <h3>Dirty Flags & Workflow</h3>
+
+        <p>When transformers process files, they're marked as <strong>D</strong> (dirty):</p>
+
+        <pre><code>Files:
+  1 *D input.txt 50 bytes/5 lines
+  2  D output.txt 120 bytes/10 lines
+* current file, D dirty file
+</code></pre>
+
+        <p><strong>Workflow:</strong></p>
+        <ol>
+        <li>Name files: `filename report.txt`</li>
+        <li>Build links and save project: `project save myproject`</li>
+        <li>Edit input → pipeline runs → files marked D</li>
+        <li>Check results: `files` (see D flags)</li>
+        <li>Save everything: `saveall`</li>
+        </ol>
+
+        <p>This means after processing completes, one <code>saveall</code> command saves all results!</p>
 
         <h2 id="best-practices">Best Practices</h2>
 
@@ -625,42 +686,53 @@ project save code-review</code></pre>
   "fn": "chatgpt.xfrm",
   "mt": "text/javascript transformer",
   "mte": "text",
-  "ln": null
-}</code></pre>
+  "ln": null,
+  "pl": "",
+  "arg": "",
+  "fl": "",
+  "st": ""
+}
+</code></pre>
 
         <h3>2. The Provider Variable</h3>
         <p>Use the <code>%PROVIDER%</code> variable if you only have a single provider:</p>
-        <pre><code>"arg": "%PROVIDER% translate this text"</code></pre>
+        <pre><code>"arg": "%PROVIDER% translate this text"
+</code></pre>
 
         <h3>3. Name Files Descriptively</h3>
         <p>Use clear, hierarchical names:</p>
         <ul>
-            <li><code>input-raw.txt</code></li>
-            <li><code>processed-stage1.txt</code></li>
-            <li><code>output-final.txt</code></li>
+        <li>`input-raw.txt`</li>
+        <li>`processed-stage1.txt`</li>
+        <li>`output-final.txt`</li>
         </ul>
 
         <h3>4. Leverage Sessions for Context</h3>
         <p>Use ChatGPT sessions to maintain conversation context:</p>
-        <pre><code>"arg": "openai session:analysis calculate statistics"</code></pre>
+        <pre><code>"arg": "openai session:analysis calculate statistics"
+</code></pre>
         <p>Later:</p>
-        <pre><code>"arg": "openai session:analysis what was the mean?"</code></pre>
+        <pre><code>"arg": "openai session:analysis what was the mean?"
+</code></pre>
 
         <h3>5. Create Backup Chains</h3>
         <p>Always preserve source material:</p>
         <pre><code>source → processor (ln: backup)
-      → backup (ln: source, pl: passthrough.xfrm)</code></pre>
+      → backup (ln: source, pl: passthrough.xfrm)
+</code></pre>
 
         <h3>6. Use Blocker for Validation</h3>
         <p>Add blockers after quality checks:</p>
-        <pre><code>content → validator → blocker → publication</code></pre>
+        <pre><code>content → validator → blocker → publication
+</code></pre>
 
         <h3>7. Fan-Out for Parallel Processing</h3>
         <p>Process once, output many ways:</p>
         <pre><code>source → translate (Japanese)
       → translate (Chinese)
       → translate (Spanish)
-      → speak (en-us)</code></pre>
+      → speak (en-us)
+</code></pre>
 
         <h2 id="common-patterns">Common Patterns</h2>
 
@@ -668,13 +740,15 @@ project save code-review</code></pre>
         <pre><code>1. data-input.txt
 2. analysis.txt (ln: 1, chatgpt: "analyze data")
 3. visualization.txt (ln: 2, chatgpt: "create R code")
-4. report.txt (ln: "2,3", chatgpt: "write report")</code></pre>
+4. report.txt (ln: "2,3", chatgpt: "write report")
+</code></pre>
 
         <h3>Content Creation</h3>
         <pre><code>1. brief.txt
 2. draft.txt (ln: 1, chatgpt: "write article")
 3. edited.txt (ln: 2, chatgpt: "improve clarity")
-4. final.txt (ln: 3, chatgpt: "format for publication")</code></pre>
+4. final.txt (ln: 3, chatgpt: "format for publication")
+</code></pre>
 
         <h3>Data Processing</h3>
         <pre><code>1. raw1.csv
@@ -682,173 +756,237 @@ project save code-review</code></pre>
 3. raw3.csv
 4. merged.csv (ln: "1,2,3", csvmerge)
 5. stats.txt (ln: 4, filestats)
-6. analysis.txt (ln: 5, chatgpt: "interpret statistics")</code></pre>
+6. analysis.txt (ln: 5, chatgpt: "interpret statistics")
+</code></pre>
 
         <h3>Code Generation</h3>
         <pre><code>1. requirements.txt
-2. code.js (ln: 1, chatgpt: "generate C# code")
+2. code.js (ln: 1, chatgpt: "generate JS code")
 3. tests.js (ln: 2, chatgpt: "create unit tests")
-4. docs.md (ln: 2, chatgpt: "document code")</code></pre>
+4. docs.md (ln: 2, chatgpt: "document code")
+</code></pre>
 
-        <h2 id="debugging">Debugging Tips</h2>
+        <h2 id="debugging-tips">Debugging Tips</h2>
 
         <h3>File Not Updating?</h3>
         <ul>
-            <li>Check <code>ln</code> index is correct (remember: 1-based!)</li>
-            <li>Verify source file is "dirty" (modified)</li>
-            <li>Ensure transformer file is included in project</li>
+        <li>Check `ln` index is correct (remember: 1-based!)</li>
+        <li>Verify source file is "dirty" (modified)</li>
+        <li>Ensure transformer file is included in project</li>
         </ul>
 
         <h3>Multi-Input Not Working?</h3>
         <ul>
-            <li>All source files must be dirty</li>
-            <li>Use string syntax: <code>"ln": "2,3,4"</code></li>
-            <li>Check transformer supports multi-input</li>
+        <li>All source files must be dirty</li>
+        <li>Use string syntax: `"ln": "2,3,4"`</li>
+        <li>Check transformer supports multi-input</li>
         </ul>
 
         <h3>Transformer Error?</h3>
         <ul>
-            <li>View console logs (transformer prints debug info)</li>
-            <li>Check transformer is loaded as plugin</li>
-            <li>Verify arguments are correctly formatted</li>
+        <li>View console logs (transformer prints debug info)</li>
+        <li>Check transformer is loaded as plugin</li>
+        <li>Verify arguments are correctly formatted</li>
         </ul>
 
         <h3>Cascade Not Triggering?</h3>
         <ul>
-            <li>Edit a source file to mark it dirty</li>
-            <li>Check for circular dependencies</li>
-            <li>Verify <code>ln</code> points to existing file</li>
+        <li>Edit a source file to mark it dirty</li>
+        <li>Check for circular dependencies</li>
+        <li>Verify `ln` points to existing file</li>
         </ul>
 
-        <h2 id="advanced">Advanced Techniques</h2>
+        <h2 id="advanced-techniques">Advanced Techniques</h2>
 
         <h3>Dynamic Provider Selection</h3>
-        <pre><code>"arg": "%PROVIDER% process this"</code></pre>
+        <pre><code>"arg": "%PROVIDER% process this"
+</code></pre>
         <p>Configure provider using csconfig</p>
 
         <h3>Conditional Logic with Sessions</h3>
         <p>Use persistent sessions for stateful processing:</p>
-        <pre><code>"arg": "openai session:validator validate input then remember result"</code></pre>
+        <pre><code>"arg": "openai session:validator validate input then remember result"
+</code></pre>
 
         <h3>Template-Driven Generation</h3>
         <pre><code>File 1: template.html (HTML with {{placeholders}})
 File 2: data.json (JSON dictionary)
-File 3: output.html (ln: "1,2", template.xfrm)</code></pre>
+File 3: output.html (ln: "1,2", template.xfrm)
+</code></pre>
 
         <h3>Multi-Stage Refinement</h3>
         <pre><code>draft → improve1 → improve2 → improve3 → final
   ↓       ↓          ↓          ↓          ↓
-backup1 backup2  backup3   backup4   backup5</code></pre>
+backup1 backup2  backup3   backup4   backup5
+</code></pre>
 
-        <h2 id="formats">File Formats</h2>
+        <h2 id="file-formats">File Formats</h2>
 
         <h3>Supported MIME Types</h3>
         <ul>
-            <li><code>text/plain</code> - Plain text</li>
-            <li><code>text/javascript</code> - JavaScript code</li>
-            <li><code>text/csv</code> - CSV data</li>
-            <li><code>application/json</code> - JSON data</li>
-            <li><code>text/html</code> - HTML documents</li>
-            <li><code>image/png</code>, <code>image/jpeg</code> - Images (for OCR)</li>
-            <li><code>application/pdf</code> - PDF documents (for OCR)</li>
+        <li>`text/plain` - Plain text</li>
+        <li>`text/javascript` - JavaScript code</li>
+        <li>`text/csv` - CSV data</li>
+        <li>`application/json` - JSON data</li>
+        <li>`text/html` - HTML documents</li>
+        <li>`image/png`, `image/jpeg` - Images (for OCR)</li>
+        <li>`application/pdf` - PDF documents (for OCR)</li>
         </ul>
 
         <h3>Editor Types</h3>
         <ul>
-            <li><code>text</code> - Text editor with line numbers</li>
-            <li><code>hex</code> - Hexadecimal editor for binary files</li>
+        <li>`text` - Text editor with line numbers</li>
+        <li>`hex` - Hexadecimal editor for binary files</li>
         </ul>
 
-        <h2 id="prompts">Tips for AI Prompts</h2>
+        <h2 id="tips-for-ai-prompts">Tips for AI Prompts</h2>
 
         <h3>Be Specific</h3>
         <pre><code>Bad:  "openai process this"
-Good: "openai extract key insights and summarize in 3 bullet points"</code></pre>
+Good: "openai extract key insights and summarize in 3 bullet points"
+</code></pre>
 
         <h3>Use Multi-Step Prompts</h3>
-        <pre><code>"openai first validate the data structure, then calculate statistics"</code></pre>
+        <pre><code>"openai first validate the data structure, then calculate statistics"
+</code></pre>
 
         <h3>Reference File Context</h3>
-        <pre><code>"openai use the data from the previous analysis to generate visualizations"</code></pre>
+        <pre><code>"openai use the data from the previous analysis to generate visualizations"
+</code></pre>
 
         <h3>Chain Reasoning</h3>
         <pre><code>File 1 → "openai analyze problem"
 File 2 → "openai propose solutions based on analysis"
-File 3 → "openai select best solution and explain"</code></pre>
+File 3 → "openai select best solution and explain"
+</code></pre>
 
-        <h2>Additional Example Projects</h2>
+        <h2 id="session-management-in-pipelines">Session Management in Pipelines</h2>
 
-        <div class="example-box">
-            <h3>Example 4: Code Review Pipeline</h3>
-            <p>Automated code analysis with parallel review tracks.</p>
-            <pre><code>source-code.js
+        <h3>Using session.xfrm</h3>
+
+        <p>The <code>session.xfrm</code> transformer allows you to manage ChatGPT sessions within pipelines:</p>
+
+        <pre><code># Load pre-trained session
+link 2 1 session legal: load
+link 3 2 chatgpt openai session:legal review contract
+
+# Train session with input
+link 2 1 session research: train
+link 3 2 chatgpt openai session:research analyze
+
+# Clear session before use
+link 2 1 session project: clear
+link 3 2 chatgpt openai session:project start fresh
+
+# Save session after processing
+link 2 1 chatgpt openai session:work process this
+link 3 2 session work: save
+</code></pre>
+
+        <h3>Session Training Patterns</h3>
+
+        <pre><code># Train from files
+link 2 1 session api: train swagger.json,examples.txt
+
+# Train from other sessions
+link 2 1 session fullstack: train frontend:,backend:,database:
+
+# Train from input sources
+link 2 1 session docs:
+# Automatically trains session 'docs' with file 1's content
+</code></pre>
+
+        <h3>Context-Aware Processing</h3>
+
+        <pre><code># Share context across multiple links
+link 2 1 chatgpt openai session:analysis examine data
+link 3 2 chatgpt openai session:analysis find patterns
+link 4 3 chatgpt openai session:analysis synthesize findings
+# All three links share the same session context
+</code></pre>
+
+        <p>For comprehensive session management documentation, see the <a href="session-management.md">Session Management Guide</a>.</p>
+
+        <h2 id="additional-example-projects">Additional Example Projects</h2>
+
+        <h3>Example 4: Code Review Pipeline (code-review-pipeline.prj)</h3>
+        <p>Automated code analysis with parallel review tracks.</p>
+
+        <p><strong>Flow:</strong></p>
+        <pre><code>source-code.js
     ├→ code-analysis.txt (bugs, security)
     ├→ suggestions.txt (improvements)
     └→ test-cases.js (unit tests)
          ↓
-    review-report.md (combines all three)</code></pre>
-        </div>
+    review-report.md (combines all three)
+</code></pre>
 
-        <div class="example-box">
-            <h3>Example 5: Document Merge & Compare</h3>
-            <p>Three-way diff and intelligent conflict resolution.</p>
-            <pre><code>version-a.txt ────┐
+        <h3>Example 5: Document Merge & Compare (document-merge-compare.prj)</h3>
+        <p>Three-way diff and intelligent conflict resolution.</p>
+
+        <p><strong>Flow:</strong></p>
+        <pre><code>version-a.txt ────┐
                   ├→ diff-a-b.txt ──┐
 version-b.txt ────┤                 ├→ conflict-resolution.txt
                   ├→ diff-b-c.txt ──┘
-version-c.txt ────┘</code></pre>
-        </div>
+version-c.txt ────┘
+</code></pre>
 
-        <div class="example-box">
-            <h3>Example 6: Multi-Format Content</h3>
-            <p>Single brief → multiple platform-optimized outputs.</p>
-            <pre><code>content-brief.txt
+        <h3>Example 6: Multi-Format Content (content-multiformat.prj)</h3>
+        <p>Single brief → multiple platform-optimized outputs.</p>
+
+        <p><strong>Flow:</strong></p>
+        <pre><code>content-brief.txt
     ├→ blog-post.md
     ├→ twitter-thread.txt
     ├→ linkedin-post.txt
     ├→ email-newsletter.html
     ├→ video-script.txt
-    └→ infographic-data.json</code></pre>
-        </div>
+    └→ infographic-data.json
+</code></pre>
 
-        <div class="example-box">
-            <h3>Example 7: Data Validation Pipeline</h3>
-            <p>Quality-gated data cleaning workflow.</p>
-            <pre><code>raw-data.csv
+        <h3>Example 7: Data Validation Pipeline (data-validation-pipeline.prj)</h3>
+        <p>Quality-gated data cleaning workflow.</p>
+
+        <p><strong>Flow:</strong></p>
+        <pre><code>raw-data.csv
     ├→ validation-report.txt
     ├→ stats-summary.txt
     └→ cleaned-data.csv → quality-check.txt → blocker → approved-data.csv
                                                               ↓
-                                                    final-report.md</code></pre>
-        </div>
+                                                    final-report.md
+</code></pre>
 
-        <div class="example-box">
-            <h3>Example 8: API Documentation Generator</h3>
-            <p>Generate complete API docs from endpoint definitions.</p>
-            <pre><code>api-endpoints.json
+        <h3>Example 8: API Documentation Generator (api-docs-generator.prj)</h3>
+        <p>Generate complete API docs from endpoint definitions.</p>
+
+        <p><strong>Flow:</strong></p>
+        <pre><code>api-endpoints.json
     ↓
 openapi-spec.json
     ├→ markdown-docs.md ──────┐
     ├→ postman-collection.json│
     ├→ client-sdk-csharp.cs ───┼→ integration-guide.md
-    └→ client-sdk-javascript.js┘</code></pre>
-        </div>
+    └→ client-sdk-javascript.js┘
+</code></pre>
 
-        <div class="example-box">
-            <h3>Example 9: Learning Material Generator</h3>
-            <p>Comprehensive educational content from a single topic.</p>
-            <pre><code>topic.txt
+        <h3>Example 9: Learning Material Generator (learning-material-generator.prj)</h3>
+        <p>Comprehensive educational content from a single topic.</p>
+
+        <p><strong>Flow:</strong></p>
+        <pre><code>topic.txt
     ├→ lesson-plan.md ────────┐
     ├→ study-notes.md ────────┤
     ├→ practice-exercises.txt ├→ teacher-guide.md
     ├→ quiz.json ─────────────┤
-    └→ visual-aids.txt ───────┘</code></pre>
-        </div>
+    └→ visual-aids.txt ───────┘
+</code></pre>
 
-        <div class="example-box">
-            <h3>Example 10: Story Development</h3>
-            <p>Multi-stage creative writing with revision cycle.</p>
-            <pre><code>story-premise.txt
+        <h3>Example 10: Story Development (story-development-pipeline.prj)</h3>
+        <p>Multi-stage creative writing with revision cycle.</p>
+
+        <p><strong>Flow:</strong></p>
+        <pre><code>story-premise.txt
     ├→ character-profiles.md ──┐
     ├→ world-building.md ──────┼→ plot-outline.md
     └────────────────────────┘      ↓
@@ -860,27 +998,34 @@ openapi-spec.json
                                      ↓
                             revised-draft.txt
                                      ↓
-                                synopsis.txt</code></pre>
-        </div>
+                                synopsis.txt
+</code></pre>
 
-        <div class="example-box">
-            <h3>Example 11: Template Report Generator</h3>
-            <p>Data-driven HTML reports with AI insights.</p>
-            <pre><code>report-template.html ──────┐
+        <h3>Example 11: Template Report Generator (template-report-generator.prj)</h3>
+        <p>Data-driven HTML reports with AI insights.</p>
+
+        <p><strong>Flow:</strong></p>
+        <pre><code>report-template.html ──────┐
                            │
 company-data.json ────┐    │
 financial-data.json ──┼→ merged-data.json ──┼→ generated-report.html ──┐
 performance-data.json ┘         ↓                                        │
                           insights.txt ──────────────────────────────────┤
                                                                           ↓
-                                                                  final-report.html</code></pre>
-        </div>
+                                                                  final-report.html
+</code></pre>
 
-        <h2>Conclusion</h2>
+        <h2 id="conclusion">Conclusion</h2>
+
         <p>CyborgShell projects enable powerful AI-driven workflows through declarative pipeline definitions. Master these patterns to build sophisticated automation ranging from simple translations to complex research pipelines with quality gates and multi-stage processing.</p>
-        
-        <div class="tip-box">
-            <strong>Remember:</strong> Files are nodes, transformers are edges, and dirty flags trigger cascading updates through your DAG. Build wisely! 🚀
+
+        <p>Remember: Files are nodes, transformers are edges, and dirty flags trigger cascading updates through your DAG. Build wisely! 🚀</p>
+
+        <div class="footer">
+			<div style="text-align: center; margin-top: 40px; color: #666;">
+				<p><strong>CyborgShell</strong> by <a href="https://cyborgunicorn.com.au" target="_blank">Cyborg Unicorn Pty Ltd</a> 2025</p>
+				<p><a href="https://cyborgshell.com" target="_blank">cyborgshell.com</a> | <a href="https://github.com/PrimalNinja/cyborgshell" target="_blank">GitHub</a></p>
+			</div>
         </div>
     </div>
 </body>

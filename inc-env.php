@@ -8,7 +8,7 @@ define("MINIFIED", "FALSE");	// can be TRUE or FALSE, to use the minified versio
 // environment constants
 define("APPNAME", "CyborgShell");
 define("VERSION", "v1.0");
-define("BUILD", "Build 20251026");
+define("BUILD", "Build 20251027");
 define("AUTHOR", "By PrimalNinja 2025");
 define("PASSWORDMINIMUMLENGTH", 8);
 

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CyborgShell Documentation - Complete Package</title>
+    <title>CyborgShell - Documentation</title>
     <style>
         * {
             margin: 0;
@@ -160,14 +160,17 @@
 </head>
 <body>
     <div class="container">
-        <h1>CyborgShell Documentation - Complete Package</h1>
+        <h1>CyborgShell - Documentation</h1>
 
         <!-- Quick Navigation -->
         <h2>Quick Navigation</h2>
         <p style="font-size: 1.1em;"><strong>New to CyborgShell?</strong> Start here:</p>
         <ol class="quick-nav-list">
             <li>📚 <a href="getting-started.html">getting-started.html</a> (5 min read)</li>
-            <li>📚 <a href="complete-guide.html">complete-guide.html</a> (Full documentation)</li>
+            <li>📚 <a href="session-management.html">session-management.html</a> (Session management deep dive)</li>
+            <li>📚 <a href="quick-reference.html">quick-reference.html</a></li>
+            <li>📚 <a href="dags.html">dags.html</a></li>
+            <li>📚 <a href="project-creation-guide.html">project-creation-guide.html</a></li>
         </ol>
 
         <p style="font-size: 1.1em;"><strong>For Security/IT Teams:</strong></p>
@@ -175,76 +178,6 @@
             <li>🔒 <a href="executive-summary.html">executive-summary.html</a> (One-page overview for decision makers)</li>
             <li>🔒 <a href="architecture-security.html">architecture-security.html</a> (Architecture, privacy, compliance, deployment)</li>
         </ul>
-        
-        <!-- Documentation Files -->
-        <h2>Documentation Files</h2>
-
-        <h3>For Security/IT Teams</h3>
-        <div class="doc-item">
-            <strong><a href="executive-summary.html">executive-summary.html</a></strong>
-            <ul>
-                <li>One-page overview for decision makers</li>
-                <li>Security model comparison</li>
-                <li>Three deployment models (cloud, self-hosted, air-gapped)</li>
-                <li>Compliance benefits (HIPAA, SOC2, GDPR)</li>
-                <li>Cost analysis and ROI</li>
-                <li>Risk assessment</li>
-                <li>Implementation roadmap</li>
-                <li>Competitive analysis</li>
-                <li>Decision criteria</li>
-            </ul>
-        </div>
-
-        <div class="doc-item">
-            <strong><a href="architecture-security.html">architecture-security.html</a></strong>
-            <ul>
-                <li>Deep dive into the **browser-first** security model</li>
-                <li>Detailed data flow diagrams</li>
-                <li>The role of the minimal server</li>
-                <li>Why API keys are safe (local storage)</li>
-                <li>Third-party risks and mitigation</li>
-                <li>The open-source auditability advantage</li>
-            </ul>
-        </div>
-
-        <h3>For Developers/Users</h3>
-
-        <div class="doc-item">
-            <strong><a href="getting-started.html">getting-started.html</a></strong>
-            <ul>
-                <li>5-minute quick start</li>
-                <li>Immediate vs. Program mode</li>
-                <li>Your first program and AI pipeline</li>
-                <li>Essential commands and tips</li>
-            </ul>
-        </div>
-
-        <div class="doc-item">
-            <strong><a href="dags.html">dags.html</a></strong>
-            <ul>
-                <li>CyborgShell and DAGs</li>
-            </ul>
-        </div>
-
-        <div class="doc-item">
-            <strong><a href="complete-guide.html">complete-guide.html</a></strong>
-            <ul>
-                <li>Full technical specifications and guides</li>
-                <li>Advanced usage of AI sessions and providers</li>
-                <li>Extending the shell with custom functions</li>
-                <li>Deep dive into **Transformers** and **Project creation**</li>
-            </ul>
-        </div>
-
-        <div class="doc-item">
-            <strong><a href="project-creation-guide.html">project-creation-guide.html</a></strong>
-            <ul>
-                <li>How to build declarative AI pipelines (DAGs)</li>
-                <li>Detailed explanation of the Project JSON structure</li>
-                <li>Multi-input linking and quality gate implementation</li>
-                <li>Advanced design patterns (Fan-In, Multi-Stage, Backup)</li>
-            </ul>
-        </div>
         
         <!-- Core Features -->
         <h2>Core Features ✨</h2>
@@ -259,24 +192,6 @@
                 <li>**No Platform Fees:** You only pay your AI provider</li>
             </ul>
         </div>
-
-        <!-- Distributed Processing -->
-        <h2>Distributed Processing Capability 🚀</h2>
-        <p>CyborgShell has a **Unique Feature** allowing multiple PCs to process files in parallel using shared storage, creating a cost-effective render farm for AI tasks.</p>
-
-        <div class="code-box">
-            Shared Network Drive → PC #1 (Ollama) + PC #2 (Ollama) + PC #3 (Ollama) + ...
-        </div>
-
-        <h3>Benefits:</h3>
-        <ul>
-            <li>**Zero cost:** All Ollama local</li>
-            <li>**Horizontal scaling:** Add more PCs = more throughput</li>
-            <li>**Minimal server load:** Only file I/O</li>
-            <li>**Natural load balancing:** First available PC processes</li>
-            <li>**Fault tolerant:** One PC down, others continue</li>
-            <li>**MapReduce-style AI processing**</li>
-        </ul>
 
         <div class="highlight-box">
             <h3>The Open Source Advantage (MIT License)</h3>
@@ -298,10 +213,153 @@
             <li>Check the source code and file issues on <a href="https://github.com/PrimalNinja/cyborgshell" target="_blank">GitHub</a>.</li>
         </ul>
 
+        <!-- Documentation Files -->
+        <h2>Documentation Files</h2>
 
+        <h3>For Security/IT Teams</h3>
+        <div class="doc-item">
+            <strong><a href="executive-summary.html">executive-summary.html</a></strong>
+            <ul>
+                <li>The Security Model</li>
+                <li>Deployment Models</li>
+                <li>Compliance Benefits/li>
+                <li>Cost Analysis</li>
+                <li>Technical Requirements</li>
+                <li>Risk Assessment</li>
+                <li>Implementation Path</li>
+                <li>Competitive Analysis</li>
+				<li>Decision Criteria</li>
+            </ul>
+        </div>
+
+        <div class="doc-item">
+            <strong><a href="architecture-security.html">architecture-security.html</a></strong>
+            <ul>
+                <li>Architecture Design</li>
+                <li>Security Model</li>
+                <li>The CORS Proxy</li>
+                <li>Deployment Scenarios</li>
+                <li>Compliance & Enterprise</li>
+                <li>Technical Details</li>
+                <li>Security Best Practices</li>
+                <li>Advantages of This Architecture</li>
+                <li>Source Code and Open Source License</li>
+				<li>Conclusion</li>
+            </ul>
+        </div>
+
+        <h3>Key Security Features</h3>
+
+        <div class="doc-item">
+            <ul>
+				<li>✅ Code runs in browser (client-side execution)</li>
+				<li>✅ API keys in browser local storage (never sent to servers) *</li>
+				<li>✅ Direct API calls to providers (no intermediary) *</li>
+				<li>✅ Self-hostable (MIT License: github.com/PrimalNinja/cyborgshell)</li>
+				<li>✅ Air-gap capable (self-host + Ollama = zero external data)</li>
+				<li>✅ CORS proxy fully auditable (~200 lines PHP, included in repo)</li>
+				<li>✅ <b>Coming Soon: ZOSCII Information Theoretic Security (ITS) Encoding for local storage</b></li>
+            </ul>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;* unless you use the Cyborg Shell's optional CORS proxy server
+        </div>
+
+        <h3>For Developers/Users</h3>
+
+        <div class="doc-item">
+            <strong><a href="getting-started.html">getting-started.html</a></strong>
+            <ul>
+                <li>Why It's Different</li>
+                <li>Two Ways to Code</li>
+                <li>Essential Commands</li>
+                <li>AI in 4 Ways</li>
+                <li>Your First Program</li>
+                <li>Your First AI Pipeline</li>
+            </ul>
+        </div>
+
+        <div class="doc-item">
+            <strong><a href="session-management.html">session-management.html</a></strong>
+            <ul>
+                <li>Session Architecture</li>
+                <li>Interactive Session Usage</li>
+                <li>Session Management Commands</li>
+                <li>Training Sessions (Building Knowledge Bases)</li>
+                <li>Transformer Session Usage</li>
+                <li>Complete Pipeline Examples</li>
+                <li>Best Practices</li>
+                <li>Advanced Patterns</li>
+                <li>Troubleshooting</li>
+                <li>Session Files Format</li>
+                <li>Integration with Other Features</li>
+                <li>Summary</li>
+            </ul>
+        </div>
+
+        <div class="doc-item">
+            <strong><a href="quick-reference.html">quick-reference.html</a></strong>
+            <ul>
+                <li>Philosophy</li>
+                <li>Architecture and Security</li>
+                <li>Configuration</li>
+                <li>Execution Modes</li>
+                <li>Command Aliases</li>
+                <li>AI Features</li>
+                <li>Project Setup</li>
+                <li>File Management</li>
+				<li>Linking (Create Pipelines)</li>
+                <li>Project Management</li>
+				<li>Dirty Flags and Saving</li>
+				<li>Transformers</li>
+				<li>Common Patterns</li>
+				<li>Workflow Examples</li>
+				<li>Debugging</li>
+				<li>Tips</li>
+				<li>Remember</li>
+				<li>Quick Start</li>
+            </ul>
+        </div>
+
+        <div class="doc-item">
+            <strong><a href="dags.html">dags.html</a></strong>
+            <ul>
+                <li>What is a DAG</li>
+                <li>Traditional DAG Tools vs CyborgShell</li>
+                <li>How CyborgShell Works</li>
+                <li>Live Example: 2 Minutes</li>
+                <li>Real-World Examples</li>
+                <li>Why This Architecture Matters</li>
+                <li>The Key Insight</li>
+				<li>CyborgShell: Redefining DAG Orchestration</li>
+            </ul>
+        </div>
+
+        <div class="doc-item">
+            <strong><a href="project-creation-guide.html">project-creation-guide.html</a></strong>
+            <ul>
+                <li>Project File structure</li>
+                <li>Key Concepts</li>
+                <li>Available Transformers</li>
+                <li>Design Patterns</li>
+                <li>Example Projects</li>
+                <li>Command-Line Project Creation</li>
+				<li>Best Practices</li>
+				<li>Common Patterns</li>
+				<li>Debugging Tips</li>
+				<li>Advanced Techniques</li>
+				<li>File Formats</li>
+				<li>Tips for AI Prompts</li>
+				<li>Session Management in Pipelines</li>
+				<li>Additional Example Projects</li>
+				<li>Conclusion</li>
+            </ul>
+        </div>
+        
         <div class="footer">
-            <p><strong>CyborgShell</strong> by <a href="https://cyborgunicorn.com.au" target="_blank">Cyborg Unicorn Pty Ltd</a> 2025</p>
-            <p><a href="https://cyborgshell.com" target="_blank">cyborgshell.com</a> | <a href="https://github.com/PrimalNinja/cyborgshell" target="_blank">GitHub</a></p>
+			<div style="text-align: center; margin-top: 40px; color: #666;">
+				<p><strong>CyborgShell</strong> by <a href="https://cyborgunicorn.com.au" target="_blank">Cyborg Unicorn Pty Ltd</a> 2025</p>
+				<p><a href="https://cyborgshell.com" target="_blank">cyborgshell.com</a> | <a href="https://github.com/PrimalNinja/cyborgshell" target="_blank">GitHub</a></p>
+			</div>
         </div>
     </div>
 </body>

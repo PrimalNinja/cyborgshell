@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyborgShell - Session Management</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        
+        h2 {
+            color: #2c3e50;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+        }
+        
+        h3 {
+            color: #34495e;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+        
+        h4 {
+            color: #34495e;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        p {
+            margin-bottom: 15px;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        code {
+            background: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            padding: 2px 6px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9em;
+            color: #c7254e;
+        }
+        
+        pre {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 20px 0;
+            border-left: 4px solid #3498db;
+        }
+        
+        pre code {
+            background: none;
+            border: none;
+            color: inherit;
+            padding: 0;
+        }
+        
+        .toc {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 20px 30px;
+            margin: 30px 0;
+        }
+        
+        .toc h2 {
+            margin-top: 0;
+            border: none;
+            padding: 0;
+        }
+        
+        .toc ul {
+            list-style: none;
+            margin-left: 0;
+        }
+        
+        .toc li {
+            margin-bottom: 5px;
+        }
+        
+        .toc a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        
+        .toc a:hover {
+            text-decoration: underline;
+        }
+        
+        .highlight-box {
+            background: #e8f4f8;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .success-box {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .danger-box {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th {
+            background: #3498db;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+        
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        .checkmark {
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .xmark {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>CyborgShell - Session Management</h1>
+        </div>
+
+        <div class="toc">
+            <h2>Table of Contents</h2>
+            <ul>
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#session-architecture">Session Architecture</a></li>
+                <li><a href="#interactive-session-usage">Interactive Session Usage</a></li>
+                <li><a href="#session-management-commands">Session Management Commands</a></li>
+                <li><a href="#training-sessions">Training Sessions (Building Knowledge Bases)</a></li>
+                <li><a href="#transformer-session-usage">Transformer Session Usage</a></li>
+                <li><a href="#complete-pipeline-examples">Complete Pipeline Examples</a></li>
+                <li><a href="#best-practices">Best Practices</a></li>
+                <li><a href="#advanced-patterns">Advanced Patterns</a></li>
+                <li><a href="#toubleshooting">Troubleshooting</a></li>
+                <li><a href="#session-files-format">Session Files Format</a></li>
+                <li><a href="#integration-with-other-features">Integration with Other Features</a></li>
+                <li><a href="#summary">Summary</a></li>
+            </ul>
+        </div>
+
+        <h2 id="overview">Overview</h2>
+
+        <p>Sessions in CyborgShell allow you to maintain persistent conversation context with AI services. This enables sophisticated multi-turn interactions where the AI "remembers" previous exchanges, making it ideal for building up knowledge bases, maintaining context across multiple queries, and creating reusable AI workflows.</p>
+
+        <p><strong>Key Concept:</strong> Sessions are stored in browser memory and can be saved to files for persistence and sharing across devices or team members.</p>
+
+        <h2 id="session-architecture">Session Architecture</h2>
+
+        <h3>Where Sessions Live</h3>
+
+        <pre><code>Browser Memory (Runtime)
+    ↓
+globals.chatgpt.sessions = {
+    "default": [...conversation history...],
+    "coding": [...conversation history...],
+    "story": [...conversation history...]
+}
+    ↓
+Files (Persistent Storage)
+    chatgpt-session-coding.json
+    chatgpt-session-story.json
+</code></pre>
+
+        <h3>Session Storage Limits</h3>
+
+        <ul>
+        <li>**Maximum Total Size**: 256 MB across all sessions</li>
+        <li>**Automatic Management**: Oldest entries removed when limit exceeded</li>
+        <li>**Per-Session Size**: Unlimited (until global limit hit)</li>
+        <li>**Character Encoding**: UTF-16 (2 bytes per character)</li>
+        </ul>
+
+        <h3>Session Lifecycle</h3>
+
+        <pre><code>1. CREATE    → First use of session name creates it
+2. BUILD     → Add conversation entries via queries/training
+3. USE       → Reference in interactive mode or transformers
+4. SAVE      → Persist to file for later use
+5. LOAD      → Restore from file when needed
+6. CLEAR     → Empty session while keeping structure
+7. DELETE    → Remove saved file
+</code></pre>
+
+        <h2 id="interactive-session-usage">Interactive Session Usage</h2>
+
+        <h3>Basic Interactive Mode</h3>
+
+        <pre><code># Enter interactive mode
+chatgpt
+# or simply
+!
+
+# Now omit 'chatgpt' prefix
+remember my name is Julian
+what's my name?
+tell me more about yourself
+x    # Exit interactive mode
+</code></pre>
+
+        <h3>Named Sessions in Interactive Mode</h3>
+
+        <pre><code>chatgpt 
+coding: help me debug this function
+coding: now optimize it for performance
+coding: add error handling
+
+story: write about a robot
+story: make it more dramatic
+story: what happened next?
+</code></pre>
+
+        <p><strong>Shorthand:</strong> Once in interactive mode, use <code>sessionname:</code> prefix:</p>
+        <pre><code># Still in interactive mode
+math: calculate 2+2
+math: what's the square root?
+coding: back to the code problem
+</code></pre>
+
+        <h3>Switching AI Services with Sessions</h3>
+
+        <pre><code># ✅ CORRECT: Use named sessions when switching services
+analysis: openai analyze this algorithm
+analysis: claude now document it beautifully
+analysis: gemini translate docs to Japanese
+chatgpt save analysis-workflow
+
+# ⚠️ AVOID: Switching services in same session
+# This mixes different AI response styles and contexts
+</code></pre>
+
+        <p><strong>Best Practice:</strong> Create a new named session for each service or use separate sessions for different AI providers.</p>
+
+        <h2 id="session-management-commands">Session Management Commands</h2>
+
+        <h3>Clear Sessions</h3>
+
+        <pre><code># Clear specific session
+chatgpt clear coding
+
+# Clear default session
+chatgpt clear
+
+# In transformer (passthrough input)
+link 2 1 session myproject: clear
+</code></pre>
+
+        <h3>Save Sessions</h3>
+
+        <pre><code># Save specific session
+chatgpt save coding
+# Creates: chatgpt-session-coding.json
+
+# Save all sessions
+chatgpt save
+# Creates: chatgpt-all-sessions.json
+
+# In transformer
+link 2 1 session myproject: save
+</code></pre>
+
+        <h3>Load Sessions</h3>
+
+        <pre><code># Load specific session
+chatgpt load coding
+
+# In transformer
+link 2 1 session myproject: load
+</code></pre>
+
+        <h3>View Sessions</h3>
+
+        <pre><code># List all sessions with stats
+chatgpt sessions
+
+# Output:
+# Session: coding (45 entries, 123 KB)
+# Session: story (12 entries, 34 KB)
+# Session: default (3 entries, 8 KB)
+</code></pre>
+
+        <h2 id="training-sessions">Training Sessions (Building Knowledge Bases)</h2>
+
+        <h3>Concept</h3>
+
+        <p>Training allows you to pre-load sessions with context from files or other sessions, creating reusable knowledge bases that inform all subsequent queries.</p>
+
+        <h3>Interactive Training</h3>
+
+        <pre><code># Train with a file
+chatgpt train coding style-guide.txt
+
+# Train with multiple files
+chatgpt train coding style-guide.txt,best-practices.txt
+
+# Train from another session
+chatgpt train fullstack coding:,frontend:,backend:
+
+# Train with mixed sources
+chatgpt train project docs.txt,api:,database:
+</code></pre>
+
+        <h3>Training Syntax</h3>
+
+        <pre><code># Format:
+chatgpt train &lt;session-name&gt; &lt;source1&gt;,&lt;source2&gt;,&lt;source3&gt;
+
+# Sources can be:
+# - Files: filename.txt
+# - Sessions: sessionname:
+# - Mixed: file1.txt,session1:,file2.md,session2:
+</code></pre>
+
+        <h3>Training Examples</h3>
+
+        <h4>Build Knowledge Bases</h4>
+
+        <pre><code># Create base knowledge
+chatgpt train common style-guide.txt,naming-conventions.txt
+
+# Create specialized knowledge
+chatgpt train php laravel-docs.txt,php-best-practices.txt
+chatgpt train js react-docs.txt,typescript-guide.txt
+
+# Compose into comprehensive session
+chatgpt train fullstack common:,php:,js:
+
+# Save for reuse
+chatgpt save fullstack
+</code></pre>
+
+        <h4>Explore Interactively, Then Train</h4>
+
+        <pre><code># Explore PHP best practices interactively
+chatgpt 
+php: what are Laravel's routing best practices?
+php: explain middleware patterns
+php: how should I structure controllers?
+
+# The conversation builds up in the 'php' session
+chatgpt sessions
+# php (12 entries, 45 KB)
+
+# Augment with static docs
+chatgpt train php php:,laravel-internal-docs.txt
+
+# Save the curated knowledge
+chatgpt save php
+
+# Later: use in pipelines
+link 2 1 chatgpt openai session:php review this Laravel code
+</code></pre>
+
+        <h4>Team Knowledge Sharing</h4>
+
+        <pre><code># Developer A: Builds PHP expertise
+chatgpt php: [interactive exploration]
+chatgpt train php php:,laravel-internal-docs.txt
+chatgpt save php
+
+# Developer B: Builds React expertise
+chatgpt react: [interactive exploration]  
+chatgpt train react react:,company-component-library.txt
+chatgpt save react
+
+# Tech Lead: Combines into team knowledge
+chatgpt train team-standards common:,php:,react:,team-conventions.txt
+chatgpt save team-standards
+
+# Everyone loads team-standards for consistency
+chatgpt load team-standards
+</code></pre>
+
+        <h2 id="transformer-session-usage">Transformer Session Usage</h2>
+
+        <h3>The session.xfrm Transformer</h3>
+
+        <p>The <code>session.xfrm</code> transformer provides session management capabilities within pipelines, allowing links to manipulate sessions without triggering AI calls.</p>
+
+        <h4>Syntax</h4>
+
+        <pre><code># Format 1: Named session with command
+link TARGET SOURCE session sessionname: command [filename]
+
+# Format 2: Default session with command  
+link TARGET SOURCE session command [filename]
+
+# Format 3: Named session, train with input
+link TARGET SOURCE session sessionname:
+
+# Format 4: Passthrough (no command)
+link TARGET SOURCE session
+</code></pre>
+
+        <h4>Commands</h4>
+
+        <ul>
+        <li>**clear** - Empty session</li>
+        <li>**save** - Persist session to file</li>
+        <li>**load** - Restore session from file</li>
+        <li>**train** - Add content to session</li>
+        <li>*(no command)* - Passthrough input unchanged</li>
+        </ul>
+
+        <h3>Transformer Examples</h3>
+
+        <h4>Clear Session Before Use</h4>
+
+        <pre><code># Clear session before starting new pipeline
+link 2 1 session project: clear
+link 3 2 chatgpt openai session:project start fresh analysis
+</code></pre>
+
+        <h4>Load Pre-Trained Session</h4>
+
+        <pre><code># Load curated knowledge base
+link 2 1 session legal: load
+link 3 2 chatgpt openai session:legal review contract
+link 4 3 chatgpt openai session:legal identify risks
+</code></pre>
+
+        <h4>Train Session in Pipeline</h4>
+
+        <pre><code># Train with file contents
+link 2 1 session docs: train
+link 3 2 chatgpt openai session:docs summarize
+
+# Train with specific files
+link 2 1 session api: train swagger.json,examples.txt
+link 3 2 chatgpt openai session:api generate client code
+</code></pre>
+
+        <h4>Save Session After Processing</h4>
+
+        <pre><code># Build up knowledge and save
+link 2 1 chatgpt openai session:research analyze
+link 3 2 chatgpt openai session:research synthesize findings
+link 4 3 session research: save
+</code></pre>
+
+        <h3>Sessions in chatgpt.xfrm</h3>
+
+        <p>The <code>chatgpt.xfrm</code> transformer supports sessions via the <code>session:id</code> syntax in arguments.</p>
+
+        <h4>Syntax</h4>
+
+        <pre><code># Format:
+link TARGET SOURCE chatgpt SERVICE session:ID prompt
+
+# Examples:
+link 2 1 chatgpt openai session:calc calculate mean
+link 3 2 chatgpt openai session:calc what was standard deviation?
+link 4 1 chatgpt claude session:review analyze code
+link 5 4 chatgpt claude session:review suggest improvements
+</code></pre>
+
+        <h4>Cross-Link Context Sharing</h4>
+
+        <pre><code># Multiple links share same session
+link 2 1 chatgpt openai session:analysis examine data
+link 3 1 chatgpt openai session:analysis find correlations
+link 4 2,3 chatgpt openai session:analysis synthesize findings
+
+# Session maintains context across all three links
+</code></pre>
+
+        <h2 id="complete-pipeline-examples">Complete Pipeline Examples</h2>
+
+        <h3>Example 1: Progressive Code Review</h3>
+
+        <pre><code>file 6
+file 1; filename code.js
+file 2; filename analysis.txt
+file 3; filename security.txt
+file 4; filename performance.txt
+file 5; filename final-report.md
+file 6; filename session-backup.json
+
+# Load pre-trained code review session
+file 2; link 1 2 session review: load
+file 2; link 1 2 chatgpt openai session:review analyze structure
+
+# Build context across reviews
+file 3; link 2 3 chatgpt openai session:review check security
+file 4; link 3 4 chatgpt openai session:review optimize performance
+
+# Generate comprehensive report
+file 5; link 2,3,4 5 chatgpt openai session:review final report
+
+# Save the enriched session
+file 6; link 5 6 session review: save
+
+project save progressive-review
+</code></pre>
+
+        <h3>Example 2: Research Pipeline with Knowledge Base</h3>
+
+        <pre><code>file 5
+file 1; filename research-query.txt
+file 2; filename context-data.txt
+file 3; filename analysis.txt
+file 4; filename recommendations.txt
+file 5; filename knowledge-base.json
+
+# Train session with domain knowledge
+file 3; link 1,2 3 session research: train
+file 3; link 1,2 3 chatgpt openai session:research analyze
+
+# Use accumulated knowledge
+file 4; link 3 4 chatgpt openai session:research recommend
+
+# Persist learned knowledge
+file 5; link 4 5 session research: save
+
+project save research-pipeline
+</code></pre>
+
+        <h3>Example 3: Multi-Stage Document Processing</h3>
+
+        <pre><code>file 8
+file 1; filename brief.txt
+file 2; filename outline.txt
+file 3; filename draft.txt
+file 4; filename edited.txt
+file 5; filename final.txt
+file 6; filename session-state.json
+file 7; filename backup.txt
+file 8; filename metadata.txt
+
+# Build document with maintained context
+file 2; link 1 2 chatgpt openai session:doc create outline
+file 3; link 2 3 chatgpt openai session:doc expand to draft
+file 4; link 3 4 chatgpt openai session:doc improve clarity
+file 5; link 4 5 chatgpt openai session:doc final polish
+
+# Preserve session and original
+file 6; link 5 6 session doc: save
+file 7; link 1 7 passthrough
+file 8; link 5 8 filestats
+
+project save document-processor
+</code></pre>
+
+        <h3>Example 4: Quality Gate with Session Memory</h3>
+
+        <pre><code>file 6
+file 1; filename submission.txt
+file 2; filename quality-score.txt
+file 3; filename gate.txt
+file 4; filename approved.txt
+file 5; filename final.txt
+file 6; filename quality-session.json
+
+# Quality check with remembered standards
+file 2; link 1 2 session quality: load
+file 2; link 1 2 chatgpt openai session:quality rate 1-10
+
+# Gate based on score
+file 3; link 2 3 chatgpt openai if score &gt;= 8 output PASS else FAIL
+file 4; link 3 4 blocker
+
+# Process if approved
+file 5; link 4 5 chatgpt openai session:quality finalize
+
+# Update quality standards
+file 6; link 5 6 session quality: save
+
+project save quality-gate
+</code></pre>
+
+        <h2 id="best-practices">Best Practices</h2>
+
+        <h3>1. Session Naming</h3>
+
+        <pre><code># ✅ GOOD: Descriptive, purpose-clear
+chatgpt legal-review: analyze contract
+chatgpt backend-api: review endpoints
+chatgpt data-analysis: examine trends
+
+# ❌ AVOID: Generic, confusing
+chatgpt x: do something
+chatgpt temp: analyze
+chatgpt test: help
+</code></pre>
+
+        <h3>2. Service Switching</h3>
+
+        <pre><code># ✅ GOOD: Separate sessions per service
+analysis: openai analyze data
+docs: claude write documentation
+translate: gemini convert to Japanese
+
+# ❌ AVOID: Mixing services in one session
+# (context styles don't mix well)
+default: openai analyze
+default: claude document
+</code></pre>
+
+        <h3>3. Session Size Management</h3>
+
+        <pre><code># Monitor session sizes
+chatgpt sessions
+
+# Clear old sessions periodically
+chatgpt clear old-project
+
+# Save important sessions before clearing
+chatgpt save important-research
+chatgpt clear important-research
+</code></pre>
+
+        <h3>4. Training Strategy</h3>
+
+        <pre><code># ✅ GOOD: Build incrementally
+chatgpt train base core-concepts.txt
+chatgpt train advanced base:,advanced-topics.txt
+chatgpt train complete advanced:,examples.txt
+
+# ❌ AVOID: Loading everything at once
+# (harder to manage, harder to update)
+chatgpt train mega everything.txt,all-docs.txt,more.txt
+</code></pre>
+
+        <h3>5. Reusable Templates</h3>
+
+        <pre><code># Create session templates for common tasks
+chatgpt code-review: you are an expert code reviewer
+chatgpt code-review: focus on security, performance, readability  
+chatgpt code-review: provide specific line-by-line feedback
+chatgpt save code-review-template
+
+# Load template for consistent reviews
+chatgpt load code-review-template
+code-review: [paste code]
+</code></pre>
+
+        <h3>6. Team Collaboration</h3>
+
+        <pre><code># Share session files via version control
+chatgpt save team-standards
+# Commit: chatgpt-session-team-standards.json
+
+# Team members load shared knowledge
+chatgpt load team-standards
+
+# Update and re-share
+chatgpt train team-standards team-standards:,new-guidelines.txt
+chatgpt save team-standards
+</code></pre>
+
+        <h3>7. Multi-Device Continuity</h3>
+
+        <pre><code># On phone (morning)
+chatgpt design: plan the user interface
+chatgpt save design
+
+# On PC (afternoon)
+chatgpt load design
+design: now implement the dashboard
+
+# On Xbox (evening)
+chatgpt load design  
+design: refine the color scheme
+</code></pre>
+
+        <h2 id="advanced-patterns">Advanced Patterns</h2>
+
+        <h3>Pattern 1: Iterative Refinement</h3>
+
+        <pre><code># Build knowledge through conversation
+chatgpt research: what is quantum entanglement?
+chatgpt research: explain bell's theorem
+chatgpt research: how does this relate to quantum computing?
+chatgpt research: summarize key insights
+
+# Augment with documents
+chatgpt train research research:,quantum-papers.txt
+
+# Save comprehensive knowledge
+chatgpt save research
+
+# Use in analysis
+chatgpt load research
+research: analyze this quantum algorithm
+</code></pre>
+
+        <h3>Pattern 2: Multi-Perspective Analysis</h3>
+
+        <pre><code># Same content, different sessions/services
+link 2 1 chatgpt openai session:tech analyze technical feasibility
+link 3 1 chatgpt claude session:legal identify legal risks
+link 4 1 chatgpt gemini session:market assess market potential
+link 5 2,3,4 chatgpt openai session:synthesis create comprehensive report
+
+# Each session maintains focused context
+</code></pre>
+
+        <h3>Pattern 3: Continuous Learning</h3>
+
+        <pre><code># Start with baseline
+chatgpt train project baseline-docs.txt
+
+# Process and learn
+link 2 1 chatgpt openai session:project analyze
+link 3 2 session project: train           # Add analysis to session
+link 4 3 chatgpt openai session:project expand insights
+link 5 4 session project: train           # Add expanded insights
+link 6 5 session project: save            # Persist learned knowledge
+
+# Next run loads richer session
+</code></pre>
+
+        <h3>Pattern 4: Quality Assurance Chain</h3>
+
+        <pre><code># Multiple quality checks with shared context
+file 7
+file 1; filename code.js
+file 2; filename syntax-check.txt
+file 3; filename security-check.txt  
+file 4; filename performance-check.txt
+file 5; filename combined-report.txt
+file 6; filename gate.txt
+file 7; filename approved.txt
+
+file 2; link 1 2 session qa: load
+file 2; link 1 2 chatgpt openai session:qa check syntax
+file 3; link 1 3 chatgpt openai session:qa check security
+file 4; link 1 4 chatgpt openai session:qa check performance
+
+file 5; link 2,3,4 5 chatgpt openai session:qa overall assessment
+file 6; link 5 6 chatgpt openai if all pass output APPROVED else REJECTED
+file 7; link 6 7 blocker
+
+# Session accumulates all QA context
+file 7; link 6 7 session qa: save
+
+project save qa-chain
+</code></pre>
+
+        <h2 id="toubleshooting">Troubleshooting</h2>
+
+        <h3>Session Not Found</h3>
+
+        <pre><code># Check available sessions
+chatgpt sessions
+
+# Verify filename when loading
+# Note: 'chatgpt-session-' prefix is automatic
+chatgpt save myproject
+# Creates: chatgpt-session-myproject.json
+chatgpt load myproject    # ✅ Correct
+chatgpt load chatgpt-session-myproject.json    # ❌ Wrong
+</code></pre>
+
+        <h3>Context Getting Confused</h3>
+
+        <pre><code># Clear session and start fresh
+chatgpt clear sessionname
+
+# Or create new session
+newsession: start with clean context
+
+# Use separate sessions for different topics
+coding: technical discussion
+story: creative writing
+</code></pre>
+
+        <h3>Session Size Limits</h3>
+
+        <pre><code># Check session sizes
+chatgpt sessions
+
+# Clear old unused sessions
+chatgpt clear old-session-1
+chatgpt clear old-session-2
+
+# Prune long sessions before saving
+# (manually review and save only important parts)
+</code></pre>
+
+        <h3>Session Not Persisting</h3>
+
+        <pre><code># Ensure you save before closing browser
+chatgpt save important-work
+
+# Sessions in memory are lost on browser close
+# Always save critical sessions to files
+
+# Backup configuration includes sessions
+csconfig → B → Backup
+</code></pre>
+
+        <h2 id="session-files-format">Session Files Format</h2>
+
+        <h3>Individual Session File</h3>
+
+        <pre><code>{
+  "session": [
+    "First conversation entry",
+    "Second conversation entry",
+    "Third conversation entry"
+  ],
+  "size": 12345
+}
+</code></pre>
+
+        <h3>All Sessions File</h3>
+
+        <pre><code>{
+  "sessions": {
+    "default": ["entry1", "entry2"],
+    "coding": ["entry1", "entry2"],
+    "story": ["entry1", "entry2"]
+  },
+  "totalSize": 67890
+}
+</code></pre>
+
+        <h2 id="integration-with-other-features">Integration with Other Features</h2>
+
+        <h3>With Transformers</h3>
+
+        <p>Sessions work seamlessly with all transformers:</p>
+
+        <pre><code># Translate with context
+link 2 1 chatgpt openai session:translate Japanese
+link 3 1 chatgpt openai session:translate remember to maintain technical terms
+
+# OCR with knowledge base
+link 2 1 ocr
+link 3 2 session medical: load
+link 4 3 chatgpt openai session:medical interpret medical terminology
+</code></pre>
+
+        <h3>With Multi-Input Links</h3>
+
+        <pre><code># Multi-input with shared session
+link 4 1,2,3 chatgpt openai session:merge combine these perspectives
+# Session sees all three inputs
+</code></pre>
+
+        <h3>With Quality Gates</h3>
+
+        <pre><code># Session-aware gates
+link 2 1 session standards: load
+link 3 2 chatgpt openai session:standards meets requirements?
+link 4 3 blocker
+</code></pre>
+
+        <h2 id="summary">Summary</h2>
+
+        <p>Sessions are a powerful feature enabling:</p>
+
+        <p>✅ <strong>Context Persistence</strong> - AI remembers previous interactions  </p>
+        <p>✅ <strong>Knowledge Bases</strong> - Pre-train with domain expertise  </p>
+        <p>✅ <strong>Reusable Workflows</strong> - Save and share curated sessions  </p>
+        <p>✅ <strong>Multi-Turn Reasoning</strong> - Build complex arguments progressively  </p>
+        <p>✅ <strong>Team Collaboration</strong> - Share knowledge via session files  </p>
+        <p>✅ <strong>Cross-Device Continuity</strong> - Work seamlessly across devices  </p>
+
+        <p><strong>Key Takeaway:</strong> Sessions transform one-shot AI queries into stateful, context-aware workflows that learn and improve over time.</p>
+
+        <p>---</p>
+
+        <p><strong>Remember:</strong></p>
+        <li>Sessions live in browser memory (save to persist)</li>
+        <li>Use named sessions for organization</li>
+        <li>Train sessions to build knowledge bases</li>
+        <li>Save important sessions before closing browser</li>
+        <li>Share session files for team collaboration</li>
+        <li>Use separate sessions when switching AI services</li>
+        </ul>
+
+        <div class="footer">
+			<div style="text-align: center; margin-top: 40px; color: #666;">
+				<p><strong>CyborgShell</strong> by <a href="https://cyborgunicorn.com.au" target="_blank">Cyborg Unicorn Pty Ltd</a> 2025</p>
+				<p><a href="https://cyborgshell.com" target="_blank">cyborgshell.com</a> | <a href="https://github.com/PrimalNinja/cyborgshell" target="_blank">GitHub</a></p>
+			</div>
+        </div>
+	</div>
+</body>
+</html>

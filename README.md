@@ -1,247 +1,246 @@
-# CyborgShell - AI-Agent-First Collaboration/Orchestration/JavaScript Development Environment
+# CyborgShell Release Notes
 
-Welcome to CyborgShell!
+**RELEASE CANDIDATE 12**
 
-RELEASE CANDIDATE 12
+## 27th October 2025
 
-Latest Release Notes.
+### Documentation
+- Online documentation now available at [https://cyborgshell.com/docs](https://cyborgshell.com/docs)
 
-New Features 26th Oct 2025:
+### ChatGPT Enhancements
+New train command for loading session data into new sessions with support for mixing previous sessions and files:
 
-- some online documentation is now available at https://cyborgshell.com/docs
+```bash
+train transport: cars.txt,trucks.txt
+train mammals: cats.txt,dogs.txt
+train insects: ants.txt,bugs.txt
+train creatures: mammals:,insects:
+```
 
-- multiple source files are now possible as inputs
+### Multiple Source Files
+Transformers now support multiple input files:
+```bash
+link 3 1,2 <transformer>
+```
+**Note:** No spaces allowed in file number lists
 
-	e.g. 
-	
-		link 3 1,2 <transformer>
-		
-		Existing transformers have been updated to cater for multiple inputs where it makes sense to. It is important that there are no spaces in the list of source file numbers.
+### New Transformers
 
-- New transformers:
+- **csvmerge.xfrm** - Appends multiple CSV files with same structure
+- **jsonmerge.xfrm** - Merges one or more JSON files
+- **filediff.xfrm** - Outputs differences between 2 source files
+- **filejoin.xfrm** - Joins multiple files (similar to passthrough)
+- **filestats.xfrm** - Outputs statistics of multiple input files
+- **session.xfrm** - Allows session commands (load, save, train) in transformer chains
+- **template.xfrm** - Populates template with JSON values using `{{key}}` syntax
+  ```bash
+  link 4 1,2,3 template  # file 1=template, files 2,3=JSON data
+  ```
+- **trigger.xfrm** - Returns 'GO' to trigger downstream files
+  ```bash
+  link 1 5 trigger  # triggers file 1 after file 5 is dirty
+  ```
 
-	csvmerge.xfrm:
-	
-		appends multile csv files of the same structure
-	
-	jsonmerge.xfrm:
+## 20th October 2025
 
-		merges 1 or more json files
-	
-	filediff.xfrm:
-	
-		outputs the differences between 2 source files
-	
-	filejoin.xfrm:
-	
-		joins 1 or more files, similar to passthrough with the exception that doesn't try preserve file numbers
-		
-	filestats.xfrm:
-	
-		outputs some filestatus of the multiple input files
-	
-	template.xfrm:
-	
-		links to multiple input files, the first file is a template with {{key}} with values from json files also linked to
-		
-		link 4 1,2,3 template would mean file 1 is the template, 2 and 3 are json files used to populate the template, 4 is the output file number
-		
-	trigger.xfrm:
-	
-		simply triggers a file by returning 'GO'
-		
-		use cases:
-		
-		link 1 5 trigger	it will cause 1 to trigger after 5 is dirty, useful for application where a trigger is not a file within the system, such as checking a mailbox, or external filesystem
+### Service Management
+Switch AI services on the fly from within ChatGPT and RPGGPT:
 
-New Features 20th Oct 2025:
+```bash
+services                    # Lists configured services
+service <servicename>       # Changes to specified service (claude, gemini, ollama, openai)
+```
 
-- From within ChatGPT and RPGGPT can now change services on the fly at any time.
-  new commands
-  
-  services				lists currently configured services
-  service <servicename>	changes service to this, i.e. claude, gemini, ollama, openai (or whatever you have configured)
+## 18th August 2025
 
-New Features 18th Aug 2025:
+### Provider Configuration
+- Transformers can run in parallel or sequential mode (for provider rate limits)
+- New mandatory provider parameter for chatgpt and translate transformers
+- Use `%PROVIDER%` placeholder for configured provider
+- Session selection added to chatgpt commandline
 
-- Transformers that use services can now be configured within csconfig to run in parallel or sequential mode.  This is to satisfy some providers usage limits. Hopefully we don't have to artificially slow the system down more.  So providers that require sequential can be sequential, ones that are ok with parallel can be also, they can be mixed and matched.
+Examples:
+```bash
+link 2 1 chatgpt %PROVIDER% all provided text is a prompt
+link 2 1 chatgpt openai all provided text is a prompt
+link 2 1 chatgpt %PROVIDER% maths: all provided text is a prompt
+link 2 1 chatgpt openai maths: all provided text is a prompt
+```
 
-- New mandatory first parameter for chatgpt and translate transformers which is the provider. This allows multiple providers to be easily used within an orchestration. If you want to use the configured one, then a placeholder parameter %PROVIDER% can be used.  Note: documentation below is updated to reflect this new parameter.
+## 29th July 2025
 
-- Session selection is also added to provider chatgpt on commandlines similar to interactive mode.
+### File Drop Events
+Link transformers to file drop events for batch processing:
 
-	e.g.
-	
-		link 2 1 chatgpt %PROVIDER% all provided text is a prompt
-		link 2 1 chatgpt openai all provided text is a prompt
-		link 2 1 chatgpt %PROVIDER% maths: all provided text is a prompt
-		link 2 1 chatgpt openai maths: all provided text is a prompt
+```bash
+link drop <transformer> [<args>]
+```
 
-New Features 29th July 2025:
+**Use cases:**
+```bash
+link drop ocr
+link drop chatgpt %PROVIDER% analyse the code and list bugs
+link drop chatgpt %PROVIDER% document functions with comments
+```
+💡 **Tip:** Use `saveall` after dropping files
 
-- The ability to link a transformer to the file drop event.  This allows you to drag files onto the main window and transform 
-  them all in a single go. If no drop event is linked then a standard drop new files is there without overwriting what you
-  are working on. If a drop event is linked, then a project is automatically setup for the dropped files and run.
-  
-  To setup a drop event.  link drop <transformer> [<args>]
-  
-	Use Cases:
+### New Transformers
 
-		link drop ocr
-		link drop chatgpt %PROVIDER% analyse the code and list any bugs or security holes you find, mention the file at the top and function before each bug
-		link drop chatgpt %PROVIDER% analyse and document the functions as comments before the functions
-		
-		btw, don't forget the files dropped all are dirty so afterwards you can save them with the saveall command.
+**speak.xfrm** - Text-to-speech with accent support
 
-- New transformers:
+Example translator chain:
+```bash
+link 2 1 translate %PROVIDER% japanese
+link 3 1 speak accent:ja-jp
+```
 
-	speak.xfrm:			arguments: e.g. accent:en-us or accent:en-au
-	
-		use cases:
-		
-		link 2 1 translate %PROVIDER% japanese
-		link 3 1 speak accent:ja-jp
-		
-			then type some of your native language into file 1, and you now have a really good translator!
-	
-New Features 28th July 2025:
+## 28th July 2025
 
-- New public demo space, some files that were in the public area have moved to here.
+### Spaces
+- New public demo space created
+- Files moved from public area to demo space
 
-New Features 27th July 2025:
+## 27th July 2025
 
-- Provided a new csconfig utility for configuration of handlers, providers and services in particular for AI.
-- New transformers:
+### Configuration
+- New **csconfig** utility for handler/provider/service configuration
 
-	ocr.xfrm:			ocr transformer for PDFs and Images
-	blocker.xfrm:		if there is no input, return nothing
-	passthrough.xfrm:	returns all input
+### New Transformers
+- **ocr.xfrm** - OCR for PDFs and images
+- **blocker.xfrm** - Returns nothing if no input
+- **passthrough.xfrm** - Returns all input unchanged
 
+## 26th July 2025
 
-New Features 26th July 2025:
+### API Key Storage
+Store API keys securely in local storage:
 
-- You can now save your AI API Keys to your local storage on devices where local storage is available.
+```bash
+config save <identifier> <value>
+config delete <identifier>
+```
 
-	config save <identifier> <value>, e.g. 
-	
-		to configure some AI providers
-		
-			config save openai-apikey <APIKEY>
-			config save openai-endpoint https://api.openai.com/v1/chat/completions
-			config save openai-model gpt-4o-mini
+**Provider Configuration Examples:**
+```bash
+config save openai-apikey <APIKEY>
+config save openai-endpoint https://api.openai.com/v1/chat/completions
+config save openai-model gpt-4o-mini
 
-			config save ollama-endpoint http://localhost:11434/v1/chat/completions
-			config save ollama-model llama3.2:latest
+config save ollama-endpoint http://localhost:11434/v1/chat/completions
+config save ollama-model llama3.2:latest
+```
 
-		to select which AI providers to use:
-		
-			config save chatgpt-provider ollama			// chatgpt transformer uses ollama config
-			config save translate-provider ollama		// translate transformer uses ollama config
-			config save ai-provider ollama				// ai-provider (the interactive one) uses ollama config
-			
-			config save ai-handler chatgpt				// this is the interactive js to use chatgpt.js, it uses the ai-provider
+**Provider Selection:**
+```bash
+config save chatgpt-provider ollama
+config save translate-provider ollama
+config save ai-provider ollama
+config save ai-handler chatgpt
+```
 
-		note: you don't need to hardcode API Keys in the JS, it will use what's in your local storage. Take care
-			  that you only run trusted programs though that do NOT steal your API Keys.
-			  
-			  note: prompting for permissions is coming soon, but if you are coding your own transformers or such 
-					in your own space, then it's unlikely you will have issues.
+### Local Space
+- New `local` space for configuration files
+- Access with `cd local` and `dir` commands
+- Switch back with `cd home` or `cd public`
 
-	config delete <identifier> to delete your previously saved config option. e.g. to delete your chatgpt API Key,
-			config delete chatgpt will do that.
+### AI Handler
+- Use `!` prefix for AI commands (e.g., `!what is the meaning of life?`)
+- Enter `!` alone for help with session management
+- Multiple sessions supported with load, save, clear commands
+- Sessions saved in currently selected space
 
-- You can now cd to the new 'local' space with cd local. You can dir it also. For now file functionality is limited
-  but you can see your configuration files there.  cd back to home or public or another space to do something useful.
+## 25th July 2025
 
-- If you setup an ai-handler, you can use the ! AI prefix within Cyborg Shell. e.g. !what is the meaning of life?
-  Simply entering ! by itself if configured with the provided chatgpt.js will display some help for managing chatgpt
-  sessions. You can use multiple sessions, load and save them, clear them etc. This allows you to create sessions of 
-  knowledge up to a point, save them and restore them as required. Sessions info is saved in your currently selected
-  space when you save them.
+### Core Features
+- Run JS files by typing filename (e.g., type `bm` to run `bm.js`)
+- Transient programs load into file space 0
+- Command-line history with up/down arrow navigation
+- Dynamic real-time transformers for linked files
+- Transformers loaded as editable files
+- Project save/load system for files and links
+- ChatGPT integration via `chatgpt.js`
 
-New Features 25th July 2025:
+### AI Transformers
 
-- To run a js file, simply type the filename. i.e. to run bm.js, simply type 'bm'.
-- Transient programs are now loaded into file space 0 so they don't corrupt user editing.
-- Commandline history is now implemented allowing for up and down arrows to navigate.
-- You can now code transformers so that linked files can be transformed dynamically in realtime.
-- Your transformers are loaded as files so you can develop them as per every other file.
-- You can now save your current files and links as a project and load a project to restore the files and links.
-- If you setup chatgpt.js, you can use chatgpt within Cyborg Shell. e.g. chatgpt give me a random number
+#### chatgpt.xfrm
+AI processing with session management
 
-- 3 AI transformers provided chatgpt.xfrm, translate.xfrm, null.xfrm
+**Commands:**
+- `AI IGNORE` - Prevents AI processing
+- `AI SESSION CLEAR [<sessionname>]` - Clears session memory
+- `AI SESSION START <sessionname>` - Begins session block
+- `AI SESSION END <sessionname>` - Ends session block
+- `AI PROMPT <sessionname> <prompt>` - Creates AI prompt block
+- `AI PROMPT END <sessionname>` - Ends prompt block
 
-	The AI transformers require an API Key to be useful. You should NOT put any transformers in here on our servers
-	if you are putting your own API Keys directly into the code. Better you fetch it from local storage as per these transformers.
-	
-	You can install ollama locally and modify your copy of transformers to use your own ollama which is also free and
-	you control your own local security.  
-	
-	Also you can use these transformers as a guide to how you may like to create your own.
-	
-	chatgpt.xfrm:  		this plugin has some commands within: in addition to supporting arguments which become part of a prompt
-	============
-	
-	AI IGNORE - if you place AI IGNORE at the start of the file, AI will not be called while it is there.
-	This allows you to have AI IGNORE there while you create your prompts, and then either remove it or slightly modify it
-	to trigger the AI to proceed.
-	
-	The chatgpt plugin has session logic to remember your training data for prompts. You can create and manage different
-	knowledge blocks with sessions.
-	
-	AI SESSION CLEAR - will clear all AI session memory stored on in your browser
-	
-	AI SESSION CLEAR <sessionname>, e.g. AI SESSION CLEAR database will clear only the database session.
-	
-	AI SESSION START <sessionname> - start of a session block, multiple blocks can share the same session name to build up knowledge.
-	AI SESSION END <sessionname> - end of a session block, multiple blocks can share the same session name to build up knowledge.
-	
-	AI PROMPT <sessionname> <prompt> - you can place as many AI PROMPT / AI PROMPT END blocks within your file as you like and each will make 
-	separate AI calls and substitute the AI PROMPT block with the response.  Prompts may be embedded within session blocks.
-	
-	AI PROMPT END <sessionname> - indicates the end of the prompt.
-	
-	null.xfrm:			don't return anything
-	=========
-	
-	translate.xfrm:		if there is any input, transform it, if there is no input, return no output.   It takes the language you want to translate to as an argument.
-	===============
+#### translate.xfrm
+Language translation transformer
 
-- New/Enhanced commands below:
+#### null.xfrm
+Returns nothing
 
-	file <filenumber>, will now create new files up to the specified filenumber if not already
-	linkto <sourcefilenumber> <plugin> <arguments>, will now create new files up to the specified filenumber if not already. arguments will be passed to the plugin so you can use the same plugin for different purposes.
-	link <targetfilenumber> <sourcefilenumber> <plugin> <arguments>, e.g. link 4 2 null will link a null transformer plugin on file 4 to file 2
-	newfile [<filename>], you can now create a new file but go to the file specified without having to go to the new file
-	touch <filenumber>, e.g. touch 1 to manually cause all transformers linked to file 1 and cascaded ones to process
-	project <projectname>, e.g. project test
-	project load <projectname>, e.g. project load test
-	project save <projectname>, e.g. project save test
-	linkto <filenumber> <transformername>, e.g. linkto 1, chatgpt
+### Enhanced Commands
 
-	type ai-example1.txt or type ai-example2.txt for examples of transformer chains.
-	
-New Features 16th June 2025:
+```bash
+file <filenumber>                                          # Creates files up to specified number
+linkto <sourcefilenumber> <plugin> <arguments>
+link <targetfilenumber> <sourcefilenumber> <plugin> <arguments>
+newfile [<filename>]                                       # Creates file without switching to it
+touch <filenumber>                                         # Manually triggers transformers
+project <projectname>                                      # Creates project
+project load <projectname>                                 # Loads project
+project save <projectname>                                 # Saves project
+```
 
-- You can now login with login yourusername [press enter], then have the password not visible when typing it in.
+**Examples:**
+- Type `ai-example1.txt` or `ai-example2.txt` for transformer chain examples
 
-New Features 15th June 2025:
+## 16th June 2025
 
-- Some support for Mime Types.
-- Text and non-Text Mime Types can be listed and edited.
-- Images and PDF can be OCRd, type 'ocr' after loaded by dragging (for now). New files will be created with any OCRd text.
-- OCR currently is a separate module, but is going to evolve into a plugin facility.
+### Authentication
+- Login with hidden password entry
+- Command: `login yourusername`
 
-New Features 9th March 2025:
+## 15th June 2025
 
-- Files can now be dragged onto the editor from your computer. 
-- You can now paste text into the line editor. Files with line numbers on the first line preserve the numbers without are autonumbered.
-- Listing files will now show which files are dirty (with a D).
-- 'saveall' will save all named files.
+### File Type Support
+- MIME type support for text and non-text files
+- OCR support for images and PDFs
+- OCR creates new files with extracted text
+- Type `ocr` after loading file via drag-and-drop
 
-Programming API:
+## 9th March 2025
 
-- added input command, 
-	e.g. api.cls(); api.print('enter your name:'); api.input("", function(str_a) { api.print('hello ' + str_a); api.stop(); });
+### File Operations
+- Drag and drop files from computer
+- Paste text into line editor
+- Auto-numbering for pasted text (preserves existing line numbers)
+- File listing shows dirty files (marked with `D`)
+- `saveall` command saves all named files
 
-Julian
+### Programming API
+
+```javascript
+api.input()  // Get user input
+
+// Example:
+api.cls();
+api.print('enter your name:');
+api.input("", function(str_a) {
+    api.print('hello ' + str_a);
+    api.stop();
+});
+```
+
+## Security Notes
+
+⚠️ **Important Security Guidelines:**
+- **DO NOT** put API keys directly in transformer code
+- Fetch API keys from local storage instead
+- Consider using local Ollama installation for full security control
+- Only run trusted programs to protect API keys
+- Permission prompting system coming soon
+
+---
+
+**CyborgShell** - AI-Agent-First Collaboration/Orchestration/JavaScript Development Environment

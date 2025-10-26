@@ -449,6 +449,148 @@ function chatgpt(strPrompt_a)
 			return;
 		}
 
+		if (strCommand === 'train')
+		{
+			if (arrWords.length >= 2)
+			{
+				// Train specific session with file content or other sessions
+				// Handle case where session ID is omitted (use 'default')
+				if (arrWords.length === 2)
+				{
+					strSessionID = 'default';
+					var strTrainingSources = arrWords[1];
+				}
+				else
+				{
+					// Session ID provided - strip colon if present
+					strSessionID = arrWords[1];
+					if (strSessionID.endsWith(':'))
+					{
+						strSessionID = strSessionID.substring(0, strSessionID.length - 1);
+					}
+					var strTrainingSources = arrWords[2];
+				}
+				
+				// Parse training sources: files (.ext) and sessions (:)
+				var arrSources = strTrainingSources.split(',');
+				var intTodo = 0;
+				var intDone = 0;
+				var arrMessages = [];
+				
+				// Count valid sources
+				for (var intI = 0; intI < arrSources.length; intI++)
+				{
+					if (arrSources[intI].trim().length > 0)
+					{
+						intTodo++;
+					}
+				}
+				
+				function checkComplete()
+				{
+					intDone++;
+					if (intDone === intTodo)
+					{
+						// All sources processed
+						if (arrMessages.length > 0)
+						{
+							api.print(arrMessages.join('\n'));
+						}
+						
+						if ($.isFunction(cb_a))
+						{
+							cb_a();
+						}
+					}
+				}
+				
+				if (intTodo === 0)
+				{
+					api.print('No valid training sources specified');
+					if ($.isFunction(cb_a))
+					{
+						cb_a();
+					}
+				}
+				else
+				{
+					for (var intI = 0; intI < arrSources.length; intI++)
+					{
+						var strSource = arrSources[intI].trim();
+						
+						if (strSource.length === 0)
+						{
+							continue;
+						}
+						
+						if (strSource.endsWith(':'))
+						{
+							// Session reference - copy from another session
+							var strSourceSession = strSource.substring(0, strSource.length - 1);
+							
+							if (globals.chatgpt.sessions[strSourceSession])
+							{
+								// Initialize target session if it doesn't exist
+								if (!globals.chatgpt.sessions[strSessionID])
+								{
+									globals.chatgpt.sessions[strSessionID] = [];
+								}
+								
+								// Append all entries from source session
+								for (var intJ = 0; intJ < globals.chatgpt.sessions[strSourceSession].length; intJ++)
+								{
+									addToSession(strSessionID, globals.chatgpt.sessions[strSourceSession][intJ]);
+								}
+								arrMessages.push('Session "' + strSessionID + '" trained with session "' + strSourceSession + '"');
+								checkComplete();
+							}
+							else
+							{
+								api.print('Source session "' + strSourceSession + '" not found');
+								checkComplete();
+							}
+						}
+						else
+						{
+							// File reference - load and train
+							(function(strFile) {
+								api.loadFile(strFile, function(objResponse_a)
+								{
+									if (objResponse_a.error.length === 0 && objResponse_a.content)
+									{
+										// Initialize session if it doesn't exist
+										if (!globals.chatgpt.sessions[strSessionID])
+										{
+											globals.chatgpt.sessions[strSessionID] = [];
+										}
+										
+										// Add file content to session
+										addToSession(strSessionID, objResponse_a.content);
+										arrMessages.push('Session "' + strSessionID + '" trained with ' + strFile);
+									}
+									else
+									{
+										api.print('Failed to load training file "' + strFile + '": ' + 
+											(objResponse_a.error || 'File not found'));
+									}
+									checkComplete();
+								});
+							})(strSource);
+						}
+					}
+				}
+			}
+			else
+			{
+				api.print('Usage: chatgpt train <sessionid> <filename>');
+				if ($.isFunction(cb_a))
+				{
+					cb_a();
+				}
+			}
+			return;
+		}
+		
 		var strConfigKey = '';
 		var strFilename = '';
 		var strKey = '';
@@ -963,6 +1105,7 @@ else if (strFlavour.toLowerCase() === 'gemini')
 			api.print('       chatgpt load <sessionid>');
 			api.print('       chatgpt services');
 			api.print('       chatgpt service <services>');
+			api.print('       chatgpt train [<sessionid>:] <filenames-sessions>');
 			api.print(' ');
 			api.print('Examples:');
 			api.print('  chatgpt remember the number 5');
@@ -975,6 +1118,9 @@ else if (strFlavour.toLowerCase() === 'gemini')
 			api.print('  chatgpt save math');
 			api.print('  chatgpt load');
 			api.print('  chatgpt load math');
+			api.print('  chatgpt train combinatorics: combinatorics.txt');
+			api.print('  chatgpt train statistics: statistics.txt');
+			api.print('  chatgpt train math: combinatorics:,statistics');
 			api.print(' ');
 			api.print('Interactive Mode:');
 			api.print("  If you are in interactive mode, you can ommit 'chatgpt ' from the commands above.");

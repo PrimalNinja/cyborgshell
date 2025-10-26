@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CyborgShell & DAGs: Complete Guide</title>
+    <title>CyborgShell - An Integrated Orchestrator Built on DAG Principles</title>
     <style>
         * {
             margin: 0;
@@ -15,50 +15,47 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             line-height: 1.6;
             color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #f5f5f5;
             padding: 20px;
         }
         
         .container {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 0 auto;
             background: white;
             padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         
         h1 {
-            color: #667eea;
-            border-bottom: 3px solid #764ba2;
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
             padding-bottom: 10px;
-            margin-bottom: 10px;
-            font-size: 2.5em;
-            text-align: center;
-        }
-        
-        .tagline {
-            text-align: center;
-            color: #666;
-            font-size: 1.1em;
             margin-bottom: 30px;
-            font-style: italic;
+            font-size: 2.5em;
         }
         
         h2 {
-            color: #764ba2;
-            margin-top: 35px;
-            margin-bottom: 15px;
+            color: #2c3e50;
+            margin-top: 40px;
+            margin-bottom: 20px;
             font-size: 1.8em;
-            border-left: 5px solid #667eea;
+            border-left: 4px solid #3498db;
             padding-left: 15px;
         }
         
         h3 {
-            color: #667eea;
+            color: #34495e;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+        
+        h4 {
+            color: #34495e;
             margin-top: 20px;
             margin-bottom: 10px;
-            font-size: 1.3em;
+            font-size: 1.1em;
         }
         
         p {
@@ -85,14 +82,13 @@
         }
         
         pre {
-            background: #2d2d2d;
-            color: #f8f8f2;
+            background: #282c34;
+            color: #abb2bf;
             padding: 20px;
-            border-radius: 8px;
+            border-radius: 5px;
             overflow-x: auto;
-            margin: 15px 0;
-            border-left: 4px solid #667eea;
-            font-size: 0.85em;
+            margin: 20px 0;
+            border-left: 4px solid #3498db;
         }
         
         pre code {
@@ -102,20 +98,86 @@
             padding: 0;
         }
         
-        .highlight-box {
-            background: #e8f4fd;
-            border-left: 4px solid #667eea;
-            padding: 20px;
-            margin: 20px 0;
+        .toc {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
             border-radius: 5px;
+            padding: 20px 30px;
+            margin: 30px 0;
+        }
+        
+        .toc h2 {
+            margin-top: 0;
+            border: none;
+            padding: 0;
+        }
+        
+        .toc ul {
+            list-style: none;
+            margin-left: 0;
+        }
+        
+        .toc li {
+            margin-bottom: 5px;
+        }
+        
+        .toc a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        
+        .toc a:hover {
+            text-decoration: underline;
+        }
+        
+        .highlight-box {
+            background: #e8f4f8;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
         }
         
         .success-box {
             background: #d4edda;
             border-left: 4px solid #28a745;
-            padding: 20px;
+            padding: 15px;
             margin: 20px 0;
-            border-radius: 5px;
+        }
+        
+        .danger-box {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th {
+            background: #3498db;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+        
+        tr:nth-child(even) {
+            background: #f9f9f9;
         }
         
         .checkmark {
@@ -123,36 +185,43 @@
             font-weight: bold;
         }
         
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            font-size: 0.95em;
+        .xmark {
+            color: #dc3545;
+            font-weight: bold;
         }
         
-        th {
-            background: #667eea;
-            color: white;
-            padding: 14px;
-            text-align: left;
-        }
-        
-        td {
-            border: 1px solid #ddd;
-            padding: 12px 14px;
-        }
-        
-        tr:nth-child(even) {
-            background: #f9f9f9;
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+                padding: 20px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>CyborgShell & DAGs</h1>
-        <p class="tagline">CyborgShell: An Integrated Orchestrator Built on DAG Principles</p>
+        <h1>CyborgShell - An Integrated Orchestrator Built on DAG Principles</h1>
 
-        <h2>What is a DAG?</h2>
+        <div class="toc">
+            <h2>Table of Contents</h2>
+            <ul>
+                <li><a href="#what-is-a-dag">What is a DAG</a></li>
+                <li><a href="#traditional-dag-tools-vs-cyborgshell">Traditional DAG Tools vs CyborgShell</a></li>
+                <li><a href="#how-cyborgshell-works">How CyborgShell Works</a></li>
+                <li><a href="#live-example">Live Example: 2 Minutes</a></li>
+                <li><a href="#real-world-examples">Real-World Examples</a></li>
+                <li><a href="#why-this-architecture-matters">Why This Architecture Matters</a></li>
+                <li><a href="#the-key-insight">The Key Insight</a></li>
+				<li><a href="#cyborgshell-redefining-dag-orchestration">CyborgShell: Redefining DAG Orchestration</a></li>
+            </ul>
+        </div>
+
+        <h2 id="what-is-a-dag">What is a DAG?</h2>
 
         <p>A Directed Acyclic Graph (DAG) is a structure for organizing work: nodes (tasks) connected by directed edges (dependencies), with one critical rule: <strong>no cycles in the graph structure.</strong></p>
 
@@ -163,7 +232,7 @@
 
         <p>This acyclic constraint does NOT prevent iteration, looping, or feedback-based workflows. It only prevents cycles IN THE GRAPH STRUCTURE. You can re-execute tasks, trigger them based on conditions, and feed outputs back as new inputs.</p>
 
-        <h2>Traditional DAG Tools vs CyborgShell</h2>
+        <h2 id="traditional-dag-tools-vs-cyborgshell">Traditional DAG Tools vs CyborgShell</h2>
 
         <p><strong>The key architectural difference:</strong> Traditional DAG tools separate the DAG from the orchestrator. CyborgShell unifies them.</p>
 
@@ -189,7 +258,7 @@ You define orchestration through links and transformers.
 Orchestration and DAG are unified.</pre>
         </div>
 
-        <h2>How CyborgShell Works</h2>
+        <h2 id="how-cyborgshell-works">How CyborgShell Works</h2>
 
         <p>CyborgShell is an integrated orchestration platform where:</p>
 
@@ -202,7 +271,7 @@ Orchestration and DAG are unified.</pre>
 
         <p>Because CyborgShell IS the orchestrator, it actively manages the DAG. It detects when files change, automatically cascades downstream, applies quality gates, and routes data through feedback loops.</p>
 
-        <h2>Live Example: 2 Minutes</h2>
+        <h2 id="live-example">Live Example: 2 Minutes</h2>
 
         <p><strong>Watch what happens in real time:</strong></p>
 
@@ -256,7 +325,7 @@ files
 # - CyborgShell detects dirty files and cascades automatically
 # - This IS active orchestration, not passive DAG execution</pre>
 
-        <h2>Real-World Examples</h2>
+        <h2 id="real-world-examples">Real-World Examples</h2>
 
         <h3>Example 1: Document Processor with Automatic Feeding</h3>
 
@@ -359,7 +428,7 @@ project save adaptive-coder
 # Same DAG, but orchestrator routes through feedback loop
 # Each iteration gets finer granularity until quality meets threshold</pre>
 
-        <h2>Why This Architecture Matters</h2>
+        <h2 id="why-this-architecture-matters">Why This Architecture Matters</h2>
 
         <table>
             <tr>
@@ -404,7 +473,7 @@ project save adaptive-coder
             </tr>
         </table>
 
-        <h2>The Key Insight</h2>
+        <h2 id="the-key-insight">The Key Insight</h2>
 
         <div class="success-box">
             <p><strong>CyborgShell IS the orchestrator.</strong></p>
@@ -429,7 +498,7 @@ project save adaptive-coder
             <p><strong>The train track:</strong> The graph stays acyclic (clean, parallelizable, understandable), but CyborgShell actively routes data through the network based on dirty files, transformers, quality gates, and conditions. It's active orchestration, not passive execution.</p>
         </div>
 
-        <h2>CyborgShell: Redefining DAG Orchestration</h2>
+        <h2 id="cyborgshell-redefining-dag-orchestration">CyborgShell: Redefining DAG Orchestration</h2>
 
         <p>CyborgShell takes the DAG concept—acyclic, parallelizable, structured—and adds something missing from traditional DAG tools: <strong>integrated, reactive orchestration.</strong></p>
 
@@ -446,9 +515,11 @@ project save adaptive-coder
 
         <hr style="margin: 40px 0; border: none; border-top: 2px solid #eee;">
 
-        <div style="text-align: center; margin-top: 40px; color: #666;">
-            <p><strong>CyborgShell</strong> by <a href="https://cyborgunicorn.com.au" target="_blank">Cyborg Unicorn Pty Ltd</a> 2025</p>
-            <p><a href="https://cyborgshell.com" target="_blank">cyborgshell.com</a> | <a href="https://github.com/PrimalNinja/cyborgshell" target="_blank">GitHub</a></p>
+        <div class="footer">
+			<div style="text-align: center; margin-top: 40px; color: #666;">
+				<p><strong>CyborgShell</strong> by <a href="https://cyborgunicorn.com.au" target="_blank">Cyborg Unicorn Pty Ltd</a> 2025</p>
+				<p><a href="https://cyborgshell.com" target="_blank">cyborgshell.com</a> | <a href="https://github.com/PrimalNinja/cyborgshell" target="_blank">GitHub</a></p>
+			</div>
         </div>
     </div>
 </body>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CyborgShell - Getting Started</title>
+    <title>CyborgShell - Getting Started in 5 Minutes</title>
     <style>
         * {
             margin: 0;
@@ -15,69 +15,60 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             line-height: 1.6;
             color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #f5f5f5;
             padding: 20px;
-            min-height: 100vh;
         }
         
         .container {
-            max-width: 900px;
+            max-width: 1200px;
             margin: 0 auto;
             background: white;
             padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-        }
-        
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-            padding-bottom: 20px;
-            border-bottom: 3px solid #667eea;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         
         h1 {
-            color: #667eea;
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
             font-size: 2.5em;
-            margin-bottom: 10px;
-        }
-        
-        .subtitle {
-            color: #666;
-            font-size: 1.2em;
-            font-style: italic;
         }
         
         h2 {
-            color: #764ba2;
-            margin-top: 30px;
-            margin-bottom: 15px;
+            color: #2c3e50;
+            margin-top: 40px;
+            margin-bottom: 20px;
             font-size: 1.8em;
-            border-left: 5px solid #667eea;
+            border-left: 4px solid #3498db;
             padding-left: 15px;
         }
         
         h3 {
-            color: #667eea;
+            color: #34495e;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+        
+        h4 {
+            color: #34495e;
             margin-top: 20px;
             margin-bottom: 10px;
-            font-size: 1.3em;
+            font-size: 1.1em;
         }
         
         p {
             margin-bottom: 15px;
         }
         
-        pre {
-            background: #2d2d2d;
-            color: #f8f8f2;
-            padding: 20px;
-            border-radius: 8px;
-            overflow-x: auto;
-            margin: 15px 0;
-            border-left: 4px solid #667eea;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 0.9em;
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
         }
         
         code {
@@ -90,6 +81,16 @@
             color: #c7254e;
         }
         
+        pre {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 20px 0;
+            border-left: 4px solid #3498db;
+        }
+        
         pre code {
             background: none;
             border: none;
@@ -97,52 +98,96 @@
             padding: 0;
         }
         
-        .highlight-box {
-            background: #e8f4fd;
-            border-left: 4px solid #667eea;
-            padding: 20px;
-            margin: 20px 0;
+        .toc {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
             border-radius: 5px;
+            padding: 20px 30px;
+            margin: 30px 0;
         }
         
-        .tip-box {
-            background: #fff9e6;
-            border-left: 4px solid #ffc107;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 5px;
-        }
-        
-        .tip-box h3 {
+        .toc h2 {
             margin-top: 0;
-            color: #f57c00;
+            border: none;
+            padding: 0;
         }
         
-        ol, ul {
-            margin-left: 30px;
-            margin-bottom: 15px;
+        .toc ul {
+            list-style: none;
+            margin-left: 0;
         }
         
-        li {
-            margin-bottom: 8px;
+        .toc li {
+            margin-bottom: 5px;
         }
         
-        .command {
-            background: #2d2d2d;
-            color: #61dafb;
-            padding: 3px 8px;
-            border-radius: 3px;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 0.9em;
+        .toc a {
+            color: #3498db;
+            text-decoration: none;
         }
         
-        .footer {
-            text-align: center;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 2px solid #eee;
-            color: #666;
-            font-size: 0.9em;
+        .toc a:hover {
+            text-decoration: underline;
+        }
+        
+        .highlight-box {
+            background: #e8f4f8;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .success-box {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .danger-box {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th {
+            background: #3498db;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+        
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        .checkmark {
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .xmark {
+            color: #dc3545;
+            font-weight: bold;
         }
         
         @media print {
@@ -153,11 +198,7 @@
             
             .container {
                 box-shadow: none;
-                max-width: 100%;
-            }
-            
-            pre {
-                page-break-inside: avoid;
+                padding: 20px;
             }
         }
     </style>
@@ -165,17 +206,29 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🚀 CyborgShell</h1>
-            <p class="subtitle">Getting Started in 5 Minutes</p>
+            <h1>CyborgShell - Getting Started in 5 Minutes</h1>
         </div>
 
-        <h2>What Is This?</h2>
+        <div class="toc">
+            <h2>Table of Contents</h2>
+            <ul>
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#why-its-different">Why It's Different</a></li>
+                <li><a href="#two-ways-to-code">Two Ways to Code</a></li>
+                <li><a href="#essential-commands">Essential Commands</a></li>
+                <li><a href="#ai-in-4-ways">AI in 4 Ways</a></li>
+                <li><a href="#your-first-program">Your First Program</a></li>
+                <li><a href="#your-first-ai-pipeline">Your First AI Pipeline</a></li>
+            </ul>
+        </div>
+
+        <h2 id="overview">Overview</h2>
         <div class="highlight-box">
             <p><strong>CyborgShell = 1980s BASIC + Modern JavaScript + AI + Cloud + Runs Everywhere</strong></p>
             <p>Type code on your phone, continue on Xbox, finish on PC. Same URL, same environment, zero setup.</p>
         </div>
 
-        <h3>Why It's Different</h3>
+        <h2 id="why-its-different">Why It's Different</h3>
         <div class="tip-box">
             <h3>🔒 Browser-Based = Your Privacy</h3>
             <ul>
@@ -196,7 +249,7 @@
             </ul>
         </div>
 
-        <h2>Two Ways to Code</h2>
+        <h2 id="two-ways-to-code">Two Ways to Code</h2>
 
         <h3>Immediate Mode (No Line Numbers)</h3>
         <p>Type and run instantly:</p>
@@ -214,7 +267,7 @@ save myprogram</code></pre>
             <strong>Key Rule:</strong> If you see a line number, it's stored. No line number? Runs immediately.
         </div>
 
-        <h2>Essential Commands</h2>
+        <h2 id="essential-commands">Essential Commands</h2>
         <pre><code># Files
 save mycode          # Save current program
 load mycode          # Load program
@@ -227,7 +280,7 @@ list                 # Show program
 edit 10              # Edit line 10
 new                  # Clear program</code></pre>
 
-        <h2>AI in 3 Ways</h2>
+        <h2 id="ai-in-4-ways">AI in 4 Ways</h2>
 
         <h3>1. Quick Questions</h3>
         <pre><code>!what is the capital of France?
@@ -245,12 +298,21 @@ story: write about robots
 coding: continue helping
 story: make it dramatic</code></pre>
 
-        <h2>Your First Program</h2>
+        <h3>4. Manus.im and other AI-Agents</h3>
+        <pre>Go to manus.im, ask it to go to cyborgshell.com, read the help and instruct it to perform a task.</pre>
+
+        <div class="tip-box">
+            <p><strong>💡 Pro tip:</strong> Sessions remember your conversations! Save them with <code>chatgpt save sessionname</code> and load later with <code>chatgpt load sessionname</code>. Great for building reusable knowledge bases.</p>
+            <p>For advanced session management (training, pipelines), see the <a href="session-management.html">Session Management Guide</a>.</p>
+        </div>
+
+        <h2 id="your-first-program">Your First Program</h2>
         <pre><code># Type this (immediate mode)
 10 api.print("My first program!");
-20 for(let i=1; i&lt;=5; i++) {
-30     api.print("Count: " + i);
-40 }
+20 for(let i=1; i&lt;=5; i++) 
+30 {
+40     api.print("Count: " + i);
+50 }
 
 # Run it
 run
@@ -262,7 +324,7 @@ save first
 load first
 run</code></pre>
 
-        <h2>Your First AI Pipeline</h2>
+        <h2 id="your-first-ai-pipeline">Your First AI Pipeline</h2>
         <pre><code># Setup 3 files
 file 1; 
 filename input.txt
@@ -273,8 +335,8 @@ filename output.txt
 file 1;
 
 # Link them with AI
-link 1 2 chatgpt openai improve this text
-link 2 3 translate Spanish
+link 2 1 chatgpt openai improve this text
+link 3 2 translate Spanish
 
 # Save the pipeline
 project save my-first-pipeline

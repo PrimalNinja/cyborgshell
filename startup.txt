@@ -1,1 +1,2 @@
 This is RELEASE CANDIDATE 12. Type 'help' for online help. Type 'notes' for release notes.
+English documentation available here: https://cyborgshell.com/docs

@@ -1,0 +1,482 @@
+function session_xfrm(objAPI_a, objGlobals_a, objXFrmAPI_a, strArgs_a, cb_a)
+{
+	var m_TRANSFORMER = 'session';
+	
+	console.log(m_TRANSFORMER + " plugin called with:");
+	console.log("objAPI_a:", typeof objAPI_a);
+	console.log("objGlobals_a:", typeof objGlobals_a);
+	console.log("objXFrmAPI_a:", typeof objXFrmAPI_a);
+	console.log("strArgs_a:", strArgs_a);
+	console.log("cb_a:", typeof cb_a);
+	
+	var m_MAXSESSIONSIZE = 256; // megabytes
+	
+	var api = objAPI_a;
+	var globals = objGlobals_a;
+	var xfrmapi = objXFrmAPI_a;
+	
+	// Concatenate all input sources
+	var m_strRaw = '';
+	var m_arrCode = [];
+	var m_strSourceFilenames = '';
+	
+	if (xfrmapi.sources && xfrmapi.sources.length > 0) 
+	{
+		var blnRenumber = xfrmapi.sources.length > 1;
+		var intLineNumber = 10;
+		
+		for (var intI = 0; intI < xfrmapi.sources.length; intI++) 
+		{
+			var objSource = xfrmapi.sources[intI];
+			
+			// Concatenate raw (binary or text string)
+			if (objSource.raw)
+			{
+				if (intI > 0)
+				{
+					m_strRaw += '\n';
+				}
+				m_strRaw += objSource.raw;
+			}
+			
+			// Concatenate cd arrays
+			if (objSource.cd)
+			{
+				for (var intJ = 0; intJ < objSource.cd.length; intJ++)
+				{
+					if (blnRenumber)
+					{
+						var objLine = {
+							ln: intLineNumber,
+							lc: objSource.cd[intJ].lc
+						};
+						m_arrCode.push(objLine);
+						intLineNumber += 10;
+					}
+					else
+					{
+						m_arrCode.push(objSource.cd[intJ]);
+					}
+				}
+			}
+			
+			// Build filename list for messages
+			if (intI > 0)
+			{
+				m_strSourceFilenames += ', ';
+			}
+			m_strSourceFilenames += (objSource.fn || 'Unnamed File');
+		}
+	} 
+	else 
+	{
+		// Single source (backwards compatibility)
+		m_strRaw = xfrmapi.raw || '';
+		m_arrCode = xfrmapi.cd || [];
+		m_strSourceFilenames = xfrmapi.sfn || 'Source';
+	}
+	
+	// Initialize session storage
+	if (!globals.chatgpt)
+	{
+		globals.chatgpt = {};
+	}
+	
+	if (!globals.chatgpt.sessions)
+	{
+		globals.chatgpt.sessionsize = 0;
+		globals.chatgpt.sessions = {};
+	}
+	
+	// Helper function to add to session
+	function addToSession(strSessionID_a, strText_a)
+	{
+		if (!globals.chatgpt.sessions[strSessionID_a])
+		{
+			globals.chatgpt.sessions[strSessionID_a] = [];
+		}
+		
+		var arrSession = globals.chatgpt.sessions[strSessionID_a];
+		var intTextSize = strText_a.length * 2; // 2 bytes per character (UTF-16)
+		var intMaxSizeBytes = m_MAXSESSIONSIZE * 1024 * 1024; // Convert MB to bytes
+		
+		// Add new text
+		arrSession.push(strText_a);
+		globals.chatgpt.sessionsize += intTextSize;
+		
+		// Remove oldest entries if we exceed the total size limit
+		while (globals.chatgpt.sessionsize > intMaxSizeBytes)
+		{
+			var blnRemovedAny = false;
+			
+			// Find the session with the oldest entry and remove it
+			var strOldestSessionID = null;
+			var intOldestIndex = -1;
+			
+			for (var strSessionKey in globals.chatgpt.sessions)
+			{
+				var arrCurrentSession = globals.chatgpt.sessions[strSessionKey];
+				if (arrCurrentSession.length > 0)
+				{
+					if (strOldestSessionID === null || intOldestIndex === -1)
+					{
+						strOldestSessionID = strSessionKey;
+						intOldestIndex = 0;
+					}
+				}
+			}
+			
+			// Remove the oldest entry
+			if (strOldestSessionID && globals.chatgpt.sessions[strOldestSessionID].length > 0)
+			{
+				var strRemovedText = globals.chatgpt.sessions[strOldestSessionID].shift();
+				var intRemovedSize = strRemovedText.length * 2;
+				globals.chatgpt.sessionsize -= intRemovedSize;
+				blnRemovedAny = true;
+				
+				// Clean up empty sessions
+				if (globals.chatgpt.sessions[strOldestSessionID].length === 0)
+				{
+					delete globals.chatgpt.sessions[strOldestSessionID];
+				}
+			}
+			
+			if (!blnRemovedAny)
+			{
+				break;
+			}
+		}
+	}
+	
+	// Parse args - session: syntax or command
+	if (!strArgs_a || strArgs_a.trim().length === 0)
+	{
+		// No args - just passthrough input sources
+		cb_a({
+			raw: m_strRaw,
+			cd: m_arrCode,
+			message: m_strSourceFilenames + ' passes through',
+			error: ''
+		});
+		return;
+	}
+	
+	var arrWords = strArgs_a.trim().split(' ');
+	var strSessionID = 'default';
+	var strCommand = '';
+	var strFilename = '';
+	
+	// Parse session: syntax
+	if (arrWords[0].endsWith(':'))
+	{
+		// Format: session myproject: [command] [filename]
+		strSessionID = arrWords[0].substring(0, arrWords[0].length - 1);
+		
+		if (arrWords.length > 1)
+		{
+			strCommand = arrWords[1].toLowerCase();
+			if (arrWords.length > 2)
+			{
+				strFilename = arrWords[2];
+			}
+		}
+		else
+		{
+			// Just "myproject:" - train with input sources
+			strCommand = 'train';
+		}
+	}
+	else
+	{
+		// Format: session command [filename]
+		strCommand = arrWords[0].toLowerCase();
+		if (arrWords.length > 1)
+		{
+			strFilename = arrWords[1];
+		}
+	}
+	
+	var intJ;
+	
+	// Handle: clear
+	if (strCommand === 'clear')
+	{
+		if (globals.chatgpt.sessions[strSessionID])
+		{
+			for (intJ = 0; intJ < globals.chatgpt.sessions[strSessionID].length; intJ++)
+			{
+				globals.chatgpt.sessionsize -= globals.chatgpt.sessions[strSessionID][intJ].length * 2;
+			}
+			globals.chatgpt.sessions[strSessionID] = [];
+		}
+		
+		// Passthrough input
+		cb_a({
+			raw: m_strRaw,
+			cd: m_arrCode,
+			message: 'Session "' + strSessionID + '" cleared',
+			error: ''
+		});
+		return;
+	}
+	
+	// Handle: save
+	if (strCommand === 'save')
+	{
+		if (globals.chatgpt.sessions[strSessionID])
+		{
+			var objSessionData = {
+				session: globals.chatgpt.sessions[strSessionID],
+				size: globals.chatgpt.sessions[strSessionID].reduce(function(intTotal_a, objEntry_a)
+				{
+					return intTotal_a + (objEntry_a.length * 2);
+				}, 0)
+			};
+			
+			api.saveFile('chatgpt-session-' + strSessionID + '.json', JSON.stringify(objSessionData), function(objResponse_a)
+			{
+				// Passthrough input regardless of save result
+				cb_a({
+					raw: m_strRaw,
+					cd: m_arrCode,
+					message: objResponse_a.error.length === 0 ? 
+						'Session "' + strSessionID + '" saved' : 
+						'Failed to save session "' + strSessionID + '"',
+					error: objResponse_a.error
+				});
+			});
+		}
+		else
+		{
+			// Passthrough input
+			cb_a({
+				raw: m_strRaw,
+				cd: m_arrCode,
+				message: '',
+				error: 'Session "' + strSessionID + '" not found'
+			});
+		}
+		return;
+	}
+	
+	// Handle: load
+	if (strCommand === 'load')
+	{
+		api.loadFile('chatgpt-session-' + strSessionID + '.json', function(objResponse_a)
+		{
+			if (objResponse_a.error.length === 0 && objResponse_a.content)
+			{
+				try
+				{
+					var objData = JSON.parse(objResponse_a.content);
+					if (objData && objData.session)
+					{
+						// Remove current session size if it exists
+						if (globals.chatgpt.sessions[strSessionID])
+						{
+							var intOldSize = globals.chatgpt.sessions[strSessionID].reduce(function(intTotal_a, objEntry_a)
+							{
+								return intTotal_a + (objEntry_a.length * 2);
+							}, 0);
+							globals.chatgpt.sessionsize -= intOldSize;
+						}
+						
+						// Load new session
+						globals.chatgpt.sessions[strSessionID] = objData.session;
+						globals.chatgpt.sessionsize += objData.size;
+						
+						// Passthrough input
+						cb_a({
+							raw: m_strRaw,
+							cd: m_arrCode,
+							message: 'Session "' + strSessionID + '" loaded',
+							error: ''
+						});
+					}
+					else
+					{
+						// Passthrough input
+						cb_a({
+							raw: m_strRaw,
+							cd: m_arrCode,
+							message: '',
+							error: 'Session "' + strSessionID + '" file is corrupted'
+						});
+					}
+				}
+				catch (objException_a)
+				{
+					// Passthrough input
+					cb_a({
+						raw: m_strRaw,
+						cd: m_arrCode,
+						message: '',
+						error: 'Session "' + strSessionID + '" file is corrupted: ' + objException_a.message
+					});
+				}
+			}
+			else
+			{
+				// Passthrough input
+				cb_a({
+					raw: m_strRaw,
+					cd: m_arrCode,
+					message: '',
+					error: 'Session "' + strSessionID + '" not found'
+				});
+			}
+		});
+		return;
+	}
+	
+	// Handle: train
+	if (strCommand === 'train')
+	{
+		if (arrWords.length >= 2)
+		{
+			// Train specific session with file content or other sessions
+			// Handle case where session ID is omitted (use 'default')
+			if (arrWords.length === 2)
+			{
+				strSessionID = 'default';
+				var strTrainingSources = arrWords[1];
+			}
+			else
+			{
+				// Session ID provided - strip colon if present
+				strSessionID = arrWords[1];
+				if (strSessionID.endsWith(':'))
+				{
+					strSessionID = strSessionID.substring(0, strSessionID.length - 1);
+				}
+				var strTrainingSources = arrWords[2];
+			}
+			
+			// Parse training sources: files (.ext) and sessions (:)
+			var arrSources = strTrainingSources.split(',');
+			var intTodo = 0;
+			var intDone = 0;
+			var arrMessages = [];
+			
+			// Count valid sources
+			for (var intI = 0; intI < arrSources.length; intI++)
+			{
+				if (arrSources[intI].trim().length > 0)
+				{
+					intTodo++;
+				}
+			}
+			
+			function checkComplete()
+			{
+				intDone++;
+				if (intDone === intTodo)
+				{
+					// All sources processed
+					if (arrMessages.length > 0)
+					{
+						api.print(arrMessages.join('\n'));
+					}
+					
+					if ($.isFunction(cb_a))
+					{
+						cb_a();
+					}
+				}
+			}
+			
+			if (intTodo === 0)
+			{
+				api.print('No valid training sources specified');
+				if ($.isFunction(cb_a))
+				{
+					cb_a();
+				}
+			}
+			else
+			{
+				for (var intI = 0; intI < arrSources.length; intI++)
+				{
+					var strSource = arrSources[intI].trim();
+					
+					if (strSource.length === 0)
+					{
+						continue;
+					}
+					
+					if (strSource.endsWith(':'))
+					{
+						// Session reference - copy from another session
+						var strSourceSession = strSource.substring(0, strSource.length - 1);
+						
+						if (globals.chatgpt.sessions[strSourceSession])
+						{
+							// Initialize target session if it doesn't exist
+							if (!globals.chatgpt.sessions[strSessionID])
+							{
+								globals.chatgpt.sessions[strSessionID] = [];
+							}
+							
+							// Append all entries from source session
+							for (var intJ = 0; intJ < globals.chatgpt.sessions[strSourceSession].length; intJ++)
+							{
+								addToSession(strSessionID, globals.chatgpt.sessions[strSourceSession][intJ]);
+							}
+							arrMessages.push('Session "' + strSessionID + '" trained with session "' + strSourceSession + '"');
+							checkComplete();
+						}
+						else
+						{
+							api.print('Source session "' + strSourceSession + '" not found');
+							checkComplete();
+						}
+					}
+					else
+					{
+						// File reference - load and train
+						(function(strFile) {
+							api.loadFile(strFile, function(objResponse_a)
+							{
+								if (objResponse_a.error.length === 0 && objResponse_a.content)
+								{
+									// Initialize session if it doesn't exist
+									if (!globals.chatgpt.sessions[strSessionID])
+									{
+										globals.chatgpt.sessions[strSessionID] = [];
+									}
+									
+									// Add file content to session
+									addToSession(strSessionID, objResponse_a.content);
+									arrMessages.push('Session "' + strSessionID + '" trained with ' + strFile);
+								}
+								else
+								{
+									api.print('Failed to load training file "' + strFile + '": ' + 
+										(objResponse_a.error || 'File not found'));
+								}
+								checkComplete();
+							});
+						})(strSource);
+					}
+				}
+			}
+		}
+		else
+		{
+			api.print('Usage: chatgpt train <sessionid> <filename>');
+			if ($.isFunction(cb_a))
+			{
+				cb_a();
+			}
+		}
+		return;
+	}
+	
+	// Unknown command or no command - just passthrough
+	cb_a({
+		raw: m_strRaw,
+		cd: m_arrCode,
+		message: m_strSourceFilenames + ' passes through',
+		error: ''
+	});
+}

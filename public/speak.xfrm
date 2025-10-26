@@ -1,18 +1,14 @@
 // example usage: 
 //	link drop speak accent:en-us
 //	link drop speak accent:en-au
-function speak_xfrm(objAPI_a, objGlobals_a, strSourceFilename_a, strSourceMimeType_a, strSourceMimeTypeEditor_a, strTargetFilename_a, strRaw_a, arrCode_a, strArgs_a, cb_a)
+function speak_xfrm(objAPI_a, objGlobals_a, objXFrmAPI_a, strArgs_a, cb_a)
 {
 	var m_TRANSFORMER = 'speak';
 	
 	console.log(m_TRANSFORMER + " plugin called with:");
 	console.log("objAPI_a:", typeof objAPI_a);
 	console.log("objGlobals_a:", typeof objGlobals_a);
-    console.log("strSourceFilename_a:", strSourceFilename_a);
-	console.log("strSourceMimeType_a:", strSourceMimeType_a);
-    console.log("strSourceMimeTypeEditor_a:", strSourceMimeTypeEditor_a);
-	console.log("strTargetFilename_a:", strTargetFilename_a);
-	console.log("arrCode_a:", arrCode_a);
+	console.log("objXFrmAPI_a:", typeof objXFrmAPI_a);
 	console.log("strArgs_a:", strArgs_a);
 	console.log("cb_a:", typeof cb_a);
 
@@ -21,10 +17,70 @@ function speak_xfrm(objAPI_a, objGlobals_a, strSourceFilename_a, strSourceMimeTy
 
 	var api = objAPI_a;
 	var globals = objGlobals_a;
+	var xfrmapi = objXFrmAPI_a;
+
+	// Concatenate all input sources
+	var m_strRaw = '';
+	var m_arrCode = [];
+	var m_strSourceFilenames = '';
+
+	if (xfrmapi.sources && xfrmapi.sources.length > 0) 
+	{
+		var blnRenumber = xfrmapi.sources.length > 1;
+		var intLineNumber = 10;
+		
+		for (var intI = 0; intI < xfrmapi.sources.length; intI++) 
+		{
+			var objSource = xfrmapi.sources[intI];
+			
+			// Concatenate raw (binary or text string)
+			if (objSource.raw)
+			{
+				if (intI > 0)  // input is text, so we need a \n
+				{
+					m_strRaw += '\n';
+				}
+				m_strRaw += objSource.raw;
+			}
+			
+			// Concatenate cd arrays
+			if (objSource.cd)
+			{
+				for (var intJ = 0; intJ < objSource.cd.length; intJ++)
+				{
+					if (blnRenumber)
+					{
+						var objLine = {
+							ln: intLineNumber,
+							lc: objSource.cd[intJ].lc
+						};
+						m_arrCode.push(objLine);
+						intLineNumber += 10;
+					}
+					else
+					{
+						m_arrCode.push(objSource.cd[intJ]);
+					}
+				}
+			}
+			
+			// Build filename list for messages
+			if (intI > 0)
+			{
+				m_strSourceFilenames += ', ';
+			}
+			m_strSourceFilenames += (objSource.fn || 'Unnamed File');
+		}
+	} 
+	else 
+	{
+		// Single source (backwards compatibility)
+		m_strRaw = xfrmapi.raw || '';
+		m_arrCode = xfrmapi.cd || [];
+		m_strSourceFilenames = xfrmapi.sfn || 'Source';
+	}
 	
 	var m_strArgs = strArgs_a;
-	var m_strRaw = strRaw_a;
-	var m_arrCode = arrCode_a;
 
 	// helpers 
 	

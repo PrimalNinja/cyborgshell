@@ -1,0 +1,91 @@
+function jsonmerge_xfrm(objAPI_a, objGlobals_a, objXFrmAPI_a, strArgs_a, cb_a)
+{
+	var m_TRANSFORMER = 'jsonmerge';	// lowercase for provider settings
+	
+    console.log(m_TRANSFORMER + " plugin called with:");
+    console.log("objAPI_a:", typeof objAPI_a);
+    console.log("objGlobals_a:", typeof objGlobals_a);
+    console.log("objXFrmAPI_a:", typeof objXFrmAPI_a);
+	console.log("strArgs_a:", strArgs_a);
+    console.log("cb_a:", typeof cb_a);
+
+	var api = objAPI_a;
+	var globals = objGlobals_a;
+	var xfrmapi = objXFrmAPI_a;
+	
+	var blnError = false;
+	var objMerged = {};
+	var strError = "";
+	var strResult = "";
+	
+	try
+	{
+		if (xfrmapi.sources && xfrmapi.sources.length > 0)
+		{
+			// Multiple JSON sources
+			for (var intI = 0; intI < xfrmapi.sources.length; intI++)
+			{
+				var strSourceContent;
+				if (xfrmapi.sources[intI].raw)
+				{
+					strSourceContent = xfrmapi.sources[intI].raw;
+				}
+				else
+				{
+					strSourceContent = "";
+				}
+				
+				if (strSourceContent)
+				{
+					var obj = JSON.parse(strSourceContent);
+					// Merge objects (later sources override earlier ones)
+					for (var key in obj)
+					{
+						objMerged[key] = obj[key];
+					}
+				}
+			}
+		}
+		else
+		{
+			// Single source
+			var singleContent;
+			if (xfrmapi.raw)
+			{
+				singleContent = xfrmapi.raw;
+			}
+			else
+			{
+				singleContent = "{}";
+			}
+			objMerged = JSON.parse(singleContent);
+		}
+		
+		strResult = JSON.stringify(objMerged, null, 2);
+	}
+	catch (objException_a)
+	{
+		blnError = true;
+		strError = "JSON parse error: " + objException_a.message;
+		strResult = "{}";
+	}
+	
+	if (blnError)
+	{
+		cb_a({
+			raw: strResult,
+			mte: "text",
+			mt: "application/json",
+			error: strError
+		});
+	}
+	else
+	{
+		cb_a({
+			raw: strResult,
+			mte: "text",
+			mt: "application/json",
+			error: strError
+		});
+	}
+}

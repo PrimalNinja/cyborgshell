@@ -1,0 +1,115 @@
+function filestats_xfrm(objAPI_a, objGlobals_a, objXFrmAPI_a, strArgs_a, cb_a)
+{
+	var m_TRANSFORMER = 'filestats';	// lowercase for provider settings
+	
+    console.log(m_TRANSFORMER + " plugin called with:");
+    console.log("objAPI_a:", typeof objAPI_a);
+    console.log("objGlobals_a:", typeof objGlobals_a);
+    console.log("objXFrmAPI_a:", typeof objXFrmAPI_a);
+	console.log("strArgs_a:", strArgs_a);
+    console.log("cb_a:", typeof cb_a);
+
+	var api = objAPI_a;
+	var globals = objGlobals_a;
+	var xfrmapi = objXFrmAPI_a;
+	
+	var arrLines;
+	var intFileCount = 0;
+	var intTotalLines = 0;
+	var intTotalSize = 0;
+	var intTotalWords = 0;
+	var intWords = 0;
+	var strContent;
+	var strResult = "";
+	
+	function countWords(str_a)
+	{
+		var arrWords = str_a.split(/\s+/);
+		var arrFilteredWords = [];
+		for (var intI = 0; intI < arrWords.length; intI++)
+		{
+			if (arrWords[intI].length > 0)
+			{
+				arrFilteredWords.push(arrWords[intI]);
+			}
+		}
+		return arrFilteredWords.length;
+	}
+	
+	if (xfrmapi.sources && xfrmapi.sources.length > 0)
+	{
+		strResult += "=== Statistics for Multiple Files ===\n\n";
+		
+		for (var intI = 0; intI < xfrmapi.sources.length; intI++)
+		{
+			if (xfrmapi.sources[intI].raw)
+			{
+				strContent = xfrmapi.sources[intI].raw;
+			}
+			else
+			{
+				strContent = "";
+			}
+			
+			arrLines = strContent.split("\n");
+			intWords = countWords(strContent);
+			
+			strResult += "File: " + xfrmapi.sources[intI].fn + "\n";
+			strResult += "  Size: " + strContent.length + " bytes\n";
+			strResult += "  Lines: " + arrLines.length + "\n";
+			strResult += "  Words: " + intWords + "\n\n";
+			
+			intTotalSize += strContent.length;
+			intTotalLines += arrLines.length;
+			intTotalWords += intWords;
+			intFileCount++;
+		}
+		
+		var intAvgSize = 0;
+		var intAvgLines = 0;
+		var intAvgWords = 0;
+		
+		if (intFileCount > 0)
+		{
+			intAvgSize = Math.round(intTotalSize / intFileCount);
+			intAvgLines = Math.round(intTotalLines / intFileCount);
+			intAvgWords = Math.round(intTotalWords / intFileCount);
+		}
+		
+		strResult += "=== Totals ===\n";
+		strResult += "Files: " + intFileCount + "\n";
+		strResult += "Total Size: " + intTotalSize + " bytes\n";
+		strResult += "Total Lines: " + intTotalLines + "\n";
+		strResult += "Total Words: " + intTotalWords + "\n";
+		strResult += "Average Size: " + intAvgSize + " bytes\n";
+		strResult += "Average Lines: " + intAvgLines + "\n";
+		strResult += "Average Words: " + intAvgWords + "\n";
+	}
+	else
+	{
+		// Single source
+		if (xfrmapi.raw)
+		{
+			strContent = xfrmapi.raw;
+		}
+		else
+		{
+			strContent = "";
+		}
+		
+		arrLines = strContent.split("\n");
+		intWords = countWords(strContent);
+		
+		strResult = "=== Statistics ===\n";
+		strResult += "Size: " + strContent.length + " bytes\n";
+		strResult += "Lines: " + arrLines.length + "\n";
+		strResult += "Words: " + intWords + "\n";
+	}
+	
+	cb_a({
+		raw: strResult,
+		mte: "text",
+		mt: "text/plain",
+		error: ""
+	});
+}

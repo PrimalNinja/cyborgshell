@@ -1,6 +1,46 @@
+// Google Command Status:
+
+// SERVER		LOCAL		GOOGLE
+
+// cmdDir		YES			TODO
+// cmdProject	-			TODO
+// cmdRun		-			TODO
+// cmdSaveAll	-			TODO
+// cmdSpace		YES			YES
+// cmdType		-			TODO
+// 'startup'	-			TODO
+// 'era'		-			TODO
+// 'load'		-			TODO
+// 'save'		-			TODO
+// 'rename'		-			TODO
+
+// File properties:
+
+// fn:	filename
+// mt:	mimetype
+// mte:	editor type
+// raw:	raw file (built code)
+// rs:	raw file size (approximate, nothing relies on it anyway)
+// cd:	editor code (unbuilt code)
+// ln:	file that this one is linked to
+// pl:	plugin name
+// arg:	optional plugin arguments
+// fl:	file flavour
+// st:	status
+// dt:	is the file dirty?
 function cyborgShell(strContainer_a, strInput_a, strOutput_a, blnShowStartupText_a)
 {
 	var m_DEBUGREADY = false;
+
+	// google drive stuff
+	var CLIENT_ID = '967393658478-o0cuvcebmpoel6db23alggbp76l98c9b.apps.googleusercontent.com'; // ⬅️ Must match your Google App
+	//var CYBORG_ORIGIN = 'https://cyborgshell.com'; 
+	var CYBORG_ORIGIN = 'http://localhost'; 
+	//var REDIRECT_URI = CYBORG_ORIGIN + '/oauth_callback.html';
+	var REDIRECT_URI = CYBORG_ORIGIN + '/cyborgshell/oauth_callback.html';
+	var SCOPE = 'https://www.googleapis.com/auth/drive.file';
+	var AUTH_ENDPOINT = 'https://accounts.google.com/o/oauth2/v2/auth';
+
 	var m_PARALLELTRANSFORMERS = true;
 
 	var m_COOKIENAME = "csdevicekey";
@@ -15,6 +55,8 @@ function cyborgShell(strContainer_a, strInput_a, strOutput_a, blnShowStartupText
 	var m_MAXLISTLINES = 1000;
 	var m_NEWFILENAME = 'Unnamed File';
 	var m_PRINTABLE_CHARS = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~';
+	var m_XFRM_BLOCKER = 'blocker.xfrm';
+	var m_XFRM_NULL = 'null.xfrm';
 	
 	var m_KEY_ARROWDOWN = 40;
 	var m_KEY_ARROWUP = 38;
@@ -87,6 +129,9 @@ function cyborgShell(strContainer_a, strInput_a, strOutput_a, blnShowStartupText
 	
 	var m_blnLocalStorageAvailable = hasLocalStorage();
 	var m_blnLocalStorageSpace = false;
+	var m_blnGoogleSpace = false;
+	var m_intGoogleAccessTokenExpiry = 0;
+	var m_strGoogleAccessToken = "";
 	var m_strAutorun = '';
 	
 	if (m_blnLocalStorageAvailable)
@@ -114,6 +159,14 @@ function cyborgShell(strContainer_a, strInput_a, strOutput_a, blnShowStartupText
 	eval("var m_objAPI = new cyborgShell_API(m_objG);");
 
 	// utils
+
+	function calculateExpiryTime(intExpiresIn_a) 
+	{
+		var dteNow = Date.now();
+		var intExpiresInMS = intExpiresIn_a * 1000;
+
+		return dteNow + intExpiresInMS;
+	}
 	
 	function after(cb_a, intDelay_a)
 	{
@@ -255,7 +308,7 @@ function cyborgShell(strContainer_a, strInput_a, strOutput_a, blnShowStartupText
 			mte: strEditor_a,		// editor type
 			raw: objRaw_a,			// raw file (built code)
 			rs: intRawSize_a,		// raw file size (approximate, nothing relies on it anyway)
-			cd: arrCode_a,			// editor (unbuilt code)
+			cd: arrCode_a,			// editor code (unbuilt code)
 			ln: null,				// file that this one is linked to
 			pl: '',					// plugin name
 			arg: '',				// optional plugin arguments
@@ -428,7 +481,229 @@ function cyborgShell(strContainer_a, strInput_a, strOutput_a, blnShowStartupText
 		return intResult;
 	}
 
-	function executePlugin(intPluginFileIndex_a, objSource_a, objTarget_a, cb_a)
+	function executePlugin(intPluginFileIndex_a, arrSources_a, objTarget_a, cb_a)
+	{
+		var arrSources;
+		var intI;
+		var objSource;
+		
+		// Ensure arrSources_a is an array
+		if (Array.isArray(arrSources_a))
+		{
+			arrSources = arrSources_a;
+		}
+		else
+		{
+			arrSources = [arrSources_a];
+		}
+		
+		function cb(objResult_a)
+		{
+			console.log('start of internal callback');
+			if (objResult_a.cd)
+			{
+				if ((objResult_a.mte === m_EDIT_HEX) || (objResult_a.mte === m_EDIT_TEXT))
+				{
+					if (objResult_a.mte !== objTarget_a.mte)
+					{
+						// change mte and a new default mimetype
+						objTarget_a.mte = objResult_a.mte;
+						if (objResult_a.mt !== undefined && objResult_a.mt !== null)
+						{
+							objTarget_a.mt = objResult_a.mt;
+						}
+						else
+						{
+							if (objTarget_a.mte === m_EDIT_HEX)
+							{
+								objTarget_a.mt = m_MIME_APPBINARY;
+							}
+							else
+							{
+								objTarget_a.mt = m_MIME_TEXTPLAIN;
+							}
+						}
+					}
+				}
+				else
+				{
+					if (objResult_a.mt !== undefined && objResult_a.mt !== null && objResult_a.mt !== objTarget_a.mt)
+					{
+						objTarget_a.mt = objResult_a.mt;
+					}
+				}
+
+				objTarget_a.cd = objResult_a.cd;
+				objTarget_a.raw = build(objResult_a.cd);
+				objTarget_a.rs = objTarget_a.raw.length;
+			}
+			else if (objResult_a.raw)
+			{
+				if ((objResult_a.mte === m_EDIT_HEX) || (objResult_a.mte === m_EDIT_TEXT))
+				{
+					if (objResult_a.mte !== objTarget_a.mte)
+					{
+						// change mte and a new default mimetype
+						objTarget_a.mte = objResult_a.mte;
+						if (objResult_a.mt !== undefined && objResult_a.mt !== null)
+						{
+							objTarget_a.mt = objResult_a.mt;
+						}
+						else
+						{
+							if (objTarget_a.mte === m_EDIT_HEX)
+							{
+								objTarget_a.mt = m_MIME_APPBINARY;
+							}
+							else
+							{
+								objTarget_a.mt = m_MIME_TEXTPLAIN;
+							}
+						}
+					}
+				}
+				else
+				{
+					if (objResult_a.mt !== undefined && objResult_a.mt !== null && objResult_a.mt !== objTarget_a.mt)
+					{
+						objTarget_a.mt = objResult_a.mt;
+					}
+				}
+
+				objTarget_a.raw = objResult_a.raw;
+				objTarget_a.rs = objResult_a.raw.length;
+				objTarget_a.cd = unbuild(objResult_a.raw, objResult_a.mte);
+			}
+			else
+			{
+				objTarget_a.raw = '';
+				objTarget_a.cd = [];
+				objTarget_a.rs = 0;
+			}
+			
+			if (objResult_a.message && objResult_a.message.length > 0)
+			{
+				appendOutput(objResult_a.message, false, true);
+			}
+			
+			if (objResult_a.error && objResult_a.error.length > 0)
+			{
+				errorOutput(objResult_a.error);
+			}
+			console.log('set dirty flag');
+			objTarget_a.dt = true;
+			
+			if (m_objThis.isFunction(cb_a))
+			{
+				console.log('end of executePlugin about to callback');
+				cb_a();
+			}
+		}
+
+		try
+		{
+			var strPluginCode = build(m_arrFiles[intPluginFileIndex_a].cd, m_EDIT_TEXT);
+			var strFunctionName = m_arrFiles[intPluginFileIndex_a].fn.replace('.xfrm', '_xfrm');
+
+			eval('system_api = {};');
+			
+			// Build system_api for multiple sources
+			if (arrSources.length === 1)
+			{
+				// Single source (backwards compatibility)
+				objSource = arrSources[0];
+				system_api.sfn = objSource.fn;
+				system_api.smt = objSource.mt;
+				system_api.smte = objSource.mte;
+				system_api.tfn = objTarget_a.fn;
+				
+				system_api.cd = objSource.cd;
+				if (objSource.mte === m_EDIT_HEX)
+				{
+					system_api.raw = objSource.raw;
+				}
+				else
+				{
+					system_api.raw = build(objSource.cd);
+				}
+			}
+			else
+			{
+				// Multiple sources - new API structure
+				system_api.sources = [];
+				for (intI = 0; intI < arrSources.length; intI++)
+				{
+					objSource = arrSources[intI];
+					var objSourceData = {
+						fn: objSource.fn,
+						mt: objSource.mt,
+						mte: objSource.mte,
+						cd: objSource.cd
+					};
+					
+					if (objSource.mte === m_EDIT_HEX)
+					{
+						objSourceData.raw = objSource.raw;
+					}
+					else
+					{
+						objSourceData.raw = build(objSource.cd);
+					}
+					
+					system_api.sources.push(objSourceData);
+				}
+				
+				// Also provide backwards compatibility fields from first source
+				system_api.sfn = arrSources[0].fn;
+				system_api.smt = arrSources[0].mt;
+				system_api.smte = arrSources[0].mte;
+				system_api.tfn = objTarget_a.fn;
+				
+				system_api.cd = arrSources[0].cd;
+				if (arrSources[0].mte === m_EDIT_HEX)
+				{
+					system_api.raw = arrSources[0].raw;
+				}
+				else
+				{
+					system_api.raw = build(arrSources[0].cd);
+				}
+			}
+			
+			system_api.arg = objTarget_a.arg;
+			system_api.cb = cb;
+
+			// accessed via array: system_api.sfn, system_api.smt, system_api.smte, system_api.tfn, system_api.raw, system_api.cd
+			var strCode = '(function(api, globals){' + strPluginCode + '; ' + strFunctionName + '(api, globals, system_api, system_api.arg, system_api.cb); })(m_objAPI, m_objG);';
+			console.log('about to eval plugin which has an internal callback');
+			eval(strCode);
+		}
+		catch (objException_a)
+		{
+			console.log('eval plugin exception, end of executePlugin about to callback');
+			errorOutput("Plugin error: " + objException_a.message);
+			
+			// Fallback: concatenate all sources
+			var strFallback = '';
+			for (intI = 0; intI < arrSources.length; intI++)
+			{
+				if (intI > 0)
+				{
+					strFallback += '\n';
+				}
+				strFallback += build(arrSources[intI].cd);
+			}
+			objTarget_a.cd = unbuild(strFallback, arrSources[0].mte);
+			objTarget_a.rs = strFallback.length;
+			
+			if (m_objThis.isFunction(cb_a))
+			{
+				cb_a();
+			}
+		}
+	}
+
+	function OLD_executePlugin(intPluginFileIndex_a, objSource_a, objTarget_a, cb_a)
 	{
 		function cb(objResult_a)
 		{
@@ -564,6 +839,208 @@ console.log('eval plugin exception, end of executePlugin about to callback');
 			objTarget_a.cd = unbuild(strFallback, objSource_a.mte);
 			objTarget_a.rs = strFallback.length;
 			
+			if (m_objThis.isFunction(cb_a))
+			{
+				cb_a();
+			}
+		}
+	}
+
+	function WRONG_executePlugin(intPluginFileIndex_a, arrSources_a, objTarget_a, cb_a)
+	{
+		var arrSources;
+		var objSource;
+		
+		// Ensure arrSources_a is an array
+		if (Array.isArray(arrSources_a))
+		{
+			arrSources = arrSources_a;
+		}
+		else
+		{
+			arrSources = [arrSources_a].sort(); // this should really preserve original order
+		}
+		
+		function cb(objResult_a)
+		{
+			console.log('start of internal callback');
+			if (objResult_a.cd)
+			{
+				if ((objResult_a.mte === m_EDIT_HEX) || (objResult_a.mte === m_EDIT_TEXT))
+				{
+					if (objResult_a.mte !== objTarget_a.mte)
+					{
+						// change mte and a new default mimetype
+						objTarget_a.mte = objResult_a.mte;
+						if (objResult_a.mt !== undefined && objResult_a.mt !== null)
+						{
+							objTarget_a.mt = objResult_a.mt;
+						}
+						else
+						{
+							if (objTarget_a.mte === m_EDIT_HEX)
+							{
+								objTarget_a.mt = m_MIME_APPBINARY;
+							}
+							else
+							{
+								objTarget_a.mt = m_MIME_TEXTPLAIN;
+							}
+						}
+					}
+				}
+				else
+				{
+					if (objResult_a.mt !== undefined && objResult_a.mt !== null && objResult_a.mt !== objTarget_a.mt)
+					{
+						objTarget_a.mt = objResult_a.mt;
+					}
+				}
+
+				objTarget_a.cd = objResult_a.cd;
+				objTarget_a.raw = build(objResult_a.cd);
+				objTarget_a.rs = objTarget_a.raw.length;
+			}
+			else if (objResult_a.raw)
+			{
+				if ((objResult_a.mte === m_EDIT_HEX) || (objResult_a.mte === m_EDIT_TEXT))
+				{
+					if (objResult_a.mte !== objTarget_a.mte)
+					{
+						// change mte and a new default mimetype
+						objTarget_a.mte = objResult_a.mte;
+						if (objResult_a.mt !== undefined && objResult_a.mt !== null)
+						{
+							objTarget_a.mt = objResult_a.mt;
+						}
+						else
+						{
+							if (objTarget_a.mte === m_EDIT_HEX)
+							{
+								objTarget_a.mt = m_MIME_APPBINARY;
+							}
+							else
+							{
+								objTarget_a.mt = m_MIME_TEXTPLAIN;
+							}
+						}
+					}
+				}
+				else
+				{
+					if (objResult_a.mt !== undefined && objResult_a.mt !== null && objResult_a.mt !== objTarget_a.mt)
+					{
+						objTarget_a.mt = objResult_a.mt;
+					}
+				}
+
+				objTarget_a.raw = objResult_a.raw;
+				objTarget_a.rs = objResult_a.raw.length;
+				objTarget_a.cd = unbuild(objResult_a.raw, objResult_a.mte);
+			}
+			else
+			{
+				objTarget_a.raw = '';
+				objTarget_a.cd = [];
+				objTarget_a.rs = 0;
+			}
+			
+			if (objResult_a.message && objResult_a.message.length > 0)
+			{
+				appendOutput(objResult_a.message, false, true);
+			}
+			
+			if (objResult_a.error && objResult_a.error.length > 0)
+			{
+				errorOutput(objResult_a.error);
+			}
+			console.log('set dirty flag');
+			objTarget_a.dt = true;
+			
+			if (m_objThis.isFunction(cb_a))
+			{
+				console.log('end of executePlugin about to callback');
+				cb_a();
+			}
+		}
+
+		try
+		{
+			var strPluginCode = build(m_arrFiles[intPluginFileIndex_a].cd, m_EDIT_TEXT);
+			var strFunctionName = m_arrFiles[intPluginFileIndex_a].fn.replace('.xfrm', '_xfrm');
+
+			eval('system_api = {};');
+			
+			// Build system_api for multiple sources
+			if (arrSources.length === 1)
+			{
+				// Single source (backwards compatibility)
+				objSource = arrSources[0];
+				system_api.sfn = objSource.fn;
+				system_api.smt = objSource.mt;
+				system_api.smte = objSource.mte;
+				system_api.tfn = objTarget_a.fn;
+				
+				if (objSource.mte === m_EDIT_HEX)
+				{
+					system_api.raw = objSource.raw;
+				}
+				else
+				{
+					system_api.cd = build(objSource.cd);
+				}
+			}
+			else
+			{
+				// Multiple sources - new API structure
+				system_api.sources = [];
+				for (intI = 0; intI < arrSources.length; intI++)
+				{
+					objSource = arrSources[intI];
+					var objSourceData = {
+						fn: objSource.fn,
+						mt: objSource.mt,
+						mte: objSource.mte
+					};
+					
+					if (objSource.mte === m_EDIT_HEX)
+					{
+						objSourceData.raw = objSource.raw;
+					}
+					else
+					{
+						objSourceData.cd = build(objSource.cd);
+					}
+					
+					system_api.sources.push(objSourceData);
+				}
+				
+				// Also provide backwards compatibility fields from first source
+				system_api.sfn = arrSources[0].fn;
+				system_api.smt = arrSources[0].mt;
+				system_api.smte = arrSources[0].mte;
+				if (arrSources[0].mte === m_EDIT_HEX)
+				{
+					system_api.raw = arrSources[0].raw;
+				}
+				else
+				{
+					system_api.cd = build(arrSources[0].cd);
+				}
+				
+				system_api.tfn = objTarget_a.fn;
+			}
+			
+			system_api.arg = objTarget_a.arg;
+			system_api.cb = cb;
+
+			// accessed via array: system_api.sfn, system_api.smt, system_api.smte, system_api.tfn, system_api.raw, system_api.cd
+			var strCode = '(function(api, globals){' + strPluginCode + '; ' + strFunctionName + '(api, globals, system_api, system_api.arg, system_api.cb); })(m_objAPI, m_objG);';
+			eval(strCode);
+		}
+		catch (objException_a)
+		{
+			errorOutput("Plugin error: " + objException_a.message);
 			if (m_objThis.isFunction(cb_a))
 			{
 				cb_a();
@@ -981,17 +1458,29 @@ console.log('eval plugin exception, end of executePlugin about to callback');
 		return escapeHTML(strResult);
 	}
 
-	function linkFile(intDestFile_a, intSourceFile_a, strPlugin_a, strArguments_a) 
+	function linkFile(intDestFile_a, arrSourceFiles_a, strPlugin_a, strArguments_a) 
 	{
 		var strPlugin = strPlugin_a;
 		var strArguments = strArguments_a;
+		var arrSourceFiles;
+		var blnError = false;
 		
-		if (!strPlugin) 
+		// Ensure arrSourceFiles_a is an array (for backwards compatibility)
+		if (Array.isArray(arrSourceFiles_a))
 		{
-			strPlugin = 'null.xfrm';
+			arrSourceFiles = arrSourceFiles_a;
+		}
+		else
+		{
+			arrSourceFiles = [arrSourceFiles_a];
 		}
 		
-		if (!strPlugin.endsWith('.xfrm')) 
+		if (!strPlugin)
+		{
+			strPlugin = m_XFRM_NULL;
+		}
+		
+		if (!strPlugin.endsWith('.xfrm'))
 		{
 			strPlugin += '.xfrm';
 		}
@@ -1001,32 +1490,53 @@ console.log('eval plugin exception, end of executePlugin about to callback');
 			strArguments = '';
 		}
 
-		if (intSourceFile_a < 0 || intDestFile_a < 0) 
+		// Validation
+		if (intDestFile_a < 0)
 		{
-			errorOutput("Invalid file number.");
+			errorOutput("Invalid destination file number.");
 			ready('linkFile');
+			blnError = true;
 		}
-		else if (intSourceFile_a === intDestFile_a) 
+		
+		if (!blnError)
 		{
-			errorOutput("A file cannot be linked to itself.");
-			ready('linkFile');
+			for (var intI = 0; intI < arrSourceFiles.length; intI++)
+			{
+				if (arrSourceFiles[intI] < 0)
+				{
+					errorOutput("Invalid source file number: " + arrSourceFiles[intI]);
+					ready('linkFile');
+					blnError = true;
+					break;
+				}
+				if (arrSourceFiles[intI] === intDestFile_a)
+				{
+					errorOutput("A file cannot be linked to itself.");
+					ready('linkFile');
+					blnError = true;
+					break;
+				}
+				if (arrSourceFiles[intI] >= m_intFiles || intDestFile_a >= m_intFiles)
+				{
+					cmdFiles();
+					blnError = true;
+					break;
+				}
+			}
 		}
-		else if (intSourceFile_a >= m_intFiles || intDestFile_a >= m_intFiles) 
-		{
-			cmdFiles();
-		}
-		else 
+		
+		if (!blnError)
 		{
 			// Load plugin immediately
 			var intPluginFileIndex = findPluginFile(strPlugin);
 
-			if (intPluginFileIndex === -1) 
+			if (intPluginFileIndex === -1)
 			{
-console.log('about to load plugin');
-				loadFile(strPlugin, function(objResponse_a) 
+				console.log('about to load plugin');
+				loadFile(strPlugin, function(objResponse_a)
 				{
-console.log('plugin loaded');
-					if (objResponse_a.error.length === 0) 
+					console.log('plugin loaded');
+					if (objResponse_a.error.length === 0)
 					{
 						var strContent = objResponse_a.content;
 
@@ -1038,40 +1548,36 @@ console.log('plugin loaded');
 
 						m_intFiles++;
 
-						// Set up the link
-						m_arrFiles[intDestFile_a].ln = intSourceFile_a;
+						// Set up the link with ARRAY of source files
+						m_arrFiles[intDestFile_a].ln = arrSourceFiles;
 						m_arrFiles[intDestFile_a].pl = strPlugin;
 						m_arrFiles[intDestFile_a].arg = strArguments;
 
-console.log('before updating linked file');
+						console.log('before updating linked file');
 
-						// Apply transformation immediately
-						//var strSourceCode = build(m_arrFiles[intSourceFile_a].cd);
-						updateLinkedFile(m_arrFiles[intSourceFile_a], m_arrFiles[intDestFile_a], function() 
+						// Apply transformation immediately if all sources are ready
+						updateLinkedFile(arrSourceFiles, m_arrFiles[intDestFile_a], function()
 						{
-console.log('before updating linked file ready');
+							console.log('before updating linked file ready');
 							ready('linkFile');
 						});
 					}
-					else 
+					else
 					{
 						errorOutput("Failed to load plugin: " + objResponse_a.error);
 						ready('linkFile');
 					}
-console.log('plugin loaded end');
+					console.log('plugin loaded end');
 				});
 			}
-			else 
+			else
 			{
-console.log('plugin already loaded');
 				// Plugin already loaded
-				m_arrFiles[intDestFile_a].ln = intSourceFile_a;
+				m_arrFiles[intDestFile_a].ln = arrSourceFiles;
 				m_arrFiles[intDestFile_a].pl = strPlugin;
 				m_arrFiles[intDestFile_a].arg = strArguments;
 
-				// Apply transformation immediately
-				//var strSourceCode = build(m_arrFiles[intSourceFile_a].cd);
-				updateLinkedFile(m_arrFiles[intSourceFile_a], m_arrFiles[intDestFile_a], function() 
+				updateLinkedFile(arrSourceFiles, m_arrFiles[intDestFile_a], function()
 				{
 					ready('linkFile');
 				});
@@ -1568,32 +2074,91 @@ console.log('plugin already loaded');
 		m_arrFiles[intFileIndex_a].rs = strBuild.length;
 	}
 
-	function updateLinkedFile(objSource_a, objTarget_a, cb_a)
+	function updateLinkedFile(arrSourceIndices_a, objTarget_a, cb_a)
 	{
-		if (objSource_a.dt)
+		var arrSourceIndices;
+		var arrSources = [];
+		var blnAllDirty = true;
+		var blnExecuteTransform = false;
+		
+		// Ensure arrSourceIndices_a is an array
+		if (Array.isArray(arrSourceIndices_a))
 		{
-			var strPluginName = objTarget_a.pl || 'blocker.xfrm';
+			arrSourceIndices = arrSourceIndices_a;
+		}
+		else if (arrSourceIndices_a && typeof arrSourceIndices_a === 'object')
+		{
+			arrSourceIndices = [arrSourceIndices_a];
+		}
+		else
+		{
+			arrSourceIndices = [];
+		}
+		
+		// Collect source objects
+		for (var intI = 0; intI < arrSourceIndices.length; intI++)
+		{
+			var intSourceIndex = arrSourceIndices[intI];
+			if (typeof intSourceIndex === 'object')
+			{
+				// It's already an object (backwards compatibility)
+				arrSources.push(intSourceIndex);
+				if (!intSourceIndex.dt)
+				{
+					blnAllDirty = false;
+				}
+			}
+			else if (typeof intSourceIndex === 'number' && m_arrFiles[intSourceIndex])
+			{
+				// It's an index
+				arrSources.push(m_arrFiles[intSourceIndex]);
+				if (!m_arrFiles[intSourceIndex].dt)
+				{
+					blnAllDirty = false;
+				}
+			}
+		}
+		
+		// Only proceed if ALL source files are dirty
+		if (blnAllDirty && arrSources.length > 0)
+		{
+			var strPluginName;
+			if (objTarget_a.pl)
+			{
+				strPluginName = objTarget_a.pl;
+			}
+			else
+			{
+				strPluginName = m_XFRM_BLOCKER;
+			}
+			
 			var intPluginFileIndex = findPluginFile(strPluginName);
 
 			if (intPluginFileIndex !== -1)
 			{
-				executePlugin(intPluginFileIndex, objSource_a, objTarget_a, cb_a);
+				// Pass array of sources to executePlugin
+				executePlugin(intPluginFileIndex, arrSources, objTarget_a, cb_a);
+				blnExecuteTransform = true;
 			}
 			else
 			{
 				// Fallback if plugin not found (shouldn't happen)
-				var strFallback = build(objSource_a.cd);
-				objTarget_a.cd = unbuild(strFallback, objSource_a.mte);
+				// For multiple sources, use first source
+				var strFallback = build(arrSources[0].cd);
+				objTarget_a.cd = unbuild(strFallback, arrSources[0].mte);
 				objTarget_a.rs = strFallback.length;
-				if (m_objThis.isFunction(cb_a)) 
+				if (m_objThis.isFunction(cb_a))
 				{
 					cb_a();
 				}
+				blnExecuteTransform = true;
 			}
 		}
-		else
+		
+		if (!blnExecuteTransform)
 		{
-			if (m_objThis.isFunction(cb_a)) 
+			// Not all sources are dirty yet, don't update
+			if (m_objThis.isFunction(cb_a))
 			{
 				cb_a();
 			}
@@ -1617,11 +2182,43 @@ console.log('plugin already loaded');
 				
 				for (intTarget = 0; intTarget < m_arrFiles.length; intTarget++)
 				{
-					if (m_arrFiles[intTarget].ln === intSource_a)
+					var varLN = m_arrFiles[intTarget].ln;
+					// Check if this file is linked to the source
+					if (varLN !== undefined && varLN !== null)
 					{
-						// Then record the link from parent (source) to child (target)
-						arrStack.push({ source: intSource_a, target: intTarget });
-						arrChildren.push(intTarget);
+						var blnIsLinked = false;
+						if (Array.isArray(varLN))
+						{
+							// Multiple sources
+							if (varLN.indexOf(intSource_a) !== -1)
+							{
+								blnIsLinked = true;
+							}
+						}
+						else if (typeof varLN === 'number')
+						{
+							// Single source (backwards compatibility)
+							if (varLN === intSource_a)
+							{
+								blnIsLinked = true;
+							}
+						}
+						
+						if (blnIsLinked)
+						{
+							// Record the link
+							var arrLinkSources;
+							if (Array.isArray(varLN))
+							{
+								arrLinkSources = varLN;
+							}
+							else
+							{
+								arrLinkSources = [varLN];
+							}
+							arrStack.push({ sources: arrLinkSources, target: intTarget });
+							arrChildren.push(intTarget);
+						}
 					}
 				}
 				
@@ -1642,7 +2239,15 @@ console.log('plugin already loaded');
 			{
 				var objLink = arrStack[intProcess];
 				intProcess++;
-				updateLinkedFile(m_arrFiles[objLink.source], m_arrFiles[objLink.target], processLink);
+				
+				// Collect source file objects
+				var arrSourceFiles = [];
+				for (var intI = 0; intI < objLink.sources.length; intI++)
+				{
+					arrSourceFiles.push(m_arrFiles[objLink.sources[intI]]);
+				}
+				
+				updateLinkedFile(arrSourceFiles, m_arrFiles[objLink.target], processLink);
 			}
 		}
 		processLink();
@@ -1655,54 +2260,112 @@ console.log('plugin already loaded');
 		
 		function updateCascade(intFileIndex, cb_a)
 		{
+			var blnAlreadyUpdated = false;
+			
 			if (arrUpdated.indexOf(intFileIndex) !== -1)
 			{
-				if (m_objThis.isFunction(cb_a)) cb_a();
-				return;
+				blnAlreadyUpdated = true;
 			}
 			
-			arrUpdated.push(intFileIndex);
-			var arrToUpdate = [];
-			
-			processArray(m_arrFiles, function(objFile_a, intRowNum_a, intFileIndex_a)
+			if (blnAlreadyUpdated)
 			{
-				if (objFile_a.ln === intFileIndex)
+				if (m_objThis.isFunction(cb_a))
 				{
-					arrToUpdate.push({file: objFile_a, index: intFileIndex_a});
+					cb_a();
 				}
-			});
-			
-			var intCompleted = 0;
-			if (arrToUpdate.length === 0)
-			{
-				if (m_objThis.isFunction(cb_a)) cb_a();
-				return;
 			}
-			
-			processArray(arrToUpdate, function(objUpdate_a)
+			else
 			{
-				//var strSourceCode = build(m_arrFiles[intFileIndex].cd);
-				updateLinkedFile(m_arrFiles[intFileIndex], objUpdate_a.file, function()
+				arrUpdated.push(intFileIndex);
+				var arrToUpdate = [];
+				
+				processArray(m_arrFiles, function(objFile_a, intRowNum_a, intFileIndex_a)
 				{
-					intCompleted++;
-					if (intCompleted === arrToUpdate.length)
+					var varLN = objFile_a.ln;
+					if (varLN !== undefined && varLN !== null)
 					{
-						// All files at this level updated, now cascade
-						var intCascadeCompleted = 0;
-						processArray(arrToUpdate, function(objUpdate_a)
+						var blnIsLinked = false;
+						if (Array.isArray(varLN))
 						{
-							updateCascade(objUpdate_a.index, function()
+							// Multiple sources
+							if (varLN.indexOf(intFileIndex) !== -1)
 							{
-								intCascadeCompleted++;
-								if (intCascadeCompleted === arrToUpdate.length)
-								{
-									if (m_objThis.isFunction(cb_a)) cb_a();
-								}
-							});
-						});
+								blnIsLinked = true;
+							}
+						}
+						else if (typeof varLN === 'number')
+						{
+							// Single source (backwards compatibility)
+							if (varLN === intFileIndex)
+							{
+								blnIsLinked = true;
+							}
+						}
+						
+						if (blnIsLinked)
+						{
+							arrToUpdate.push({file: objFile_a, index: intFileIndex_a});
+						}
 					}
 				});
-			});
+				
+				var intCompleted = 0;
+				if (arrToUpdate.length === 0)
+				{
+					if (m_objThis.isFunction(cb_a))
+					{
+						cb_a();
+					}
+				}
+				else
+				{
+					processArray(arrToUpdate, function(objUpdate_a)
+					{
+						// Get all source indices for this target
+						var varLN = objUpdate_a.file.ln;
+						var arrSourceIndices;
+						if (Array.isArray(varLN))
+						{
+							arrSourceIndices = varLN;
+						}
+						else
+						{
+							arrSourceIndices = [varLN];
+						}
+						
+						// Collect source file objects
+						var arrSourceFiles = [];
+						for (var intI = 0; intI < arrSourceIndices.length; intI++)
+						{
+							arrSourceFiles.push(m_arrFiles[arrSourceIndices[intI]]);
+						}
+						
+						updateLinkedFile(arrSourceFiles, objUpdate_a.file, function()
+						{
+							intCompleted++;
+							if (intCompleted === arrToUpdate.length)
+							{
+								// All files at this level updated, now cascade
+								var intCascadeCompleted = 0;
+								processArray(arrToUpdate, function(objUpdate_a)
+								{
+									updateCascade(objUpdate_a.index, function()
+									{
+										intCascadeCompleted++;
+										if (intCascadeCompleted === arrToUpdate.length)
+										{
+											if (m_objThis.isFunction(cb_a))
+											{
+												cb_a();
+											}
+										}
+									});
+								});
+							}
+						});
+					});
+				}
+			}
 		}
 		
 		updateCascade(intFileLinkedTo_a);
@@ -2207,13 +2870,20 @@ console.log('plugin already loaded');
 				strFlavour = " " + strFlavour;
 			}
 
-			var intLinkTo = objFile_a.ln;
+			var varLinkTo = objFile_a.ln;
 			var strLinkTo = "";
-			if (intLinkTo !== null)
+			if (varLinkTo !== null)
 			{
-				if (intLinkTo  >= 0)
+				if (Array.isArray(varLinkTo))
 				{
-					strLinkTo = " Linked to " + intLinkTo + ":" + objFile_a.pl + ":" + objFile_a.arg;
+					strLinkTo = " Linked to " + varLinkTo.join(",") + ":" + objFile_a.pl + ":" + objFile_a.arg;
+				}
+				else
+				{
+					if (varLinkTo  >= 0)
+					{
+						strLinkTo = " Linked to " + varLinkTo + ":" + objFile_a.pl + ":" + objFile_a.arg;
+					}
 				}
 			}
 			
@@ -2245,40 +2915,92 @@ console.log('plugin already loaded');
 
 	function cmdLink(arrParams_a)
 	{
-		var intExistingInde;
+		var intI;
+		var intExistingIndex;
+		var intSourceFile;
 		var strArguments;
+		var blnProcessComplete = false;
 		
 		if (arrParams_a.length < 2)
 		{
 			errorOutput("Missing parameters.");
 			ready('cmdLink');
+			blnProcessComplete = true;
 		}
-		else
+		
+		if (!blnProcessComplete)
 		{
-			var arg1 = arrParams_a[1];
-			if (/^\d+$/.test(arg1))
+			var varArg1 = arrParams_a[1];
+			if (/^\d+$/.test(varArg1))
 			{
-				// Traditional file-number logic
+				// Traditional file-number logic with support for multiple inputs
 				if (arrParams_a.length < 3)
 				{
 					errorOutput("Missing parameters.");
 					ready('cmdLink');
-					return;
+					blnProcessComplete = true;
 				}
 				
-				var intDestFile = getInt(arg1, 10);
-				var intSourceFile = getInt(arrParams_a[2], 10);
-				var strPlugin = arrParams_a[3];
-				strArguments = arrParams_a.slice(4).join(' ');
+				if (!blnProcessComplete)
+				{
+					var intDestFile = getInt(varArg1, 10);
+					
+					// Parse source files - could be comma-separated like "2,3,4"
+					var strSourceFiles = arrParams_a[2];
+					var arrSourceFiles = [];
+					
+					if (strSourceFiles.indexOf(',') > -1)
+					{
+						// Multiple source files
+						var arrSourceParts = strSourceFiles.split(',');
+						for (intI = 0; intI < arrSourceParts.length; intI++)
+						{
+							intSourceFile = getInt(arrSourceParts[intI].trim(), 10);
+							if (intSourceFile >= 0)
+							{
+								arrSourceFiles.push(intSourceFile);
+							}
+						}
+					}
+					else
+					{
+						// Single source file (backwards compatibility)
+						intSourceFile = getInt(strSourceFiles, 10);
+						if (intSourceFile >= 0)
+						{
+							arrSourceFiles.push(intSourceFile);
+						}
+					}
+					
+					if (arrSourceFiles.length === 0)
+					{
+						errorOutput("No valid source files specified.");
+						ready('cmdLink');
+						blnProcessComplete = true;
+					}
+					
+					if (!blnProcessComplete)
+					{
+						var strPlugin = arrParams_a[3];
+						strArguments = arrParams_a.slice(4).join(' ');
 
-				createEmptyFilesUpTo(intDestFile);
-				createEmptyFilesUpTo(intSourceFile);
-				linkFile(intDestFile, intSourceFile, strPlugin, strArguments);
+						// Create empty files up to the maximum file number needed
+						createEmptyFilesUpTo(intDestFile);
+						for (intI = 0; intI < arrSourceFiles.length; intI++)
+						{
+							createEmptyFilesUpTo(arrSourceFiles[intI]);
+						}
+						
+						// Call modified linkFile with array of source files
+						linkFile(intDestFile, arrSourceFiles, strPlugin, strArguments);
+						blnProcessComplete = true;
+					}
+				}
 			}
 			else
 			{
 				// Event-based linking
-				var strEvent = arg1;
+				var strEvent = varArg1;
 				
 				if (arrParams_a.length === 2)
 				{
@@ -2294,6 +3016,7 @@ console.log('plugin already loaded');
 						appendOutput("No event link found for: " + strEvent, false, true);
 					}
 					ready('cmdLink');
+					blnProcessComplete = true;
 				}
 				else
 				{
@@ -2301,7 +3024,7 @@ console.log('plugin already loaded');
 					var strTransformer = arrParams_a[2];
 					strArguments = arrParams_a.slice(3).join(' ');
 
-					if (!strTransformer.endsWith('.xfrm')) 
+					if (!strTransformer.endsWith('.xfrm'))
 					{
 						strTransformer += '.xfrm';
 					}
@@ -2320,34 +3043,9 @@ console.log('plugin already loaded');
 
 					m_arrLinkEvents.push({ eventname: strEvent, transformer: strTransformer, arg: strArguments });
 					ready('cmdLink');
+					blnProcessComplete = true;
 				}
 			}
-		}
-	}
-
-	function OLD_cmdLink(arrParams_a) 
-	{
-		if (arrParams_a.length > 3) 
-		{
-			if (m_blnLocalStorageSpace)
-			{
-				errorOutput('Invalid operation for the local space.');
-			}
-			else
-			{
-				var intDestFile = getInt(arrParams_a[1].trim(), 10);
-				var intSourceFile = getInt(arrParams_a[2].trim(), 10);
-				var strPlugin = arrParams_a[3];
-				var strArguments = arrParams_a.slice(4).join(' ');
-				createEmptyFilesUpTo(intDestFile);
-				createEmptyFilesUpTo(intSourceFile);
-				linkFile(intDestFile, intSourceFile, strPlugin, strArguments);
-			}
-		} 
-		else 
-		{
-			errorOutput("Missing parameters.");
-			ready('cmdLink');
 		}
 	}
 	
@@ -3067,6 +3765,30 @@ console.log('plugin already loaded');
 			   ready('cmdSpace');
 		   }
 	   }
+	   else if (arrParams_a.length > 1 && ((arrParams_a[1].trim().toLowerCase() === 'google') || (arrParams_a[1].trim().toLowerCase() === 'drive.google.com')))
+	   {
+		   if (Date.now() < m_intGoogleAccessTokenExpiry)
+		   {
+			   m_blnGoogleSpace = true;
+			   appendOutput("Space is now drive.google.com.", false, true);
+			   ready('cmdSpace');
+		   }
+		   else
+		   {
+			   cyborgConnectDrive(function(strAccessToken_a, intExpiresIn_a)
+			   {
+				   m_strGoogleAccessToken = strAccessToken_a;
+				   m_intGoogleAccessTokenExpiry = calculateExpiryTime(intExpiresIn_a);
+				   m_blnGoogleSpace = true;
+				   appendOutput("Space is now drive.google.com.", false, true);
+				   ready('cmdSpace');
+			   }, function()
+			   {
+				   errorOutput("drive.google.com unavailable.");
+				   ready('cmdSpace');
+			   });
+		   }
+	   }
 	   else if (arrParams_a.length > 1)
 	   {
 		   // Switching to non-local space
@@ -3078,6 +3800,11 @@ console.log('plugin already loaded');
 		   if (m_blnLocalStorageSpace)
 		   {
 			   appendOutput("local", false, true);
+			   ready('cmdSpace');
+		   }
+		   else if (m_blnGoogleSpace)
+		   {
+			   appendOutput("drive.google.com", false, true);
 			   ready('cmdSpace');
 		   }
 		   else
@@ -3857,4 +4584,189 @@ console.log('plugin already loaded');
 			handleFileDrop(arrFiles);
 		});
 	};
+	
+	// Main function to start the OAuth flow (e.g., called when user types 'cd google').
+	function cyborgConnectDrive(cbSuccess_a, cbError_a)
+	{
+		// Generate PKCE values (Code Verifier and Challenge)
+		var strCodeVerifier = generateRandomString(128);
+		var strCodeChallenge = generateCodeChallenge(strCodeVerifier); 
+
+		// Store verifier locally for the final exchange
+		if (window.sessionStorage) 
+		{
+			window.sessionStorage.setItem('oauth_code_verifier', strCodeVerifier);
+		}
+
+		// Build the Authorization URL, forcing consent
+		var strAuthURL = AUTH_ENDPOINT +
+			'?client_id=' + encodeURIComponent(CLIENT_ID) +
+			'&redirect_uri=' + encodeURIComponent(REDIRECT_URI) +
+			'&response_type=code' +
+			'&scope=' + encodeURIComponent(SCOPE) +
+			'&access_type=online' +
+			'&prompt=consent' + // Forces consent screen every time
+			'&code_challenge=' + encodeURIComponent(strCodeChallenge) +
+			'&code_challenge_method=S256';
+
+		// Open the pop-up window
+		var intWidth = 600;
+		var intHeight = 600;
+		var intLeft = (screen.width - intWidth) / 2;
+		var intTop = (screen.height - intHeight) / 2;
+		window.open(strAuthURL, 'googleAuthPopup', 'width=' + intWidth + ',height=' + intHeight + ',top=' + intTop + ',left=' + intLeft);
+		
+		// Set up the postMessage listener to receive the code
+		window.addEventListener('message', function(objEvent_a) 
+		{
+			// Ensure message security (check origin)
+			if (objEvent_a.origin === CYBORG_ORIGIN) 
+			{
+				if (objEvent_a.data && objEvent_a.data.type === 'GOOGLE_AUTH_CODE') 
+				{
+					// SUCCESS: Code received.
+					window.removeEventListener('message', arguments.callee);
+					
+					var strAuthCode = objEvent_a.data.code;
+					console.log("Authorization granted. Exchanging code securely...");
+					
+					// INVOKE THE EXCHANGE FUNCTION, PASSING CALLBACKS
+					// The callbacks will execute after the AJAX confirms the token.
+					exchangeCode(strAuthCode, cbSuccess_a, cbError_a);
+				} 
+				else if (objEvent_a.data && objEvent_a.data.type === 'GOOGLE_AUTH_ERROR') 
+				{
+					 // ERROR: User denied access or other failure
+					window.removeEventListener('message', arguments.callee);
+					console.error("Authorization failed or denied by user:", objEvent_a.data.error);
+
+					// Call cbError_a immediately because the process is over.
+					if (m_objThis.isFunction(cbError_a))
+					{
+						cbError_a();
+					}
+				}
+			}
+		}, false);
+	}
+
+	// random string generator for PKCE verifier.
+	function generateRandomString(intLength_a) 
+	{
+		var strChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~';
+		var strResult = '';
+
+		for (var intI = 0; intI < intLength_a; intI++) 
+		{
+			strResult += strChars.charAt(Math.floor(Math.random() * strChars.length));
+		}
+
+		return strResult;
+	}
+
+	/*
+	 * DUMMY function for PKCE Code Challenge.
+	 * A production app MUST use SHA256 hashing and Base64Url encoding here.
+	 * As a minimal functional test, we skip the hash and rely on the verifier 
+	 * in session storage, but Google will fail this PKCE check.
+	 * * To make the test pass, you will NEED a proper crypto library OR use 
+	 * a simple Base64Url-encoded verifier as the challenge for a quick, non-compliant test.
+	 * * For real compliance, you need to use a library like 'jsrsasign' for SHA256 in ES5.
+	 */
+	function generateCodeChallenge(strVerifier_a) 
+	{
+		var strHash = CryptoJS.SHA256(strVerifier_a);
+		var strResult = CryptoJS.enc.Base64url.stringify(strHash);
+		
+		return strResult;
+	}
+
+	/*
+	 * Minimal jQuery function to send the authorization code and verifier
+	 * via AJAX to the server for exchange.
+	 * * @param {string} strAuthCode_a - The temporary code received from the Google pop-up.
+	 * * @param {function} cbSuccess_a - The callback to run on final token success. 
+	 * * @param {function} cbError_a - The callback to run on final token failure. 
+	 */
+	function exchangeCode(strAuthCode_a, cbSuccess_a, cbError_a) 
+	{
+		var strVerifier = window.sessionStorage.getItem('oauth_code_verifier');
+		//var strURL = '/api/google/exchange.php';
+		var strURL = '/cyborgshell/api/google/exchange.php';
+		
+		// Clean up the security key immediately
+		if (window.sessionStorage) 
+		{
+			window.sessionStorage.removeItem('oauth_code_verifier');
+		}
+
+		if (!strVerifier) 
+		{
+			console.error("ERROR: PKCE security key missing. Cannot complete exchange.");
+			// Call error callback immediately if critical data is missing
+			if (m_objThis.isFunction(cbError_a)) { cbError_a(); }
+			return;
+		}
+
+		// Prepare the JSON payload
+		var objPayload = {
+			code: strAuthCode_a,
+			verifier: strVerifier
+		};
+
+		console.log("Sending secure token exchange request to " + strURL + " using jQuery.post...");
+		
+		// Send the request using jQuery's $.post
+		$.post(strURL, JSON.stringify(objPayload), function(objResponse_a) {
+			
+			if (objResponse_a && objResponse_a.success) 
+			{
+				// SUCCESS: Token successfully received and exchanged.
+				console.log("Token Exchange Successful. Access Token Received:", objResponse_a.access_token);
+
+				if (window.sessionStorage) 
+				{
+					window.sessionStorage.setItem('drive_access_token', objResponse_a.access_token);
+				}
+				
+				// EXECUTE SUCCESS CALLBACK HERE
+				if (m_objThis.isFunction(cbSuccess_a))
+				{
+					cbSuccess_a(objResponse_a.access_token, objResponse_a.expires_in);
+				}
+
+			} 
+			else 
+			{
+				// Server returned 200, but the payload indicates an error (e.g., bad code, invalid PKCE)
+				console.error("Token Exchange Failed (Server Success, Payload Error):", response.error, response.details);
+				
+				// EXECUTE ERROR CALLBACK HERE
+				if (m_objThis.isFunction(cbError_a))
+				{
+					cbError_a();
+				}
+			}
+			
+		}, "json").fail(function(xhr, status, strError_a) 
+		{
+			// This runs on HTTP errors (e.g., 404, 500 from the PHP script)
+			var strErrorDetails;
+			if (xhr.responseJSON) 
+			{
+				strErrorDetails = xhr.responseJSON.details;
+			} 
+			else 
+			{
+				strErrorDetails = xhr.responseText || strError_a;
+			}
+			console.error("Token Exchange Failed (HTTP Error):", strErrorDetails);
+			
+			// EXECUTE ERROR CALLBACK HERE
+			if (m_objThis.isFunction(cbError_a))
+			{
+				cbError_a();
+			}
+		});
+	}
 }

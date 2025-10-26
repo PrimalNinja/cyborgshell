@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyborgShell Project Creation Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        
+        h2 {
+            color: #2c3e50;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+        }
+        
+        h3 {
+            color: #34495e;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+        
+        h4 {
+            color: #34495e;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        p {
+            margin-bottom: 15px;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        code {
+            background: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            padding: 2px 6px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9em;
+            color: #c7254e;
+        }
+        
+        pre {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 20px 0;
+            border-left: 4px solid #3498db;
+        }
+        
+        pre code {
+            background: none;
+            border: none;
+            color: inherit;
+            padding: 0;
+        }
+        
+        .toc {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 20px 30px;
+            margin: 30px 0;
+        }
+        
+        .toc h2 {
+            margin-top: 0;
+            border: none;
+            padding: 0;
+        }
+        
+        .toc ul {
+            list-style: none;
+            margin-left: 0;
+        }
+        
+        .toc li {
+            margin-bottom: 5px;
+        }
+        
+        .toc a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        
+        .toc a:hover {
+            text-decoration: underline;
+        }
+        
+        .pattern-box {
+            background: #e8f4f8;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .example-box {
+            background: #f0f9ff;
+            border: 1px solid #b3d9ff;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .tip-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .warning-box {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .command {
+            background: #282c34;
+            color: #61dafb;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9em;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th {
+            background: #3498db;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+        
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+                padding: 20px;
+            }
+            
+            pre {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CyborgShell Project Creation Guide</h1>
+        
+        <div class="toc">
+            <h2>Table of Contents</h2>
+            <ul>
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#structure">Project File Structure</a></li>
+                <li><a href="#concepts">Key Concepts</a></li>
+                <li><a href="#transformers">Available Transformers</a></li>
+                <li><a href="#patterns">Design Patterns</a></li>
+                <li><a href="#examples">Example Projects</a></li>
+                <li><a href="#cli">Command-Line Project Creation</a></li>
+                <li><a href="#best-practices">Best Practices</a></li>
+                <li><a href="#common-patterns">Common Patterns</a></li>
+                <li><a href="#debugging">Debugging Tips</a></li>
+                <li><a href="#advanced">Advanced Techniques</a></li>
+                <li><a href="#formats">File Formats</a></li>
+                <li><a href="#prompts">Tips for AI Prompts</a></li>
+            </ul>
+        </div>
+
+        <h2 id="overview">Overview</h2>
+        <p>CyborgShell projects are JSON files that define transformer pipelines - directed acyclic graphs (DAGs) where files are nodes and transformers are edges. When a source file becomes "dirty" (modified), all linked transformers execute automatically in cascade.</p>
+
+        <h2 id="structure">Project File Structure</h2>
+        <pre><code>{
+  "projectName": "my-project",
+  "files": [
+    {
+      "fn": "filename.txt",           // Filename
+      "mt": "text/plain",             // MIME type
+      "mte": "text",                  // Editor type (text/hex)
+      "ln": 1,                        // Linked to file index (null if none)
+      "pl": "transformer.xfrm",       // Plugin/transformer name
+      "arg": "arguments here",        // Transformer arguments
+      "fl": "",                       // File flavour
+      "st": ""                        // Status
+    }
+  ]
+}</code></pre>
+
+        <h2 id="concepts">Key Concepts</h2>
+        
+        <h3>File Indexing</h3>
+        <ul>
+            <li>Files are indexed starting at <strong>1</strong> (not 0!)</li>
+            <li>File 0 is reserved for "Run Space"</li>
+            <li>Use <code>ln: null</code> for source files with no input</li>
+            <li>Use <code>ln: 2</code> to link to file index 2</li>
+        </ul>
+
+        <h3>Multi-Input Links</h3>
+        <ul>
+            <li>Single input: <code>"ln": 2</code></li>
+            <li>Multiple inputs: <code>"ln": "2,3,4"</code></li>
+            <li>All input files must be dirty before transformer executes</li>
+        </ul>
+
+        <h3>Transformer Placement</h3>
+        <ul>
+            <li>Transformers should be included as files in the project</li>
+            <li>Use <code>"mt": "text/javascript transformer"</code> for transformer files</li>
+            <li>Set <code>"ln": null</code> for transformer files</li>
+        </ul>
+
+        <h2 id="transformers">Available Transformers</h2>
+
+        <h3>AI Transformers</h3>
+        <table>
+            <tr>
+                <th>Transformer</th>
+                <th>Description</th>
+                <th>Arguments</th>
+            </tr>
+            <tr>
+                <td><code>chatgpt.xfrm</code></td>
+                <td>AI processing</td>
+                <td><code>"service prompt"</code> or <code>"service session:id prompt"</code></td>
+            </tr>
+            <tr>
+                <td><code>translate.xfrm</code></td>
+                <td>Translate text</td>
+                <td>target language</td>
+            </tr>
+        </table>
+
+        <div class="tip-box">
+            <strong>ChatGPT Services:</strong> <code>openai</code>, <code>claude</code>, <code>gemini</code>, or <code>%PROVIDER%</code> for configured default
+        </div>
+
+        <h3>Data Processing</h3>
+        <table>
+            <tr>
+                <th>Transformer</th>
+                <th>Description</th>
+                <th>Arguments</th>
+            </tr>
+            <tr>
+                <td><code>blocker.xfrm</code></td>
+                <td>Stops cascade if input is empty</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td><code>null.xfrm</code></td>
+                <td>Discards input, outputs nothing</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td><code>passthrough.xfrm</code></td>
+                <td>Direct copy, handles both .raw and .cd, renumbers multi-input</td>
+                <td>None</td>
+            </tr>
+        </table>
+
+        <h3>File Transformers</h3>
+        <table>
+            <tr>
+                <th>Transformer</th>
+                <th>Description</th>
+                <th>Arguments</th>
+            </tr>
+            <tr>
+                <td><code>csvmerge.xfrm</code></td>
+                <td>Merge CSVs, skip duplicate headers</td>
+                <td><code>no-headers</code> (optional)</td>
+            </tr>
+            <tr>
+                <td><code>filediff.xfrm</code></td>
+                <td>Line-by-line diff of two files</td>
+				<td>None</td>
+            </tr>
+            <tr>
+                <td><code>filejoin.xfrm</code></td>
+                <td>Concatenate with separator</td>
+                <td>separator (default <code>%NL%</code>)</td>
+            </tr>
+            <tr>
+                <td><code>filestats.xfrm</code></td>
+                <td>Statistics (size, lines, words) for single/multiple files</td>
+				<td>None</td>
+            </tr>
+            <tr>
+                <td><code>jsonmerge.xfrm</code></td>
+                <td>Merge JSON objects (later sources override)</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td><code>template.xfrm</code></td>
+                <td>Template substitution using JSON dictionaries</td>
+                <td>None</td>
+            </tr>
+        </table>
+
+        <h3>Other</h3>
+        <table>
+            <tr>
+                <th>Transformer</th>
+                <th>Description</th>
+                <th>Arguments</th>
+            </tr>
+            <tr>
+                <td><code>speak.xfrm</code></td>
+                <td>Text-to-speech</td>
+                <td><code>accent:locale</code> (e.g., <code>accent:en-au</code>)</td>
+            </tr>
+        </table>
+
+        <h2 id="patterns">Design Patterns</h2>
+
+        <div class="pattern-box">
+            <h3>1. Linear Pipeline</h3>
+            <p>Simple A → B → C flow:</p>
+            <pre><code>File 1: input.txt (ln: null)
+File 2: processed.txt (ln: 1, pl: chatgpt.xfrm)
+File 3: output.txt (ln: 2, pl: translate.xfrm)</code></pre>
+        </div>
+
+        <div class="pattern-box">
+            <h3>2. Fan-Out (Broadcast)</h3>
+            <p>One source, multiple outputs:</p>
+            <pre><code>File 1: source.txt (ln: null)
+File 2: english.txt (ln: 1, pl: passthrough.xfrm)
+File 3: japanese.txt (ln: 1, pl: translate.xfrm, arg: "Japanese")
+File 4: chinese.txt (ln: 1, pl: translate.xfrm, arg: "Chinese")</code></pre>
+        </div>
+
+        <div class="pattern-box">
+            <h3>3. Fan-In (Merge)</h3>
+            <p>Multiple sources, one output:</p>
+            <pre><code>File 1: data1.csv (ln: null)
+File 2: data2.csv (ln: null)
+File 3: data3.csv (ln: null)
+File 4: merged.csv (ln: "1,2,3", pl: csvmerge.xfrm)</code></pre>
+        </div>
+
+        <div class="pattern-box">
+            <h3>4. Quality Gate</h3>
+            <p>Conditional processing:</p>
+            <pre><code>File 1: content.txt (ln: null)
+File 2: analysis.txt (ln: 1, pl: chatgpt.xfrm, arg: "openai analyze quality 1-10")
+File 3: gate.txt (ln: 2, pl: chatgpt.xfrm, arg: "openai if score >= 8 output YES else NO")
+File 4: final.txt (ln: 3, pl: blocker.xfrm)</code></pre>
+        </div>
+
+        <div class="pattern-box">
+            <h3>5. Multi-Stage Processing</h3>
+            <p>Complex DAG with multiple paths:</p>
+            <pre><code>File 1: input → File 2: process1 → File 5: merge
+                                   ↗
+File 3: input → File 4: process2 ↗</code></pre>
+        </div>
+
+        <div class="pattern-box">
+            <h3>6. Backup Pattern</h3>
+            <p>Preserve original while processing:</p>
+            <pre><code>File 1: working.js (ln: 2, pl: passthrough.xfrm)
+File 2: ai-processor.js (ln: 1, pl: chatgpt.xfrm)
+File 3: backup.js (ln: 1, pl: passthrough.xfrm)</code></pre>
+        </div>
+
+        <h2 id="examples">Example Projects</h2>
+
+        <div class="example-box">
+            <h3>Example 1: AI Coder (aicoder.prj)</h3>
+            <p>AI-assisted code generation with automatic backup.</p>
+            
+            <h4>Flow:</h4>
+            <pre><code>#1 coder.js (write code/prompts) → passthrough → #3 coderbackup.js (safety backup)
+    ↓
+chatgpt (AI processes)
+    ↓ 
+#2 coderai.js
+    ↓
+passthrough → back to coder.js</code></pre>
+
+            <h4>Usage:</h4>
+            <ol>
+                <li>Type <code>10 # make a fibonacci function</code> in coder.js</li>
+                <li>AI generates code</li>
+                <li>Type <code>run</code> to execute</li>
+                <li>Original preserved in coderbackup.js</li>
+            </ol>
+        </div>
+
+        <div class="example-box">
+            <h3>Example 2: Multi-Language Translation (aitranslate.prj)</h3>
+            <p>Generate content and translate to multiple languages simultaneously.</p>
+            
+            <h4>Flow:</h4>
+            <pre><code>#1 aitest_prompt.txt (user prompt)
+    ↓
+chatgpt
+    ↓
+#2 aitest_story.txt (AI-generated story)
+    ↓ 
+blocker (quality check)
+    ↓ 
+#3 aitest_english.txt (validated content)
+    ├→ translate → #4 aitest_chinese.txt
+    ├→ translate → #5 aitest_indonesian.txt
+    ├→ translate → #6 aitest_japanese.txt
+    └→ translate → #7 aitest_tagalog.txt</code></pre>
+        </div>
+
+        <div class="example-box">
+            <h3>Example 3: Statistical Analysis Pipeline (stat-analysis.prj)</h3>
+            <p>Multi-stage research workflow with quality gate.</p>
+            
+            <h4>Flow:</h4>
+            <pre><code>#1 data-input (user request)
+    ↓
+chatgpt
+    ↓
+#2 raw-dataset (AI generated data)
+    ├→ basic-statistics ────┐
+    ├→ outlier-analysis     │
+    ├→ frequency-distribution│
+    └→ regression-analysis ─┼→ latex-statistics → # comprehensive-report
+                            │                              ↓
+                            └→ # JS-code                passthrough
+                                                           ↓
+                                                    # quality-assessment
+                                                           ↓
+                                                      quality-gate
+                                                           ↓
+                                                    # final-publication</code></pre>
+
+            <div class="tip-box">
+                <strong>Quality Gate:</strong> Report only publishes if AI self-assessment scores ≥8/10.
+            </div>
+        </div>
+
+        <h2 id="cli">Command-Line Project Creation</h2>
+
+        <h3>Setup Pattern</h3>
+        <p>Before creating links, set up your file structure:</p>
+        <pre><code>file 10              # Creates files 1-10, goes to file 10
+file 1               # Return to file 1</code></pre>
+
+        <p>This creates 10 empty working files. Transformers will automatically load from file 11 onward when referenced.</p>
+
+        <div class="tip-box">
+            <strong>Mental Model:</strong>
+            <ul>
+                <li>Files 1-10: Your working files (data, inputs, outputs)</li>
+                <li>Files 11+: Transformers (automatically loaded when used)</li>
+            </ul>
+        </div>
+
+        <h3>Project Management Commands</h3>
+        <pre><code>project save myproject     # Saves as myproject.prj
+project load myproject     # Loads myproject.prj</code></pre>
+
+        <div class="warning-box">
+            <strong>Note:</strong> <code>.prj</code> extension is automatic - don't include it in the name.
+        </div>
+
+        <div class="example-box">
+            <h3>Example: Creating AI Coder Project</h3>
+            <pre><code># Setup
+file 3
+file 1
+
+# Name files
+filename coder.js
+file 2
+filename coderai.js
+file 3
+filename coderbackup.js
+file 1
+files
+
+# Create links
+link 2 1 chatgpt %PROVIDER% process the file prompts start with # or // #
+link 3 1 passthrough
+link 1 2 passthrough
+files
+
+# Save
+project save aicoder</code></pre>
+        </div>
+
+        <div class="example-box">
+            <h3>Example: Creating Translation Pipeline</h3>
+            <pre><code># Setup files
+file 7
+file 1
+
+# Name them
+filename aitest_prompt.txt
+file 2
+filename aitest_story.txt
+file 3
+filename aitest_english.txt
+file 4
+filename aitest_chinese.txt
+file 5
+filename aitest_japanese.txt
+file 6
+filename aitest_indonesian.txt
+file 7
+filename aitest_tagalog.txt
+file 1
+files
+
+# Create links
+link 2 1 chatgpt %PROVIDER%
+link 3 2 blocker
+link 4 3 translate Chinese
+link 5 3 translate Japanese
+link 6 3 translate Indonesian
+link 7 3 translate Tagalog
+files
+
+# Save
+project save aitranslate</code></pre>
+        </div>
+
+        <div class="example-box">
+            <h3>Example: Creating Code Review Pipeline</h3>
+            <pre><code># Setup
+file 5
+file 1
+
+# Name files
+filename source-code.js
+file 2
+filename code-analysis.txt
+file 3
+filename suggestions.txt
+file 4
+filename test-cases.js
+file 5
+filename review-report.md
+file 1
+files
+
+# Create links
+link 2 1 chatgpt openai analyze this code for bugs, security issues, and code smells
+link 3 1 chatgpt openai suggest improvements for readability, performance, and maintainability
+link 4 1 chatgpt openai generate comprehensive unit tests using pytest
+link 5 2,3,4 chatgpt openai compile a comprehensive code review report with the analysis, suggestions, and test coverage
+files
+
+# Save
+project save code-review</code></pre>
+        </div>
+
+        <h2 id="best-practices">Best Practices</h2>
+
+        <h3>1. Include Required Transformers</h3>
+        <p>Don't forget to add transformer files to your project:</p>
+        <pre><code>{
+  "fn": "chatgpt.xfrm",
+  "mt": "text/javascript transformer",
+  "mte": "text",
+  "ln": null
+}</code></pre>
+
+        <h3>2. The Provider Variable</h3>
+        <p>Use the <code>%PROVIDER%</code> variable if you only have a single provider:</p>
+        <pre><code>"arg": "%PROVIDER% translate this text"</code></pre>
+
+        <h3>3. Name Files Descriptively</h3>
+        <p>Use clear, hierarchical names:</p>
+        <ul>
+            <li><code>input-raw.txt</code></li>
+            <li><code>processed-stage1.txt</code></li>
+            <li><code>output-final.txt</code></li>
+        </ul>
+
+        <h3>4. Leverage Sessions for Context</h3>
+        <p>Use ChatGPT sessions to maintain conversation context:</p>
+        <pre><code>"arg": "openai session:analysis calculate statistics"</code></pre>
+        <p>Later:</p>
+        <pre><code>"arg": "openai session:analysis what was the mean?"</code></pre>
+
+        <h3>5. Create Backup Chains</h3>
+        <p>Always preserve source material:</p>
+        <pre><code>source → processor (ln: backup)
+      → backup (ln: source, pl: passthrough.xfrm)</code></pre>
+
+        <h3>6. Use Blocker for Validation</h3>
+        <p>Add blockers after quality checks:</p>
+        <pre><code>content → validator → blocker → publication</code></pre>
+
+        <h3>7. Fan-Out for Parallel Processing</h3>
+        <p>Process once, output many ways:</p>
+        <pre><code>source → translate (Japanese)
+      → translate (Chinese)
+      → translate (Spanish)
+      → speak (en-us)</code></pre>
+
+        <h2 id="common-patterns">Common Patterns</h2>
+
+        <h3>Research Pipeline</h3>
+        <pre><code>1. data-input.txt
+2. analysis.txt (ln: 1, chatgpt: "analyze data")
+3. visualization.txt (ln: 2, chatgpt: "create R code")
+4. report.txt (ln: "2,3", chatgpt: "write report")</code></pre>
+
+        <h3>Content Creation</h3>
+        <pre><code>1. brief.txt
+2. draft.txt (ln: 1, chatgpt: "write article")
+3. edited.txt (ln: 2, chatgpt: "improve clarity")
+4. final.txt (ln: 3, chatgpt: "format for publication")</code></pre>
+
+        <h3>Data Processing</h3>
+        <pre><code>1. raw1.csv
+2. raw2.csv
+3. raw3.csv
+4. merged.csv (ln: "1,2,3", csvmerge)
+5. stats.txt (ln: 4, filestats)
+6. analysis.txt (ln: 5, chatgpt: "interpret statistics")</code></pre>
+
+        <h3>Code Generation</h3>
+        <pre><code>1. requirements.txt
+2. code.js (ln: 1, chatgpt: "generate C# code")
+3. tests.js (ln: 2, chatgpt: "create unit tests")
+4. docs.md (ln: 2, chatgpt: "document code")</code></pre>
+
+        <h2 id="debugging">Debugging Tips</h2>
+
+        <h3>File Not Updating?</h3>
+        <ul>
+            <li>Check <code>ln</code> index is correct (remember: 1-based!)</li>
+            <li>Verify source file is "dirty" (modified)</li>
+            <li>Ensure transformer file is included in project</li>
+        </ul>
+
+        <h3>Multi-Input Not Working?</h3>
+        <ul>
+            <li>All source files must be dirty</li>
+            <li>Use string syntax: <code>"ln": "2,3,4"</code></li>
+            <li>Check transformer supports multi-input</li>
+        </ul>
+
+        <h3>Transformer Error?</h3>
+        <ul>
+            <li>View console logs (transformer prints debug info)</li>
+            <li>Check transformer is loaded as plugin</li>
+            <li>Verify arguments are correctly formatted</li>
+        </ul>
+
+        <h3>Cascade Not Triggering?</h3>
+        <ul>
+            <li>Edit a source file to mark it dirty</li>
+            <li>Check for circular dependencies</li>
+            <li>Verify <code>ln</code> points to existing file</li>
+        </ul>
+
+        <h2 id="advanced">Advanced Techniques</h2>
+
+        <h3>Dynamic Provider Selection</h3>
+        <pre><code>"arg": "%PROVIDER% process this"</code></pre>
+        <p>Configure provider using csconfig</p>
+
+        <h3>Conditional Logic with Sessions</h3>
+        <p>Use persistent sessions for stateful processing:</p>
+        <pre><code>"arg": "openai session:validator validate input then remember result"</code></pre>
+
+        <h3>Template-Driven Generation</h3>
+        <pre><code>File 1: template.html (HTML with {{placeholders}})
+File 2: data.json (JSON dictionary)
+File 3: output.html (ln: "1,2", template.xfrm)</code></pre>
+
+        <h3>Multi-Stage Refinement</h3>
+        <pre><code>draft → improve1 → improve2 → improve3 → final
+  ↓       ↓          ↓          ↓          ↓
+backup1 backup2  backup3   backup4   backup5</code></pre>
+
+        <h2 id="formats">File Formats</h2>
+
+        <h3>Supported MIME Types</h3>
+        <ul>
+            <li><code>text/plain</code> - Plain text</li>
+            <li><code>text/javascript</code> - JavaScript code</li>
+            <li><code>text/csv</code> - CSV data</li>
+            <li><code>application/json</code> - JSON data</li>
+            <li><code>text/html</code> - HTML documents</li>
+            <li><code>image/png</code>, <code>image/jpeg</code> - Images (for OCR)</li>
+            <li><code>application/pdf</code> - PDF documents (for OCR)</li>
+        </ul>
+
+        <h3>Editor Types</h3>
+        <ul>
+            <li><code>text</code> - Text editor with line numbers</li>
+            <li><code>hex</code> - Hexadecimal editor for binary files</li>
+        </ul>
+
+        <h2 id="prompts">Tips for AI Prompts</h2>
+
+        <h3>Be Specific</h3>
+        <pre><code>Bad:  "openai process this"
+Good: "openai extract key insights and summarize in 3 bullet points"</code></pre>
+
+        <h3>Use Multi-Step Prompts</h3>
+        <pre><code>"openai first validate the data structure, then calculate statistics"</code></pre>
+
+        <h3>Reference File Context</h3>
+        <pre><code>"openai use the data from the previous analysis to generate visualizations"</code></pre>
+
+        <h3>Chain Reasoning</h3>
+        <pre><code>File 1 → "openai analyze problem"
+File 2 → "openai propose solutions based on analysis"
+File 3 → "openai select best solution and explain"</code></pre>
+
+        <h2>Additional Example Projects</h2>
+
+        <div class="example-box">
+            <h3>Example 4: Code Review Pipeline</h3>
+            <p>Automated code analysis with parallel review tracks.</p>
+            <pre><code>source-code.js
+    ├→ code-analysis.txt (bugs, security)
+    ├→ suggestions.txt (improvements)
+    └→ test-cases.js (unit tests)
+         ↓
+    review-report.md (combines all three)</code></pre>
+        </div>
+
+        <div class="example-box">
+            <h3>Example 5: Document Merge & Compare</h3>
+            <p>Three-way diff and intelligent conflict resolution.</p>
+            <pre><code>version-a.txt ────┐
+                  ├→ diff-a-b.txt ──┐
+version-b.txt ────┤                 ├→ conflict-resolution.txt
+                  ├→ diff-b-c.txt ──┘
+version-c.txt ────┘</code></pre>
+        </div>
+
+        <div class="example-box">
+            <h3>Example 6: Multi-Format Content</h3>
+            <p>Single brief → multiple platform-optimized outputs.</p>
+            <pre><code>content-brief.txt
+    ├→ blog-post.md
+    ├→ twitter-thread.txt
+    ├→ linkedin-post.txt
+    ├→ email-newsletter.html
+    ├→ video-script.txt
+    └→ infographic-data.json</code></pre>
+        </div>
+
+        <div class="example-box">
+            <h3>Example 7: Data Validation Pipeline</h3>
+            <p>Quality-gated data cleaning workflow.</p>
+            <pre><code>raw-data.csv
+    ├→ validation-report.txt
+    ├→ stats-summary.txt
+    └→ cleaned-data.csv → quality-check.txt → blocker → approved-data.csv
+                                                              ↓
+                                                    final-report.md</code></pre>
+        </div>
+
+        <div class="example-box">
+            <h3>Example 8: API Documentation Generator</h3>
+            <p>Generate complete API docs from endpoint definitions.</p>
+            <pre><code>api-endpoints.json
+    ↓
+openapi-spec.json
+    ├→ markdown-docs.md ──────┐
+    ├→ postman-collection.json│
+    ├→ client-sdk-csharp.cs ───┼→ integration-guide.md
+    └→ client-sdk-javascript.js┘</code></pre>
+        </div>
+
+        <div class="example-box">
+            <h3>Example 9: Learning Material Generator</h3>
+            <p>Comprehensive educational content from a single topic.</p>
+            <pre><code>topic.txt
+    ├→ lesson-plan.md ────────┐
+    ├→ study-notes.md ────────┤
+    ├→ practice-exercises.txt ├→ teacher-guide.md
+    ├→ quiz.json ─────────────┤
+    └→ visual-aids.txt ───────┘</code></pre>
+        </div>
+
+        <div class="example-box">
+            <h3>Example 10: Story Development</h3>
+            <p>Multi-stage creative writing with revision cycle.</p>
+            <pre><code>story-premise.txt
+    ├→ character-profiles.md ──┐
+    ├→ world-building.md ──────┼→ plot-outline.md
+    └────────────────────────┘      ↓
+                            chapter-1, 2, 3 drafts
+                                     ↓
+                              full-draft.txt
+                                     ↓
+                            editorial-notes.txt
+                                     ↓
+                            revised-draft.txt
+                                     ↓
+                                synopsis.txt</code></pre>
+        </div>
+
+        <div class="example-box">
+            <h3>Example 11: Template Report Generator</h3>
+            <p>Data-driven HTML reports with AI insights.</p>
+            <pre><code>report-template.html ──────┐
+                           │
+company-data.json ────┐    │
+financial-data.json ──┼→ merged-data.json ──┼→ generated-report.html ──┐
+performance-data.json ┘         ↓                                        │
+                          insights.txt ──────────────────────────────────┤
+                                                                          ↓
+                                                                  final-report.html</code></pre>
+        </div>
+
+        <h2>Conclusion</h2>
+        <p>CyborgShell projects enable powerful AI-driven workflows through declarative pipeline definitions. Master these patterns to build sophisticated automation ranging from simple translations to complex research pipelines with quality gates and multi-stage processing.</p>
+        
+        <div class="tip-box">
+            <strong>Remember:</strong> Files are nodes, transformers are edges, and dirty flags trigger cascading updates through your DAG. Build wisely! 🚀
+        </div>
+    </div>
+</body>
+</html>

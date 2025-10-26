@@ -1,0 +1,108 @@
+function filediff_xfrm(objAPI_a, objGlobals_a, objXFrmAPI_a, strArgs_a, cb_a)
+{
+	var m_TRANSFORMER = 'filediff';	// lowercase for provider settings
+	
+    console.log(m_TRANSFORMER + " plugin called with:");
+    console.log("objAPI_a:", typeof objAPI_a);
+    console.log("objGlobals_a:", typeof objGlobals_a);
+    console.log("objXFrmAPI_a:", typeof objXFrmAPI_a);
+	console.log("strArgs_a:", strArgs_a);
+    console.log("cb_a:", typeof cb_a);
+
+	var api = objAPI_a;
+	var globals = objGlobals_a;
+	var xfrmapi = objXFrmAPI_a;
+	
+	var blnFilesIdentical = true;
+	var strResult = "";
+	
+	if (xfrmapi.sources && xfrmapi.sources.length >= 2)
+	{
+		var strFile1Content;
+		if (xfrmapi.sources[0].raw)
+		{
+			strFile1Content = xfrmapi.sources[0].raw;
+		}
+		else
+		{
+			strFile1Content = "";
+		}
+		
+		var strFile2Content;
+		if (xfrmapi.sources[1].raw)
+		{
+			strFile2Content = xfrmapi.sources[1].raw;
+		}
+		else
+		{
+			strFile2Content = "";
+		}
+		
+		var arrFile1Lines = strFile1Content.split("\n");
+		var arrFile2Lines = strFile2Content.split("\n");
+		
+		strResult += "=== Comparing " + xfrmapi.sources[0].fn + " with " + xfrmapi.sources[1].fn + " ===\n\n";
+		
+		var intMaxLines;
+		if (arrFile1Lines.length > arrFile2Lines.length)
+		{
+			intMaxLines = arrFile1Lines.length;
+		}
+		else
+		{
+			intMaxLines = arrFile2Lines.length;
+		}
+		
+		for (var intI = 0; intI < intMaxLines; intI++)
+		{
+			var strLine1;
+			if (intI < arrFile1Lines.length)
+			{
+				strLine1 = arrFile1Lines[intI];
+			}
+			else
+			{
+				strLine1 = "[EOF]";
+			}
+			
+			var strLine2;
+			if (intI < arrFile2Lines.length)
+			{
+				strLine2 = arrFile2Lines[intI];
+			}
+			else
+			{
+				strLine2 = "[EOF]";
+			}
+			
+			if (strLine1 !== strLine2)
+			{
+				blnFilesIdentical = false;
+				strResult += "Line " + (intI + 1) + ":\n";
+				strResult += "  < " + strLine1 + "\n";
+				strResult += "  > " + strLine2 + "\n";
+				strResult += "\n";
+			}
+		}
+		
+		if (blnFilesIdentical)
+		{
+			strResult += "Files are identical.\n";
+		}
+	}
+	else if (xfrmapi.sources && xfrmapi.sources.length === 1)
+	{
+		strResult = "Diff requires at least 2 input files. Only 1 provided.";
+	}
+	else
+	{
+		strResult = "Diff requires at least 2 input files.";
+	}
+	
+	cb_a({
+		raw: strResult,
+		mte: "text",
+		mt: "text/plain",
+		error: ""
+	});
+}

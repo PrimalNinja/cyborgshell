@@ -1,0 +1,115 @@
+function template_xfrm(objAPI_a, objGlobals_a, objXFrmAPI_a, strArgs_a, cb_a)
+{
+    var m_TRANSFORMER = 'template-json';
+    
+    console.log(m_TRANSFORMER + " plugin called with:");
+    console.log("objAPI_a:", typeof objAPI_a);
+    console.log("objGlobals_a:", typeof objGlobals_a);
+    console.log("objXFrmAPI_a:", typeof objXFrmAPI_a);
+    console.log("strArgs_a:", strArgs_a);
+    console.log("cb_a:", typeof cb_a);
+
+    var api = objAPI_a;
+    var globals = objGlobals_a;
+    var xfrmapi = objXFrmAPI_a;
+
+    var arrJSONData;
+    var intI;
+    var objDict = {};
+    var objSource;
+    var strKey;
+    var strTemplate = "";
+    var strResult = "";
+
+    var strMimeTypeEditor = "text";
+    var strMimeType = "text/plain";
+
+    if (xfrmapi.sources && xfrmapi.sources.length >= 2)
+    {
+        // --- Template is first file
+        if (xfrmapi.sources[0].raw)
+        {
+            strTemplate = xfrmapi.sources[0].raw;
+        }
+        else
+        {
+            strTemplate = "";
+        }
+
+        strResult = strTemplate;
+
+        // --- Build combined dictionary from JSON files (first wins)
+        for (intI = 1; intI < xfrmapi.sources.length; intI++)
+        {
+            objSource = xfrmapi.sources[intI];
+            if (objSource && objSource.raw)
+            {
+                try
+                {
+                    arrJSONData = JSON.parse(objSource.raw);
+                    for (strKey in arrJSONData)
+                    {
+                        if (arrJSONData.hasOwnProperty(strKey))
+                        {
+                            if (!(strKey in objDict))
+                            {
+                                objDict[strKey] = arrJSONData[strKey];
+                            }
+                        }
+                    }
+                }
+                catch (e)
+                {
+                    console.log("Invalid JSON in source: " + (objSource.fn || ("index " + intI)) + " - " + e.message);
+                }
+            }
+        }
+
+        // --- Replace placeholders {{strKey}} with dictionary values
+        strResult = strResult.replace(/\{\{(.*?)\}\}/g, function(varMatch_a, strP1_a)
+        {
+            strKey = strP1_a.replace(/^\s+|\s+$/g, '');
+            if (objDict.hasOwnProperty(strKey))
+            {
+                return objDict[strKey];
+            }
+            else
+            {
+                return varMatch_a;
+            }
+        });
+
+        // --- Determine mime types (from first source if available)
+        if (xfrmapi.sources[0])
+        {
+            if (xfrmapi.sources[0].mte)
+            {
+                strMimeTypeEditor = xfrmapi.sources[0].mte;
+            }
+            if (xfrmapi.sources[0].mt)
+            {
+                strMimeType = xfrmapi.sources[0].mt;
+            }
+        }
+
+        cb_a({
+            raw: strResult,
+            mte: strMimeTypeEditor,
+            mt: strMimeType,
+            error: ""
+        });
+    }
+    else
+    {
+        strResult = "Template transformer requires at least 2 files:\n";
+        strResult += "  File 1: Template with placeholders like {{strKey}}\n";
+        strResult += "  File 2+: JSON dictionaries providing values\n";
+
+        cb_a({
+            raw: strResult,
+            mte: "text",
+            mt: "text/plain",
+            error: ""
+        });
+    }
+}

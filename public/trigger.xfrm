@@ -1,6 +1,6 @@
-function null_xfrm(objAPI_a, objGlobals_a, objXFrmAPI_a, strArgs_a, cb_a)
+function trigger_xfrm(objAPI_a, objGlobals_a, objXFrmAPI_a, strArgs_a, cb_a)
 {
-    var m_TRANSFORMER = 'null'; // lowercase for provider settings
+    var m_TRANSFORMER = 'trigger'; // lowercase for provider settings
 
     console.log(m_TRANSFORMER + " plugin called with:");
     console.log("objAPI_a:", typeof objAPI_a);
@@ -37,9 +37,9 @@ function null_xfrm(objAPI_a, objGlobals_a, objXFrmAPI_a, strArgs_a, cb_a)
 	}
 
 	cb_a({
-		raw: null,
+		raw: "GO",
 		cd: null,
-		message: m_strSourceFilenames + ' nullified',
+		message: m_strSourceFilenames + ' triggered',
 		error: ''
 	});
 }

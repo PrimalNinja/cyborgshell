@@ -1,0 +1,84 @@
+function csvmerge_xfrm(objAPI_a, objGlobals_a, objXFrmAPI_a, strArgs_a, cb_a)
+{
+	var m_TRANSFORMER = 'csvmerge';	// lowercase for provider settings
+	
+    console.log(m_TRANSFORMER + " plugin called with:");
+    console.log("objAPI_a:", typeof objAPI_a);
+    console.log("objGlobals_a:", typeof objGlobals_a);
+    console.log("objXFrmAPI_a:", typeof objXFrmAPI_a);
+	console.log("strArgs_a:", strArgs_a);
+    console.log("cb_a:", typeof cb_a);
+
+	var api = objAPI_a;
+	var globals = objGlobals_a;
+	var xfrmapi = objXFrmAPI_a;
+	
+	var blnIncludeHeaders = true;
+	var blnFirstFile = true;
+	var strResult = "";
+	
+	if (strArgs_a === "no-headers")
+	{
+		blnIncludeHeaders = false;
+	}
+	
+	if (xfrmapi.sources && xfrmapi.sources.length > 0)
+	{
+		for (var intI = 0; intI < xfrmapi.sources.length; intI++)
+		{
+			var strSourceContent;
+			if (xfrmapi.sources[intI].raw)
+			{
+				strSourceContent = xfrmapi.sources[intI].raw;
+			}
+			else
+			{
+				strSourceContent = "";
+			}
+			
+			var arrLines = strSourceContent.split("\n");
+			
+			for (var intJ = 0; intJ < arrLines.length; intJ++)
+			{
+				var blnSkipLine = false;
+				
+				// Skip header row if not first file and blnIncludeHeaders is true
+				if (intJ === 0 && !blnFirstFile && blnIncludeHeaders)
+				{
+					blnSkipLine = true;
+				}
+				
+				// Skip empty lines
+				if (!arrLines[intJ].trim())
+				{
+					blnSkipLine = true;
+				}
+				
+				if (!blnSkipLine)
+				{
+					strResult += arrLines[intJ] + "\n";
+				}
+			}
+			blnFirstFile = false;
+		}
+	}
+	else
+	{
+		// Single source
+		if (xfrmapi.raw)
+		{
+			strResult = xfrmapi.raw;
+		}
+		else
+		{
+			strResult = "";
+		}
+	}
+	
+	cb_a({
+		raw: strResult,
+		mte: "text",
+		mt: "text/csv",
+		error: ""
+	});
+}

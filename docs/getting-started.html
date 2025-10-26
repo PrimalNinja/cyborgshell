@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyborgShell - Getting Started</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 1.2em;
+            font-style: italic;
+        }
+        
+        h2 {
+            color: #764ba2;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+            border-left: 5px solid #667eea;
+            padding-left: 15px;
+        }
+        
+        h3 {
+            color: #667eea;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+        
+        p {
+            margin-bottom: 15px;
+        }
+        
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9em;
+        }
+        
+        code {
+            background: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            padding: 2px 6px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9em;
+            color: #c7254e;
+        }
+        
+        pre code {
+            background: none;
+            border: none;
+            color: inherit;
+            padding: 0;
+        }
+        
+        .highlight-box {
+            background: #e8f4fd;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .tip-box {
+            background: #fff9e6;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .tip-box h3 {
+            margin-top: 0;
+            color: #f57c00;
+        }
+        
+        ol, ul {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        .command {
+            background: #2d2d2d;
+            color: #61dafb;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9em;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+                max-width: 100%;
+            }
+            
+            pre {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 CyborgShell</h1>
+            <p class="subtitle">Getting Started in 5 Minutes</p>
+        </div>
+
+        <h2>What Is This?</h2>
+        <div class="highlight-box">
+            <p><strong>CyborgShell = 1980s BASIC + Modern JavaScript + AI + Cloud + Runs Everywhere</strong></p>
+            <p>Type code on your phone, continue on Xbox, finish on PC. Same URL, same environment, zero setup.</p>
+        </div>
+
+        <h3>Why It's Different</h3>
+        <div class="tip-box">
+            <h3>🔒 Browser-Based = Your Privacy</h3>
+            <ul>
+                <li>Code runs in <strong>your browser</strong>, not on servers</li>
+                <li>API keys stored in <strong>your local storage</strong>, never on servers</li>
+                <li>Direct API calls from browser to AI providers</li>
+                <li>Self-hostable (MIT License): <a href="https://github.com/PrimalNinja/cyborgshell">github.com/PrimalNinja/cyborgshell</a></li>
+            </ul>
+        </div>
+
+        <div class="highlight-box">
+            <h3>🔐 Complete Privacy Option</h3>
+            <ul>
+                <li>Self-host CyborgShell internally</li>
+                <li>Use Ollama for local AI</li>
+                <li><strong>Zero data leaves your network</strong></li>
+                <li>Perfect for healthcare, legal, financial, classified work</li>
+            </ul>
+        </div>
+
+        <h2>Two Ways to Code</h2>
+
+        <h3>Immediate Mode (No Line Numbers)</h3>
+        <p>Type and run instantly:</p>
+        <pre><code>api.print("Hello!");
+for(let i=0; i&lt;5; i++) api.print(i);</code></pre>
+
+        <h3>Program Mode (With Line Numbers)</h3>
+        <p>Store and save:</p>
+        <pre><code>10 api.print("Hello!");
+20 for(let i=0; i&lt;5; i++) api.print(i);
+run
+save myprogram</code></pre>
+
+        <div class="highlight-box">
+            <strong>Key Rule:</strong> If you see a line number, it's stored. No line number? Runs immediately.
+        </div>
+
+        <h2>Essential Commands</h2>
+        <pre><code># Files
+save mycode          # Save current program
+load mycode          # Load program
+dir                  # List saved files
+cls                  # Clear screen
+run                  # Execute program
+
+# Editing
+list                 # Show program
+edit 10              # Edit line 10
+new                  # Clear program</code></pre>
+
+        <h2>AI in 3 Ways</h2>
+
+        <h3>1. Quick Questions</h3>
+        <pre><code>!what is the capital of France?
+!how do I sort an array in JavaScript?</code></pre>
+
+        <h3>2. Conversations</h3>
+        <pre><code>chatgpt
+write me a function to calculate fibonacci
+now make it recursive</code></pre>
+
+        <h3>3. Named Sessions (Keep Context Separate)</h3>
+        <pre><code>chatgpt 
+coding: help me debug this
+story: write about robots
+coding: continue helping
+story: make it dramatic</code></pre>
+
+        <h2>Your First Program</h2>
+        <pre><code># Type this (immediate mode)
+10 api.print("My first program!");
+20 for(let i=1; i&lt;=5; i++) {
+30     api.print("Count: " + i);
+40 }
+
+# Run it
+run
+
+# Save it
+save first
+
+# Load it anytime
+load first
+run</code></pre>
+
+        <h2>Your First AI Pipeline</h2>
+        <pre><code># Setup 3 files
+file 1; 
+filename input.txt
+file 2; 
+filename processed.txt
+file 3; 
+filename output.txt
+file 1;
+
+# Link them with AI
+link 1 2 chatgpt openai improve this text
+link 2 3 translate Spanish
+
+# Save the pipeline
+project save my-first-pipeline
+
+# Use it - edit file 1
+file 1; 
+edit 10
+10 The quick brown fox jumps
+
+# Files 2 and 3 auto-process!
+files                # See D (dirty/processed) flag
+saveall              # Save all results</code></pre>
+
+        <div class="tip-box">
+            <h3>💡 Tips</h3>
+            <ol>
+                <li><strong>No line number = immediate, with line number = stored</strong></li>
+                <li><strong>Commands work on phone, Xbox, PC - identically</strong></li>
+                <li><strong>AI sessions keep context</strong> - use named sessions for different tasks</li>
+                <li><strong>Projects are pipelines</strong> - edit input, output auto-generates</li>
+                <li><strong>Everything saves to cloud</strong> - access from any device</li>
+            </ol>
+        </div>
+
+        <h2>What Now?</h2>
+        <ul>
+            <li>Type <code>help</code> for full command list</li>
+            <li>Type <code>!teach me about transformers</code> for AI-powered learning</li>
+            <li>Load example: <code>project load aicoder</code> then explore</li>
+            <li>Read full guide for advanced features</li>
+        </ul>
+
+        <h2>Philosophy</h2>
+        <div class="highlight-box">
+            <p>No installation. No setup. No barriers.</p>
+            <p>Just <strong>code</strong>.</p>
+            <p>On your phone at lunch. On Xbox at night. On PC at work.</p>
+            <p><strong>Welcome to CyborgShell.</strong> 🚀</p>
+        </div>
+
+        <div class="footer">
+			<div style="text-align: center; margin-top: 40px; color: #666;">
+				<p><strong>CyborgShell</strong> by <a href="https://cyborgunicorn.com.au" target="_blank">Cyborg Unicorn Pty Ltd</a> 2025</p>
+				<p><a href="https://cyborgshell.com" target="_blank">cyborgshell.com</a> | <a href="https://github.com/PrimalNinja/cyborgshell" target="_blank">GitHub</a></p>
+			</div>
+        </div>
+    </div>
+</body>
+</html>

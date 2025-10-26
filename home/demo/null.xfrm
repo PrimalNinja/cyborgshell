@@ -1,26 +1,45 @@
-function null_xfrm(objAPI_a, objGlobals_a, strSourceFilename_a, strSourceMimeType_a, strSourceMimeTypeEditor_a, strTargetFilename_a, strRaw_a, arrCode_a, strArgs_a, cb_a)
+function null_xfrm(objAPI_a, objGlobals_a, objXFrmAPI_a, strArgs_a, cb_a)
 {
-	var m_TRANSFORMER = 'null';	// lowercase for provider settings
-	
+    var m_TRANSFORMER = 'null'; // lowercase for provider settings
+
     console.log(m_TRANSFORMER + " plugin called with:");
     console.log("objAPI_a:", typeof objAPI_a);
     console.log("objGlobals_a:", typeof objGlobals_a);
-    console.log("strSourceFilename_a:", strSourceFilename_a);
-	console.log("strSourceMimeType_a:", strSourceMimeType_a);
-    console.log("strSourceMimeTypeEditor_a:", strSourceMimeTypeEditor_a);
-    console.log("strTargetFilename_a:", strTargetFilename_a);
-    //console.log("strRaw_a:", strRaw_a);
-    console.log("arrCode_a:", arrCode_a);
-	console.log("strArgs_a:", strArgs_a);
+    console.log("objXFrmAPI_a:", typeof objXFrmAPI_a);
+    console.log("strArgs_a:", strArgs_a);
     console.log("cb_a:", typeof cb_a);
 
-	var api = objAPI_a;
-	var globals = objGlobals_a;
+    var api = objAPI_a;
+    var globals = objGlobals_a;
+    var xfrmapi = objXFrmAPI_a;
 	
+	// Concatenate all input sources
+	var m_strSourceFilenames = '';
+
+	if (xfrmapi.sources && xfrmapi.sources.length > 0) 
+	{
+		for (var intI = 0; intI < xfrmapi.sources.length; intI++) 
+		{
+			var objSource = xfrmapi.sources[intI];
+			
+			// Build filename list for messages
+			if (intI > 0)
+			{
+				m_strSourceFilenames += ', ';
+			}
+			m_strSourceFilenames += (objSource.fn || 'Unnamed File');
+		}
+	} 
+	else 
+	{
+		// Single source (backwards compatibility)
+		m_strSourceFilenames = xfrmapi.sfn || 'Source';
+	}
+
 	cb_a({
 		raw: null,
 		cd: null,
-		message: strSourceFilename_a + ' nulls',
+		message: m_strSourceFilenames + ' nullified',
 		error: ''
 	});
 }

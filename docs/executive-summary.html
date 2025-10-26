@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyborgShell - Executive Summary</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            color: #667eea;
+            border-bottom: 3px solid #764ba2;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 2.5em;
+            text-align: center;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+        
+        h2 {
+            color: #764ba2;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+            border-left: 5px solid #667eea;
+            padding-left: 15px;
+        }
+        
+        h3 {
+            color: #667eea;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+        
+        h4 {
+            color: #667eea;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        p {
+            margin-bottom: 15px;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        code {
+            background: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            padding: 2px 6px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9em;
+            color: #c7254e;
+        }
+        
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+        }
+        
+        pre code {
+            background: none;
+            border: none;
+            color: inherit;
+            padding: 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+            padding: 12px 8px;
+            text-align: left;
+        }
+        
+        td {
+            border: 1px solid #ddd;
+            padding: 10px 8px;
+        }
+        
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        .highlight-box {
+            background: #e8f4fd;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .success-box {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .checkmark {
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .xmark {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .feature-card {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+        }
+        
+        .feature-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CyborgShell</h1>
+        <p class="subtitle">Executive Summary for IT/Security Teams</p>
+
+        <h2>What It Is</h2>
+        <p>CyborgShell is an <strong>open-source, browser-based AI development platform</strong> with a fundamentally different security model than traditional cloud AI tools.</p>
+        
+        <div class="highlight-box">
+            <p><strong>Quick Facts:</strong></p>
+            <ul>
+                <li><strong>License:</strong> MIT (free, open source)</li>
+                <li><strong>Source:</strong> <a href="https://github.com/PrimalNinja/cyborgshell">https://github.com/PrimalNinja/cyborgshell</a></li>
+                <li><strong>Architecture:</strong> Client-side execution, minimal server</li>
+                <li><strong>Deployment:</strong> Cloud, self-hosted, or air-gapped</li>
+            </ul>
+        </div>
+
+        <h2>The Security Model</h2>
+        
+        <h3>Traditional Cloud AI Platform</h3>
+        <pre><code>User → Vendor Server → AI Provider
+       ↓
+   • Stores your API keys
+   • Executes your code
+   • Sees all prompts/responses
+   • Potential compliance issues</code></pre>
+
+        <h3>CyborgShell</h3>
+        <pre><code>User → Your Browser → AI Provider (direct)
+       ↓
+   • API keys in local storage only
+   • Code executes client-side
+   • Server only for file operations
+   • Minimal attack surface</code></pre>
+
+        <div class="success-box">
+            <p><strong>Server only handles:</strong></p>
+            <ul>
+                <li>Load files</li>
+                <li>Save files</li>
+                <li>List directories</li>
+                <li>Optional CORS proxy (no data retention)</li>
+            </ul>
+            
+            <p><strong>Server does NOT:</strong></p>
+            <ul>
+                <li class="xmark">❌ Store API keys</li>
+                <li class="xmark">❌ Execute code</li>
+                <li class="xmark">❌ See prompts or responses</li>
+                <li class="xmark">❌ Log AI interactions</li>
+            </ul>
+        </div>
+
+        <h2>Deployment Models</h2>
+        
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h4>1. Public Cloud</h4>
+                <p><code>cyborgshell.com → Browser → Cloud AI</code></p>
+                <p><strong>Use Case:</strong> Evaluation, non-sensitive work</p>
+                <p><strong>Security:</strong> API keys in browser, file ops on our server</p>
+            </div>
+            
+            <div class="feature-card">
+                <h4>2. Self-Hosted</h4>
+                <p><code>Your Server → Browser → Cloud AI</code></p>
+                <p><strong>Use Case:</strong> Corporate deployment, compliance</p>
+                <p><strong>Security:</strong> Full infrastructure control</p>
+            </div>
+            
+            <div class="feature-card">
+                <h4>3. Air-Gapped</h4>
+                <p><code>Your Server → Browser → Ollama (Local)</code></p>
+                <p><strong>Use Case:</strong> HIPAA, classified, confidential</p>
+                <p><strong>Security:</strong> Zero external transmission</p>
+            </div>
+            
+            <div class="feature-card">
+                <h4>4. Distributed</h4>
+                <p><code>Shared Drive → Multiple PCs (Ollama)</code></p>
+                <p><strong>Use Case:</strong> Batch processing, render farms</p>
+                <p><strong>Benefits:</strong> Horizontal scaling, zero cost</p>
+            </div>
+        </div>
+
+        <h2>Compliance Benefits</h2>
+        
+        <table>
+            <tr>
+                <th>Framework</th>
+                <th>CyborgShell Support</th>
+            </tr>
+            <tr>
+                <td><strong>HIPAA (Healthcare)</strong></td>
+                <td>
+                    <span class="checkmark">✅</span> PHI Protection: Use Ollama locally, zero external transmission<br>
+                    <span class="checkmark">✅</span> Access Controls: Your infrastructure, your rules<br>
+                    <span class="checkmark">✅</span> Audit Trail: Simple file operations log
+                </td>
+            </tr>
+            <tr>
+                <td><strong>SOC 2 (Service Organizations)</strong></td>
+                <td>
+                    <span class="checkmark">✅</span> Security Controls: Open source allows full audit<br>
+                    <span class="checkmark">✅</span> Data Flow Mapping: Browser → Your server → Local AI<br>
+                    <span class="checkmark">✅</span> Minimal Third-Party Risk: No external processing
+                </td>
+            </tr>
+            <tr>
+                <td><strong>GDPR (Privacy)</strong></td>
+                <td>
+                    <span class="checkmark">✅</span> Data Minimization: Only file operations on server<br>
+                    <span class="checkmark">✅</span> User Control: Users manage own API keys<br>
+                    <span class="checkmark">✅</span> Right to Deletion: Simple file removal
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Classified/Confidential</strong></td>
+                <td>
+                    <span class="checkmark">✅</span> Air-Gap Capable: Fully functional without internet<br>
+                    <span class="checkmark">✅</span> Complete Control: Self-host entire stack<br>
+                    <span class="checkmark">✅</span> No Data Leakage: All processing internal
+                </td>
+            </tr>
+        </table>
+
+        <h2>Cost Analysis</h2>
+        
+        <div class="highlight-box">
+            <h3>Traditional Cloud AI Platforms</h3>
+            <ul>
+                <li>Platform subscription fees</li>
+                <li>Per-user licensing</li>
+                <li>API call markups</li>
+                <li>Vendor lock-in</li>
+                <li>Hidden data egress charges</li>
+            </ul>
+            
+            <h3>CyborgShell</h3>
+            <ul>
+                <li class="checkmark"><strong>$0 platform fees</strong> (open source)</li>
+                <li class="checkmark"><strong>$0 per-user costs</strong> (self-host)</li>
+                <li class="checkmark"><strong>Direct API pricing</strong> (your keys)</li>
+                <li class="checkmark"><strong>$0 lock-in</strong> (MIT license)</li>
+                <li class="checkmark"><strong>Optional $0 AI</strong> (Ollama local)</li>
+            </ul>
+        </div>
+
+        <div class="success-box">
+            <h3>Example Savings</h3>
+            <pre><code>24GB-48GB Video Card USD$2000-$6000 one off starter cost
+			
+50-person engineering team:
+Traditional Platform: $50-500/user/month = $2,500-25,000/month
+CyborgShell: $0/month + your direct API costs
+
+ROI: Immediate (no platform fees)
+
+Batch processing example:
+Process 100,000 documents/month
+
+Traditional Cloud AI:
+- API costs: $0.002/document × 100,000 = $200
+- Platform fee: $5,000
+- Total: $5,200/month
+
+CyborgShell + Ollama (10 PCs):
+- Hardware: One-time ($500/PC × 10 = $5,000)
+- API costs: $0 (Ollama local)
+- Platform fee: $0
+- Total: $0/month after hardware amortization
+
+ROI: 1 month payback, then infinite free processing</code></pre>
+        </div>
+
+        <h2>Technical Requirements</h2>
+
+        <h3>Minimal Server Requirements</h3>
+        <ul>
+            <li>Any web server (Apache, Nginx, IIS)</li>
+            <li>Static file hosting capability</li>
+            <li>Optional: PHP for CORS proxy</li>
+            <li>No database required</li>
+            <li>No application server required</li>
+            <li>No container orchestration required</li>
+        </ul>
+
+        <h3>Ollama (or other) Local AI Server Requirements</h3>
+        <ul>
+            <li>Ollama runs best with a discrete GPU (e.g., NVIDIA RTX or Apple M-series).</li>
+            <li>While CPU-only operation is supported, performance is significantly slower and not recommended for production workloads or batch processing.</li>
+            <li>For production or distributed environments, a GPU with <strong>at least 24 GB VRAM</strong> is recommended – for example, an <strong>NVIDIA RTX 4090</strong> (≈ USD $2,000 / AUD $4,000) to ensure smooth operation with larger models.</li>
+        </ul>
+
+        <h3>Client Requirements</h3>
+        <ul>
+            <li>Modern browser (Chrome, Firefox, Safari, Edge, Mobile Phones, XBox Ones)</li>
+            <li>JavaScript enabled</li>
+            <li>Local storage enabled</li>
+        </ul>
+
+        <h3>Network Requirements</h3>
+        <p><strong>Public/Self-Hosted with Cloud AI:</strong></p>
+        <ul>
+            <li>Outbound: HTTPS to AI providers</li>
+            <li>Inbound: HTTPS from users</li>
+        </ul>
+
+        <p><strong>Air-Gapped with Ollama:</strong></p>
+        <ul>
+            <li>Internal network only</li>
+            <li>No internet required</li>
+            <li>Can be completely isolated</li>
+        </ul>
+
+        <h2>Risk Assessment</h2>
+        
+        <div class="success-box">
+            <h3>Risks Eliminated</h3>
+            <ul>
+                <li class="checkmark">✅ <strong>Centralized API Key Breach:</strong> Keys never stored on servers</li>
+                <li class="checkmark">✅ <strong>Server-Side Vulnerabilities:</strong> Code runs client-side</li>
+                <li class="checkmark">✅ <strong>Vendor Lock-In:</strong> Open source, self-hostable</li>
+                <li class="checkmark">✅ <strong>Data Exfiltration:</strong> Air-gap option available</li>
+                <li class="checkmark">✅ <strong>Service Disruption:</strong> Self-host = you control uptime</li>
+            </ul>
+        </div>
+        
+        <div class="warning-box">
+            <h3>Remaining Risks (Mitigations)</h3>
+            <p><strong>Client-Side Storage:</strong> Use private/incognito on shared machines</p>
+            <p><strong>CORS Proxy (Optional):</strong> Self-host for complete control, or eliminate with Ollama</p>
+            <p><strong>AI Provider Trust:</strong> Choose providers meeting your requirements, or use Ollama</p>
+        </div>
+
+        <h2>Implementation Path</h2>
+        
+        <div class="highlight-box">
+            <h3>Phase 1: Evaluation (1 day)</h3>
+            <ol>
+                <li>Access public instance: cyborgshell.com</li>
+                <li>Test with non-sensitive data</li>
+                <li>Evaluate capabilities</li>
+                <li>Review documentation</li>
+            </ol>
+            
+            <h3>Phase 2: Self-Hosted Pilot (1 week)</h3>
+            <ol>
+                <li>Clone repository</li>
+                <li>Deploy to internal test server</li>
+                <li>Configure test AI service (Ollama recommended)</li>
+                <li>Pilot with small team</li>
+                <li>Security review of deployment</li>
+            </ol>
+            
+            <h3>Phase 3: Production Deployment (2 weeks)</h3>
+            <ol>
+                <li>Infrastructure setup (your web server)</li>
+                <li>SSL certificate configuration</li>
+                <li>Ollama installation (if air-gapped)</li>
+                <li>Network security configuration</li>
+                <li>User training and onboarding</li>
+            </ol>
+
+            <h3>Phase 4: Air-Gap Option (if needed)</h3>
+            <ol>
+                <li>Isolated network setup</li>
+                <li>Local Ollama deployment</li>
+                <li>Security validation</li>
+                <li>Compliance verification</li>
+                <li>Operational procedures</li>
+            </ol>
+        </div>
+
+        <h2>Competitive Analysis</h2>
+        
+        <table>
+            <tr>
+                <th>Capability</th>
+                <th>CyborgShell</th>
+                <th>GitHub Copilot</th>
+                <th>ChatGPT Enterprise</th>
+                <th>AWS CodeWhisperer</th>
+            </tr>
+            <tr>
+                <td><strong>Self-Hostable</strong></td>
+                <td class="checkmark">✅ Yes</td>
+                <td class="xmark">❌ No</td>
+                <td class="xmark">❌ No</td>
+                <td class="xmark">❌ No</td>
+            </tr>
+            <tr>
+                <td><strong>Air-Gap Capable</strong></td>
+                <td class="checkmark">✅ Yes</td>
+                <td class="xmark">❌ No</td>
+                <td class="xmark">❌ No</td>
+                <td class="xmark">❌ No</td>
+            </tr>
+            <tr>
+                <td><strong>Open Source</strong></td>
+                <td class="checkmark">✅ MIT</td>
+                <td class="xmark">❌ Proprietary</td>
+                <td class="xmark">❌ Proprietary</td>
+                <td class="xmark">❌ Proprietary</td>
+            </tr>
+            <tr>
+                <td><strong>API Key Location</strong></td>
+                <td class="checkmark">✅ Local</td>
+                <td class="xmark">⚠️ Vendor</td>
+                <td class="xmark">⚠️ Vendor</td>
+                <td class="xmark">⚠️ Vendor</td>
+            </tr>
+            <tr>
+                <td><strong>Multi-Provider</strong></td>
+                <td class="checkmark">✅ Yes</td>
+                <td class="xmark">❌ No</td>
+                <td class="xmark">❌ No</td>
+                <td class="xmark">❌ No</td>
+            </tr>
+            <tr>
+                <td><strong>Local AI</strong></td>
+                <td class="checkmark">✅ Ollama</td>
+                <td class="xmark">❌ No</td>
+                <td class="xmark">❌ No</td>
+                <td class="xmark">❌ No</td>
+            </tr>
+            <tr>
+                <td><strong>Transformer Pipelines</strong></td>
+                <td class="checkmark">✅ Yes</td>
+                <td class="xmark">❌ No</td>
+                <td>⚠️ Limited</td>
+                <td class="xmark">❌ No</td>
+            </tr>
+            <tr>
+                <td><strong>Platform Fees</strong></td>
+                <td class="checkmark">✅ $0</td>
+                <td class="xmark">❌ $10-39/user</td>
+                <td class="xmark">❌ Contact sales</td>
+                <td class="xmark">❌ Varies</td>
+            </tr>
+            <tr>
+                <td><strong>Distributed Processing</strong></td>
+                <td class="checkmark">✅ Yes (horizontal)</td>
+                <td class="xmark">❌ No</td>
+                <td class="xmark">❌ No</td>
+                <td class="xmark">❌ No</td>
+            </tr>
+            <tr>
+                <td><strong>Batch Processing</strong></td>
+                <td class="checkmark">✅ Native</td>
+                <td>⚠️ Limited</td>
+                <td>⚠️ API only</td>
+                <td>⚠️ Limited</td>
+            </tr>
+            <tr>
+                <td><strong>Horizontal Scaling</strong></td>
+                <td class="checkmark">✅ Infinite</td>
+                <td class="xmark">❌ No</td>
+                <td>⚠️ Rate limited</td>
+                <td>⚠️ Rate limited</td>
+            </tr>
+        </table>
+
+        <h2>Decision Criteria</h2>
+        
+        <h3>Choose CyborgShell If:</h3>
+        <ul>
+            <li class="checkmark">✅ Security/compliance requires air-gap capability</li>
+            <li class="checkmark">✅ Need to self-host for data sovereignty</li>
+            <li class="checkmark">✅ Want zero vendor lock-in (open source)</li>
+            <li class="checkmark">✅ Prefer client-side execution model</li>
+            <li class="checkmark">✅ Need multi-AI provider flexibility</li>
+            <li class="checkmark">✅ Want to eliminate platform fees</li>
+            <li class="checkmark">✅ Require full code auditability</li>
+            <li class="checkmark">✅ Need batch/distributed processing at scale</li>
+            <li class="checkmark">✅ Want horizontal scaling capability (1 to infinite workers)</li>
+            <li class="checkmark">✅ Have use cases for parallel AI processing</li>
+        </ul>
+
+        <h3>May Not Be Ideal If:</h3>
+        <ul>
+            <li>⚠️ Need enterprise support contracts (community support only)</li>
+            <li>⚠️ Require SaaS-only deployment (though SaaS available)</li>
+            <li>⚠️ Can't accommodate client-side execution model</li>
+            <li>⚠️ Don't have infrastructure for self-hosting (if needed)</li>
+        </ul>
+
+        <h3>Specific Use Cases That Benefit:</h3>
+
+        <h4>Healthcare/Life Sciences</h4>
+        <ul>
+            <li>PHI analysis with Ollama (HIPAA compliant, zero external data)</li>
+            <li>Batch processing of medical records</li>
+            <li>Research data analysis (air-gapped)</li>
+        </ul>
+
+        <h4>Legal</h4>
+        <ul>
+            <li>Contract analysis (privileged data stays internal)</li>
+            <li>Document review at scale (distributed processing)</li>
+            <li>eDiscovery workflows (parallel processing)</li>
+        </ul>
+
+        <h4>Finance</h4>
+        <ul>
+            <li>Confidential data analysis (air-gapped)</li>
+            <li>Batch report generation (zero API costs with Ollama)</li>
+            <li>Risk modeling (distributed across multiple systems)</li>
+        </ul>
+
+        <h4>Manufacturing/IoT</h4>
+        <ul>
+            <li>Quality control automation (parallel inspection)</li>
+            <li>Log analysis at scale (distributed processing)</li>
+            <li>Predictive maintenance (local AI on shop floor)</li>
+        </ul>
+
+        <h4>Education</h4>
+        <ul>
+            <li>Student assignments (free Ollama for all)</li>
+            <li>Automated grading (batch processing)</li>
+            <li>Research projects (no API costs)</li>
+        </ul>
+
+        <h4>Media/Creative</h4>
+        <ul>
+            <li>Batch video/audio transcription</li>
+            <li>Content transformation pipelines</li>
+            <li>Multi-format generation (render farm style)</li>
+        </ul>
+
+        <h4>Government/Defense</h4>
+        <ul>
+            <li>Classified data analysis (air-gapped mandatory)</li>
+            <li>Intelligence processing (distributed, isolated)</li>
+            <li>Secure communications analysis</li>
+        </ul>
+
+        <h2>Questions for Vendor</h2>
+        
+        <ol>
+            <li><strong>Are API keys ever transmitted to your servers?</strong> No, browser local storage only*</li>
+            <li><strong>Do you log AI prompts or responses?</strong> No, direct calls from browser</li>
+            <li><strong>Can we self-host?</strong> Yes, MIT license, full source available</li>
+            <li><strong>What's your air-gap story?</strong> Fully functional with Ollama, zero internet needed</li>
+            <li><strong>What data leaves our network?</strong> Only file operations to server you control</li>
+            <li><strong>Can we audit the code?</strong> Yes, complete source on GitHub</li>
+            <li><strong>What about the CORS proxy?</strong> ~200 lines PHP, logging OFF by default, fully auditable</li>
+            <li><strong>Does the proxy log API keys?</strong> No - LOG_OUTPUT = FALSE by default</li>
+            <li><strong>Can we verify what the proxy does?</strong> Yes - open source, self-hostable, or eliminate entirely with Ollama</li>
+            <li><strong>What's the TCO?</strong> $0 platform fees + your AI API costs (or $0 with Ollama)</li>
+            <li><strong>Vendor lock-in risks?</strong> None, open source</li>
+            <li><strong>Can we scale horizontally?</strong> Yes, add PCs for linear throughput increase</li>
+            <li><strong>Batch processing capability?</strong> Native, with distributed processing support</li>
+        </ol>
+        
+        <p style="margin-left: 30px; font-size: 0.9em;">* Only if you use the optional CORS proxy hosted by us.</p>
+
+        <hr style="margin: 40px 0; border: none; border-top: 2px solid #eee;">
+
+        <h2>References</h2>
+        <ul>
+            <li><strong>Website:</strong> cyborgshell.com</li>
+            <li><strong>Source Code:</strong> https://github.com/PrimalNinja/cyborgshell</li>
+            <li><strong>License:</strong> MIT</li>
+            <li><strong>Documentation:</strong> See included guides</li>
+            <li><strong>Creator:</strong> PrimalNinja (2025)</li>
+        </ul>
+
+        <h2>Next Steps</h2>
+        <ol>
+            <li><strong>Technical Review</strong>: Download source, audit code</li>
+            <li><strong>Security Assessment</strong>: Review architecture document</li>
+            <li><strong>Pilot Test</strong>: Deploy to test environment</li>
+            <li><strong>Decision</strong>: Approve for production deployment</li>
+        </ol>
+
+        <div class="highlight-box">
+            <h3>Summary</h3>
+            <p>CyborgShell provides a unique browser-first architecture that enables air-gapped AI development, eliminates platform fees, and gives organizations complete control over their AI infrastructure while maintaining compliance with security frameworks.</p>
+            
+            <p><strong>Recommendation:</strong> Suitable for organizations requiring maximum security, compliance, or cost control in their AI development workflows.</p>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px; color: #666;">
+            <p><strong>CyborgShell</strong> by <a href="https://cyborgunicorn.com.au" target="_blank">Cyborg Unicorn Pty Ltd</a> 2025</p>
+            <p><a href="https://cyborgshell.com" target="_blank">cyborgshell.com</a> | <a href="https://github.com/PrimalNinja/cyborgshell" target="_blank">GitHub</a></p>
+        </div>
+    </div>
+</body>
+</html>

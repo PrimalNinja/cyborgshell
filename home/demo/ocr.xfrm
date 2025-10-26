@@ -1,34 +1,45 @@
-function ocr_xfrm(objAPI_a, objGlobals_a, strSourceFilename_a, strSourceMimeType_a, strSourceMimeTypeEditor_a, strTargetFilename_a, strRaw_a, arrCode_a, strArgs_a, cb_a)
+function ocr_xfrm(objAPI_a, objGlobals_a, objXFrmAPI_a, strArgs_a, cb_a)
 {
-	var m_TRANSFORMER = 'ocr';	// lowercase for provider settings
-	
-    console.log(m_TRANSFORMER + " plugin called with:");
-    console.log("objAPI_a:", typeof objAPI_a);
-    console.log("objGlobals_a:", typeof objGlobals_a);
-    console.log("strSourceFilename_a:", strSourceFilename_a);
-    console.log("strSourceFilename_a:", strSourceFilename_a);
-	console.log("strSourceMimeType_a:", strSourceMimeType_a);
-    console.log("strSourceMimeTypeEditor_a:", strSourceMimeTypeEditor_a);
-    console.log("strTargetFilename_a:", strTargetFilename_a);
-    //console.log("strRaw_a:", strRaw_a);
-    console.log("arrCode_a:", arrCode_a);
+    var m_TRANSFORMER = 'ocr';
+	console.log(m_TRANSFORMER + " plugin called with:");
+	console.log("objAPI_a:", typeof objAPI_a);
+	console.log("objGlobals_a:", typeof objGlobals_a);
+	console.log("objXFrmAPI_a:", typeof objXFrmAPI_a);
 	console.log("strArgs_a:", strArgs_a);
-    console.log("cb_a:", typeof cb_a);
+	console.log("cb_a:", typeof cb_a);
+    
+    var xfrmapi = objXFrmAPI_a;
 
-	var m_MIME_APPPDF = "application/pdf";
-	var m_MIME_IMAGEBMP = "image/bmp";
-	var m_MIME_IMAGEGIF = "image/gif";
-	var m_MIME_IMAGEJPEG = "image/jpeg";
-	var m_MIME_IMAGEPNG = "image/png";
-
-	var m_EDIT_HEX = "hex";
-	var m_EDIT_TEXT = "text";
+    // Extract data IMMEDIATELY to capture by value
+    var strRaw = '';
+    var strSourceFilename = '';
+    var strSourceMimeType = '';
+    
+    if (xfrmapi.sources && xfrmapi.sources.length > 0) 
+    {
+        if (xfrmapi.sources[0].raw)
+        {
+            strRaw = xfrmapi.sources[0].raw;
+            strSourceFilename = xfrmapi.sources[0].fn;
+            strSourceMimeType = xfrmapi.sources[0].mt;
+        }
+    } 
+    else if (xfrmapi.raw) 
+    {
+        strRaw = xfrmapi.raw;
+        strSourceFilename = xfrmapi.sfn;
+        strSourceMimeType = xfrmapi.smt;
+    }
+    
+    // call the internal function with captured values
+    ocr_xfrm_internal(objAPI_a, objGlobals_a, strRaw, strSourceFilename, strSourceMimeType, strArgs_a, cb_a);
+}
 	
-	var api = objAPI_a;
-	var globals = objGlobals_a;
+function ocr_xfrm_internal(objAPI_a, objGlobals_a, strRaw_a, strSourceFilename_a, strSourceMimeType_a, strArgs_a, cb_a)
+{
+    var api = objAPI_a;
+    var globals = objGlobals_a;
 
-	var m_strRaw = strRaw_a;
-	
 	function base64StringToArrayBuffer(str_a) 
 	{
 		var strPrefix = 'data:image/png;base64,';
@@ -61,7 +72,7 @@ function ocr_xfrm(objAPI_a, objGlobals_a, strSourceFilename_a, strSourceMimeType
 
 	function ocrImage(cb_a)
 	{
-		ocrTesseract(binaryStringToArrayBuffer(m_strRaw), cb_a);
+		ocrTesseract(binaryStringToArrayBuffer(strRaw_a), cb_a);
 	}
 
 	function ocrPDF(cb_a)
@@ -118,7 +129,7 @@ function ocr_xfrm(objAPI_a, objGlobals_a, strSourceFilename_a, strSourceMimeType
 			await convertToText(arrImages);
 		};
 
-		convertFile(m_strRaw);
+		convertFile(strRaw_a);
 	}
 
 	function ocrTesseract(objFile_a, cb_a) 
@@ -224,7 +235,7 @@ function ocr_xfrm(objAPI_a, objGlobals_a, strSourceFilename_a, strSourceMimeType
 				globals.ocr.status = 'loaded';
 				api.print("OCR engine loaded.");
 				
-				performOCR(); // Process the current transformer
+				//performOCR(); // Process the current transformer
 				
 				// Process all queued transformers
 				while (globals.ocr.queue.length > 0) 
@@ -251,7 +262,7 @@ function ocr_xfrm(objAPI_a, objGlobals_a, strSourceFilename_a, strSourceMimeType
 			document.head.appendChild(objScript);
 		});
 	}
-	
+
 	// Main transformer logic
 	// Initialize if needed
 	if (!globals.ocr) 
@@ -272,7 +283,7 @@ function ocr_xfrm(objAPI_a, objGlobals_a, strSourceFilename_a, strSourceMimeType
 		// Add to queue regardless of loading status
 		globals.ocr.queue.push(function() 
 		{
-			ocr_xfrm(objAPI_a, objGlobals_a, strSourceFilename_a, strSourceMimeType_a, strSourceMimeTypeEditor_a, strTargetFilename_a, strRaw_a, arrCode_a, strArgs_a, cb_a);
+			ocr_xfrm_internal(objAPI_a, objGlobals_a, strRaw_a, strSourceFilename_a, strSourceMimeType_a, strArgs_a, cb_a);
 		});
 		
 		if (globals.ocr.status !== 'loading') 

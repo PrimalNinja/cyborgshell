@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyborgShell Documentation - Complete Package</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-align: center;
+        }
+        
+        h2 {
+            color: #3498db;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 1.8em;
+        }
+        
+        h3 {
+            color: #2c3e50;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            font-size: 1.4em;
+        }
+
+        p {
+            margin-bottom: 15px;
+        }
+
+        a {
+            color: #3498db;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        a:hover {
+            color: #2980b9;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        .quick-nav-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .quick-nav-list li {
+            background-color: #ecf0f1;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            transition: background-color 0.3s;
+        }
+
+        .quick-nav-list li:hover {
+            background-color: #e0e6e8;
+        }
+
+        .doc-item {
+            border: 1px solid #dcdcdc;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+
+        .doc-item strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+        
+        .info-box {
+            background-color: #e8f5e9; /* Light Green */
+            border-left: 5px solid #4caf50; /* Green */
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .highlight-box {
+            background-color: #fbecec; /* Light Red/Pink */
+            border-left: 5px solid #e74c3c; /* Red */
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .code-box {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9em;
+            margin: 20px 0;
+            white-space: pre;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 2em;
+            }
+            h2 {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CyborgShell Documentation - Complete Package</h1>
+
+        <!-- Quick Navigation -->
+        <h2>Quick Navigation</h2>
+        <p style="font-size: 1.1em;"><strong>New to CyborgShell?</strong> Start here:</p>
+        <ol class="quick-nav-list">
+            <li>📚 <a href="getting-started.html">getting-started.html</a> (5 min read)</li>
+            <li>📚 <a href="complete-guide.html">complete-guide.html</a> (Full documentation)</li>
+        </ol>
+
+        <p style="font-size: 1.1em;"><strong>For Security/IT Teams:</strong></p>
+        <ul class="quick-nav-list">
+            <li>🔒 <a href="executive-summary.html">executive-summary.html</a> (One-page overview for decision makers)</li>
+            <li>🔒 <a href="architecture-security.html">architecture-security.html</a> (Architecture, privacy, compliance, deployment)</li>
+        </ul>
+        
+        <!-- Documentation Files -->
+        <h2>Documentation Files</h2>
+
+        <h3>For Security/IT Teams</h3>
+        <div class="doc-item">
+            <strong><a href="executive-summary.html">executive-summary.html</a></strong>
+            <ul>
+                <li>One-page overview for decision makers</li>
+                <li>Security model comparison</li>
+                <li>Three deployment models (cloud, self-hosted, air-gapped)</li>
+                <li>Compliance benefits (HIPAA, SOC2, GDPR)</li>
+                <li>Cost analysis and ROI</li>
+                <li>Risk assessment</li>
+                <li>Implementation roadmap</li>
+                <li>Competitive analysis</li>
+                <li>Decision criteria</li>
+            </ul>
+        </div>
+
+        <div class="doc-item">
+            <strong><a href="architecture-security.html">architecture-security.html</a></strong>
+            <ul>
+                <li>Deep dive into the **browser-first** security model</li>
+                <li>Detailed data flow diagrams</li>
+                <li>The role of the minimal server</li>
+                <li>Why API keys are safe (local storage)</li>
+                <li>Third-party risks and mitigation</li>
+                <li>The open-source auditability advantage</li>
+            </ul>
+        </div>
+
+        <h3>For Developers/Users</h3>
+
+        <div class="doc-item">
+            <strong><a href="getting-started.html">getting-started.html</a></strong>
+            <ul>
+                <li>5-minute quick start</li>
+                <li>Immediate vs. Program mode</li>
+                <li>Your first program and AI pipeline</li>
+                <li>Essential commands and tips</li>
+            </ul>
+        </div>
+
+        <div class="doc-item">
+            <strong><a href="dags.html">dags.html</a></strong>
+            <ul>
+                <li>CyborgShell and DAGs</li>
+            </ul>
+        </div>
+
+        <div class="doc-item">
+            <strong><a href="complete-guide.html">complete-guide.html</a></strong>
+            <ul>
+                <li>Full technical specifications and guides</li>
+                <li>Advanced usage of AI sessions and providers</li>
+                <li>Extending the shell with custom functions</li>
+                <li>Deep dive into **Transformers** and **Project creation**</li>
+            </ul>
+        </div>
+
+        <div class="doc-item">
+            <strong><a href="project-creation-guide.html">project-creation-guide.html</a></strong>
+            <ul>
+                <li>How to build declarative AI pipelines (DAGs)</li>
+                <li>Detailed explanation of the Project JSON structure</li>
+                <li>Multi-input linking and quality gate implementation</li>
+                <li>Advanced design patterns (Fan-In, Multi-Stage, Backup)</li>
+            </ul>
+        </div>
+        
+        <!-- Core Features -->
+        <h2>Core Features ✨</h2>
+        <div class="info-box">
+            <ul>
+                <li>**AI Integration:** Seamless, multi-provider AI access (Gemini, ChatGPT, Claude, Ollama)</li>
+                <li>**Air-Gap Capable:** Run self-hosted with Ollama for zero external data transfer</li>
+                <li>**Open Source:** MIT License, full code auditability, and zero vendor lock-in</li>
+                <li>**Pipeline Automation:** Declarative AI/data pipelines that auto-execute on file change</li>
+                <li>**BASIC/JS Hybrid:** Use 80s BASIC syntax with modern JavaScript power</li>
+                <li>**Cross-Platform:** Works identically on phone, tablet, PC, or game console</li>
+                <li>**No Platform Fees:** You only pay your AI provider</li>
+            </ul>
+        </div>
+
+        <!-- Distributed Processing -->
+        <h2>Distributed Processing Capability 🚀</h2>
+        <p>CyborgShell has a **Unique Feature** allowing multiple PCs to process files in parallel using shared storage, creating a cost-effective render farm for AI tasks.</p>
+
+        <div class="code-box">
+            Shared Network Drive → PC #1 (Ollama) + PC #2 (Ollama) + PC #3 (Ollama) + ...
+        </div>
+
+        <h3>Benefits:</h3>
+        <ul>
+            <li>**Zero cost:** All Ollama local</li>
+            <li>**Horizontal scaling:** Add more PCs = more throughput</li>
+            <li>**Minimal server load:** Only file I/O</li>
+            <li>**Natural load balancing:** First available PC processes</li>
+            <li>**Fault tolerant:** One PC down, others continue</li>
+            <li>**MapReduce-style AI processing**</li>
+        </ul>
+
+        <div class="highlight-box">
+            <h3>The Open Source Advantage (MIT License)</h3>
+            <ul>
+                <li>Audit all code for security</li>
+                <li>Modify for your needs</li>
+                <li>Deploy anywhere (internal, cloud, air-gapped)</li>
+                <li>No vendor lock-in or usage fees</li>
+                <li>Full control</li>
+            </ul>
+        </div>
+
+        <!-- Support -->
+        <h2>Support & Community</h2>
+        <p>If you have any questions, you can always find help:</p>
+        <ul>
+            <li>Type <code>help</code> in CyborgShell for built-in command reference.</li>
+            <li>Visit <a href="https://cyborgshell.com" target="_blank">cyborgshell.com</a> for the official site.</li>
+            <li>Check the source code and file issues on <a href="https://github.com/PrimalNinja/cyborgshell" target="_blank">GitHub</a>.</li>
+        </ul>
+
+
+        <div class="footer">
+            <p><strong>CyborgShell</strong> by <a href="https://cyborgunicorn.com.au" target="_blank">Cyborg Unicorn Pty Ltd</a> 2025</p>
+            <p><a href="https://cyborgshell.com" target="_blank">cyborgshell.com</a> | <a href="https://github.com/PrimalNinja/cyborgshell" target="_blank">GitHub</a></p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyborgShell & DAGs: Complete Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            color: #667eea;
+            border-bottom: 3px solid #764ba2;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            text-align: center;
+        }
+        
+        .tagline {
+            text-align: center;
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+        
+        h2 {
+            color: #764ba2;
+            margin-top: 35px;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+            border-left: 5px solid #667eea;
+            padding-left: 15px;
+        }
+        
+        h3 {
+            color: #667eea;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+        
+        p {
+            margin-bottom: 15px;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        code {
+            background: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            padding: 2px 6px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9em;
+            color: #c7254e;
+        }
+        
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            font-size: 0.85em;
+        }
+        
+        pre code {
+            background: none;
+            border: none;
+            color: inherit;
+            padding: 0;
+        }
+        
+        .highlight-box {
+            background: #e8f4fd;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .success-box {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .checkmark {
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.95em;
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+            padding: 14px;
+            text-align: left;
+        }
+        
+        td {
+            border: 1px solid #ddd;
+            padding: 12px 14px;
+        }
+        
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CyborgShell & DAGs</h1>
+        <p class="tagline">CyborgShell: An Integrated Orchestrator Built on DAG Principles</p>
+
+        <h2>What is a DAG?</h2>
+
+        <p>A Directed Acyclic Graph (DAG) is a structure for organizing work: nodes (tasks) connected by directed edges (dependencies), with one critical rule: <strong>no cycles in the graph structure.</strong></p>
+
+        <div class="highlight-box">
+            <p><strong>The DAG Rule:</strong> You cannot have A→B→C→A. The graph flows in one direction only.</p>
+            <p><strong>Why this matters:</strong> It guarantees parallelization is possible, prevents circular dependencies, and makes the system understandable.</p>
+        </div>
+
+        <p>This acyclic constraint does NOT prevent iteration, looping, or feedback-based workflows. It only prevents cycles IN THE GRAPH STRUCTURE. You can re-execute tasks, trigger them based on conditions, and feed outputs back as new inputs.</p>
+
+        <h2>Traditional DAG Tools vs CyborgShell</h2>
+
+        <p><strong>The key architectural difference:</strong> Traditional DAG tools separate the DAG from the orchestrator. CyborgShell unifies them.</p>
+
+        <div class="success-box">
+            <h3>Traditional Architecture (Airflow, dbt)</h3>
+            <pre>DAG Definition (YAML/Python)
+        ↓
+Orchestrator (Airflow Scheduler, dbt CLI)
+        ↓
+Executes DAG, handles retries, scheduling, etc.
+
+You write config to tell orchestrator what to do.
+Orchestration logic lives separate from DAG.</pre>
+
+            <h3>CyborgShell Architecture</h3>
+            <pre>Files (nodes) + Links (edges) = DAG Definition
+        ↓
+CyborgShell IS the Orchestrator
+        ↓
+CyborgShell executes, monitors, cascades, loops, gates
+
+You define orchestration through links and transformers.
+Orchestration and DAG are unified.</pre>
+        </div>
+
+        <h2>How CyborgShell Works</h2>
+
+        <p>CyborgShell is an integrated orchestration platform where:</p>
+
+        <ul>
+            <li><strong>Files are nodes</strong> (tasks in the pipeline)</li>
+            <li><strong>Links are edges</strong> (dependencies between tasks)</li>
+            <li><strong>Transformers are processors</strong> (what happens at each step)</li>
+            <li><strong>The dirty flag system</strong> (detects changes automatically)</li>
+        </ul>
+
+        <p>Because CyborgShell IS the orchestrator, it actively manages the DAG. It detects when files change, automatically cascades downstream, applies quality gates, and routes data through feedback loops.</p>
+
+        <h2>Live Example: 2 Minutes</h2>
+
+        <p><strong>Watch what happens in real time:</strong></p>
+
+        <pre># SETUP (30 seconds):
+file 10
+file 1
+edit 10
+10 write me a children's story about a donkey
+
+link 2 1 chatgpt openai treat all as a prompt
+# Instant: File 2 auto-processes (no manual trigger)
+
+link 3 2 translate openai german
+# Instant: File 3 auto-processes (no manual trigger)
+
+link 4 3,2 chatgpt openai word count and top 10 words
+# Instant: File 4 auto-processes with multi-input
+
+project save story-generator
+
+# Result: DAG created, all files processed automatically
+
+
+# FIRST RUN:
+files
+# File 1: D (dirty - you edited it)
+# File 2: D (1699 bytes, story generated)
+# File 3: D (1960 bytes, translated to German)
+# File 4: D (304 bytes, word analysis of both)
+
+
+# ITERATE - Edit original file (5 seconds):
+file 1
+edit 10
+10 write me a children's story about a donkey
+
+# CyborgShell detects file 1 is dirty
+# ALL transformers cascade automatically
+# File 1 → File 2 → File 3 → File 4
+
+files
+# File 1: D (dirty)
+# File 2: D (1506 bytes - regenerated)
+# File 3: D (1682 bytes - retranslated)
+# File 4: D (326 bytes - reanalyzed)
+
+
+# KEY INSIGHTS:
+# - Add new transformer = auto-processes (no manual trigger needed)
+# - Edit original file = all downstream auto-reprocess instantly
+# - CyborgShell detects dirty files and cascades automatically
+# - This IS active orchestration, not passive DAG execution</pre>
+
+        <h2>Real-World Examples</h2>
+
+        <h3>Example 1: Document Processor with Automatic Feeding</h3>
+
+        <pre>file 5
+file 1
+filename trigger.txt
+
+file 2
+filename current-document.txt
+
+file 3
+filename processed-document.txt
+
+file 4
+filename results.txt
+
+file 5
+filename archive.txt
+
+# DAG (acyclic): 1→2→3→(4,5) then 4→1 (feedback loop)
+link 2 1 documentfeeder     # Feeds docs from inbox automatically
+link 3 2 chatgpt claude "analyze and summarize"
+link 4 3 chatgpt openai "extract insights"
+link 5 3 passthrough        # Archive
+link 1 4 trigger            # Writes "GO" to file 1, triggering next cycle
+
+project save document-processor
+
+# What CyborgShell's orchestrator does:
+# - File 1 starts with "GO" (or gets it from trigger)
+# - documentfeeder pulls first document from inbox/mailbox
+# - Cascade: 1→2→3→(4,5)
+# - trigger writes "GO" to file 1, marks it dirty
+# - CyborgShell auto-cascades, documentfeeder pulls next document
+# - Loop continues until inbox empty (documentfeeder returns IDLE)
+# - Self-regulating infinite pipeline
+# - New documents trigger processing instantly</pre>
+
+        <h3>Example 2: Statistical Analysis with Adaptive Looping</h3>
+
+        <pre>project load stat-analysis
+files
+# DAG structure (acyclic): 1→2→(3,4,5,6)→(7,8,9)→10→11→12→13→14
+# Multiple branches, merge points, quality checks
+
+# What CyborgShell's orchestrator does:
+# 1. Edit file 1 with experiment parameters
+# 2. Cascade: 1→2→(parallel: 3,4,5,6)→(parallel: 7,8,9)→10→11→12→13→14
+# 3. File 13: quality gate checks if score >= 8 output PASS, else output STOP
+# 4. If score too low:
+#    - Edit file 3 (statistical methodology)
+#    - CyborgShell reruns: 3→7→10→11→12→13→14
+#    - Quality reassessed
+# 5. If score still low:
+#    - Edit file 2 (data generation)
+#    - CyborgShell reruns entire cascade
+# 6. Loop until quality threshold met
+
+# The DAG structure never changes (always acyclic)
+# But CyborgShell routes data through loops based on quality gates</pre>
+
+        <h3>Example 3: AI Coding Assistant with Recursive Refinement</h3>
+
+        <pre>file 5
+file 1
+filename complex-task.txt
+
+file 2
+filename breakdown.txt
+
+file 3
+filename solutions.txt
+
+file 4
+filename quality-check.txt
+
+file 5
+filename final-code.txt
+
+# DAG (acyclic): 1→2→3→4→5
+link 2 1 chatgpt claude "break this into N subtasks"
+link 3 2 chatgpt openai "solve each subtask"
+link 4 3 chatgpt claude "rate code quality 1-10"
+link 5 4 chatgpt claude "if quality >= 8 pass code through, else output STOP"
+link 6 5 blocker  # Blocks if quality check returns STOP
+
+project save adaptive-coder
+
+# What CyborgShell's orchestrator does:
+# 1. Edit file 1: "Build a weather app with real-time updates"
+# 2. Cascade: 1→2→3→4→5
+# 3. Quality score: 6 (blocked)
+# 4. Edit file 2: "Break into 20 subtasks instead of 10"
+# 5. Cascade: 2→3→4→5 (quality reassessed)
+# 6. Quality score: 7 (still blocked)
+# 7. Edit file 2: "Break into 30 micro-subtasks"
+# 8. Cascade: 2→3→4→5
+# 9. Quality score: 9 (passes, file 5 processes)
+
+# Same DAG, but orchestrator routes through feedback loop
+# Each iteration gets finer granularity until quality meets threshold</pre>
+
+        <h2>Why This Architecture Matters</h2>
+
+        <table>
+            <tr>
+                <th>Aspect</th>
+                <th>Traditional DAG Tools</th>
+                <th>CyborgShell</th>
+            </tr>
+            <tr>
+                <td><strong>Architecture</strong></td>
+                <td>DAG + Orchestrator (separate)</td>
+                <td><span class="checkmark">✓</span> Unified</td>
+            </tr>
+            <tr>
+                <td><strong>Auto-cascade on edit</strong></td>
+                <td>No</td>
+                <td><span class="checkmark">✓</span> Yes (detects dirty files)</td>
+            </tr>
+            <tr>
+                <td><strong>Auto-process new links</strong></td>
+                <td>Requires manual trigger</td>
+                <td><span class="checkmark">✓</span> Instant</td>
+            </tr>
+            <tr>
+                <td><strong>Quality gates</strong></td>
+                <td>Complex config</td>
+                <td><span class="checkmark">✓</span> Native (blocker transformer)</td>
+            </tr>
+            <tr>
+                <td><strong>File monitoring</strong></td>
+                <td>Not core feature</td>
+                <td><span class="checkmark">✓</span> Native (documentfeeder, etc.)</td>
+            </tr>
+            <tr>
+                <td><strong>Setup time</strong></td>
+                <td>Hours to days</td>
+                <td>Minutes</td>
+            </tr>
+            <tr>
+                <td><strong>Iteration speed</strong></td>
+                <td>Slow (restart, retrigger)</td>
+                <td><span class="checkmark">✓</span> Instant (edit, cascade)</td>
+            </tr>
+        </table>
+
+        <h2>The Key Insight</h2>
+
+        <div class="success-box">
+            <p><strong>CyborgShell IS the orchestrator.</strong></p>
+            
+            <p>You don't configure an orchestrator to run your DAG. CyborgShell actively manages the DAG:</p>
+            <ul>
+                <li>Detects when files are edited (dirty flag)</li>
+                <li>Automatically cascades downstream</li>
+                <li>Processes new transformers instantly</li>
+                <li>Handles quality gates and conditional routing</li>
+                <li>Monitors files for triggers</li>
+            </ul>
+            
+            <p>When you set up a story generator, CyborgShell doesn't just sit there. It:</p>
+            <ul>
+                <li>Processes file 2 the instant you add the link</li>
+                <li>Cascades file 3 immediately (no manual trigger)</li>
+                <li>Cascades file 4 immediately (no manual trigger)</li>
+                <li>When you edit file 1, reruns everything automatically</li>
+            </ul>
+            
+            <p><strong>The train track:</strong> The graph stays acyclic (clean, parallelizable, understandable), but CyborgShell actively routes data through the network based on dirty files, transformers, quality gates, and conditions. It's active orchestration, not passive execution.</p>
+        </div>
+
+        <h2>CyborgShell: Redefining DAG Orchestration</h2>
+
+        <p>CyborgShell takes the DAG concept—acyclic, parallelizable, structured—and adds something missing from traditional DAG tools: <strong>integrated, reactive orchestration.</strong></p>
+
+        <p>You get:</p>
+        <ul>
+            <li><strong>Clean topology:</strong> Acyclic graph structure (no circular dependencies)</li>
+            <li><strong>Powerful data flow:</strong> Feedback loops via quality gates and file monitoring</li>
+            <li><strong>Instant iteration:</strong> Edit → automatic cascade (no manual triggers)</li>
+            <li><strong>Infinite workflows:</strong> Monitor inboxes, queues, streams continuously</li>
+            <li><strong>Massive train tracks:</strong> Simple links and transformers create arbitrarily complex orchestrations</li>
+        </ul>
+
+        <p>Whether it's a simple story generator or a complex AI system that breaks tasks into subtasks, monitors quality gates, and adapts based on results - CyborgShell handles the orchestration automatically.</p>
+
+        <hr style="margin: 40px 0; border: none; border-top: 2px solid #eee;">
+
+        <div style="text-align: center; margin-top: 40px; color: #666;">
+            <p><strong>CyborgShell</strong> by <a href="https://cyborgunicorn.com.au" target="_blank">Cyborg Unicorn Pty Ltd</a> 2025</p>
+            <p><a href="https://cyborgshell.com" target="_blank">cyborgshell.com</a> | <a href="https://github.com/PrimalNinja/cyborgshell" target="_blank">GitHub</a></p>
+        </div>
+    </div>
+</body>
+</html>

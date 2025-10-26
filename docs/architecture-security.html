@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyborgShell - Architecture & Security</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        
+        h2 {
+            color: #2c3e50;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+        }
+        
+        h3 {
+            color: #34495e;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+        
+        h4 {
+            color: #34495e;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        p {
+            margin-bottom: 15px;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        code {
+            background: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            padding: 2px 6px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9em;
+            color: #c7254e;
+        }
+        
+        pre {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 20px 0;
+            border-left: 4px solid #3498db;
+        }
+        
+        pre code {
+            background: none;
+            border: none;
+            color: inherit;
+            padding: 0;
+        }
+        
+        .toc {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 20px 30px;
+            margin: 30px 0;
+        }
+        
+        .toc h2 {
+            margin-top: 0;
+            border: none;
+            padding: 0;
+        }
+        
+        .toc ul {
+            list-style: none;
+            margin-left: 0;
+        }
+        
+        .toc li {
+            margin-bottom: 5px;
+        }
+        
+        .toc a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        
+        .toc a:hover {
+            text-decoration: underline;
+        }
+        
+        .highlight-box {
+            background: #e8f4f8;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .success-box {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .danger-box {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th {
+            background: #3498db;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+        
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        .checkmark {
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .xmark {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CyborgShell Architecture & Security</h1>
+        
+        <div class="toc">
+            <h2>Table of Contents</h2>
+            <ul>
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#architecture">Architecture Design</a></li>
+                <li><a href="#security">Security Model</a></li>
+                <li><a href="#cors-proxy">The CORS Proxy</a></li>
+                <li><a href="#deployments">Deployment Scenarios</a></li>
+                <li><a href="#distributed">Distributed Processing</a></li>
+                <li><a href="#compliance">Compliance & Enterprise</a></li>
+                <li><a href="#technical">Technical Details</a></li>
+                <li><a href="#best-practices">Security Best Practices</a></li>
+                <li><a href="#advantages">Advantages</a></li>
+            </ul>
+        </div>
+
+        <h2 id="overview">Overview</h2>
+        <p>CyborgShell is a <strong>browser-first AI platform</strong> with a fundamentally different architecture than traditional cloud AI tools. This document explains how it works and why it matters for your privacy and security.</p>
+
+        <h2 id="architecture">Architecture Design</h2>
+        
+        <h3>What Runs Where</h3>
+        <div class="highlight-box">
+            <h4>Your Browser (Client)</h4>
+            <ul>
+                <li>JavaScript Execution</li>
+                <li>Transformer Pipeline Processing</li>
+                <li>AI API Calls (direct to providers)</li>
+                <li>Project Management</li>
+                <li>Local Storage (API keys, sessions, configs)</li>
+            </ul>
+            
+            <h4>CyborgShell Server (Minimal)</h4>
+            <ul>
+                <li>File load/save operations</li>
+                <li>Directory listings</li>
+                <li>Optional CORS proxy</li>
+                <li class="xmark">NO code execution</li>
+                <li class="xmark">NO API key storage</li>
+            </ul>
+        </div>
+
+        <h3>Key Principle: Client-Side Execution</h3>
+        <p><strong>Your browser does all the work:</strong></p>
+        <ul>
+            <li>JavaScript code execution</li>
+            <li>Transformer pipeline orchestration</li>
+            <li>AI API calls (directly from browser to AI providers)</li>
+            <li>Data processing</li>
+            <li>Project state management</li>
+        </ul>
+        
+        <p><strong>The server only handles:</strong></p>
+        <ul>
+            <li>Loading files you request</li>
+            <li>Saving files you create</li>
+            <li>Listing your saved files</li>
+            <li>Optional CORS proxy for some providers</li>
+        </ul>
+
+        <h2 id="security">Security Model</h2>
+        
+        <h3>API Key Storage</h3>
+        <div class="success-box">
+            <p><strong>Your API keys are stored in browser local storage:</strong></p>
+            <ul>
+                <li class="checkmark">✅ Never transmitted to CyborgShell servers *</li>
+                <li class="checkmark">✅ Never stored in CyborgShell databases</li>
+                <li class="checkmark">✅ Persist across sessions on the same browser</li>
+                <li class="checkmark">✅ Can be backed up/deployed to other machines via csconfig</li>
+            </ul>
+			
+			* unless you use the Cyborg Shell's optional CORS proxy server
+        </div>
+        
+        <div class="warning-box">
+            <p><strong>Coming Soon: ZOSCII Information Theoretic Security (ITS) Encoding</strong></p>
+            <ul>
+                <li>Local storage will use ZOSCII</li>
+            </ul>
+        </div>
+        
+        <div class="danger-box">
+            <p><strong>Important:</strong> Local storage is tied to the browser/device. If using a public computer:</p>
+            <ol>
+                <li>Use private/incognito mode, OR</li>
+                <li>Clear your config after use: <code>csconfig</code> → Delete service details</li>
+            </ol>
+        </div>
+
+        <h3>Data Flow</h3>
+        <table>
+            <tr>
+                <th>Architecture</th>
+                <th>Traditional Cloud AI</th>
+                <th>CyborgShell</th>
+            </tr>
+            <tr>
+                <td>API Keys</td>
+                <td class="xmark">Stored on vendor servers</td>
+                <td class="checkmark">Browser local storage only</td>
+            </tr>
+            <tr>
+                <td>Code Execution</td>
+                <td class="xmark">On vendor servers</td>
+                <td class="checkmark">In your browser</td>
+            </tr>
+            <tr>
+                <td>AI Calls</td>
+                <td class="xmark">Through vendor server</td>
+                <td class="checkmark">Direct from browser</td>
+            </tr>
+            <tr>
+                <td>Data Privacy</td>
+                <td class="xmark">Vendor sees everything</td>
+                <td class="checkmark">Only file operations</td>
+            </tr>
+        </table>
+
+        <h3>Why This Matters</h3>
+        <div class="success-box">
+            <p><strong>Privacy:</strong></p>
+            <ul>
+                <li>Your code never passes through CyborgShell servers during execution</li>
+                <li>Your API keys never leave your browser *</li>
+                <li>Your AI conversations go directly to the provider *</li>
+                <li>CyborgShell never sees your prompts or responses *</li>
+            </ul>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;* unless you use the Cyborg Shell's optional CORS proxy server<br><br>
+            
+            <p><strong>Security:</strong></p>
+            <ul>
+                <li>Reduced attack surface (no server-side execution)</li>
+                <li>No centralized API key database to compromise</li>
+                <li>You control which AI providers to use</li>
+                <li>Audit trail is simpler (file operations only)</li>
+            </ul>
+            
+            <p><strong>Control:</strong></p>
+            <ul>
+                <li>Switch AI providers without changing platform</li>
+                <li>Use multiple providers simultaneously</li>
+                <li>Control costs directly (your API accounts)</li>
+                <li>No vendor lock-in</li>
+            </ul>
+        </div>
+
+        <h2 id="cors-proxy">The CORS Proxy</h2>
+        
+        <h3>Why It Exists</h3>
+        <p>Browsers have a security feature called CORS (Cross-Origin Resource Sharing) that prevents JavaScript from making requests to different domains. Some AI providers also require authentication tokens in specific formats.</p>
+        
+        <h3>What It Actually Does</h3>
+        <p>The proxy is <strong>minimal PHP code</strong> (~200 lines) included in the GitHub repository:</p>
+        
+        <pre><code>// Source/Destination Whitelists
+$arrSourceWhitelist = array('cyborgshell.com', 'cyborgdesktop.com', 'localhost');
+$arrDestinationWhitelist = array(); // Empty = allow all (you can restrict)
+
+// Logging (OFF by default)
+DEFINE('LOG_OUTPUT', 'FALSE');
+
+// Bearer Token Extraction
+// Extract bearer token from JSON body
+// Remove it from payload before sending to API
+// Add proper Authorization: Bearer header
+// Forward request to AI provider</code></pre>
+
+        <div class="highlight-box">
+            <p><strong>Process:</strong></p>
+            <ol>
+                <li>Receives request from browser with API key in JSON body</li>
+                <li>Extracts <code>bearer</code> or <code>api_key</code> field from JSON</li>
+                <li>Removes it from the payload</li>
+                <li>Adds proper <code>Authorization: Bearer</code> header</li>
+                <li>Forwards request to AI provider</li>
+                <li>Returns response unchanged</li>
+            </ol>
+        </div>
+
+        <h3>What It Doesn't Do</h3>
+        <ul>
+            <li class="xmark">❌ Does NOT store your API keys (passed through only)</li>
+            <li class="xmark">❌ Does NOT retain any data (logging disabled by default)</li>
+            <li class="xmark">❌ Does NOT execute any code from requests</li>
+            <li class="xmark">❌ Does NOT modify your prompts or responses</li>
+            <li class="xmark">❌ Does NOT connect to anything except specified destination</li>
+            <li class="xmark">❌ Does NOT make outbound calls without explicit request</li>
+        </ul>
+
+        <h3>The Reality of Proxies</h3>
+        <div class="warning-box">
+            <p><strong>Any proxy sees data in transit</strong> - that's how proxies work. The critical questions are:</p>
+            <ol>
+                <li><strong>What does it do with the data?</strong> (This one: passes through, doesn't store)</li>
+                <li><strong>Can you verify that?</strong> (Yes: ~200 lines of open source PHP)</li>
+                <li><strong>Can you trust it?</strong> (Self-host = you control it completely)</li>
+            </ol>
+        </div>
+
+        <div class="success-box">
+            <p><strong>The Truth:</strong> If you're using ANY platform with closed-source code, you're trusting them with your API keys whether they admit it or not. CyborgShell's difference:</p>
+            <ul>
+                <li class="checkmark">✅ <strong>Open Source</strong> - Audit every line of code</li>
+                <li class="checkmark">✅ <strong>Self-Hostable</strong> - Run on your infrastructure</li>
+                <li class="checkmark">✅ <strong>Transparent</strong> - No hidden data collection</li>
+                <li class="checkmark">✅ <strong>Optional</strong> - Eliminate proxy entirely with Ollama</li>
+            </ul>
+        </div>
+
+        <div class="highlight-box">
+            <h4>Simple Decision Guide</h4>
+            <p><strong>API key visibility through proxy matters to you?</strong><br>
+            → <strong>Self-host it.</strong> Then you control everything. Problem solved.</p>
+            
+            <p><strong>Don't want to deal with any proxy at all?</strong><br>
+            → <strong>Use Ollama.</strong> Zero external calls, zero proxy needed.</p>
+            
+            <p><strong>Using cyborgshell.com for convenience?</strong><br>
+            → Our server follows best practices. Code is open source. You decide your trust level.</p>
+            
+            <p><strong>Bottom line:</strong> You have options. Choose what fits your security requirements.</p>
+        </div>
+
+        <h2 id="deployments">Deployment Scenarios</h2>
+        
+        <h3>1. Public Cloud (cyborgshell.com)</h3>
+        <p><strong>Architecture:</strong> User Browser → cyborgshell.com (file ops) → AI Provider APIs</p>
+        <p><strong>Use Case:</strong> Quick start, multi-device access, cloud storage</p>
+        <p><strong>Security:</strong> API keys in browser, direct API calls to providers</p>
+        <p><strong>Internet:</strong> Required for AI providers, file sync</p>
+
+        <h3>2. Self-Hosted + Cloud AI</h3>
+        <p><strong>Architecture:</strong> User Browser → Your Server (file ops) → Cloud AI APIs</p>
+        <p><strong>Use Case:</strong> Corporate deployment with cloud AI</p>
+        <p><strong>Security:</strong> Full control of server, API keys stay client-side</p>
+        <p><strong>Setup:</strong> Clone from GitHub, host on internal/external server</p>
+
+        <h3>3. Self-Hosted + Local AI (Complete Privacy)</h3>
+        <p><strong>Architecture:</strong> User Browser → Your Server (file ops) → Ollama (localhost)</p>
+        <p><strong>Use Case:</strong> Maximum security, HIPAA/SOC2, air-gapped environments</p>
+        <p><strong>Security:</strong> Zero external data transmission</p>
+        <p><strong>Perfect For:</strong> Healthcare, legal, financial, classified work</p>
+
+        <h3>4. Distributed Processing (Horizontal Scaling)</h3>
+        <p><strong>Architecture:</strong> Shared Network Drive → Multiple PCs with Ollama processing in parallel</p>
+        <p><strong>Use Case:</strong> Batch processing, render farms, massive throughput</p>
+        <p><strong>Benefits:</strong></p>
+        <ul>
+            <li>Zero cost (all Ollama local)</li>
+            <li>Horizontal scaling (add more PCs = more throughput)</li>
+            <li>Minimal server load (only file I/O)</li>
+            <li>Natural load balancing</li>
+            <li>Fault tolerant</li>
+            <li>MapReduce-style AI processing</li>
+        </ul>
+
+        <h2 id="compliance">Compliance & Enterprise</h2>
+        
+        <h3>HIPAA (Healthcare)</h3>
+        <div class="success-box">
+            <p><strong>Requirements:</strong> PHI must not leave network</p>
+            <p><strong>CyborgShell Solution:</strong></p>
+            <ul>
+                <li>Self-host CyborgShell internally</li>
+                <li>Use Ollama for any PHI-related processing</li>
+                <li>No PHI ever transmitted externally</li>
+                <li>Server logs only file operations (no content)</li>
+                <li>Encryption via HTTPS (your cert)</li>
+            </ul>
+        </div>
+
+        <h3>SOC 2 (Service Organizations)</h3>
+        <div class="success-box">
+            <p><strong>CyborgShell Solution:</strong></p>
+            <ul>
+                <li>Simple data flow (browser → your server → local AI)</li>
+                <li>No third-party data processing</li>
+                <li>Audit trail limited to file operations</li>
+                <li>Open source allows security review</li>
+            </ul>
+        </div>
+
+        <h3>GDPR (Privacy)</h3>
+        <div class="success-box">
+            <p><strong>CyborgShell Solution:</strong></p>
+            <ul>
+                <li>Minimal server-side data (files only)</li>
+                <li>User controls all API keys and configs</li>
+                <li>No user tracking or analytics in code</li>
+                <li>Simple deletion (remove files)</li>
+            </ul>
+        </div>
+
+        <h2 id="technical">Technical Details</h2>
+        
+        <h3>Server Requirements (Self-Hosting)</h3>
+        <p><strong>Minimal:</strong></p>
+        <ul>
+            <li>Any web server (Apache, Nginx, IIS)</li>
+            <li>PHP (for file functionality and optional CORS proxy)</li>
+        </ul>
+        
+        <p><strong>No Special Requirements:</strong></p>
+        <ul>
+            <li>No database</li>
+            <li>No application server</li>
+            <li>No containers required (but can use)</li>
+            <li>Static HTML/JS + simple file ops</li>
+        </ul>
+
+        <h3>Network Requirements</h3>
+        <table>
+            <tr>
+                <th>Deployment</th>
+                <th>Requirements</th>
+            </tr>
+            <tr>
+                <td>Public Cloud</td>
+                <td>Internet access for AI provider APIs, HTTPS</td>
+            </tr>
+            <tr>
+                <td>Self-Hosted + Cloud AI</td>
+                <td>Outbound access to AI providers, inbound for users</td>
+            </tr>
+            <tr>
+                <td>Self-Hosted + Local AI</td>
+                <td>No internet required at all, internal network only</td>
+            </tr>
+        </table>
+
+        <h2 id="best-practices">Security Best Practices</h2>
+        
+        <h3>API Key Management</h3>
+        <div class="success-box">
+            <p><strong>DO:</strong></p>
+            <ul>
+                <li>Use csconfig to set keys (stores in browser local storage)</li>
+                <li>Back up your config (csconfig → B → Backup configuration)</li>
+                <li>Use different keys per environment (dev/prod)</li>
+            </ul>
+        </div>
+        
+        <div class="danger-box">
+            <p><strong>DON'T:</strong></p>
+            <ul>
+                <li>Share devices with sensitive keys (use private/incognito if needed)</li>
+                <li>Commit keys to version control (projects don't contain keys)</li>
+            </ul>
+        </div>
+
+        <h3>Proxy Configuration</h3>
+        <div class="success-box">
+            <ul>
+                <li>Keep <code>LOG_OUTPUT = 'FALSE'</code> in production</li>
+                <li>Enable logging only for troubleshooting specific issues</li>
+                <li>Set restrictive source/destination whitelists</li>
+                <li>Use HTTPS for all connections</li>
+                <li>Review logs immediately after debugging, then delete</li>
+                <li>Consider eliminating proxy entirely (use Ollama local)</li>
+            </ul>
+        </div>
+
+        <h2 id="advantages">Advantages of This Architecture</h2>
+        
+        <h3>For Users</h3>
+        <ul>
+            <li class="checkmark">✅ <strong>Privacy</strong>: Your code, your keys, your control</li>
+            <li class="checkmark">✅ <strong>Flexibility</strong>: Switch AI providers anytime</li>
+            <li class="checkmark">✅ <strong>Cost</strong>: Your API keys = your pricing</li>
+            <li class="checkmark">✅ <strong>Speed</strong>: Direct API calls, no intermediary</li>
+            <li class="checkmark">✅ <strong>Offline</strong>: Works with local AI (Ollama)</li>
+        </ul>
+
+        <h3>For Organizations</h3>
+        <ul>
+            <li class="checkmark">✅ <strong>Security</strong>: Reduced attack surface</li>
+            <li class="checkmark">✅ <strong>Compliance</strong>: Air-gap capable</li>
+            <li class="checkmark">✅ <strong>Control</strong>: Self-host everything</li>
+            <li class="checkmark">✅ <strong>Audit</strong>: Simple data flows</li>
+            <li class="checkmark">✅ <strong>Cost</strong>: No platform fees</li>
+        </ul>
+
+        <h3>For Developers</h3>
+        <ul>
+            <li class="checkmark">✅ <strong>Transparency</strong>: Open source (MIT)</li>
+            <li class="checkmark">✅ <strong>Extensibility</strong>: Add your own transformers</li>
+            <li class="checkmark">✅ <strong>Portability</strong>: Run anywhere</li>
+            <li class="checkmark">✅ <strong>Simplicity</strong>: Static files + file ops</li>
+            <li class="checkmark">✅ <strong>Customization</strong>: Fork and modify</li>
+        </ul>
+
+        <h2>Source Code</h2>
+        <div class="highlight-box">
+            <p><strong>GitHub:</strong> <a href="https://github.com/PrimalNinja/cyborgshell">https://github.com/PrimalNinja/cyborgshell</a></p>
+            <p><strong>License:</strong> MIT (free, open source)</p>
+            <p><strong>Components:</strong></p>
+            <ul>
+                <li>HTML/CSS/JavaScript (client)</li>
+                <li>PHP (minimal server for file ops)</li>
+                <li>Transformers (JavaScript)</li>
+                <li>Example projects</li>
+            </ul>
+        </div>
+
+        <h2>Conclusion</h2>
+        <div class="success-box">
+            <p>CyborgShell's browser-first architecture provides unique security and privacy benefits:</p>
+            <ol>
+                <li><strong>Your API keys stay local</strong> (browser storage, not servers)</li>
+                <li><strong>Your code executes in your browser</strong> (not on servers)</li>
+                <li><strong>Your AI calls go direct</strong> (browser → AI provider)</li>
+                <li><strong>Complete self-hosting possible</strong> (MIT license)</li>
+                <li><strong>Air-gap capable</strong> (with Ollama)</li>
+            </ol>
+            <p>Whether you use the public cloud version for convenience, self-host for control, or deploy air-gapped for maximum security - the choice is yours.</p>
+            <p><strong>Your code. Your AI. Your control.</strong> 🔒</p>
+        </div>
+
+
+        <div style="text-align: center; margin-top: 40px; color: #666;">
+            <p><strong>CyborgShell</strong> by <a href="https://cyborgunicorn.com.au" target="_blank">Cyborg Unicorn Pty Ltd</a> 2025</p>
+            <p><a href="https://cyborgshell.com" target="_blank">cyborgshell.com</a> | <a href="https://github.com/PrimalNinja/cyborgshell" target="_blank">GitHub</a></p>
+        </div>
+    </div>
+</body>
+</html>

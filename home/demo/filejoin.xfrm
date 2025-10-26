@@ -1,0 +1,91 @@
+function filejoin_xfrm(objAPI_a, objGlobals_a, objXFrmAPI_a, strArgs_a, cb_a)
+{
+	var m_TRANSFORMER = 'filejoin';	// lowercase for provider settings
+	
+    console.log(m_TRANSFORMER + " plugin called with:");
+    console.log("objAPI_a:", typeof objAPI_a);
+    console.log("objGlobals_a:", typeof objGlobals_a);
+    console.log("objXFrmAPI_a:", typeof objXFrmAPI_a);
+	console.log("strArgs_a:", strArgs_a);
+    console.log("cb_a:", typeof cb_a);
+
+	var api = objAPI_a;
+	var globals = objGlobals_a;
+	var xfrmapi = objXFrmAPI_a;
+	
+	var strResult = "";
+	var strSeparator = "";
+	
+	if (strArgs_a)
+	{
+		strSeparator = strArgs_a;
+	}
+	else
+	{
+		strSeparator = "%NL%";
+	}
+	
+	strSeparator = strSeparator.replace(/%NL%/g, "\n").replace(/%T%/g, "\t");
+	
+	// Check if we have multiple sources
+	if (xfrmapi.sources && xfrmapi.sources.length > 0)
+	{
+		// Multiple inputs - combine them
+		for (var intI = 0; intI < xfrmapi.sources.length; intI++)
+		{
+			if (intI > 0)
+			{
+				strResult += strSeparator;
+			}
+			
+			if (xfrmapi.sources[intI].raw)
+			{
+				strResult += xfrmapi.sources[intI].raw;
+			}
+			else
+			{
+				strResult += "";
+			}
+		}
+	}
+	else
+	{
+		// Single input (backwards compatibility)
+		if (xfrmapi.raw)
+		{
+			strResult = xfrmapi.raw;
+		}
+		else
+		{
+			strResult = "";
+		}
+	}
+	
+	var strMimeTypeEditor;
+	if (xfrmapi.smte)
+	{
+		strMimeTypeEditor = xfrmapi.smte;
+	}
+	else
+	{
+		strMimeTypeEditor = "text";
+	}
+	
+	var strMimeType;
+	if (xfrmapi.smt)
+	{
+		strMimeType = xfrmapi.smt;
+	}
+	else
+	{
+		strMimeType = "text/plain";
+	}
+	
+	// Return the combined result
+	cb_a({
+		raw: strResult,
+		mte: strMimeTypeEditor,
+		mt: strMimeType,
+		error: ""
+	});
+}

@@ -1,5 +1,53 @@
 Latest Release Notes.
 
+New Features 26th Oct 2025:
+
+- some online documentation is now available at https://cyborgshell.com/docs
+
+- multiple source files are now possible as inputs
+
+	e.g. 
+	
+		link 3 1,2 <transformer>
+		
+		Existing transformers have been updated to cater for multiple inputs where it makes sense to. It is important that there are no spaces in the list of source file numbers.
+
+- New transformers:
+
+	csvmerge.xfrm:
+	
+		appends multile csv files of the same structure
+	
+	jsonmerge.xfrm:
+
+		merges 1 or more json files
+	
+	filediff.xfrm:
+	
+		outputs the differences between 2 source files
+	
+	filejoin.xfrm:
+	
+		joins 1 or more files, similar to passthrough with the exception that doesn't try preserve file numbers
+		
+	filestats.xfrm:
+	
+		outputs some filestatus of the multiple input files
+	
+	template.xfrm:
+	
+		links to multiple input files, the first file is a template with {{key}} with values from json files also linked to
+		
+		link 4 1,2,3 template would mean file 1 is the template, 2 and 3 are json files used to populate the template, 4 is the output file number
+		
+	trigger.xfrm:
+	
+		simply triggers a file by returning 'GO'
+		
+		use cases:
+		
+		link 1 5 trigger	it will cause 1 to trigger after 5 is dirty, useful for application where a trigger is not a file within the system, such as checking a mailbox, or external filesystem
+
 New Features 20th Oct 2025:
 
 - From within ChatGPT and RPGGPT can now change services on the fly at any time.

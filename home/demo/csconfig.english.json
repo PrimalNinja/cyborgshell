@@ -33,7 +33,7 @@
 	"exiting": "Exiting...",
 	"enterServiceName": "Enter service name (e.g. 'claude', 'huggingface', 'gemini', 'openai', 'ollama', 'speak'):",
 	"enterKey": "Enter %%KEY%%:",
-	"enterChoice": "Enter your choice (1-6, B, D) or press Enter to exit:",
+	"enterChoice": "Enter your choice (1-6, BS, DS, BL, DL) or press Enter to exit:",
 	"deployParseError": "Error parsing csconfig.json: %%ERROR%%",
 	"deployLoadError": "Error loading csconfig.json: %%ERROR%%",
 	"deployDescription": "Deploy csconfig.json from your current space to your local storage.",
@@ -61,5 +61,12 @@
 	"aboutToDelete": "About to delete all config for [%%SERVICENAME%%]. Continue? (Y/N)",
 	"aboutToBackup": "About to backup your configuration from local storage. Continue? (Y/N)",
 	"abortedNoChangesSaved": "Aborted. No changes saved.",
-	"abortedNoChanges": "Aborted. No changes."
+	"abortedNoChanges": "Aborted. No changes.",
+	"backupToLocal": "Backup configuration to Local Download",
+	"deployFromLocal": "Deploy configuration from Local File",
+	"backupToLocalDescription": "Export all CyborgShell configuration and download as a JSON file to your computer.",
+	"deployFromLocalDescription": "Import CyborgShell configuration from a JSON file on your computer.",
+	"aboutToBackupLocal": "About to backup your configuration and download it. Continue? (Y/N)",
+	"aboutToDeployLocal": "Please select a JSON configuration file to import:",
+	"backupLocalComplete": "Configuration downloaded successfully!"
 }

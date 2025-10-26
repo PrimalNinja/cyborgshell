@@ -51,14 +51,17 @@ function showMenu()
 	api.print("5. " + m_objLang.addUpdateServiceDetails);
 	api.print("6. " + m_objLang.deleteServiceDetails);
 	api.print(" ");
-	api.print("B. " + m_objLang.backupConfiguration);
-	api.print("D. " + m_objLang.deployConfiguration);
+	api.print("BS. " + m_objLang.backupConfiguration);
+	api.print("DS. " + m_objLang.deployConfiguration);
+	api.print("BL. " + m_objLang.backupToLocal);
+	api.print("DL. " + m_objLang.deployFromLocal);
 	api.print(" ");
 	api.print(m_objLang.enterChoice);
 
 	api.input("", function(strChoice)
 	{
-		switch(strChoice.trim())
+		var strChoiceUpper = strChoice.trim().toUpperCase();
+		switch(strChoiceUpper)
 		{
 			case '1':
 			configureAutorun();
@@ -84,14 +87,20 @@ function showMenu()
 			deleteServiceDetails();
 			break;
 
-			case 'B':
-			case 'b':
+			case 'BS':
 			backupConfiguration();
 			break;
 
-			case 'D':
-			case 'd':
+			case 'DS':
 			deployConfiguration();
+			break;
+
+			case 'BL':
+			backupToLocal();
+			break;
+
+			case 'DL':
+			deployFromLocal();
 			break;
 
 			default:
@@ -442,223 +451,373 @@ function addUpdateServiceDetails()
 							askNextConfigWithDefaults();
 						}
 					});
-					})(m_arrConfigKeys[intI]);
+				})(m_arrConfigKeys[intI]);
+			}
+		}
+	});
+}
+
+function askNextConfigWithDefaults()
+{
+	if (m_intConfigKeyIndex < m_arrConfigKeys.length)
+	{
+		var strKey = m_arrConfigKeys[m_intConfigKeyIndex];
+		var strCurrentValue = m_objConfigVals[strKey] || "";
+
+		api.print(m_objLang.enterKey.replace("%%KEY%%", strKey));
+		api.input(strCurrentValue, function(strValue_a)
+		{
+			var strValue = strValue_a.trim();
+
+			// Handle deletion
+			if (strValue === '-')
+			{
+				api.deleteLocalData(m_objConfigVals.service + "-" + strKey, function()
+				{
+					api.print(m_objLang.keyDeleted.replace("%%KEY%%", strKey));
+					m_objConfigVals[strKey] = "";
+					m_intConfigKeyIndex++;
+					askNextConfigWithDefaults();
+				});
+			}
+			else
+			{
+				// If empty, keep the existing value
+				if (strValue.length === 0)
+				{
+					strValue = strCurrentValue;
 				}
+
+				api.print(strValue);
+				m_objConfigVals[strKey] = strValue;
+				m_intConfigKeyIndex++;
+				askNextConfigWithDefaults();
 			}
 		});
 	}
-
-	function askNextConfigWithDefaults()
+	else
 	{
-		if (m_intConfigKeyIndex < m_arrConfigKeys.length)
+		api.print(" ");
+		api.print(m_objLang.youEntered);
+		m_arrConfigKeys.forEach(function(strKey_a)
 		{
-			var strKey = m_arrConfigKeys[m_intConfigKeyIndex];
-			var strCurrentValue = m_objConfigVals[strKey] || "";
-
-			api.print(m_objLang.enterKey.replace("%%KEY%%", strKey));
-			api.input(strCurrentValue, function(strValue_a)
+			api.print(strKey_a + ": " + m_objConfigVals[strKey_a]);
+		});
+		api.print(m_objLang.isThisCorrect);
+		api.input("", function(strConfirm_a)
+		{
+			if (strConfirm_a.trim().toLowerCase() === "y")
 			{
-				var strValue = strValue_a.trim();
-
-				// Handle deletion
-				if (strValue === '-')
+				var strService = m_objConfigVals.service;
+				m_arrConfigKeys.forEach(function(strKey_a)
 				{
-					api.deleteLocalData(m_objConfigVals.service + "-" + strKey, function()
+					if (m_objConfigVals[strKey_a] && m_objConfigVals[strKey_a].length > 0)
 					{
-						api.print(m_objLang.keyDeleted.replace("%%KEY%%", strKey));
-						m_objConfigVals[strKey] = "";
-						m_intConfigKeyIndex++;
-						askNextConfigWithDefaults();
-					});
+						api.saveLocalData(strService + "-" + strKey_a, m_objConfigVals[strKey_a], function() {});
+					}
+				});
+				api.print(m_objLang.configSaved.replace("%%SERVICE%%", strService));
+			}
+			else
+			{
+				api.print(m_objLang.abortedNoChangesSaved);
+			}
+			api.print(" ");
+			showMenu();
+		});
+	}
+}
+
+function backupConfiguration()
+{
+	var m_LOCALSTORAGEPREFIX = "cyborgshell-";
+	var m_LOCALSTORAGECONFIG = "config-";
+
+	api.print(m_objLang.backupDescription);
+	api.print(m_objLang.backupWarning);
+	api.print("");
+	api.print(m_objLang.aboutToBackup);
+	api.input("", function(strConfirm_a)
+	{
+		if (strConfirm_a.trim().toLowerCase() === "y")
+		{
+			api.print(m_objLang.backingUp);
+			api.print(" ");
+
+			var objConfig = {};
+
+			// Collect all config- prefixed items from localStorage
+			for (var intI = 0; intI < localStorage.length; intI++)
+			{
+				var strKey = localStorage.key(intI);
+				if (typeof strKey === 'string' && strKey.length > 0 && strKey.startsWith(m_LOCALSTORAGEPREFIX))
+				{
+					var strFilename = strKey.substring(m_LOCALSTORAGEPREFIX.length);
+					if (strFilename.startsWith(m_LOCALSTORAGECONFIG))
+					{
+						var strConfigKey = strFilename.substring(m_LOCALSTORAGECONFIG.length);
+						var strData = localStorage.getItem(strKey);
+						try
+						{
+							objConfig[strConfigKey] = JSON.parse(strData);
+						}
+						catch (objException_a)
+						{
+							objConfig[strConfigKey] = strData;
+						}
+					}
+				}
+			}
+
+			var strConfigJson = JSON.stringify(
+				Object.keys(objConfig).sort().reduce(function(result, key) 
+				{
+					result[key] = objConfig[key];
+					return result;
+				}, {}), null, 2);
+
+			api.saveFile("csconfig.json", strConfigJson, function(objResponse_a)
+			{
+				if (objResponse_a.error.length === 0)
+				{
+					api.print(m_objLang.backupComplete);
 				}
 				else
 				{
-					// If empty, keep the existing value
-					if (strValue.length === 0)
-					{
-						strValue = strCurrentValue;
-					}
-
-					api.print(strValue);
-					m_objConfigVals[strKey] = strValue;
-					m_intConfigKeyIndex++;
-					askNextConfigWithDefaults();
+					api.print(m_objLang.backupError.replace("%%ERROR%%", objResponse_a.error));
 				}
+
+				api.input("", function()
+				{
+					showMenu();
+				});
 			});
 		}
 		else
 		{
-			api.print(" ");
-			api.print(m_objLang.youEntered);
-			m_arrConfigKeys.forEach(function(strKey_a)
+			api.print(m_objLang.backupAborted);
+
+			api.input("", function()
 			{
-				api.print(strKey_a + ": " + m_objConfigVals[strKey_a]);
-			});
-			api.print(m_objLang.isThisCorrect);
-			api.input("", function(strConfirm_a)
-			{
-				if (strConfirm_a.trim().toLowerCase() === "y")
-				{
-					var strService = m_objConfigVals.service;
-					m_arrConfigKeys.forEach(function(strKey_a)
-					{
-						if (m_objConfigVals[strKey_a] && m_objConfigVals[strKey_a].length > 0)
-						{
-							api.saveLocalData(strService + "-" + strKey_a, m_objConfigVals[strKey_a], function() {});
-						}
-					});
-					api.print(m_objLang.configSaved.replace("%%SERVICE%%", strService));
-				}
-				else
-				{
-					api.print(m_objLang.abortedNoChangesSaved);
-				}
-				api.print(" ");
 				showMenu();
 			});
 		}
-	}
+	});
+}
 
-	function backupConfiguration()
+function deployConfiguration()
+{
+	api.print(m_objLang.deployDescription);
+	api.print("");
+	api.print(m_objLang.aboutToDeploy);
+	api.input("", function(strConfirm_a)
 	{
-		var m_LOCALSTORAGEPREFIX = "cyborgshell-";
-		var m_LOCALSTORAGECONFIG = "config-";
-
-		api.print(m_objLang.backupDescription);
-		api.print(m_objLang.backupWarning);
-		api.print("");
-		api.print(m_objLang.aboutToBackup);
-		api.input("", function(strConfirm_a)
+		if (strConfirm_a.trim().toLowerCase() === "y")
 		{
-			if (strConfirm_a.trim().toLowerCase() === "y")
+			api.print(m_objLang.loadingConfig);
+			api.print(" ");
+
+			api.loadFile("csconfig.json", function(objResponse_a)
 			{
-				api.print(m_objLang.backingUp);
-				api.print(" ");
-
-				var objConfig = {};
-
-				// Collect all config- prefixed items from localStorage
-				for (var intI = 0; intI < localStorage.length; intI++)
+				if (objResponse_a.error.length === 0)
 				{
-					var strKey = localStorage.key(intI);
-					if (typeof strKey === 'string' && strKey.length > 0 && strKey.startsWith(m_LOCALSTORAGEPREFIX))
+					try
 					{
-						var strFilename = strKey.substring(m_LOCALSTORAGEPREFIX.length);
-						if (strFilename.startsWith(m_LOCALSTORAGECONFIG))
+						var objConfig = JSON.parse(objResponse_a.content);
+						var intConfigCount = 0;
+
+						for (var strConfigKey in objConfig)
 						{
-							var strConfigKey = strFilename.substring(m_LOCALSTORAGECONFIG.length);
-							var strData = localStorage.getItem(strKey);
-							try
+							if (objConfig.hasOwnProperty(strConfigKey))
 							{
-								objConfig[strConfigKey] = JSON.parse(strData);
-							}
-							catch (objException_a)
-							{
-								objConfig[strConfigKey] = strData;
+								api.saveLocalData(strConfigKey, objConfig[strConfigKey], function() {});
+								intConfigCount++;
 							}
 						}
+
+						api.print(m_objLang.deployComplete.replace("%%COUNT%%", intConfigCount));
+					}
+					catch (objException_a)
+					{
+						api.print(m_objLang.deployParseError.replace("%%ERROR%%", objException_a.message));
 					}
 				}
-
-				//var strConfigJson = JSON.stringify(objConfig, null, 2);
-				var strConfigJson = JSON.stringify(
-					Object.keys(objConfig).sort().reduce(function(result, key) 
-					{
-						result[key] = objConfig[key];
-						return result;
-					}, {}), null, 2);
-
-				api.saveFile("csconfig.json", strConfigJson, function(objResponse_a)
+				else
 				{
-					if (objResponse_a.error.length === 0)
-					{
-						api.print(m_objLang.backupComplete);
-					}
-					else
-					{
-						api.print(m_objLang.backupError.replace("%%ERROR%%", objResponse_a.error));
-					}
-
-					api.input("", function()
-					{
-						showMenu();
-					});
-				});
-			}
-			else
-			{
-				api.print(m_objLang.backupAborted);
+					api.print(m_objLang.deployLoadError.replace("%%ERROR%%", objResponse_a.error));
+				}
 
 				api.input("", function()
 				{
 					showMenu();
 				});
-			}
-		});
-	}
-
-	function deployConfiguration()
-	{
-		api.print(m_objLang.deployDescription);
-		api.print("");
-		api.print(m_objLang.aboutToDeploy);
-		api.input("", function(strConfirm_a)
+			});
+		}
+		else
 		{
-			if (strConfirm_a.trim().toLowerCase() === "y")
-			{
-				api.print(m_objLang.loadingConfig);
-				api.print(" ");
+			api.print(m_objLang.deployAborted);
 
-				api.loadFile("csconfig.json", function(objResponse_a)
+			api.input("", function()
+			{
+				showMenu();
+			});
+		}
+	});
+}
+
+function backupToLocal()
+{
+	var m_LOCALSTORAGEPREFIX = "cyborgshell-";
+	var m_LOCALSTORAGECONFIG = "config-";
+
+	api.print(m_objLang.backupToLocalDescription || "Backup configuration to local download");
+	api.print("");
+	api.print(m_objLang.aboutToBackupLocal || "About to create a backup and download it. Continue? (Y/N)");
+	api.input("", function(strConfirm_a)
+	{
+		if (strConfirm_a.trim().toLowerCase() === "y")
+		{
+			api.print(m_objLang.backingUp || "Backing up...");
+			api.print(" ");
+
+			var objConfig = {};
+
+			// Collect all config- prefixed items from localStorage
+			for (var intI = 0; intI < localStorage.length; intI++)
+			{
+				var strKey = localStorage.key(intI);
+				if (typeof strKey === 'string' && strKey.length > 0 && strKey.startsWith(m_LOCALSTORAGEPREFIX))
 				{
-					if (objResponse_a.error.length === 0)
+					var strFilename = strKey.substring(m_LOCALSTORAGEPREFIX.length);
+					if (strFilename.startsWith(m_LOCALSTORAGECONFIG))
 					{
+						var strConfigKey = strFilename.substring(m_LOCALSTORAGECONFIG.length);
+						var strData = localStorage.getItem(strKey);
 						try
 						{
-							var objConfig = JSON.parse(objResponse_a.content);
-							var intConfigCount = 0;
-
-							for (var strConfigKey in objConfig)
-							{
-								if (objConfig.hasOwnProperty(strConfigKey))
-								{
-									api.saveLocalData(strConfigKey, objConfig[strConfigKey], function() {});
-									intConfigCount++;
-								}
-							}
-
-							api.print(m_objLang.deployComplete.replace("%%COUNT%%", intConfigCount));
+							objConfig[strConfigKey] = JSON.parse(strData);
 						}
 						catch (objException_a)
 						{
-							api.print(m_objLang.deployParseError.replace("%%ERROR%%", objException_a.message));
+							objConfig[strConfigKey] = strData;
 						}
 					}
-					else
-					{
-						api.print(m_objLang.deployLoadError.replace("%%ERROR%%", objResponse_a.error));
-					}
-
-					api.input("", function()
-					{
-						showMenu();
-					});
-				});
+				}
 			}
-			else
-			{
-				api.print(m_objLang.deployAborted);
 
-				api.input("", function()
+			var strConfigJson = JSON.stringify(
+				Object.keys(objConfig).sort().reduce(function(result, key) 
 				{
-					showMenu();
-				});
-			}
-		});
-	}
+					result[key] = objConfig[key];
+					return result;
+				}, {}), null, 2);
 
-	// Start the program
-	loadLanguage(function()
-	{
-		showMenu();
+			// Create download
+			var blob = new Blob([strConfigJson], { type: 'application/json' });
+			var url = URL.createObjectURL(blob);
+			var a = document.createElement('a');
+			a.href = url;
+			a.download = 'csconfig-backup.json';
+			document.body.appendChild(a);
+			a.click();
+			document.body.removeChild(a);
+			URL.revokeObjectURL(url);
+
+			api.print(m_objLang.backupLocalComplete || "Backup downloaded successfully!");
+
+			api.input("", function()
+			{
+				showMenu();
+			});
+		}
+		else
+		{
+			api.print(m_objLang.backupAborted || "Backup aborted.");
+
+			api.input("", function()
+			{
+				showMenu();
+			});
+		}
 	});
+}
+
+function deployFromLocal()
+{
+	api.print(m_objLang.deployFromLocalDescription || "Deploy configuration from local file");
+	api.print("");
+	api.print(m_objLang.aboutToDeployLocal || "Please select a JSON file to deploy");
+	api.print(" ");
+
+	// Create file input element
+	var input = document.createElement('input');
+	input.type = 'file';
+	input.accept = '.json,application/json';
+	
+	input.onchange = function(e)
+	{
+		var file = e.target.files[0];
+		if (!file)
+		{
+			api.print(m_objLang.deployAborted || "Deploy aborted.");
+			api.input("", function()
+			{
+				showMenu();
+			});
+			return;
+		}
+
+		var reader = new FileReader();
+		reader.onload = function(event)
+		{
+			try
+			{
+				var objConfig = JSON.parse(event.target.result);
+				var intConfigCount = 0;
+
+				api.print(m_objLang.loadingConfig || "Loading configuration...");
+				api.print(" ");
+
+				for (var strConfigKey in objConfig)
+				{
+					if (objConfig.hasOwnProperty(strConfigKey))
+					{
+						api.saveLocalData(strConfigKey, objConfig[strConfigKey], function() {});
+						intConfigCount++;
+					}
+				}
+
+				api.print((m_objLang.deployComplete || "Deploy complete! %%COUNT%% settings imported.").replace("%%COUNT%%", intConfigCount));
+			}
+			catch (objException_a)
+			{
+				api.print((m_objLang.deployParseError || "Error parsing JSON: %%ERROR%%").replace("%%ERROR%%", objException_a.message));
+			}
+
+			api.input("", function()
+			{
+				showMenu();
+			});
+		};
+
+		reader.onerror = function()
+		{
+			api.print(m_objLang.deployLoadError || "Error reading file");
+			api.input("", function()
+			{
+				showMenu();
+			});
+		};
+
+		reader.readAsText(file);
+	};
+
+	// Trigger file browser
+	input.click();
+}
+
+// Start the program
+loadLanguage(function()
+{
+	showMenu();
+});

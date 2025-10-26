@@ -1120,7 +1120,7 @@ else if (strFlavour.toLowerCase() === 'gemini')
 			api.print('  chatgpt load math');
 			api.print('  chatgpt train combinatorics: combinatorics.txt');
 			api.print('  chatgpt train statistics: statistics.txt');
-			api.print('  chatgpt train math: combinatorics:,statistics');
+			api.print('  chatgpt train math: combinatorics:,statistics:');
 			api.print(' ');
 			api.print('Interactive Mode:');
 			api.print("  If you are in interactive mode, you can ommit 'chatgpt ' from the commands above.");

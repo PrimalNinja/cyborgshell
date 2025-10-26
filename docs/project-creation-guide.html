@@ -436,8 +436,9 @@ chatgpt
 
         <p>Before creating links, set up your file structure:</p>
 
-        <pre><code>file 10              # Creates files 1-10, goes to file 10
-file 1               # Return to file 1
+        <pre><code>newfile 10              # Creates files 1-10
+files
+file 1               # Go to file 1 if not there already
 </code></pre>
 
         <p>This creates 10 empty working files. Transformers will automatically load from file 11 onward when referenced.</p>
@@ -458,7 +459,8 @@ project load myproject     # Loads myproject.prj
         <h3>Example: Creating AI Coder Project</h3>
 
         <pre><code># Setup
-file 3
+newfile 3
+files
 file 1
 
 # Name files
@@ -483,7 +485,8 @@ project save aicoder
         <h3>Example: Creating Translation Pipeline</h3>
 
         <pre><code># Setup files
-file 7
+newfile 7
+files
 file 1
 
 # Name them
@@ -519,7 +522,8 @@ project save aitranslate
         <h3>Example: Creating Code Review Pipeline</h3>
 
         <pre><code># Setup
-file 5
+newfile 5
+files
 file 1
 
 # Name files
@@ -549,7 +553,8 @@ project save code-review
         <h3>Example: Creating Document Merge Project</h3>
 
         <pre><code># Setup
-file 7
+newfile 7
+files
 file 1
 
 # Name files
@@ -584,7 +589,8 @@ project save document-merge
         <h3>Example: Creating Quality Gate Pipeline</h3>
 
         <pre><code># Setup
-file 7
+newfile 7
+files
 file 1
 
 # Name files
@@ -624,10 +630,10 @@ project save data-validation
 
         <ol>
         <li>**Plan your file count**: Count total files needed (inputs + outputs + intermediates)</li>
-        <li>**Use file X to pre-create**: `file 15` creates 15 files instantly</li>
+        <li>**Use file X to pre-create**: `newfile 15` creates 15 files instantly</li>
         <li>**Name as you go**: Switch to each file and use `filename` command</li>
         <li>**Link from target**: Go to the target file, then create the link</li>
-        <li>**Multi-input links**: Use commas without spaces: `link 1,2,3 5 transformer`</li>
+        <li>**Multi-input links**: Use commas without spaces: `link 5 1,2,3 transformer`</li>
         <li>**Test incrementally**: Create a few links, test, then continue</li>
         <li>**Save often**: Use `project save` after major changes</li>
         </ol>

@@ -557,102 +557,131 @@ link 4 2,3 chatgpt openai session:analysis synthesize findings
 
         <h3>Example 1: Progressive Code Review</h3>
 
-        <pre><code>file 6
-file 1; filename code.js
-file 2; filename analysis.txt
-file 3; filename security.txt
-file 4; filename performance.txt
-file 5; filename final-report.md
-file 6; filename session-backup.json
+        <pre><code>newfile 6
+files
+file 1
+filename code.js
+file 2
+filename analysis.txt
+file 3
+filename security.txt
+file 4
+filename performance.txt
+file 5
+filename final-report.md
+file 6
+filename session-backup.json
 
 # Load pre-trained code review session
-file 2; link 1 2 session review: load
-file 2; link 1 2 chatgpt openai session:review analyze structure
+link 2 1 session review: load
+link 2 1 chatgpt openai session:review analyze structure
 
 # Build context across reviews
-file 3; link 2 3 chatgpt openai session:review check security
-file 4; link 3 4 chatgpt openai session:review optimize performance
+link 3 2 chatgpt openai session:review check security
+link 4 3 chatgpt openai session:review optimize performance
 
 # Generate comprehensive report
-file 5; link 2,3,4 5 chatgpt openai session:review final report
+link 5 2,3,4 chatgpt openai session:review final report
 
 # Save the enriched session
-file 6; link 5 6 session review: save
+link 6 5 session review: save
 
 project save progressive-review
 </code></pre>
 
         <h3>Example 2: Research Pipeline with Knowledge Base</h3>
 
-        <pre><code>file 5
-file 1; filename research-query.txt
-file 2; filename context-data.txt
-file 3; filename analysis.txt
-file 4; filename recommendations.txt
-file 5; filename knowledge-base.json
+        <pre><code>newfile 5
+files
+file 1
+filename research-query.txt
+file 2
+filename context-data.txt
+file 3
+filename analysis.txt
+file 4
+filename recommendations.txt
+file 5
+filename knowledge-base.json
 
 # Train session with domain knowledge
-file 3; link 1,2 3 session research: train
-file 3; link 1,2 3 chatgpt openai session:research analyze
+link 3 1,2 session research: train
+link 3 1,2 chatgpt openai session:research analyze
 
 # Use accumulated knowledge
-file 4; link 3 4 chatgpt openai session:research recommend
+link 4 3 chatgpt openai session:research recommend
 
 # Persist learned knowledge
-file 5; link 4 5 session research: save
+link 5 4 session research: save
 
 project save research-pipeline
 </code></pre>
 
         <h3>Example 3: Multi-Stage Document Processing</h3>
 
-        <pre><code>file 8
-file 1; filename brief.txt
-file 2; filename outline.txt
-file 3; filename draft.txt
-file 4; filename edited.txt
-file 5; filename final.txt
-file 6; filename session-state.json
-file 7; filename backup.txt
-file 8; filename metadata.txt
+        <pre><code>newfile 8
+files
+file 1
+filename brief.txt
+file 2
+filename outline.txt
+file 3
+filename draft.txt
+file 4
+filename edited.txt
+file 5
+filename final.txt
+file 6
+filename session-state.json
+file 7
+filename backup.txt
+file 8
+filename metadata.txt
 
 # Build document with maintained context
-file 2; link 1 2 chatgpt openai session:doc create outline
-file 3; link 2 3 chatgpt openai session:doc expand to draft
-file 4; link 3 4 chatgpt openai session:doc improve clarity
-file 5; link 4 5 chatgpt openai session:doc final polish
+link 2 1 chatgpt openai session:doc create outline
+link 3 2 chatgpt openai session:doc expand to draft
+link 4 3 chatgpt openai session:doc improve clarity
+link 5 4 chatgpt openai session:doc final polish
 
 # Preserve session and original
-file 6; link 5 6 session doc: save
-file 7; link 1 7 passthrough
-file 8; link 5 8 filestats
+link 6 5 session doc: save
+link 7 1 passthrough
+link 8 5 filestats
 
 project save document-processor
 </code></pre>
 
         <h3>Example 4: Quality Gate with Session Memory</h3>
 
-        <pre><code>file 6
-file 1; filename submission.txt
-file 2; filename quality-score.txt
-file 3; filename gate.txt
-file 4; filename approved.txt
-file 5; filename final.txt
-file 6; filename quality-session.json
+        <pre><code>newfile 6
+files
+file 1
+filename submission.txt
+file 2
+filename quality-score.txt
+file 3
+filename gate.txt
+file 4
+filename approved.txt
+file 5
+filename final.txt
+file 6
+filename quality-session.json
 
 # Quality check with remembered standards
-file 2; link 1 2 session quality: load
-file 2; link 1 2 chatgpt openai session:quality rate 1-10
+link 2 1 session quality: load
+link 2 1 chatgpt openai session:quality rate 1-10
 
 # Gate based on score
-file 3; link 2 3 chatgpt openai if score &gt;= 8 output PASS else FAIL
-file 4; link 3 4 blocker
+link 3 2 chatgpt openai if score &gt;= 8 output PASS else FAIL
+link 4 3 blocker
 
 # Process if approved
-file 5; link 4 5 chatgpt openai session:quality finalize
+link 5 4 chatgpt openai session:quality finalize
 
 # Update quality standards
-file 6; link 5 6 session quality: save
+link 6 5 session quality: save
 
 project save quality-gate
 </code></pre>
@@ -802,26 +831,34 @@ link 6 5 session project: save            # Persist learned knowledge
         <h3>Pattern 4: Quality Assurance Chain</h3>
 
         <pre><code># Multiple quality checks with shared context
+newfile 7
+files
+file 1
+filename code.js
+file 2
+filename syntax-check.txt
+file 3
+filename security-check.txt  
+file 4
+filename performance-check.txt
+file 5
+filename combined-report.txt
+file 6
+filename gate.txt
 file 7
-file 1; filename code.js
-file 2; filename syntax-check.txt
-file 3; filename security-check.txt  
-file 4; filename performance-check.txt
-file 5; filename combined-report.txt
-file 6; filename gate.txt
-file 7; filename approved.txt
+filename approved.txt
 
-file 2; link 1 2 session qa: load
-file 2; link 1 2 chatgpt openai session:qa check syntax
-file 3; link 1 3 chatgpt openai session:qa check security
-file 4; link 1 4 chatgpt openai session:qa check performance
+link 2 1 session qa: load
+link 2 1 chatgpt openai session:qa check syntax
+link 3 1 chatgpt openai session:qa check security
+link 4 1 chatgpt openai session:qa check performance
 
-file 5; link 2,3,4 5 chatgpt openai session:qa overall assessment
-file 6; link 5 6 chatgpt openai if all pass output APPROVED else REJECTED
-file 7; link 6 7 blocker
+link 5 2,3,4 chatgpt openai session:qa overall assessment
+link 6 5 chatgpt openai if all pass output APPROVED else REJECTED
+link 7 6 blocker
 
 # Session accumulates all QA context
-file 7; link 6 7 session qa: save
+link 7 6 session qa: save
 
 project save qa-chain
 </code></pre>

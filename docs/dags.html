@@ -276,7 +276,8 @@ Orchestration and DAG are unified.</pre>
         <p><strong>Watch what happens in real time:</strong></p>
 
         <pre># SETUP (30 seconds):
-file 10
+newfile 10
+files
 file 1
 edit 10
 10 write me a children's story about a donkey
@@ -329,7 +330,8 @@ files
 
         <h3>Example 1: Document Processor with Automatic Feeding</h3>
 
-        <pre>file 5
+        <pre>newfile 5
+files
 file 1
 filename trigger.txt
 
@@ -389,7 +391,8 @@ files
 
         <h3>Example 3: AI Coding Assistant with Recursive Refinement</h3>
 
-        <pre>file 5
+        <pre>newfile 5
+files
 file 1
 filename complex-task.txt
 

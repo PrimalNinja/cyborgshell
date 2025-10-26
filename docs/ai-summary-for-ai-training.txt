@@ -1,0 +1,543 @@
+CYBORGSHELL COMPLETE USAGE GUIDE FOR AI AGENTS
+
+=== SYSTEM OVERVIEW ===
+Browser-based JavaScript environment. Code runs client-side. API keys stored in browser localStorage.
+Two execution modes: immediate (no line numbers) or program (with line numbers).
+Supports file management, projects, AI integration, and transformer pipelines (DAGs).
+
+=== GETTING STARTED ===
+Type 'help' for help system. Type 'dir' to list files. Type 'files' to see editor files.
+Current space shown in prompt. Use 'cd demo' or 'cd public' to change spaces.
+
+=== BASIC COMMANDS ===
+cls or clear                    - Clear screen
+help [topic]                    - Get help (topics: general, editor, file, account, sharing, about, terms, privacy, etiquette)
+dir [pattern]                   - List files in current space (wildcards * ?)
+load filename                   - Load file into editor
+save filename                   - Save current editor content
+type filename [from-to]         - Display file without loading (e.g., type file.txt, type file.txt 10-20)
+run                             - Execute current program
+run filename                    - Load and execute file
+del filename                    - Delete file (aliases: delete, era)
+copy source dest                - Copy file (alias: cp)
+ren oldname newname             - Rename file (aliases: rename, mv)
+language [lang]                 - Show or set language
+languages                       - List available languages
+cd spacename                    - Change space (aliases: space, cs, chdir)
+spaces                          - List accessible spaces
+
+=== EDITOR COMMANDS ===
+file [N]                        - Show current file number or switch to file N. If N > current max, creates files up to N and switches to N.
+files                           - List all editor files. Shows * for current file, D for dirty (processed/modified) files.
+filename [name]                 - Show or set filename for current file
+newfile [N]                     - Create N new files without switching from current file (default 1). 
+                                  Example: 'newfile 5' creates 5 new files, stays on current file.
+                                  Note: 'file 10' then 'file 1' is same as 'newfile 10'.
+list [from-to]                  - List program lines (e.g., list, list 10-20, list 20-, list -30)
+edit N                          - Edit line N (alias: ed)
+new                             - Clear current file
+renum                           - Renumber lines
+paste linenum filenum           - Paste content from filenum before linenum in current file
+beautify                        - Format JSON in current file
+beautify filename               - Format JSON file without loading it
+
+=== WRITING CODE ===
+Immediate execution (no line numbers):
+    api.print("Hello");
+    for(let i=0; i<5; i++) api.print(i);
+
+Program mode (with line numbers):
+    10 api.print("Hello");
+    20 for(let i=0; i<5; i++) api.print(i);
+    run
+
+Common API functions:
+    api.print(text)                          - Print text
+    api.cls()                                - Clear screen
+    api.input(default, callback)             - Get user input: api.input("", function(str) { api.print(str); api.stop(); });
+    api.loadFile(filename, callback)         - Load file: api.loadFile("file.txt", function(resp) { if(resp.error.length===0) {...} });
+    api.saveFile(filename, content, callback)- Save file
+    api.loadLocalData(key, callback)         - Load from localStorage
+    api.saveLocalData(key, value, callback)  - Save to localStorage
+    api.deleteLocalData(key, callback)       - Delete from localStorage
+    api.stop()                               - Stop execution
+    api.end()                                - End program
+
+=== CONFIGURATION (csconfig) ===
+Type 'csconfig' to open configurator menu.
+
+Options:
+1. Configure autorun program - Set program to run on startup
+2. Configure handler - Link handlers to .js files (e.g., ai handler → chatgpt.js)
+3. Configure provider - Link providers to services (e.g., chatgpt provider → openai service)
+4. View service details - Display service configuration
+5. Add/update service - Configure API keys, endpoints, models for services (openai, claude, gemini, ollama, etc.)
+6. Delete service - Remove service configuration
+
+BS. Backup configuration to Server - Saves to server (plain text, use only in private space)
+DS. Deploy configuration from Server - Loads from server
+BL. Backup configuration to Local Download - Downloads JSON to your computer (RECOMMENDED for API keys)
+DL. Deploy configuration from Local File - Uploads JSON from your computer
+
+Service configuration fields:
+- flavour: chatgpt, claude, gemini (API format type)
+- apikey: Your API key
+- endpoint: API endpoint URL
+- model: Model name (e.g., gpt-4o-mini, claude-3-5-sonnet-20241022, llama3.2:latest)
+- parallel: Y or N (can transformers run in parallel?)
+- maxtokens: Max tokens per request (e.g., 2000)
+- temperature: 0.0-1.0 (e.g., 0.7)
+- proxy: Proxy URL if needed (e.g., proxy/index.php?url=)
+- jsonbearer: Y or N (send API key in JSON body?)
+
+Example Ollama local setup:
+Service name: ollama
+- flavour: chatgpt
+- apikey: (leave blank)
+- endpoint: http://localhost:11434/v1/chat/completions
+- model: llama3.2:latest
+- parallel: Y
+- maxtokens: 2000
+- temperature: 0.7
+- jsonbearer: N
+
+Provider examples:
+- ai provider → openai (used by ! command and ai handler)
+- chatgpt provider → openai (used by chatgpt.xfrm transformer)
+- translate provider → ollama (used by translate.xfrm transformer)
+
+Use %PROVIDER% in transformer arguments to use configured default.
+
+=== AI FEATURES ===
+
+Quick AI query:
+    !what is the capital of France?
+
+ChatGPT command line:
+    chatgpt hello world
+    chatgpt remember the number 5
+    chatgpt what number did I remember?
+
+Named sessions (maintain separate contexts):
+    chatgpt math: solve 2+2
+    chatgpt story: write about robots
+    chatgpt math: multiply by 5
+    math: what's the square root?          (shorthand in session)
+
+Interactive mode:
+    chatgpt                                (or just: !)
+    remember my name is Bob
+    what's my name?
+    x                                      (exit interactive mode)
+
+Session management:
+    chatgpt sessions                       - List all sessions with stats
+    chatgpt clear [sessionname]            - Clear session (default if no name)
+    chatgpt save [sessionname]             - Save session to file (all sessions if no name)
+    chatgpt load [sessionname]             - Load session from file
+    chatgpt train sessionname sources      - Train session with files/sessions
+        Examples:
+        chatgpt train legal contract.txt,law.txt
+        chatgpt train fullstack frontend:,backend:,docs.txt
+
+Service switching:
+    chatgpt services                       - List configured services
+    chatgpt service openai                 - Switch to OpenAI
+    chatgpt service claude                 - Switch to Claude
+    chatgpt service ollama                 - Switch to Ollama (local)
+    chatgpt service                        - Show current service
+
+RPG game:
+    rpggpt                                 - Start interactive fiction game
+
+=== PROJECTS & TRANSFORMERS ===
+
+Setup workflow:
+1. Create files (choose ONE method):
+    METHOD A:
+        file 10
+		files
+        file 1
+        (creates 10 files and switches to file 1)
+    
+    METHOD B:
+        newfile 5
+		files
+        (creates 5 new files without switching from current file)
+    
+    (Note: files 1-10 for working, 11+ auto-loaded as transformers)
+
+2. Name files:
+    filename input.txt
+    file 2
+    filename output.txt
+    file 1
+    (only switch files when you need to name or edit them)
+
+Create links (build pipelines):
+    link TARGET SOURCE transformer args
+
+Single input examples:
+    link 2 1 passthrough                                     - Copy file 1 to file 2
+    link 2 1 chatgpt openai improve this text                - AI improve text
+    link 3 2 translate openai Japanese                       - Translate to Japanese
+    link 2 1 chatgpt openai session:analysis examine data    - Use named session
+
+Multi-input (CRITICAL: NO SPACES between numbers):
+    link 4 1,2,3 csvmerge                                    - Merge 3 CSVs (CORRECT: 1,2,3)
+    link 5 2,3,4 chatgpt openai combine these                - Combine 3 inputs (CORRECT: 2,3,4)
+    link 3 1, 2 chatgpt openai combine                       - WRONG! Spaces cause failure!
+
+Drop event (drag-and-drop files):
+    link drop ocr                                            - OCR all dropped files
+    link drop chatgpt openai analyze code for bugs          - Analyze all dropped files
+
+Available transformers:
+
+chatgpt.xfrm: service [session:id] prompt
+    Services: openai, claude, gemini, ollama, %PROVIDER%
+    Examples:
+        link 2 1 chatgpt openai analyze this
+        link 2 1 chatgpt claude session:review check code
+        link 2 1 chatgpt %PROVIDER% improve text
+    Scan mode: Looks for AI PROMPT START/END blocks in source file
+
+translate.xfrm: service language
+    Examples:
+        link 2 1 translate openai Japanese
+        link 3 1 translate %PROVIDER% Spanish
+
+session.xfrm: [sessionname:] command [args]
+    Commands: clear, save, load, train
+    Examples:
+        link 2 1 session project: clear                      - Clear session before use
+        link 2 1 session legal: load                         - Load pre-trained session
+        link 2 1 session docs: train                         - Train with file 1 content
+        link 2 1 session api: train swagger.json,examples.txt - Train with specific files
+
+blocker.xfrm: (no args)
+    Stops cascade if input is empty. Use for quality gates.
+    Example:
+        link 3 2 blocker                                     - Only process if file 2 has content
+
+passthrough.xfrm: (no args)
+    Direct copy. Handles .raw and .cd formats. Renumbers multi-input.
+    Examples:
+        link 2 1 passthrough                                 - Simple copy
+        link 3 1 passthrough                                 - Backup original
+
+null.xfrm: (no args)
+    Discards input, outputs nothing.
+
+speak.xfrm: accent:locale
+    Text-to-speech.
+    Examples:
+        link 2 1 speak accent:en-us
+        link 3 1 speak accent:ja-jp
+
+ocr.xfrm: (no args)
+    OCR PDFs and images.
+
+csvmerge.xfrm: [no-headers]
+    Merge CSV files. Skip duplicate headers with no-headers arg.
+    Examples:
+        link 4 1,2,3 csvmerge
+        link 4 1,2,3 csvmerge no-headers
+
+filediff.xfrm: (no args)
+    Line-by-line diff of two files.
+    Example:
+        link 3 1,2 filediff
+
+filejoin.xfrm: [separator]
+    Concatenate files with separator. Default: %NL% (newline).
+    Examples:
+        link 3 1,2 filejoin
+        link 3 1,2 filejoin ---SEP---
+
+filestats.xfrm: (no args)
+    File statistics (size, lines, words) for single or multiple files.
+    Example:
+        link 2 1 filestats
+
+jsonmerge.xfrm: (no args)
+    Merge JSON objects. Later sources override earlier.
+    Example:
+        link 4 1,2,3 jsonmerge
+
+template.xfrm: (no args)
+    Template substitution. File 1: template with {{placeholders}}, File 2: JSON data.
+    Example:
+        link 3 1,2 template
+
+Project management:
+    project save name                      - Save project as name.prj (extension automatic)
+    project load name                      - Load project name.prj
+    project name "Title"                   - Set display name
+    touch N                                - Manually trigger cascade from file N
+    files                                  - List files (D = dirty/processed)
+    saveall                                - Save all dirty files at once
+
+How transformers work:
+- When source file becomes "dirty" (modified), linked transformers execute automatically
+- Cascade: If file 1 changes, file 2 processes, then file 3, then file 4, etc.
+- Multi-input: ALL source files must be dirty before transformer executes
+- Files marked with D flag after processing
+- Use 'saveall' to save all processed files at once
+
+=== COMMON PATTERNS ===
+
+Linear pipeline (A → B → C):
+    newfile 10
+	files
+    file 1
+    filename input.txt
+    file 2
+    filename processed.txt
+    file 3
+    filename output.txt
+    link 2 1 chatgpt openai process this
+    link 3 2 translate Japanese
+    project save pipeline
+
+Fan-out (1 → many):
+    newfile 5
+	files
+    file 1
+    filename source.txt
+    file 2
+    filename japanese.txt
+    file 3
+    filename chinese.txt
+    file 4
+    filename spanish.txt
+    link 2 1 translate openai Japanese
+    link 3 1 translate openai Chinese
+    link 4 1 translate openai Spanish
+    project save fanout
+
+Fan-in (many → 1):
+    newfile 5
+	files
+    file 1
+    filename data1.csv
+    file 2
+    filename data2.csv
+    file 3
+    filename data3.csv
+    file 4
+    filename merged.csv
+    link 4 1,2,3 csvmerge
+    project save fanin
+
+Quality gate:
+    newfile 5
+	files
+    file 1
+    filename content.txt
+    file 2
+    filename score.txt
+    file 3
+    filename gate.txt
+    file 4
+    filename approved.txt
+    link 2 1 chatgpt openai rate quality 1-10
+    link 3 2 chatgpt openai if score >= 8 output PASS else STOP
+    link 4 3 blocker
+    project save quality-gate
+
+AI Coder (with backup):
+    newfile 3
+	files
+    file 1
+    filename coder.js
+    file 2
+    filename coderai.js
+    file 3
+    filename backup.js
+    link 2 1 chatgpt %PROVIDER% process prompts starting with #
+    link 1 2 passthrough
+    link 3 1 passthrough
+    project save aicoder
+    file 1
+    edit 10
+    10 # make a fibonacci function
+    (cascade happens automatically)
+    run
+
+=== TYPICAL WORKFLOW ===
+1. Configure services (csconfig → option 5)
+2. Create files:
+    newfile 10
+	files
+    file 1
+3. Name files:
+    filename input.txt
+4. Create links:
+    link 2 1 chatgpt openai process
+5. Save project:
+    project save myproject
+6. Edit input file:
+    edit 10
+    (then add content on line 10)
+7. Check results:
+    files
+    (see D flags showing processed files)
+8. Save all:
+    saveall
+
+=== CRITICAL RULES ===
+1. Files are 1-indexed (file 1, not file 0). File 0 is "Run Space".
+2. Multi-input: NO SPACES between numbers! Use 1,2,3 NOT 1, 2, 3
+3. File extensions automatic: save name not save name.prj
+4. Transformers auto-load from file 11+ when referenced
+5. Use %PROVIDER% to use configured default service
+6. Editing source file triggers automatic cascade through entire DAG
+7. System works identically on phone, Xbox, PC, tablet (ES5 compatible)
+
+=== ACCOUNT & SHARING ===
+register username password [alias]     - Create account (doesn't auto-login)
+login username password                - Login (password hidden if no password typed)
+logout                                 - Logout
+alias [newalias]                       - Show or set alias
+username [newname]                     - Show or set username
+password oldpw newpw                   - Change password
+about [message]                        - Show or set about message
+online / offline                       - Set online status
+devices                                - List your devices
+device devicekey alias                 - Name a device
+users [pattern]                        - List users (wildcards * ?)
+
+Sharing spaces:
+1. Fred creates sharekey: newkey wilma
+2. Fred gives sharekey to Wilma
+3. Wilma grants access: grant <sharekey>
+4. Fred now has access to Wilma's space
+Commands: keys, shares, grant <key>, revoke <key>
+
+=== SESSIONS (ADVANCED) ===
+Sessions maintain conversation context with AI (256MB total memory, LRU eviction).
+Stored in browser memory. Save to files for persistence.
+
+Interactive training (build knowledge bases):
+    chatgpt train legal contract-law.txt,precedents.txt
+    chatgpt train coding style-guide.txt,best-practices.txt
+    chatgpt train fullstack frontend:,backend:,database:
+    chatgpt save legal                                        - Save for reuse
+
+In transformers:
+    link 2 1 session legal: load                              - Load pre-trained
+    link 3 2 chatgpt openai session:legal review contract    - Use loaded session
+    link 4 3 session legal: save                              - Save updated session
+
+Session best practices:
+- Use separate sessions per topic/service
+- Train with files and other sessions
+- Save important sessions before closing browser
+- Named sessions prevent context contamination
+
+=== EXAMPLES FOR AI AGENTS ===
+
+Simple code execution:
+    10 api.print("Hello World");
+    20 for(var i=0; i<5; i++) { api.print(i); }
+    run
+
+Create AI pipeline:
+    newfile 3
+	files
+    file 1
+    filename input.txt
+    file 2
+    filename output.txt
+    link 2 1 chatgpt openai improve this text
+    project save improve
+    file 1
+    edit 10
+    10 This is some text that needs improvement.
+    (File 2 processes automatically)
+    files
+    file 2
+    list
+    saveall
+
+Batch process dropped files:
+    link drop ocr
+    (Drag PDF/image files onto CyborgShell window - they'll be OCRd automatically)
+    files
+    saveall
+
+Multi-language translation:
+    newfile 5
+	files
+    file 1
+    filename story.txt
+    file 2
+    filename japanese.txt
+    file 3
+    filename chinese.txt
+    file 4
+    filename spanish.txt
+    link 2 1 translate openai Japanese
+    link 3 1 translate openai Chinese
+    link 4 1 translate openai Spanish
+    project save translate
+    file 1
+    edit 10
+    10 Once upon a time, there was a robot who learned to love.
+    files
+    saveall
+
+=== SECURITY & PRIVACY ===
+- Code runs client-side in browser (not on servers)
+- API keys stored in browser localStorage only*
+- Direct API calls to providers (no intermediary)*
+- Self-hostable: github.com/PrimalNinja/cyborgshell (MIT license)
+- Air-gap capable: self-host + Ollama = zero external data
+- Use BL/DL (local backup/deploy) to manage API keys securely
+- Never use BS/DS (server backup/deploy) in public spaces with API keys
+- CORS proxy: optional, open source, LOG_OUTPUT=FALSE by default
+*unless using optional CORS proxy
+
+=== ERROR HANDLING ===
+"File not found" - File doesn't exist, check spelling or use 'dir' to list
+"Could not load" - File exists but couldn't be loaded into editor slot
+"Provider: [none]" - No service configured, run csconfig
+"Link failed" - Check syntax: link TARGET SOURCE transformer args
+"Transformer not found" - Transformer file not loaded/available
+
+=== PLATFORM NOTES ===
+Tested on: PC (Chrome, Firefox, Edge, Opera), Mobile (Chrome, Browser), Xbox One (Edge)
+Language support: 28 languages (use 'languages' to list)
+ES5 compatible (no ES6 dependencies - works on older platforms)
+
+=== QUICK REFERENCE ===
+Start:
+    help
+    dir
+    cd demo
+    dir
+
+Code:
+    10 api.print("test");
+    run
+
+AI:
+    !query
+    OR
+    chatgpt query
+
+Pipeline:
+    newfile 10
+	files
+    file 1
+    filename in.txt
+    link 2 1 chatgpt openai process
+    project save test
+
+Config:
+    csconfig
+    (choose option 5)
+    (configure service)
+    (then use BL to backup keys locally)
+	

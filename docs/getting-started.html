@@ -326,13 +326,15 @@ run</code></pre>
 
         <h2 id="your-first-ai-pipeline">Your First AI Pipeline</h2>
         <pre><code># Setup 3 files
-file 1; 
+newfile 3
+files
+file 1
 filename input.txt
-file 2; 
+file 2
 filename processed.txt
-file 3; 
+file 3
 filename output.txt
-file 1;
+file 1
 
 # Link them with AI
 link 2 1 chatgpt openai improve this text
@@ -342,7 +344,7 @@ link 3 2 translate Spanish
 project save my-first-pipeline
 
 # Use it - edit file 1
-file 1; 
+file 1
 edit 10
 10 The quick brown fox jumps
 

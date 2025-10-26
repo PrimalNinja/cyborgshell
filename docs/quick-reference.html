@@ -390,8 +390,9 @@ chatgpt analyze this confidential data</code></pre>
         <h2 id="project-setup">Project Setup</h2>
 
         <h3>Always Start Here</h3>
-        <pre><code>file 10              # Creates files 1-10, goes to file 10
-file 1               # Return to file 1</code></pre>
+        <pre><code>newfile 10              # Creates files 1-10
+files
+file 1               # Go to file 1 if not there already</code></pre>
         
         <div class="info">
             <strong>Why?</strong> Transformers auto-load from file 11+. This gives you 10 working files.
@@ -480,120 +481,164 @@ link 3 1,2 template                     # Template + JSON data</code></pre>
         <h2 id="common-patterns">Common Patterns</h2>
 
         <h3>Simple Pipeline (A → B → C)</h3>
-        <pre><code>file 3; file 1
+        <pre><code>newfile 3
+files
+file 1
 filename input.txt
-file 2; filename processed.txt
-file 3; filename output.txt
+file 2
+filename processed.txt
+file 3
+filename output.txt
 
-file 2; link 1 2 chatgpt openai process this
-file 3; link 2 3 translate Japanese
+link 2 1 chatgpt openai process this
+link 3 2 translate Japanese
 
 project save simple-pipeline</code></pre>
 
         <h3>Fan-Out (1 → Many)</h3>
-        <pre><code>file 5; file 1
+        <pre><code>newfile 5
+files
+file 1
 filename source.txt
-file 2; filename output1.txt
-file 3; filename output2.txt
-file 4; filename output3.txt
-file 5; filename output4.txt
+file 2
+filename output1.txt
+file 3
+filename output2.txt
+file 4
+filename output3.txt
+file 5
+filename output4.txt
 
-file 2; link 1 2 translate Japanese
-file 3; link 1 3 translate Chinese
-file 4; link 1 4 translate Spanish
-file 5; link 1 5 chatgpt openai summarize
+link 2 1 translate Japanese
+link 3 1 translate Chinese
+link 4 1 translate Spanish
+link 5 1 chatgpt openai summarize
 
 project save fan-out</code></pre>
 
         <h3>Fan-In (Many → 1)</h3>
-        <pre><code>file 5; file 1
+        <pre><code>newfile 5
+files
+file 1
 filename data1.csv
-file 2; filename data2.csv
-file 3; filename data3.csv
-file 4; filename merged.csv
-file 5; filename analysis.txt
+file 2
+filename data2.csv
+file 3
+filename data3.csv
+file 4
+filename merged.csv
+file 5
+filename analysis.txt
 
-file 4; link 1,2,3 4 csvmerge
-file 5; link 4 5 chatgpt openai analyze
+link 4 1,2,3 csvmerge
+link 5 4 chatgpt openai analyze
 
 project save fan-in</code></pre>
 
         <h3>Quality Gate</h3>
-        <pre><code>file 5; file 1
+        <pre><code>newfile 5
+files
+file 1
 filename content.txt
-file 2; filename analysis.txt
-file 3; filename gate.txt
-file 4; filename approved.txt
-file 5; filename final.txt
+file 2
+filename analysis.txt
+file 3
+filename gate.txt
+file 4
+filename approved.txt
+file 5
+filename final.txt
 
-file 2; link 1 2 chatgpt openai rate quality 1-10
-file 3; link 2 3 chatgpt openai if score >= 8 output YES else NO or STOP
-file 4; link 3 4 blocker
-file 5; link 4 5 chatgpt openai polish
+link 2 1 chatgpt openai rate quality 1-10
+link 3 2 chatgpt openai if score >= 8 output YES else NO or STOP
+link 4 3 blocker
+link 5 4 chatgpt openai polish
 
 project save quality-gate</code></pre>
 
         <h3>Multi-AI Workflow</h3>
-        <pre><code>file 4; file 1
+        <pre><code>newfile 4
+files
+file 1
 filename code.js
-file 2; filename analysis.txt
-file 3; filename docs.txt
-file 4; filename final.md
+file 2
+filename analysis.txt
+file 3
+filename docs.txt
+file 4
+filename final.md
 
-file 2; link 1 2 chatgpt openai analyze bugs
-file 3; link 1 3 chatgpt claude document clearly
-file 4; link 2,3 4 chatgpt gemini create report
+link 2 1 chatgpt openai analyze bugs
+link 3 1 chatgpt claude document clearly
+link 4 2,3 chatgpt gemini create report
 
 project save multi-ai</code></pre>
 
         <h2 id="workflow-examples">Workflow Examples</h2>
 
         <h3>AI Coder (2 minutes)</h3>
-        <pre><code>file 3
-file 1; filename coder.js
-file 2; filename coderai.js
-file 3; filename backup.js
+        <pre><code>newfile 3
+files
+file 1
+filename coder.js
+file 2
+filename coderai.js
+file 3
+filename backup.js
 
-file 2; link 1 2 chatgpt %PROVIDER% process prompts starting with #
-file 1; link 2 1 passthrough
-file 3; link 1 3 passthrough
+link 2 1 chatgpt %PROVIDER% process prompts starting with #
+link 3 1 passthrough
+link 1 2 passthrough
 
 project save aicoder
 
-file 1; edit 10
+file 1
+edit 10
 10 # make a fibonacci function
 run</code></pre>
 
         <h3>Translation Hub (2 minutes)</h3>
-        <pre><code>file 6
-file 1; filename brief.txt
-file 2; filename story.txt
-file 3; filename japanese.txt
-file 4; filename chinese.txt
-file 5; filename spanish.txt
-file 6; filename audio.txt
+        <pre><code>newfile 6
+files
+file 1
+filename brief.txt
+file 2
+filename story.txt
+file 3
+filename japanese.txt
+file 4
+filename chinese.txt
+file 5
+filename spanish.txt
+file 6
+filename audio.txt
 
-file 2; link 1 2 chatgpt openai write short story
-file 3; link 2 3 translate Japanese
-file 4; link 2 4 translate Chinese
-file 5; link 2 5 translate Spanish
-file 6; link 3 6 speak accent:ja-jp
+link 2 1 chatgpt openai write short story
+link 3 2 translate Japanese
+link 4 2 translate Chinese
+link 5 2 translate Spanish
+link 6 3 speak accent:ja-jp
 
 project save translation-hub
 
-file 1; edit 10
+file 1
+edit 10
 10 # Story about robot learning emotions</code></pre>
 
         <h3>Code Reviewer (3 minutes)</h3>
         <pre><code>file 4
-file 1; filename code.js
-file 2; filename review.txt
-file 3; filename tests.js
-file 4; filename report.md
+file 1
+filename code.js
+file 2
+filename review.txt
+file 3
+filename tests.js
+file 4
+filename report.md
 
-file 2; link 1 2 chatgpt openai analyze bugs and improvements
-file 3; link 1 3 chatgpt openai generate unit tests
-file 4; link 2,3 4 chatgpt openai comprehensive report
+link 2 1 chatgpt openai analyze bugs and improvements
+link 3 1 chatgpt openai generate unit tests
+link 4 2,3 chatgpt openai comprehensive report
 
 project save code-review</code></pre>
 
@@ -665,10 +710,13 @@ run
 !explain quantum computing simply
 
 # Create pipeline
-file 3
-file 1; filename input.txt
-file 2; filename output.txt
-file 2; link 1 2 chatgpt openai improve this
+newfile 3
+files
+file 1
+filename input.txt
+file 2
+filename output.txt
+link 2 1 chatgpt openai improve this
 project save pipeline
 
 # Multi-AI workflow

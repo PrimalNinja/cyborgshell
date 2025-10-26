@@ -437,7 +437,7 @@ chatgpt train php php:,laravel-internal-docs.txt
 chatgpt save php
 
 # Later: use in pipelines
-link 2 1 chatgpt openai session:php review this Laravel code
+link 2 1 chatgpt openai session: php review this Laravel code
 </code></pre>
 
         <h4>Team Knowledge Sharing</h4>
@@ -497,58 +497,58 @@ link TARGET SOURCE session
 
         <pre><code># Clear session before starting new pipeline
 link 2 1 session project: clear
-link 3 2 chatgpt openai session:project start fresh analysis
+link 3 2 chatgpt openai session: project start fresh analysis
 </code></pre>
 
         <h4>Load Pre-Trained Session</h4>
 
         <pre><code># Load curated knowledge base
 link 2 1 session legal: load
-link 3 2 chatgpt openai session:legal review contract
-link 4 3 chatgpt openai session:legal identify risks
+link 3 2 chatgpt openai session: legal review contract
+link 4 3 chatgpt openai session: legal identify risks
 </code></pre>
 
         <h4>Train Session in Pipeline</h4>
 
         <pre><code># Train with file contents
 link 2 1 session docs: train
-link 3 2 chatgpt openai session:docs summarize
+link 3 2 chatgpt openai session: docs summarize
 
 # Train with specific files
 link 2 1 session api: train swagger.json,examples.txt
-link 3 2 chatgpt openai session:api generate client code
+link 3 2 chatgpt openai session: api generate client code
 </code></pre>
 
         <h4>Save Session After Processing</h4>
 
         <pre><code># Build up knowledge and save
-link 2 1 chatgpt openai session:research analyze
-link 3 2 chatgpt openai session:research synthesize findings
+link 2 1 chatgpt openai session: research analyze
+link 3 2 chatgpt openai session: research synthesize findings
 link 4 3 session research: save
 </code></pre>
 
         <h3>Sessions in chatgpt.xfrm</h3>
 
-        <p>The <code>chatgpt.xfrm</code> transformer supports sessions via the <code>session:id</code> syntax in arguments.</p>
+        <p>The <code>chatgpt.xfrm</code> transformer supports sessions via the <code>session: id</code> syntax in arguments.</p>
 
         <h4>Syntax</h4>
 
         <pre><code># Format:
-link TARGET SOURCE chatgpt SERVICE session:ID prompt
+link TARGET SOURCE chatgpt SERVICE session: ID prompt
 
 # Examples:
-link 2 1 chatgpt openai session:calc calculate mean
-link 3 2 chatgpt openai session:calc what was standard deviation?
-link 4 1 chatgpt claude session:review analyze code
-link 5 4 chatgpt claude session:review suggest improvements
+link 2 1 chatgpt openai session: calc calculate mean
+link 3 2 chatgpt openai session: calc what was standard deviation?
+link 4 1 chatgpt claude session: review analyze code
+link 5 4 chatgpt claude session: review suggest improvements
 </code></pre>
 
         <h4>Cross-Link Context Sharing</h4>
 
         <pre><code># Multiple links share same session
-link 2 1 chatgpt openai session:analysis examine data
-link 3 1 chatgpt openai session:analysis find correlations
-link 4 2,3 chatgpt openai session:analysis synthesize findings
+link 2 1 chatgpt openai session: analysis examine data
+link 3 1 chatgpt openai session: analysis find correlations
+link 4 2,3 chatgpt openai session: analysis synthesize findings
 
 # Session maintains context across all three links
 </code></pre>
@@ -574,14 +574,14 @@ filename session-backup.json
 
 # Load pre-trained code review session
 link 2 1 session review: load
-link 2 1 chatgpt openai session:review analyze structure
+link 2 1 chatgpt openai session: review analyze structure
 
 # Build context across reviews
-link 3 2 chatgpt openai session:review check security
-link 4 3 chatgpt openai session:review optimize performance
+link 3 2 chatgpt openai session: review check security
+link 4 3 chatgpt openai session: review optimize performance
 
 # Generate comprehensive report
-link 5 2,3,4 chatgpt openai session:review final report
+link 5 2,3,4 chatgpt openai session: review final report
 
 # Save the enriched session
 link 6 5 session review: save
@@ -606,10 +606,10 @@ filename knowledge-base.json
 
 # Train session with domain knowledge
 link 3 1,2 session research: train
-link 3 1,2 chatgpt openai session:research analyze
+link 3 1,2 chatgpt openai session: research analyze
 
 # Use accumulated knowledge
-link 4 3 chatgpt openai session:research recommend
+link 4 3 chatgpt openai session: research recommend
 
 # Persist learned knowledge
 link 5 4 session research: save
@@ -639,10 +639,10 @@ file 8
 filename metadata.txt
 
 # Build document with maintained context
-link 2 1 chatgpt openai session:doc create outline
-link 3 2 chatgpt openai session:doc expand to draft
-link 4 3 chatgpt openai session:doc improve clarity
-link 5 4 chatgpt openai session:doc final polish
+link 2 1 chatgpt openai session: doc create outline
+link 3 2 chatgpt openai session: doc expand to draft
+link 4 3 chatgpt openai session: doc improve clarity
+link 5 4 chatgpt openai session: doc final polish
 
 # Preserve session and original
 link 6 5 session doc: save
@@ -671,14 +671,14 @@ filename quality-session.json
 
 # Quality check with remembered standards
 link 2 1 session quality: load
-link 2 1 chatgpt openai session:quality rate 1-10
+link 2 1 chatgpt openai session: quality rate 1-10
 
 # Gate based on score
 link 3 2 chatgpt openai if score &gt;= 8 output PASS else FAIL
 link 4 3 blocker
 
 # Process if approved
-link 5 4 chatgpt openai session:quality finalize
+link 5 4 chatgpt openai session: quality finalize
 
 # Update quality standards
 link 6 5 session quality: save
@@ -805,10 +805,10 @@ research: analyze this quantum algorithm
         <h3>Pattern 2: Multi-Perspective Analysis</h3>
 
         <pre><code># Same content, different sessions/services
-link 2 1 chatgpt openai session:tech analyze technical feasibility
-link 3 1 chatgpt claude session:legal identify legal risks
-link 4 1 chatgpt gemini session:market assess market potential
-link 5 2,3,4 chatgpt openai session:synthesis create comprehensive report
+link 2 1 chatgpt openai session: tech analyze technical feasibility
+link 3 1 chatgpt claude session: legal identify legal risks
+link 4 1 chatgpt gemini session: market assess market potential
+link 5 2,3,4 chatgpt openai session: synthesis create comprehensive report
 
 # Each session maintains focused context
 </code></pre>
@@ -819,9 +819,9 @@ link 5 2,3,4 chatgpt openai session:synthesis create comprehensive report
 chatgpt train project baseline-docs.txt
 
 # Process and learn
-link 2 1 chatgpt openai session:project analyze
+link 2 1 chatgpt openai session: project analyze
 link 3 2 session project: train           # Add analysis to session
-link 4 3 chatgpt openai session:project expand insights
+link 4 3 chatgpt openai session: project expand insights
 link 5 4 session project: train           # Add expanded insights
 link 6 5 session project: save            # Persist learned knowledge
 
@@ -849,11 +849,11 @@ file 7
 filename approved.txt
 
 link 2 1 session qa: load
-link 2 1 chatgpt openai session:qa check syntax
-link 3 1 chatgpt openai session:qa check security
-link 4 1 chatgpt openai session:qa check performance
+link 2 1 chatgpt openai session: qa check syntax
+link 3 1 chatgpt openai session: qa check security
+link 4 1 chatgpt openai session: qa check performance
 
-link 5 2,3,4 chatgpt openai session:qa overall assessment
+link 5 2,3,4 chatgpt openai session: qa overall assessment
 link 6 5 chatgpt openai if all pass output APPROVED else REJECTED
 link 7 6 blocker
 
@@ -949,19 +949,19 @@ csconfig → BL → Backup configuration to Local Download
         <p>Sessions work seamlessly with all transformers:</p>
 
         <pre><code># Translate with context
-link 2 1 chatgpt openai session:translate Japanese
-link 3 1 chatgpt openai session:translate remember to maintain technical terms
+link 2 1 chatgpt openai session: translate Japanese
+link 3 1 chatgpt openai session: translate remember to maintain technical terms
 
 # OCR with knowledge base
 link 2 1 ocr
 link 3 2 session medical: load
-link 4 3 chatgpt openai session:medical interpret medical terminology
+link 4 3 chatgpt openai session: medical interpret medical terminology
 </code></pre>
 
         <h3>With Multi-Input Links</h3>
 
         <pre><code># Multi-input with shared session
-link 4 1,2,3 chatgpt openai session:merge combine these perspectives
+link 4 1,2,3 chatgpt openai session: merge combine these perspectives
 # Session sees all three inputs
 </code></pre>
 
@@ -969,7 +969,7 @@ link 4 1,2,3 chatgpt openai session:merge combine these perspectives
 
         <pre><code># Session-aware gates
 link 2 1 session standards: load
-link 3 2 chatgpt openai session:standards meets requirements?
+link 3 2 chatgpt openai session: standards meets requirements?
 link 4 3 blocker
 </code></pre>
 

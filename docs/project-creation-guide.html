@@ -282,7 +282,7 @@
 
         <h3>AI Transformers</h3>
         <ul>
-        <li>**chatgpt.xfrm** - AI processing (args: `"service prompt"` or `"service session:id prompt"`)</li>
+        <li>**chatgpt.xfrm** - AI processing (args: `"service prompt"` or `"service session: id prompt"`)</li>
         <p>  - Services: <code>openai</code>, <code>claude</code>, <code>gemini</code>, or <code>%PROVIDER%</code> for configured default</p>
         <p>  - Sessions maintain context across calls</p>
         <p>  - Scan mode: looks for <code>AI PROMPT START/END</code> blocks in source</p>
@@ -715,10 +715,10 @@ type filename             # View file without loading
 
         <h3>4. Leverage Sessions for Context</h3>
         <p>Use ChatGPT sessions to maintain conversation context:</p>
-        <pre><code>"arg": "openai session:analysis calculate statistics"
+        <pre><code>"arg": "openai session: analysis calculate statistics"
 </code></pre>
         <p>Later:</p>
-        <pre><code>"arg": "openai session:analysis what was the mean?"
+        <pre><code>"arg": "openai session: analysis what was the mean?"
 </code></pre>
 
         <h3>5. Create Backup Chains</h3>
@@ -811,7 +811,7 @@ type filename             # View file without loading
 
         <h3>Conditional Logic with Sessions</h3>
         <p>Use persistent sessions for stateful processing:</p>
-        <pre><code>"arg": "openai session:validator validate input then remember result"
+        <pre><code>"arg": "openai session: validator validate input then remember result"
 </code></pre>
 
         <h3>Template-Driven Generation</h3>
@@ -874,18 +874,18 @@ File 3 → "openai select best solution and explain"
 
         <pre><code># Load pre-trained session
 link 2 1 session legal: load
-link 3 2 chatgpt openai session:legal review contract
+link 3 2 chatgpt openai session: legal review contract
 
 # Train session with input
 link 2 1 session research: train
-link 3 2 chatgpt openai session:research analyze
+link 3 2 chatgpt openai session: research analyze
 
 # Clear session before use
 link 2 1 session project: clear
-link 3 2 chatgpt openai session:project start fresh
+link 3 2 chatgpt openai session: project start fresh
 
 # Save session after processing
-link 2 1 chatgpt openai session:work process this
+link 2 1 chatgpt openai session: work process this
 link 3 2 session work: save
 </code></pre>
 
@@ -905,9 +905,9 @@ link 2 1 session docs:
         <h3>Context-Aware Processing</h3>
 
         <pre><code># Share context across multiple links
-link 2 1 chatgpt openai session:analysis examine data
-link 3 2 chatgpt openai session:analysis find patterns
-link 4 3 chatgpt openai session:analysis synthesize findings
+link 2 1 chatgpt openai session: analysis examine data
+link 3 2 chatgpt openai session: analysis find patterns
+link 4 3 chatgpt openai session: analysis synthesize findings
 # All three links share the same session context
 </code></pre>
 

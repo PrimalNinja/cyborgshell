@@ -181,7 +181,7 @@ Single input examples:
     link 2 1 passthrough                                     - Copy file 1 to file 2
     link 2 1 chatgpt openai improve this text                - AI improve text
     link 3 2 translate openai Japanese                       - Translate to Japanese
-    link 2 1 chatgpt openai session:analysis examine data    - Use named session
+    link 2 1 chatgpt openai session: analysis examine data   - Use named session
 
 Multi-input (CRITICAL: NO SPACES between numbers):
     link 4 1,2,3 csvmerge                                    - Merge 3 CSVs (CORRECT: 1,2,3)
@@ -194,11 +194,11 @@ Drop event (drag-and-drop files):
 
 Available transformers:
 
-chatgpt.xfrm: service [session:id] prompt
+chatgpt.xfrm: service [session: id] prompt
     Services: openai, claude, gemini, ollama, %PROVIDER%
     Examples:
         link 2 1 chatgpt openai analyze this
-        link 2 1 chatgpt claude session:review check code
+        link 2 1 chatgpt claude session: review check code
         link 2 1 chatgpt %PROVIDER% improve text
     Scan mode: Looks for AI PROMPT START/END blocks in source file
 
@@ -427,7 +427,7 @@ Interactive training (build knowledge bases):
 
 In transformers:
     link 2 1 session legal: load                              - Load pre-trained
-    link 3 2 chatgpt openai session:legal review contract    - Use loaded session
+    link 3 2 chatgpt openai session: legal review contract    - Use loaded session
     link 4 3 session legal: save                              - Save updated session
 
 Session best practices:

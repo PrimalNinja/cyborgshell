@@ -349,7 +349,7 @@ function cyborgShell_API(objGlobals_a)
 	};
 	
 	// flow
-	m_objThis.end = function()
+	this.end = function()
 	{
 		globals.console.end();
 	};
@@ -485,7 +485,11 @@ function cyborgShell_API(objGlobals_a)
 			arrJSON.forEach(function(objRecord_a, intIndex_a) 
 			{
 				var strValue = objRecord_a[strFieldName_a];
-				var strEscapedValue = m_objThis.escapeValue(strValue);
+				var strEscapedValue = strValue;
+				if (typeof strEscapedValue === 'string')
+				{
+					strEscapedValue = m_objThis.escapeValue(strValue);
+				}
 
 				if (!objIndex[strEscapedValue]) 
 				{
@@ -533,7 +537,7 @@ function cyborgShell_API(objGlobals_a)
 	  return strValue_a.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 	};
 
-	this.findData = function(strTableName_a, strFieldName_a, strValue_a) 
+	this.findData = function(strTableName_a, strFieldName_a, strValue_a)
 	{
 		var blnAscending = true;
 		var intIndex;
@@ -545,31 +549,36 @@ function cyborgShell_API(objGlobals_a)
 
 		if (strValue === undefined) { strValue = ""; }
 
-		if (arrJSON === undefined) 
+		if (arrJSON === undefined)
 		{
 			m_objThis.print("Table " + strTableName_a + " not found.");
 		}
 		else
 		{
-			if (globals.Indexes[strIndexName]) 
+			if (globals.Indexes[strIndexName])
 			{
-				if (strValue.length > 0) 
+				if (strValue.length > 0)
 				{
-					var strEscapedValue = this.escapeValue(strValue);
+					var strEscapedValue = strValue;
+					if (typeof strEscapedValue === 'string')
+					{
+						strEscapedValue = m_objThis.escapeValue(strValue);
+					}
 					//blnAscending = globals.Indexes[strIndexName].ascending;
 					intIndex = globals.Indexes[strIndexName].index[strEscapedValue];
-					if (intIndex !== undefined) 
+					if (intIndex !== undefined)
 					{
+						// For duplicate values, cursor is the index into the 'intIndex' array (0 for first record)
 						objCursor = { cursor: 0, dataIndex: intIndex[0], indexed: true, value: strValue };
-					} 
-					else 
+					}
+					else
 					{
 						objCursor = { cursor: -1, dataIndex: -1, indexed: true, value: strValue };
 					}
-				} 
-				else 
+				}
+				else
 				{
-					if (arrJSON.length > 0) 
+					if (arrJSON.length > 0)
 					{
 						blnAscending = globals.Indexes[strIndexName].ascending;
 						var arrSortedKeys = [];
@@ -583,6 +592,7 @@ function cyborgShell_API(objGlobals_a)
 						}
 						var intKey = arrSortedKeys[0];
 						intIndex = globals.Indexes[strIndexName].index[intKey];
+						// For full scan, cursor is the global record count (0 for the first record)
 						objCursor = { cursor: 0, dataIndex: intIndex[0], indexed: true, value: "" };
 					}
 					else
@@ -590,25 +600,25 @@ function cyborgShell_API(objGlobals_a)
 						objCursor = { cursor: -1, dataIndex: -1, indexed: false, value: strValue };
 					}
 				}
-			} 
-			else 
+			}
+			else
 			{
-				if (strValue.length > 0) 
+				if (strValue.length > 0)
 				{
-					intIndex = arrJSON.findIndex(function(objRecord_a) 
+					intIndex = arrJSON.findIndex(function(objRecord_a)
 					{
 						return objRecord_a[strFieldName_a] === strValue;
 					});
 					
 					objCursor = { cursor: intIndex, dataIndex: intIndex, indexed: false, value: strValue };
-				} 
-				else 
+				}
+				else
 				{
-					if (arrJSON.length > 0) 
+					if (arrJSON.length > 0)
 					{
 						objCursor = { cursor: 0, dataIndex: 0, indexed: false, value: strValue };
-					} 
-					else 
+					}
+					else
 					{
 						objCursor = { cursor: -1, dataIndex: -1, indexed: false, value: strValue };
 					}
@@ -616,7 +626,7 @@ function cyborgShell_API(objGlobals_a)
 			}
 
 			globals.Cursors[strIndexName] = objCursor;
-			if (objCursor.dataIndex !== -1) 
+			if (objCursor.dataIndex !== -1)
 			{
 				objResult = globals.TableData[strTableName_a][objCursor.dataIndex];
 			}
@@ -625,103 +635,121 @@ function cyborgShell_API(objGlobals_a)
 		return objResult;
 	};
 
-	this.nextData = function(strTableName_a, strFieldName_a) 
-	{ 
+	this.nextData = function(strTableName_a, strFieldName_a)
+	{
 		var objResult;
 		var strIndexName = strTableName_a + '__' + strFieldName_a;
 		var arrJSON = globals.TableData[strTableName_a];
 		var objCursor = globals.Cursors[strIndexName];
 
-		if (arrJSON === undefined) 
+		if (arrJSON === undefined)
 		{
 			m_objThis.print("Table " + strTableName_a + " not found.");
 		}
-		else if (objCursor === undefined) 
+		else if (objCursor === undefined)
 		{
 			m_objThis.print("Cursor for " + strTableName_a + " not found.");
 		}
 		else
 		{
-			if (globals.Indexes[strIndexName]) 
+			if (globals.Indexes[strIndexName])
 			{
 				var arrIndices = [];
 				var intDataIndex = -1;
 				var intNextIndex;
 				var strValue = objCursor.value;
+				
 				if (strValue.length > 0)
 				{
-					var strEscapedValue = this.escapeValue(strValue);
-					var intCurrentIndex = objCursor.cursor;
+					// Indexed Specific Value Lookup (Bug Fix: Cursor was not incremented)
+					var strEscapedValue = m_objThis.escapeValue(strValue);
+					var intCurrentCursor = objCursor.cursor;
 					arrIndices = globals.Indexes[strIndexName].index[strEscapedValue];
 					intDataIndex = objCursor.dataIndex;
 
-					if (arrIndices !== undefined) 
+					if (arrIndices !== undefined)
 					{
+						// intNextIndex is the position in arrIndices (the array of duplicate data indices)
 						intNextIndex = arrIndices.indexOf(intDataIndex) + 1;
-						if (intNextIndex >= arrIndices.length) 
+						
+						if (intNextIndex >= arrIndices.length)
 						{
 							objCursor = { cursor: -1, dataIndex: -1, indexed: true, value: strValue };
-						} 
-						else 
-						{
-							objCursor = { cursor: intCurrentIndex, dataIndex: arrIndices[intNextIndex], indexed: true, value: strValue };
 						}
-					} 
-					else 
+						else
+						{
+							// FIX: Cursor must be updated to track the position in arrIndices
+							objCursor = { cursor: intNextIndex, dataIndex: arrIndices[intNextIndex], indexed: true, value: strValue };
+						}
+					}
+					else
 					{
+						// Should be unreachable if findData worked, but handled defensively
 						objCursor = { cursor: -1, dataIndex: -1, indexed: true, value: strValue };
 					}
 				}
 				else
 				{
-					var objKeys = Object.keys(globals.Indexes[strIndexName].index);
-					var intKeyIndex = 0;
-					var intI = 0;
-					intDataIndex = -1;
-					intNextIndex = objCursor.cursor + 1;
+					// Indexed Full Scan (Bug Fix: Rewritten traversal logic)
+					var blnAscending = globals.Indexes[strIndexName].ascending;
+					var arrSortedKeys = [];
+					var intI = 0; // Global record counter
+					var intTargetCursor = objCursor.cursor + 1;
 
-					while ((intI < intNextIndex) && (intDataIndex < 0))
+					if (blnAscending)
 					{
-						while ((intKeyIndex < objKeys.length) && (intDataIndex < 0))
+						arrSortedKeys = Object.keys(globals.Indexes[strIndexName].index).sort();
+					}
+					else
+					{
+						arrSortedKeys = Object.keys(globals.Indexes[strIndexName].index).sort().reverse();
+					}
+
+					// Iterate through keys and their indices to find the record at the Target Cursor position
+					for (var intKeyIndex = 0; intKeyIndex < arrSortedKeys.length; intKeyIndex++)
+					{
+						var objKey = arrSortedKeys[intKeyIndex];
+						arrIndices = globals.Indexes[strIndexName].index[objKey];
+
+						for (var intJ = 0; intJ < arrIndices.length; intJ++)
 						{
-							var objKey = objKeys[intKeyIndex];
-							arrIndices = globals.Indexes[strIndexName].index[objKey];
-							for (var intJ = 0; intJ < arrIndices.length; intJ++) 
+							if (intI === intTargetCursor)
 							{
-								if (intI === intNextIndex) 
-								{
-									intDataIndex = arrIndices[intJ];
-									break;
-								} 
-								else 
-								{
-									intI++;
-								}
+								// Found the next record!
+								intDataIndex = arrIndices[intJ];
+								break; // Exit inner loop
 							}
-							intKeyIndex++;
+							intI++; // Advance the global record counter
+						}
+						
+						if (intDataIndex !== -1) 
+						{
+							break; // Found the record, exit outer key loop
 						}
 					}
-  
-					if (intI < intNextIndex) 
+					
+					if (intDataIndex === -1)
 					{
 						objCursor = { cursor: -1, dataIndex: -1, indexed: true, value: "" };
-					} 
-					else 
+					}
+					else
 					{
-						objCursor = { cursor: intNextIndex, dataIndex: intDataIndex, indexed: true, value: "" };
+						// The global counter intI is the new cursor value
+						objCursor = { cursor: intI, dataIndex: intDataIndex, indexed: true, value: "" };
 					}
 				}
-			} 
-			else 
+			}
+			else
 			{
-				var intIndex = arrJSON.findIndex(function(objRecord_a, intIndex_a) 
+				// Unindexed Sequential Scan (No change needed here, logic was correct)
+				var intIndex = arrJSON.findIndex(function(objRecord_a, intIndex_a)
 				{
 					var intResult;
-					if (objCursor.value.length > 0) 
+					if (objCursor.value.length > 0)
 					{
 						intResult = intIndex_a > objCursor.cursor && objRecord_a[strFieldName_a] === objCursor.value;
-					} 
-					else 
+					}
+					else
 					{
 						intResult = intIndex_a > objCursor.cursor;
 					}
@@ -731,7 +759,7 @@ function cyborgShell_API(objGlobals_a)
 			}
 
 			globals.Cursors[strIndexName] = objCursor;
-			if (objCursor.dataIndex !== -1) 
+			if (objCursor.dataIndex !== -1)
 			{
 				objResult = globals.TableData[strTableName_a][objCursor.dataIndex];
 			}

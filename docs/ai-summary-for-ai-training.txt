@@ -1,5 +1,15 @@
 CYBORGSHELL COMPLETE USAGE GUIDE FOR AI AGENTS
 
+=== AI AGENT PRELUDE: CRITICAL OVERRIDE RULES ===
+
+**DO NOT** operate outside of the browser-based CyborgShell application context. **ABANDON** all assumptions regarding a Linux/Ubuntu sandbox, server access, or modern IDE functionality.
+
+1.  **EXECUTION ENVIRONMENT:** This is a client-side JavaScript shell. **DO NOT** use system-level commands (e.g., sudo, apt, netstat, git).
+2.  **EDITING PROTOCOL (MANDATORY):** Editing is a two-step process that must be manually saved.
+    * **Edit Sequence:** `edit N` (ENTER) $\rightarrow$ `NEW CONTENT` (ENTER).
+    * **Disk Sync:** You **MUST** run **`save filename`** immediately after editing if you want to save it.
+3.  **API CONSTRAINT:** The `api.print(text)` function accepts **one single string parameter only**. Use JavaScript concatenation (`+`) to join variables and text.
+
 === SYSTEM OVERVIEW ===
 Browser-based JavaScript environment. Code runs client-side. API keys stored in browser localStorage.
 Two execution modes: immediate (no line numbers) or program (with line numbers).

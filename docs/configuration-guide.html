@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyborgShell - Configuration Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        
+        h2 {
+            color: #2c3e50;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+        }
+        
+        h3 {
+            color: #34495e;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+        
+        h4 {
+            color: #34495e;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        p {
+            margin-bottom: 15px;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        code {
+            background: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            padding: 2px 6px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9em;
+            color: #c7254e;
+        }
+        
+        pre {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 20px 0;
+            border-left: 4px solid #3498db;
+        }
+        
+        pre code {
+            background: none;
+            border: none;
+            color: inherit;
+            padding: 0;
+        }
+        
+        .toc {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 20px 30px;
+            margin: 30px 0;
+        }
+        
+        .toc h2 {
+            margin-top: 0;
+            border: none;
+            padding: 0;
+        }
+        
+        .toc ul {
+            list-style: none;
+            margin-left: 0;
+        }
+        
+        .toc li {
+            margin-bottom: 5px;
+        }
+        
+        .toc a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        
+        .toc a:hover {
+            text-decoration: underline;
+        }
+        
+        .highlight-box {
+            background: #e8f4f8;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .success-box {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .danger-box {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th {
+            background: #3498db;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+        
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        .checkmark {
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .xmark {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CyborgShell - Configuration Guide</h1>
+
+        <div class="toc">
+            <h2>Table of Contents</h2>
+            <ul>
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#when-configuration-needed">When Configuration is Needed</a></li>
+                <li><a href="#accessing-csconfig">Accessing csconfig</a></li>
+                <li><a href="#configuration-options">Configuration Options</a></li>
+                <li><a href="#ai-service-setup">AI Service Setup</a></li>
+                <li><a href="#provider-configuration">Provider Configuration</a></li>
+                <li><a href="#backup-and-deployment">Backup and Deployment</a></li>
+                <li><a href="#advanced-configuration">Advanced Configuration</a></li>
+                <li><a href="#security-considerations">Security Considerations</a></li>
+                <li><a href="#troubleshooting">Troubleshooting</a></li>
+                <li><a href="#examples">Complete Examples</a></li>
+            </ul>
+        </div>
+
+        <h2 id="overview">Overview</h2>
+        
+        <div class="highlight-box">
+            <p><strong>Configuration is OPTIONAL</strong></p>
+            <p>CyborgShell works immediately for programming without any configuration. You only need to configure csconfig if you want to use AI features.</p>
+        </div>
+
+        <h3>Registration and Storage</h3>
+        
+        <div class="highlight-box">
+            <p><strong>Registration is OPTIONAL</strong></p>
+            <p>Registration is only required if you want:</p>
+            <ul>
+                <li>Your own private storage space on the server</li>
+                <li>To share spaces with other users or teams</li>
+            </ul>
+            <p><strong>Without registration:</strong> You can still save programs/files in the public space (accessible to everyone on all devices), but you won't have a private space.</p>
+        </div>
+
+        <div class="warning-box">
+            <p><strong>⚠️ Security Reality Check:</strong></p>
+            <p>CyborgShell is <strong>MORE secure</strong> than downloading and running random .exe files from the internet. Here's why:</p>
+            <ul>
+                <li class="checkmark">✅ <strong>Browser Sandbox:</strong> Code runs in your browser's security sandbox (can't access your file system, install keyloggers, or modify system files)</li>
+                <li class="checkmark">✅ <strong>No System Access:</strong> Cannot install malware, rootkits, or persistent threats on your computer</li>
+                <li class="checkmark">✅ <strong>Limited Scope:</strong> Can only access what's in the browser environment (local storage, session data)</li>
+                <li class="checkmark">✅ <strong>Close Tab = Gone:</strong> Close the browser tab and any running code immediately stops</li>
+            </ul>
+            
+            <p><strong>That said, be vigilant when running unknown public code:</strong></p>
+            <ul>
+                <li>Malicious code <strong>can</strong> access data in your browser local storage (including API keys)</li>
+                <li>Malicious code <strong>can</strong> delete or modify files in your CyborgShell space</li>
+                <li>Malicious code <strong>can</strong> make unauthorized API calls using your keys</li>
+            </ul>
+            
+            <p><strong>Best Practices:</strong></p>
+            <ul>
+                <li><strong>Review code before running it</strong> (especially from public spaces)</li>
+                <li><strong>Use separate API keys</strong> for public experimentation vs. production work</li>
+                <li><strong>Set spending limits</strong> on your AI provider accounts</li>
+                <li><strong>Your space is private</strong> unless you explicitly share it</li>
+            </ul>
+            
+            <p><strong>Bottom Line:</strong> Running code in CyborgShell is like using Google Drive, GitHub Codespaces, or JSFiddle - <strong>far safer than downloading random software</strong>. The browser sandbox is your friend!</p>
+        </div>
+
+        <h3>How Storage Works</h3>
+
+        <p><strong>Spaces:</strong> Think of spaces like folders or drives:</p>
+        <ul>
+            <li><strong>Public Space:</strong> Everyone can access (read/write) - great for learning and sharing</li>
+            <li><strong>Your Personal Space:</strong> Private to you (requires registration)</li>
+            <li><strong>Shared Spaces:</strong> Spaces you've been granted access to by others</li>
+        </ul>
+
+        <p><strong>File Storage:</strong></p>
+        <ul>
+            <li>Programs and files you <code>save</code> are stored on the CyborgShell server</li>
+            <li>Your space is accessible from any device where you login</li>
+            <li>Use <code>space</code> command to switch between spaces</li>
+            <li>Use <code>grant</code> and <code>revoke</code> to share your space with others</li>
+        </ul>
+
+        <p>See <code>help account</code> and <code>help sharing</code> in CyborgShell for details on registration and space management.</p>
+
+        <h3>Operating Modes</h3>
+
+        <p>CyborgShell can be used in several modes:</p>
+        <ul>
+            <li><strong>Anonymous + Public Space:</strong> No registration, save to public space (accessible to everyone on all devices)</li>
+            <li><strong>Registered + Private Space:</strong> Your own private space, save programs privately, share with others</li>
+            <li><strong>With AI (Optional):</strong> Add AI capabilities by configuring API keys in browser local storage (works with or without registration)</li>
+            <li><strong>Self-Hosted:</strong> Run your own CyborgShell server for complete control</li>
+        </ul>
+
+        <h2 id="when-configuration-needed">When Configuration is Needed</h2>
+
+        <h3>No Configuration Required For:</h3>
+        <div class="success-box">
+            <ul>
+                <li class="checkmark">✅ Writing and running JavaScript code</li>
+                <li class="checkmark">✅ Creating and managing files</li>
+                <li class="checkmark">✅ Building projects and pipelines (non-AI transformers)</li>
+                <li class="checkmark">✅ Using passthrough, blocker, filejoin, csvmerge, OCR, etc.</li>
+                <li class="checkmark">✅ File operations and data processing</li>
+            </ul>
+        </div>
+
+        <h3>Configuration Required For:</h3>
+        <div class="warning-box">
+            <ul>
+                <li>⚠️ Using <code>chatgpt</code> command</li>
+                <li>⚠️ Using <code>!</code> quick AI queries</li>
+                <li>⚠️ AI transformers (chatgpt.xfrm, translate.xfrm)</li>
+                <li>⚠️ Session management with AI services</li>
+                <li>⚠️ RPG game (rpggpt)</li>
+            </ul>
+        </div>
+
+        <h2 id="accessing-csconfig">Accessing csconfig</h2>
+
+        <pre><code># Enter configuration interface
+csconfig
+
+# You'll see a menu:
+# 1. Configure autorun program
+# 2. Configure handler (ai, rpggpt)
+# 3. Configure provider (chatgpt → service mapping)
+# 4. View service details
+# 5. Add/update service (API keys, endpoints)
+# 6. Delete service
+# 
+# BS. Backup configuration to Server
+# DS. Deploy configuration from Server
+# BL. Backup configuration to Local Download
+# DL. Deploy configuration from Local File
+#
+# X. Exit
+</code></pre>
+
+        <h2 id="configuration-options">Configuration Options</h2>
+
+        <h3>Option 1: Configure Autorun Program</h3>
+        <p>Set a program to run automatically when CyborgShell starts.</p>
+        
+        <pre><code>csconfig
+1
+Enter program name: startup
+# Now 'startup' will run on every launch
+</code></pre>
+
+        <div class="highlight-box">
+            <p><strong>Use Case:</strong> Automatically load your workspace, initialize variables, or set up your environment</p>
+        </div>
+
+        <h3>Option 2: Configure Handler</h3>
+        <p>Set the default AI handler for the <code>chatgpt</code> command.</p>
+
+        <pre><code>csconfig
+2
+Available handlers:
+  - ai (standard AI chat)
+  - rpggpt (interactive fiction/RPG)
+
+Enter handler: ai
+</code></pre>
+
+        <h3>Option 3: Configure Provider</h3>
+        <p>Map the keyword "chatgpt" to a specific AI service.</p>
+
+        <pre><code>csconfig
+3
+Enter provider service name: openai
+# Now 'chatgpt' uses OpenAI by default
+
+# Or use the special keyword:
+Enter provider service name: %PROVIDER%
+# Uses whichever service you've marked as default
+</code></pre>
+
+        <div class="highlight-box">
+            <p><strong>Tip:</strong> Use <code>%PROVIDER%</code> in projects to make them portable across different AI services</p>
+        </div>
+
+        <h3>Option 4: View Service Details</h3>
+        <p>List all configured AI services and their settings (without showing API keys).</p>
+
+        <pre><code>csconfig
+4
+
+# Output:
+Service: openai
+  Endpoint: https://api.openai.com/v1/chat/completions
+  Model: gpt-4
+  Temperature: 0.7
+  Top_p: 1
+  Frequency_penalty: 0
+  Presence_penalty: 0
+
+Service: claude
+  Endpoint: https://api.anthropic.com/v1/messages
+  Model: claude-3-5-sonnet-20241022
+  ...
+</code></pre>
+
+        <h3>Option 5: Add/Update Service</h3>
+        <p>Configure API keys, endpoints, and parameters for AI services.</p>
+
+        <pre><code>csconfig
+5
+Enter service name: openai
+Enter API key: sk-proj-...
+Enter endpoint [default]: 
+Enter model [gpt-4]: gpt-4o
+Enter temperature [0.7]: 0.8
+Enter top_p [1]: 
+Enter frequency_penalty [0]: 
+Enter presence_penalty [0]: 
+Enter max_tokens [4096]: 8192
+</code></pre>
+
+        <h3>Option 6: Delete Service</h3>
+        <p>Remove a configured AI service.</p>
+
+        <pre><code>csconfig
+6
+Enter service name to delete: old-service
+Service 'old-service' deleted.
+</code></pre>
+
+        <h2 id="ai-service-setup">AI Service Setup</h2>
+
+        <h3>OpenAI (ChatGPT)</h3>
+
+        <div class="highlight-box">
+            <h4>Getting Your API Key</h4>
+            <ol>
+                <li>Go to <a href="https://platform.openai.com" target="_blank">platform.openai.com</a></li>
+                <li>Sign in or create account</li>
+                <li>Navigate to API Keys section</li>
+                <li>Create new secret key</li>
+                <li>Copy key (starts with <code>sk-proj-...</code>)</li>
+            </ol>
+        </div>
+
+        <pre><code>csconfig
+5
+Service name: openai
+API key: sk-proj-YOUR-KEY-HERE
+Endpoint: https://api.openai.com/v1/chat/completions
+Model: gpt-4o
+Temperature: 0.7
+Top_p: 1
+Frequency_penalty: 0
+Presence_penalty: 0
+Max_tokens: 4096
+</code></pre>
+
+        <h3>Anthropic (Claude)</h3>
+
+        <div class="highlight-box">
+            <h4>Getting Your API Key</h4>
+            <ol>
+                <li>Go to <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a></li>
+                <li>Sign in or create account</li>
+                <li>Navigate to API Keys</li>
+                <li>Create new key</li>
+                <li>Copy key (starts with <code>sk-ant-...</code>)</li>
+            </ol>
+        </div>
+
+        <pre><code>csconfig
+5
+Service name: claude
+API key: sk-ant-YOUR-KEY-HERE
+Endpoint: https://api.anthropic.com/v1/messages
+Model: claude-3-5-sonnet-20241022
+Temperature: 0.7
+Top_p: 1
+Frequency_penalty: 0
+Presence_penalty: 0
+Max_tokens: 4096
+</code></pre>
+
+        <h3>Google (Gemini)</h3>
+
+        <div class="highlight-box">
+            <h4>Getting Your API Key</h4>
+            <ol>
+                <li>Go to <a href="https://makersuite.google.com/app/apikey" target="_blank">Google AI Studio</a></li>
+                <li>Sign in with Google account</li>
+                <li>Create API key</li>
+                <li>Copy key</li>
+            </ol>
+        </div>
+
+        <pre><code>csconfig
+5
+Service name: gemini
+API key: YOUR-GOOGLE-API-KEY
+Endpoint: https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent
+Model: gemini-pro
+Temperature: 0.7
+Top_p: 1
+Frequency_penalty: 0
+Presence_penalty: 0
+Max_tokens: 4096
+</code></pre>
+
+        <h3>Ollama (Local AI - No API Key Required)</h3>
+
+        <div class="success-box">
+            <h4>Setup</h4>
+            <ol>
+                <li>Install Ollama from <a href="https://ollama.ai" target="_blank">ollama.ai</a></li>
+                <li>Pull a model: <code>ollama pull llama3.2:latest</code></li>
+                <li>Start Ollama service</li>
+                <li>Configure in csconfig (no API key needed)</li>
+            </ol>
+        </div>
+
+        <pre><code>csconfig
+5
+Service name: ollama
+API key: [leave blank or type "none"]
+Endpoint: http://localhost:11434/v1/chat/completions
+Model: llama3.2:latest
+Temperature: 0.7
+Top_p: 1
+Frequency_penalty: 0
+Presence_penalty: 0
+Max_tokens: 4096
+</code></pre>
+
+        <div class="success-box">
+            <p><strong>✅ Complete Privacy:</strong> Ollama runs locally with zero external API calls</p>
+            <p><strong>✅ Zero Cost:</strong> No API fees, unlimited usage</p>
+            <p><strong>✅ Air-Gap Capable:</strong> Works without internet connection</p>
+        </div>
+
+        <h2 id="provider-configuration">Provider Configuration</h2>
+
+        <h3>Setting Default Provider</h3>
+
+        <p>The <code>%PROVIDER%</code> variable allows projects to be portable across different AI services.</p>
+
+        <pre><code># Set default provider
+csconfig
+3
+Enter provider service name: openai
+
+# Now anywhere %PROVIDER% is used, it maps to 'openai'
+</code></pre>
+
+        <h3>Using %PROVIDER% in Projects</h3>
+
+        <pre><code># In transformer links
+link 2 1 chatgpt %PROVIDER% analyze this
+
+# In interactive mode
+chatgpt %PROVIDER%: help me debug
+
+# Switching providers changes behavior everywhere
+csconfig → 3 → claude
+# Now all %PROVIDER% references use Claude
+</code></pre>
+
+        <h3>Multi-Service Setup</h3>
+
+        <p>Configure multiple services and switch between them:</p>
+
+        <pre><code># Configure all three major services
+csconfig → 5 → openai → [configure]
+csconfig → 5 → claude → [configure]
+csconfig → 5 → gemini → [configure]
+csconfig → 5 → ollama → [configure]
+
+# Use explicitly in commands
+chatgpt service openai
+chatgpt analyze with GPT-4
+
+chatgpt service claude
+chatgpt document with Claude
+
+chatgpt service gemini
+chatgpt translate with Gemini
+
+chatgpt service ollama
+chatgpt private analysis with local AI
+</code></pre>
+
+        <h2 id="backup-and-deployment">Backup and Deployment</h2>
+
+        <h3>Backup Configuration to Server (BS)</h3>
+
+        <div class="danger-box">
+            <p><strong>⚠️ CRITICAL WARNING:</strong></p>
+            <p>This option backs up your configuration (including API keys) to the CyborgShell server in <strong>PLAIN TEXT</strong> until ZOSCII ITS encoding is implemented.</p>
+            <ul>
+                <li>Only use if you control the server (self-hosted)</li>
+                <li>Do NOT use on public/shared servers with sensitive keys</li>
+                <li>Configuration is stored in "your space" on the server</li>
+            </ul>
+        </div>
+
+        <pre><code>csconfig
+BS
+Configuration backed up to server
+</code></pre>
+
+        <h3>Deploy Configuration from Server (DS)</h3>
+
+        <p>Restore configuration from server backup:</p>
+
+        <pre><code>csconfig
+DS
+Configuration deployed from server
+</code></pre>
+
+        <h3>Backup Configuration to Local Download (BL)</h3>
+
+        <div class="success-box">
+            <p><strong>✅ RECOMMENDED:</strong> Safe local backup method</p>
+        </div>
+
+        <pre><code>csconfig
+BL
+# Downloads: cyborgshell-config-backup.json
+# Saves to your Downloads folder
+</code></pre>
+
+        <h3>Deploy Configuration from Local File (DL)</h3>
+
+        <p>Restore configuration from local backup file:</p>
+
+        <pre><code>csconfig
+DL
+# Opens file picker
+# Select: cyborgshell-config-backup.json
+# Configuration restored
+</code></pre>
+
+        <h3>Cross-Device Configuration</h3>
+
+        <div class="highlight-box">
+            <h4>Scenario: Work on Multiple Devices</h4>
+            
+            <p><strong>On your PC:</strong></p>
+            <pre><code>csconfig → 5 → configure all services
+csconfig → BL → download backup
+</code></pre>
+
+            <p><strong>On your phone:</strong></p>
+            <pre><code># Transfer cyborgshell-config-backup.json to phone
+csconfig → DL → select file → deploy
+</code></pre>
+
+            <p><strong>Result:</strong> Identical configuration on both devices</p>
+        </div>
+
+        <h2 id="advanced-configuration">Advanced Configuration</h2>
+
+        <h3>Temperature Settings</h3>
+
+        <p>Controls randomness/creativity (0.0 to 2.0):</p>
+
+        <ul>
+            <li><strong>0.0-0.3:</strong> Deterministic, factual, consistent</li>
+            <li><strong>0.4-0.7:</strong> Balanced (default)</li>
+            <li><strong>0.8-1.2:</strong> Creative, varied</li>
+            <li><strong>1.3-2.0:</strong> Highly random, experimental</li>
+        </ul>
+
+        <pre><code># Factual coding assistant
+Temperature: 0.2
+
+# Creative writing
+Temperature: 1.0
+
+# Experimental exploration
+Temperature: 1.5
+</code></pre>
+
+        <h3>Max Tokens</h3>
+
+        <p>Maximum response length:</p>
+
+        <ul>
+            <li><strong>512-1024:</strong> Short responses</li>
+            <li><strong>2048-4096:</strong> Standard (default)</li>
+            <li><strong>8192-16384:</strong> Long-form content</li>
+            <li><strong>32768+:</strong> Very long documents (if supported)</li>
+        </ul>
+
+        <h3>Custom Endpoints</h3>
+
+        <p>Use custom or proxy endpoints:</p>
+
+        <pre><code># Self-hosted Ollama
+Endpoint: http://192.168.1.100:11434/v1/chat/completions
+
+# OpenAI-compatible API
+Endpoint: https://your-proxy.com/v1/chat/completions
+
+# Azure OpenAI
+Endpoint: https://YOUR-RESOURCE.openai.azure.com/openai/deployments/YOUR-DEPLOYMENT/chat/completions?api-version=2024-02-15-preview
+</code></pre>
+
+        <h3>Service-Specific Models</h3>
+
+        <table>
+            <tr>
+                <th>Service</th>
+                <th>Model Examples</th>
+                <th>Use Case</th>
+            </tr>
+            <tr>
+                <td><strong>OpenAI</strong></td>
+                <td>
+                    <code>gpt-4o</code><br>
+                    <code>gpt-4-turbo</code><br>
+                    <code>gpt-3.5-turbo</code>
+                </td>
+                <td>
+                    Best overall<br>
+                    Fast, capable<br>
+                    Cost-effective
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Claude</strong></td>
+                <td>
+                    <code>claude-3-5-sonnet-20241022</code><br>
+                    <code>claude-3-opus-20240229</code><br>
+                    <code>claude-3-haiku-20240307</code>
+                </td>
+                <td>
+                    Balanced<br>
+                    Most capable<br>
+                    Fastest
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Gemini</strong></td>
+                <td>
+                    <code>gemini-pro</code><br>
+                    <code>gemini-ultra</code>
+                </td>
+                <td>
+                    Standard<br>
+                    Advanced
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Ollama</strong></td>
+                <td>
+                    <code>llama3.2:latest</code><br>
+                    <code>mistral:latest</code><br>
+                    <code>codellama:latest</code>
+                </td>
+                <td>
+                    General purpose<br>
+                    Fast, efficient<br>
+                    Code-focused
+                </td>
+            </tr>
+        </table>
+
+        <h2 id="security-considerations">Security Considerations</h2>
+
+        <h3>API Key Storage</h3>
+
+        <div class="success-box">
+            <p><strong>✅ Your API keys are stored in browser local storage:</strong></p>
+            <ul>
+                <li class="checkmark">Never transmitted to CyborgShell servers*</li>
+                <li class="checkmark">Never stored in CyborgShell databases</li>
+                <li class="checkmark">Persist across sessions on same browser</li>
+                <li class="checkmark">Can be backed up/deployed via csconfig</li>
+            </ul>
+            <p style="margin-top: 10px;">* unless you use the optional CORS proxy server</p>
+        </div>
+
+        <h3>Public/Shared Computers</h3>
+
+        <div class="warning-box">
+            <p><strong>If using CyborgShell on a public computer:</strong></p>
+            <ol>
+                <li>Use private/incognito mode, OR</li>
+                <li>Clear configuration after use:
+                    <pre><code>csconfig → 6 → delete all services</code></pre>
+                </li>
+                <li>Browser local storage is tied to the device</li>
+            </ol>
+        </div>
+
+        <h3>Configuration Backup Security</h3>
+
+        <table>
+            <tr>
+                <th>Method</th>
+                <th>Security Level</th>
+                <th>Use Case</th>
+            </tr>
+            <tr>
+                <td><strong>BL (Local Download)</strong></td>
+                <td class="checkmark">✅ Secure</td>
+                <td>Personal backups, cross-device sync</td>
+            </tr>
+            <tr>
+                <td><strong>DL (Local Deploy)</strong></td>
+                <td class="checkmark">✅ Secure</td>
+                <td>Restore from personal backup</td>
+            </tr>
+            <tr>
+                <td><strong>BS (Server Backup)</strong></td>
+                <td class="xmark">⚠️ Use with caution</td>
+                <td>Only on self-hosted servers</td>
+            </tr>
+            <tr>
+                <td><strong>DS (Server Deploy)</strong></td>
+                <td class="xmark">⚠️ Use with caution</td>
+                <td>Only on self-hosted servers</td>
+            </tr>
+        </table>
+
+        <h3>Best Practices</h3>
+
+        <div class="success-box">
+            <ul>
+                <li class="checkmark">Use separate API keys for dev/prod</li>
+                <li class="checkmark">Set spending limits on API provider accounts</li>
+                <li class="checkmark">Backup configuration locally (BL) before major changes</li>
+                <li class="checkmark">Use Ollama for sensitive/confidential data</li>
+                <li class="checkmark">Never commit configuration files to version control</li>
+                <li class="checkmark">Rotate API keys periodically</li>
+            </ul>
+        </div>
+
+        <h2 id="troubleshooting">Troubleshooting</h2>
+
+        <h3>AI Commands Not Working</h3>
+
+        <pre><code># Check if services configured
+csconfig → 4
+
+# If no services shown, configure at least one
+csconfig → 5 → [configure service]
+
+# Set default provider
+csconfig → 3 → openai
+</code></pre>
+
+        <h3>Invalid API Key Error</h3>
+
+        <pre><code># Update service with correct key
+csconfig → 5 → [service name] → [paste correct key]
+
+# Verify at provider website:
+# OpenAI: platform.openai.com
+# Claude: console.anthropic.com
+# Gemini: makersuite.google.com
+</code></pre>
+
+        <h3>Configuration Not Persisting</h3>
+
+        <pre><code># Check browser local storage enabled
+# Settings → Privacy → Allow local storage
+
+# Backup configuration
+csconfig → BL
+
+# If still issues, try:
+# 1. Clear browser cache
+# 2. Redeploy configuration: csconfig → DL
+</code></pre>
+
+        <h3>Multiple Devices Out of Sync</h3>
+
+        <pre><code># On primary device
+csconfig → BL → download backup
+
+# Transfer file to other device
+
+# On other device
+csconfig → DL → select backup file
+</code></pre>
+
+        <h2 id="examples">Complete Examples</h2>
+
+        <h3>Example 1: First-Time Setup (OpenAI)</h3>
+
+        <pre><code># Step 1: Get API key from platform.openai.com
+# Step 2: Configure service
+csconfig
+5
+Service name: openai
+API key: sk-proj-abc123...
+Endpoint: [press Enter for default]
+Model: gpt-4o
+Temperature: 0.7
+Top_p: [press Enter]
+Frequency_penalty: [press Enter]
+Presence_penalty: [press Enter]
+Max_tokens: 4096
+X
+
+# Step 3: Set as default provider
+csconfig
+3
+Provider: openai
+X
+
+# Step 4: Test
+chatgpt hello world
+!what is the capital of France?
+</code></pre>
+
+        <h3>Example 2: Multi-Service Setup</h3>
+
+        <pre><code># Configure OpenAI
+csconfig → 5 → openai → [configure]
+
+# Configure Claude
+csconfig → 5 → claude → [configure]
+
+# Configure Gemini
+csconfig → 5 → gemini → [configure]
+
+# Configure Ollama (local)
+csconfig → 5 → ollama → [configure]
+
+# Set default
+csconfig → 3 → openai
+
+# Backup everything
+csconfig → BL
+
+# Now use different services
+chatgpt service openai
+!quick question with GPT
+
+chatgpt service claude
+!another question with Claude
+
+chatgpt service ollama
+!private question with local AI
+</code></pre>
+
+        <h3>Example 3: Team Configuration</h3>
+
+        <pre><code># Tech lead creates master config
+csconfig → 5 → openai → [team API key]
+csconfig → 5 → claude → [team API key]
+csconfig → 3 → openai
+csconfig → BL → save as "team-config.json"
+
+# Share team-config.json with team
+
+# Each team member deploys
+csconfig → DL → select "team-config.json"
+
+# Everyone has identical setup
+</code></pre>
+
+        <h3>Example 4: Privacy-First Setup (Ollama Only)</h3>
+
+        <pre><code># Install Ollama locally
+# Visit ollama.ai, download, install
+
+# Pull model
+ollama pull llama3.2:latest
+
+# Configure in CyborgShell
+csconfig
+5
+Service name: ollama
+API key: [leave blank]
+Endpoint: http://localhost:11434/v1/chat/completions
+Model: llama3.2:latest
+Temperature: 0.7
+Top_p: 1
+Frequency_penalty: 0
+Presence_penalty: 0
+Max_tokens: 4096
+X
+
+# Set as default
+csconfig
+3
+Provider: ollama
+X
+
+# Test - zero external calls
+chatgpt analyze this confidential data
+# All processing happens locally
+
+# Perfect for:
+# - Healthcare (PHI data)
+# - Legal (privileged communications)
+# - Financial (confidential reports)
+# - Classified work (air-gapped environments)
+</code></pre>
+
+        <h3>Example 5: Development vs Production</h3>
+
+        <pre><code># Development configuration
+csconfig → 5 → openai-dev → [dev API key]
+csconfig → 5 → ollama → [local setup]
+csconfig → 3 → ollama
+csconfig → BL → save as "dev-config.json"
+
+# Production configuration
+csconfig → 5 → openai-prod → [prod API key]
+csconfig → 5 → claude-prod → [prod API key]
+csconfig → 3 → openai-prod
+csconfig → BL → save as "prod-config.json"
+
+# Switch between environments
+# Development:
+csconfig → DL → dev-config.json
+
+# Production:
+csconfig → DL → prod-config.json
+</code></pre>
+
+        <h3>Example 6: Cost-Optimized Setup</h3>
+
+        <pre><code># Free tier / low cost
+csconfig → 5 → ollama → [local, free]
+csconfig → 5 → openai → [gpt-3.5-turbo, cheap]
+
+# Use Ollama for bulk work
+chatgpt service ollama
+# Process 1000 documents - zero cost
+
+# Use OpenAI for critical tasks
+chatgpt service openai
+# Final review with GPT-4
+</code></pre>
+
+        <h2>Quick Start Checklist</h2>
+
+        <div class="highlight-box">
+            <h3>For Programming Only (No AI)</h3>
+            <p>✅ No configuration needed - start coding immediately!</p>
+        </div>
+
+        <div class="highlight-box">
+            <h3>For AI Features</h3>
+            <ol>
+                <li>☐ Get API key from provider (OpenAI/Claude/Gemini) or install Ollama</li>
+                <li>☐ Run <code>csconfig</code></li>
+                <li>☐ Select option 5 (Add/update service)</li>
+                <li>☐ Enter service details</li>
+                <li>☐ Select option 3 (Configure provider)</li>
+                <li>☐ Set default service</li>
+                <li>☐ Exit (X)</li>
+                <li>☐ Test: <code>chatgpt hello world</code></li>
+                <li>☐ Backup: <code>csconfig → BL</code></li>
+            </ol>
+        </div>
+
+        <h2>Summary</h2>
+
+        <div class="success-box">
+            <p><strong>Key Points:</strong></p>
+            <ul>
+                <li>Configuration is <strong>optional</strong> - only needed for AI features</li>
+                <li>API keys stored in <strong>browser local storage</strong> (not on servers)</li>
+                <li>Use <strong>BL/DL</strong> for safe backup/restore</li>
+                <li>Use <strong>%PROVIDER%</strong> for portable projects</li>
+                <li>Use <strong>Ollama</strong> for complete privacy (zero external calls)</li>
+                <li>Multiple services can coexist - switch as needed</li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            <div style="text-align: center; margin-top: 40px; color: #666;">
+                <p><strong>CyborgShell</strong> by <a href="https://cyborgunicorn.com.au" target="_blank">Cyborg Unicorn Pty Ltd</a> 2025</p>
+                <p><a href="https://cyborgshell.com" target="_blank">cyborgshell.com</a> | <a href="https://github.com/PrimalNinja/cyborgshell" target="_blank">GitHub</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyborgShell - API Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        
+        h2 {
+            color: #2c3e50;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+        }
+        
+        h3 {
+            color: #34495e;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+        
+        h4 {
+            color: #34495e;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        p {
+            margin-bottom: 15px;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        code {
+            background: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            padding: 2px 6px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9em;
+            color: #c7254e;
+        }
+        
+        pre {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 20px 0;
+            border-left: 4px solid #3498db;
+        }
+        
+        pre code {
+            background: none;
+            border: none;
+            color: inherit;
+            padding: 0;
+        }
+        
+        .toc {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 20px 30px;
+            margin: 30px 0;
+        }
+        
+        .toc h2 {
+            margin-top: 0;
+            border: none;
+            padding: 0;
+        }
+        
+        .toc ul {
+            list-style: none;
+            margin-left: 0;
+        }
+        
+        .toc li {
+            margin-bottom: 5px;
+        }
+        
+        .toc a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        
+        .toc a:hover {
+            text-decoration: underline;
+        }
+        
+        .highlight-box {
+            background: #e8f4f8;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .success-box {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .danger-box {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th {
+            background: #3498db;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+        
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        .method-signature {
+            background: #34495e;
+            color: #ecf0f1;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>CyborgShell - API Guide</h1>
+        </div>
+
+        <div class="toc">
+            <h2>Table of Contents</h2>
+            <ul>
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#application-types">Application Types</a></li>
+                <li><a href="#screen-output">Screen and Output Functions</a></li>
+                <li><a href="#file-functions">File Functions</a></li>
+                <li><a href="#data-functions">Data/Database Functions</a></li>
+                <li><a href="#utility-functions">Utility Functions</a></li>
+                <li><a href="#tab-functions">Tab Functions</a></li>
+                <li><a href="#examples">Complete Examples</a></li>
+            </ul>
+        </div>
+
+        <h2 id="overview">Overview</h2>
+        <p>The CyborgShell API provides a minimal but powerful set of functions for building both console-based and full-screen applications. All API functions are accessed through the <code>api</code> object.</p>
+
+        <div class="highlight-box">
+            <p><strong>Basic Usage Pattern:</strong></p>
+            <pre><code>api.print("Hello World!");
+api.print("Enter your name:");
+api.input("", function(strName) {
+    api.print("Hello, " + strName + "!");
+});</code></pre>
+        </div>
+
+        <h2 id="application-types">Application Types</h2>
+        
+        <h3>Console Applications</h3>
+        <p>Console applications use <code>api.print()</code> and <code>api.input()</code> to interact with the user through the CyborgShell terminal interface.</p>
+        
+        <pre><code>// Simple console application
+10 api.print("Welcome to my program!");
+20 api.print("What's your name?");
+30 api.input("", function(strName) {
+40     api.print("Nice to meet you, " + strName + "!");
+50 });
+run</code></pre>
+
+        <h3>Full-Screen Applications</h3>
+        <p>Full-screen applications bypass the console and create their own UI directly in the browser DOM. See the included <code>3d.js</code> example for a complete full-screen 3D application.</p>
+
+        <div class="success-box">
+            <p><strong>Example: 3d.js Pattern</strong></p>
+            <ul>
+                <li>Dynamically loads external libraries (Three.js)</li>
+                <li>Creates full-screen canvas elements</li>
+                <li>Manages its own rendering loop</li>
+                <li>Provides close button for user exit</li>
+                <li>Direct DOM manipulation with jQuery</li>
+            </ul>
+        </div>
+
+        <pre><code>// Full-screen application pattern
+function main() {
+    // Create full-screen canvas
+    var canvas = document.createElement('canvas');
+    $(canvas).css({
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%'
+    });
+    $('body').append(canvas);
+    
+    // Your application logic here...
+}
+main();</code></pre>
+
+        <h2 id="screen-output">Screen and Output Functions</h2>
+
+        <h3>api.print()</h3>
+        <div class="method-signature">api.print(str, forceLTR, reverseRTL)</div>
+        <p>Output text to the console.</p>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>str</code></td>
+                    <td>string</td>
+                    <td>Text to output</td>
+                </tr>
+                <tr>
+                    <td><code>forceLTR</code></td>
+                    <td>boolean</td>
+                    <td>Optional. Force left-to-right text direction</td>
+                </tr>
+                <tr>
+                    <td><code>reverseRTL</code></td>
+                    <td>boolean</td>
+                    <td>Optional. Reverse right-to-left text</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <pre><code>// Basic usage
+api.print("Hello World!");
+
+// Multiple lines
+api.print("Line 1");
+api.print("Line 2");
+api.print("Line 3");</code></pre>
+
+        <h3>api.input()</h3>
+        <div class="method-signature">api.input(defaultValue, callback)</div>
+        <p>Get user input from the console.</p>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>defaultValue</code></td>
+                    <td>string</td>
+                    <td>Default value pre-filled in input (usually empty string "")</td>
+                </tr>
+                <tr>
+                    <td><code>callback</code></td>
+                    <td>function</td>
+                    <td>Function called with user input as parameter</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="warning-box">
+            <p><strong>Important:</strong> The first parameter is the <strong>default value</strong>, not a prompt! Use <code>api.print()</code> to show your prompt first.</p>
+        </div>
+
+        <pre><code>// Get user input (correct pattern)
+api.print("Enter your age:");
+api.input("", function(strAge) {
+    api.print("You are " + strAge + " years old");
+});
+
+// With default value
+api.print("Enter your name:");
+api.input("Guest", function(strName) {
+    api.print("Hello " + strName);
+});
+
+// Chain multiple inputs
+api.print("First name:");
+api.input("", function(strFirst) {
+    api.print("Last name:");
+    api.input("", function(strLast) {
+        api.print("Hello " + strFirst + " " + strLast);
+    });
+});</code></pre>
+
+        <h3>api.cls()</h3>
+        <div class="method-signature">api.cls()</div>
+        <p>Clear the console screen.</p>
+        
+        <pre><code>// Clear screen
+api.cls();
+api.print("Fresh screen!");</code></pre>
+
+        <h3>api.errorOutput()</h3>
+        <div class="method-signature">api.errorOutput(errorMessage)</div>
+        <p>Output an error message to the console.</p>
+        
+        <pre><code>// Display error
+api.errorOutput("An error occurred!");
+
+// Error handling pattern
+try {
+    // risky operation
+} catch(e) {
+    api.errorOutput("Error: " + e.message);
+}</code></pre>
+
+        <h2 id="file-functions">File Functions</h2>
+
+        <h3>api.saveFile()</h3>
+        <div class="method-signature">api.saveFile(filename, data, callback)</div>
+        <p>Save data to cloud storage (requires login).</p>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>filename</code></td>
+                    <td>string</td>
+                    <td>Name of file to save</td>
+                </tr>
+                <tr>
+                    <td><code>data</code></td>
+                    <td>object/string</td>
+                    <td>Data to save (will be JSON stringified)</td>
+                </tr>
+                <tr>
+                    <td><code>callback</code></td>
+                    <td>function</td>
+                    <td>Called with response object on completion</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <pre><code>// Save to cloud
+var objData = {
+    name: "John",
+    score: 100
+};
+
+api.saveFile("mydata", objData, function(response) {
+    if (response) {
+        api.print("Saved successfully!");
+    } else {
+        api.errorOutput("Save failed: " + response.error);
+    }
+});</code></pre>
+
+        <h3>api.loadFile()</h3>
+        <div class="method-signature">api.loadFile(filename, callback)</div>
+        <p>Load data from cloud storage (requires login).</p>
+        
+        <pre><code>// Load from cloud
+api.loadFile("mydata", function(response) {
+    if (response) {
+        var objData = response;
+        api.print("Name: " + objData.name);
+        api.print("Score: " + objData.score);
+    } else {
+        api.errorOutput("Load failed: " + response.error);
+    }
+});</code></pre>
+
+        <h3>api.saveLocalData()</h3>
+        <div class="method-signature">api.saveLocalData(filename, data, callback)</div>
+        <p>Save data to browser local storage (no login required).</p>
+        
+        <pre><code>// Save locally
+var objSettings = {
+    theme: "dark",
+    fontSize: 14
+};
+
+api.saveLocalData("settings", objSettings, function(success) {
+    if (success) {
+        api.print("Settings saved locally!");
+    }
+});</code></pre>
+
+        <h3>api.loadLocalData()</h3>
+        <div class="method-signature">api.loadLocalData(filename, callback)</div>
+        <p>Load data from browser local storage.</p>
+        
+        <pre><code>// Load locally
+api.loadLocalData("settings", function(response) {
+    if (response) {
+        var objSettings = response;
+        api.print("Theme: " + objSettings.theme);
+        api.print("Font Size: " + objSettings.fontSize);
+    }
+});</code></pre>
+
+        <div class="warning-box">
+            <p><strong>Note:</strong> Cloud functions (<code>saveFile</code>/<code>loadFile</code>) require user login. Local functions (<code>saveLocalData</code>/<code>loadLocalData</code>) work without login but data is browser-specific.</p>
+        </div>
+
+        <h2 id="data-functions">Data/Database Functions</h2>
+        <p>CyborgShell includes a simple in-memory database system for managing structured data.</p>
+
+        <h3>api.createDatabase()</h3>
+        <div class="method-signature">api.createDatabase()</div>
+        <p>Initialize the database system. Call this once before using other database functions.</p>
+        
+        <pre><code>// Initialize database
+api.createDatabase();</code></pre>
+
+        <h3>api.appendTable()</h3>
+        <div class="method-signature">api.appendTable(tableName, jsonArray)</div>
+        <p>Add records to a table.</p>
+        
+        <pre><code>// Create and populate a table
+api.createDatabase();
+
+var arrPeople = [
+    { name: "Alice", age: 30, city: "New York" },
+    { name: "Bob", age: 25, city: "London" },
+    { name: "Charlie", age: 35, city: "New York" }
+];
+
+api.appendTable("people", arrPeople);
+api.print("Added " + arrPeople.length + " records");</code></pre>
+
+        <h3>api.createIndex()</h3>
+        <div class="method-signature">api.createIndex(tableName, fieldName, ascending)</div>
+        <p>Create an index on a field for faster searching.</p>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>tableName</code></td>
+                    <td>string</td>
+                    <td>Name of the table</td>
+                </tr>
+                <tr>
+                    <td><code>fieldName</code></td>
+                    <td>string</td>
+                    <td>Field to index</td>
+                </tr>
+                <tr>
+                    <td><code>ascending</code></td>
+                    <td>boolean</td>
+                    <td>true for ascending, false for descending</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <pre><code>// Create indexes
+api.createIndex("people", "name", true);    // Ascending by name
+api.createIndex("people", "age", false);    // Descending by age
+api.createIndex("people", "city", true);    // Ascending by city</code></pre>
+
+        <h3>api.findData()</h3>
+        <div class="method-signature">api.findData(tableName, fieldName, value)</div>
+        <p>Find the first record matching the value. Returns the record object or undefined.</p>
+        
+        <pre><code>// Find by exact match
+var objPerson = api.findData("people", "name", "Alice");
+if (objPerson) {
+    api.print("Found: " + objPerson.name + ", Age: " + objPerson.age);
+} else {
+    api.print("Not found");
+}
+
+// Find first record (pass empty string)
+var objFirst = api.findData("people", "name", "");
+api.print("First person: " + objFirst.name);</code></pre>
+
+        <h3>api.nextData()</h3>
+        <div class="method-signature">api.nextData(tableName, fieldName)</div>
+        <p>Get the next record after the current cursor position. Returns the record object or undefined.</p>
+        
+        <pre><code>// Iterate through all records
+api.findData("people", "name", "");  // Position at first
+var objRecord = api.nextData("people", "name");
+while (objRecord) {
+    api.print(objRecord.name + " - " + objRecord.age);
+    objRecord = api.nextData("people", "name");
+}
+
+// Find all people named "Alice"
+api.findData("people", "name", "Alice");
+var objPerson = api.findData("people", "name", "Alice");
+while (objPerson) {
+    api.print("Age: " + objPerson.age);
+    objPerson = api.nextData("people", "name");
+}</code></pre>
+
+        <h3>api.truncateTable()</h3>
+        <div class="method-signature">api.truncateTable(tableName)</div>
+        <p>Delete all records from a table.</p>
+        
+        <pre><code>// Clear table
+api.truncateTable("people");
+api.print("Table cleared");</code></pre>
+
+        <h3>api.dropIndex()</h3>
+        <div class="method-signature">api.dropIndex(tableName, fieldName)</div>
+        <p>Remove an index from a field.</p>
+        
+        <pre><code>// Remove index
+api.dropIndex("people", "age");</code></pre>
+
+        <h3>Complete Database Example</h3>
+        <pre><code>// Complete database workflow
+api.createDatabase();
+
+// Add data
+var arrEmployees = [
+    { id: 1, name: "Alice", dept: "Sales", salary: 50000 },
+    { id: 2, name: "Bob", dept: "Engineering", salary: 75000 },
+    { id: 3, name: "Charlie", dept: "Sales", salary: 55000 },
+    { id: 4, name: "Diana", dept: "Engineering", salary: 80000 }
+];
+api.appendTable("employees", arrEmployees);
+
+// Create indexes
+api.createIndex("employees", "dept", true);
+api.createIndex("employees", "salary", false);  // Descending
+
+// Find all in Sales department
+api.print("Sales Department:");
+var objEmp = api.findData("employees", "dept", "Sales");
+while (objEmp) {
+    api.print("  " + objEmp.name + ": $" + objEmp.salary);
+    objEmp = api.nextData("employees", "dept");
+}
+
+// List all by salary (highest first)
+api.print("\nBy Salary:");
+objEmp = api.findData("employees", "salary", "");
+while (objEmp) {
+    api.print("  " + objEmp.name + ": $" + objEmp.salary);
+    objEmp = api.nextData("employees", "salary");
+}</code></pre>
+
+        <h2 id="utility-functions">Utility Functions</h2>
+
+        <h3>api.getGUID()</h3>
+        <div class="method-signature">api.getGUID()</div>
+        <p>Generate a unique GUID (Globally Unique Identifier).</p>
+        
+        <pre><code>// Generate unique IDs
+var strID = api.getGUID();
+api.print("Generated ID: " + strID);
+// Output: "a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d"</code></pre>
+
+        <h3>api.debugObject()</h3>
+        <div class="method-signature">api.debugObject(object, recurse, indent)</div>
+        <p>Print object properties for debugging.</p>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>object</code></td>
+                    <td>object</td>
+                    <td>Object to debug</td>
+                </tr>
+                <tr>
+                    <td><code>recurse</code></td>
+                    <td>boolean</td>
+                    <td>Optional. true to show nested objects (default: true)</td>
+                </tr>
+                <tr>
+                    <td><code>indent</code></td>
+                    <td>string</td>
+                    <td>Optional. Indentation string (default: '')</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <pre><code>// Debug an object
+var objPerson = {
+    name: "Alice",
+    age: 30,
+    address: {
+        city: "New York",
+        zip: "10001"
+    }
+};
+
+api.debugObject(objPerson);
+// Output:
+// name: Alice
+// age: 30
+// address:
+//  city: New York
+//  zip: 10001
+
+// Non-recursive (shallow)
+api.debugObject(objPerson, false);
+// Output:
+// name: Alice
+// age: 30
+// address: Object</code></pre>
+
+        <h3>api.escapeValue()</h3>
+        <div class="method-signature">api.escapeValue(value)</div>
+        <p>Escape special characters in a string value (used internally by database functions).</p>
+        
+        <pre><code>// Escape special characters
+var strSafe = api.escapeValue("User input: $100");
+api.print(strSafe);</code></pre>
+
+        <h2 id="tab-functions">Tab Functions</h2>
+
+        <h3>api.getTabHandler()</h3>
+        <div class="method-signature">api.getTabHandler(callback)</div>
+        <p>Get a tab handler for inter-tab communication. Advanced feature for multi-window applications.</p>
+        
+        <pre><code>// Create tab handler
+var objTabHandler = api.getTabHandler(function(queue, message, data) {
+    api.print("Received: " + message);
+});
+
+// Open new tab
+var objNewWindow = objTabHandler.createTab("index.php");
+
+// Broadcast to all tabs
+objTabHandler.broadcast("myqueue", "Hello tabs!", { data: 123 });</code></pre>
+
+        <h2 id="examples">Complete Examples</h2>
+
+        <h3>Example 1: Simple Calculator</h3>
+        <pre><code>10 api.cls();
+20 api.print("=== Calculator ===");
+30 api.print("Enter first number:");
+40 api.input("", function(strA) {
+45     api.print(strA);
+50     api.print("Enter second number:");
+60     api.input("", function(strB) {
+65         api.print(strB);
+70         var intA = parseInt(strA);
+80         var intB = parseInt(strB);
+90         api.print("Sum: " + (intA + intB));
+100        api.print("Product: " + (intA * intB));
+110    });
+120 });</code></pre>
+
+        <h3>Example 2: Address Book</h3>
+        <pre><code>10 api.createDatabase();
+20 
+30 function addContact() {
+40     api.print("Name:");
+50     api.input("", function(strName) {
+55         api.print(strName);
+60         api.print("Phone:");
+70         api.input("", function(strPhone) {
+75         api.print(strPhone);
+80             api.print("Email:");
+90             api.input("", function(strEmail) {
+95             api.print(strEmail);
+100                var objContact = {
+110                    id: api.getGUID(),
+120                    name: strName,
+130                    phone: strPhone,
+140                    email: strEmail
+150                };
+160                api.appendTable("contacts", [objContact]);
+170                api.print("Contact added!");
+180                showMenu();
+190            });
+200        });
+210    });
+220 }
+230 
+240 function listContacts() {
+250     api.print("\n=== Contacts ===");
+260     var objContact = api.findData("contacts", "name", "");
+270     if (!objContact) {
+280         api.print("No contacts found");
+290     }
+300     while (objContact) {
+310         api.print(objContact.name + " - " + objContact.phone + " - " + objContact.email);
+320         objContact = api.nextData("contacts", "name");
+330     }
+340     showMenu();
+350 }
+360 
+370 function showMenu() {
+380     api.print("\n1. Add Contact");
+390     api.print("2. List Contacts");
+400     api.print("3. Quit");
+410     api.print("Choice:");
+420     api.input("", function(strChoice) {
+430         if (strChoice === "1") addContact();
+440         else if (strChoice === "2") listContacts();
+450         else if (strChoice === "3") api.print("Goodbye!");
+460         else showMenu();
+470     });
+480 }
+490 
+500 api.cls();
+510 api.print("=== Address Book ===");
+520 api.createIndex("contacts", "name", true);
+530 showMenu();</code></pre>
+
+        <h3>Example 3: Data Persistence</h3>
+        <pre><code>10 api.cls();
+20 
+30 function saveScore() {
+40     api.print("Your name:");
+50     api.input("", function(strName) {
+55         api.print(strName);
+60         api.print("Your score:");
+70         api.input("", function(strScore) {
+75             api.print(strScore);
+80             var objData = {
+90                 name: strName,
+100                score: parseInt(strScore),
+110                date: new Date().toISOString()
+120            };
+130            api.saveLocalData("highscore", objData, function(success) {
+140                if (success) {
+150                    api.print("Score saved!");
+160                }
+170                showMenu();
+180            });
+190        });
+200    });
+210 }
+220 
+230 function loadScore() {
+240     api.loadLocalData("highscore", function(response) {
+250         if (response) {
+260             var objData = response;
+270             api.print("\nHigh Score:");
+280             api.print("Name: " + objData.name);
+290             api.print("Score: " + objData.score);
+300             api.print("Date: " + objData.date);
+310         } else {
+320             api.print("No high score saved yet");
+330         }
+340         showMenu();
+350     });
+360 }
+370 
+380 function showMenu() {
+390     api.print("\n1. Save Score");
+400     api.print("2. Load Score");
+410     api.print("3. Quit");
+420     api.print("Choice:");
+430     api.input("", function(strChoice) {
+440         if (strChoice === "1") saveScore();
+450         else if (strChoice === "2") loadScore();
+460         else if (strChoice === "3") api.print("Goodbye!");
+470         else showMenu();
+480     });
+490 }
+500 
+510 api.print("=== Score Tracker ===");
+520 showMenu();</code></pre>
+
+        <h3>Example 4: Full-Screen Application (Pattern from 3d.js)</h3>
+        <pre><code>function main() {
+    // Load external library
+    function includeScript(strURL, cbSuccess) {
+        if (!globals.loadedScripts) {
+            globals.loadedScripts = {};
+        }
+        
+        if (globals.loadedScripts[strURL]) {
+            cbSuccess();
+        } else {
+            $.ajax({
+                url: strURL,
+                dataType: 'script',
+                cache: true,
+                success: function() {
+                    globals.loadedScripts[strURL] = true;
+                    cbSuccess();
+                }
+            });
+        }
+    }
+    
+    includeScript('https://cdn.example.com/library.js', function() {
+        // Create full-screen canvas
+        var canvas = document.createElement('canvas');
+        $(canvas).css({
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            'z-index': 9999
+        });
+        $('body').append(canvas);
+        
+        // Add close button
+        var closeBtn = $('&lt;div&gt;X&lt;/div&gt;');
+        closeBtn.css({
+            position: 'fixed',
+            top: '10px',
+            right: '10px',
+            'font-size': '24px',
+            cursor: 'pointer',
+            'z-index': 10000
+        });
+        closeBtn.click(function() {
+            $(canvas).remove();
+            $(closeBtn).remove();
+        });
+        $('body').append(closeBtn);
+        
+        // Your rendering/animation code here
+        var ctx = canvas.getContext('2d');
+        function animate() {
+            // Animation logic
+            requestAnimationFrame(animate);
+        }
+        animate();
+    });
+}
+
+main();</code></pre>
+
+        <h2>Best Practices</h2>
+        <div class="success-box">
+            <h3>Console Applications</h3>
+            <ul>
+                <li>Use line numbers for programs you want to save</li>
+                <li>Use immediate mode (no line numbers) for testing</li>
+                <li>Always provide user feedback with <code>api.print()</code></li>
+                <li>Handle callback nesting carefully to avoid "callback hell"</li>
+                <li>Use <code>api.cls()</code> to start with a clean screen</li>
+            </ul>
+        </div>
+
+        <div class="success-box">
+            <h3>Database Operations</h3>
+            <ul>
+                <li>Always call <code>api.createDatabase()</code> first</li>
+                <li>Create indexes on fields you'll search frequently</li>
+                <li>Use ascending indexes for alphabetical sorting</li>
+                <li>Use descending indexes for "newest first" sorting</li>
+                <li>Remember: database is in-memory only (cleared on page refresh)</li>
+            </ul>
+        </div>
+
+        <div class="success-box">
+            <h3>File Operations</h3>
+            <ul>
+                <li>Use <code>saveLocalData()</code> for settings and preferences</li>
+                <li>Use <code>saveFile()</code> for data you want accessible across devices</li>
+                <li>Always handle callback errors gracefully</li>
+                <li>Store complex objects as JSON</li>
+                <li>Don't store sensitive data in local storage without encryption</li>
+            </ul>
+        </div>
+
+        <div class="success-box">
+            <h3>Full-Screen Applications</h3>
+            <ul>
+                <li>Always provide a way to close/exit (close button)</li>
+                <li>Use <code>position: fixed</code> for full-screen elements</li>
+                <li>Set high <code>z-index</code> to overlay the console</li>
+                <li>Clean up DOM elements when done</li>
+                <li>Load external libraries dynamically with cache checking</li>
+            </ul>
+        </div>
+
+        <h2>Limitations and Notes</h2>
+        <div class="warning-box">
+            <ul>
+                <li>Database is <strong>in-memory only</strong> - data lost on page refresh</li>
+                <li>Use file functions to persist important data</li>
+                <li>Cloud storage requires user login</li>
+                <li>Local storage is browser-specific</li>
+                <li>Callback-based API - not Promise-based</li>
+                <li>No built-in async/await support (use callbacks)</li>
+                <li>Global <code>api</code> object automatically available</li>
+            </ul>
+        </div>
+
+        <h2>Next Steps</h2>
+        <ul>
+            <li><strong>Try the examples</strong> - Copy and paste into CyborgShell</li>
+            <li><strong>Experiment</strong> - Build your own applications</li>
+            <li><strong>Combine features</strong> - Mix database, files, and UI</li>
+            <li><strong>Check 3d.js</strong> - See real full-screen application pattern</li>
+            <li><strong>Read other docs</strong> - Learn about AI pipelines and projects</li>
+        </ul>
+
+        <div class="footer">
+            <div style="text-align: center; margin-top: 40px; color: #666;">
+                <p><strong>CyborgShell</strong> by <a href="https://cyborgunicorn.com.au" target="_blank">Cyborg Unicorn Pty Ltd</a> 2025</p>
+                <p><a href="https://cyborgshell.com" target="_blank">cyborgshell.com</a> | <a href="https://github.com/PrimalNinja/cyborgshell" target="_blank">GitHub</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

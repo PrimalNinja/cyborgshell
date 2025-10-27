@@ -245,6 +245,7 @@ function chatgpt(strPrompt_a)
 		var strCommand = arrWords[0].toLowerCase();
 		var strSessionID = '';
 		var objSession;
+		var intI;
 		var intJ;
 
 		// Handle session commands
@@ -451,6 +452,7 @@ function chatgpt(strPrompt_a)
 
 		if (strCommand === 'train')
 		{
+			var strTrainingSources;
 			if (arrWords.length >= 2)
 			{
 				// Train specific session with file content or other sessions
@@ -458,7 +460,7 @@ function chatgpt(strPrompt_a)
 				if (arrWords.length === 2)
 				{
 					strSessionID = 'default';
-					var strTrainingSources = arrWords[1];
+					strTrainingSources = arrWords[1];
 				}
 				else
 				{
@@ -468,7 +470,7 @@ function chatgpt(strPrompt_a)
 					{
 						strSessionID = strSessionID.substring(0, strSessionID.length - 1);
 					}
-					var strTrainingSources = arrWords[2];
+					strTrainingSources = arrWords[2];
 				}
 				
 				// Parse training sources: files (.ext) and sessions (:)
@@ -478,7 +480,7 @@ function chatgpt(strPrompt_a)
 				var arrMessages = [];
 				
 				// Count valid sources
-				for (var intI = 0; intI < arrSources.length; intI++)
+				for (intI = 0; intI < arrSources.length; intI++)
 				{
 					if (arrSources[intI].trim().length > 0)
 					{
@@ -514,7 +516,7 @@ function chatgpt(strPrompt_a)
 				}
 				else
 				{
-					for (var intI = 0; intI < arrSources.length; intI++)
+					for (intI = 0; intI < arrSources.length; intI++)
 					{
 						var strSource = arrSources[intI].trim();
 						
@@ -537,7 +539,7 @@ function chatgpt(strPrompt_a)
 								}
 								
 								// Append all entries from source session
-								for (var intJ = 0; intJ < globals.chatgpt.sessions[strSourceSession].length; intJ++)
+								for (intJ = 0; intJ < globals.chatgpt.sessions[strSourceSession].length; intJ++)
 								{
 									addToSession(strSessionID, globals.chatgpt.sessions[strSourceSession][intJ]);
 								}

@@ -1,0 +1,55 @@
+Káàbọ̀ sí CyborgShell!
+
+Eyi ni itọsọna iranlọwọ ti yoo ṣe iranlọwọ fun ọ lati tọka nipasẹ awọn ofin ati awọn ilana oriṣiriṣi. 
+
+Maṣe gbagbe lati ka nipa eyi nipa titẹ 'help about' ati ka awọn ofin ìpamọ nipa titẹ 'help privacy' ati ipo lilo nipa titẹ 'help terms'.
+(eyi tumọ si pe boya o nlo ọja yii, o gba awọn ofin ìpamọ ati ipo lilo)
+
+O le forukọsilẹ ki o le wọle ati ṣeto awọn eto rẹ ki o pin wọn pẹlu awọn miiran.
+Kọ 'help account' fun iranlọwọ lori awọn ofin ti iforukọsilẹ ati wiwọle ati awọn ofin miiran ti o ni ibatan si akọọlẹ.
+
+Itọsọna Iranlọwọ
+
+help
+
+    O n ṣe afihan itọsọna iranlọwọ yii.
+
+help general
+
+    O n ṣe afihan iranlọwọ nipa awọn ofin ti o gbooro.
+
+help editor
+
+    O n ṣe afihan iranlọwọ nipa awọn ofin ti olootu.
+
+help file
+
+    O n ṣe afihan iranlọwọ nipa awọn ofin ti faili.
+
+help account
+
+    O n ṣe afihan iranlọwọ nipa awọn ofin ti akọọlẹ.
+
+help sharing
+
+    O n ṣe afihan iranlọwọ nipa awọn ofin ti pinpin.
+
+help about
+
+    O n ṣe afihan diẹ ninu alaye nipa ọja yii.
+
+help roadmap
+
+    O n ṣe afihan diẹ ninu alaye nipa ohun ti a n gbero lati ṣe pẹlu ọja yii.
+
+help privacy
+
+    O n ṣe afihan awọn ofin ìpamọ.
+
+help terms
+
+    O n ṣe afihan ipo lilo.
+
+help etiquette
+
+    O n ṣe afihan awọn ofin ti a n bọwọ fun fun ilana awujọ yii.

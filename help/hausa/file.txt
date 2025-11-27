@@ -1,0 +1,46 @@
+Umurnin Fayiloli  
+Wannan umarni yana da alaka da fayiloli a cikin sararin fayil ɗinka na yanzu.
+
+beautify <sunan fayil>
+
+	Yana kyautata fayil na JSON ba tare da lalata shirin da aka loda a halin yanzu ba.
+	
+dir [<sunan fayil>] (ko cat, ls)
+
+	Yana lissafa shirye-shiryen da aka adana. Sunan fayil yana iya ƙunsar alamomin gungun * ko ?.
+	
+copy <sunan fayil a> <sunan fayil b> (ko cp)
+
+	Yana kwafa fayil daga sunan fayil a zuwa sunan fayil b.
+	
+del <sunan fayil> (ko delete, era)
+
+	Yana goge shirin.
+	
+load <sunan fayil>
+
+	Yana loda shirin.
+	
+ren <sunan fayil a> <sunan fayil b> (ko rename, mv)
+
+	Yana canza sunan fayil daga sunan fayil a zuwa sunan fayil b.
+	
+run <sunan fayil>
+
+	Yana gudanar da shirin, yana maye gurbin shirin da aka loda a halin yanzu.
+	
+save <sunan fayil>
+
+	Yana adana shirin.
+	
+space [<mabuɗin sarari> | <laƙabi>] (ko cs, cd, chdir)
+
+	Yana nuna sararin da kake ciki ko yana canza zuwa sabon.
+	
+spaces
+
+	Yana lissafa dukkan sararin fayil da kake da izinin shiga.
+	
+type <sunan fayil> [[daga layi]-[zuwa layi]]
+
+	Yana rubuta shirin ba tare da lalata shirin da aka loda a halin yanzu ba.

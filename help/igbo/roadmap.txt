@@ -1,0 +1,25 @@
+Atụmatụ Ọdịnihu
+
+Nke a bụ ụfọdụ ozi gbasara ụfọdụ atụmatụ ọhụrụ anyị na-eme atụmatụ itinye na ngwaahịa a na-elekwasị anya na mfe dị ka ebumnuche kachasị. Ọ bụghị ihe dị mkpa ịdepụta ha dịka oge ha ga-adị njikere:
+
+- Ike ịmepụta ngwugwu, iziga ngwugwu, na ịkekọrịta ngwugwu ma ọ bụ n’ihu ma ọ bụ maka ndị a họọrọ.
+  
+- Tinye iwu faịlụ iji mee ka ọ dị mfe ịkopi na ịkwaga faịlụ n'etiti ebe na ngwugwu.
+  
+- Ụfọdụ ọrụ njikwa ngwaọrụ na bọtịnụ (ihichapụ ha).
+  
+- Njikwa ụdị. Ike ịgụnye paramita, bulite paramita ochie, laghachi na paramita ochie.
+  
+- Ike ịbawanye na imeziwanye ngwaahịa a site na iji onwe ya.
+  
+- Ụfọdụ ebe AI, ọ bụghị naanị njikọ LLM kamakwa ikekwe njikọ na ngwaahịa anyị nke dAIbolical.
+  
+- Nchịkọta API ka ị ghara ime ihe site na mmalite.
+  
+- Ime ihe omume ozugbo mgbe ịbanye, na nhọrọ ịhapụ nke a ma ọ bụrụ na ihe na-apụghị isi na ya.
+  
+- Nkwado 'flavour' nke koodu isi ka ị nwee ike rụọ ọrụ na ụdị faịlụ dị iche iche n'ụzọ mara amara, dịka idozi faịlụ binary na onye editọ ahịrị.
+  
+- Tinye ngwaọrụ ndị ọzọ ka ịmụ na mmepe sọftụwia bụrụ ihe dị mfe dịka ọ dị na afọ 80.
+  
+- Ụfọdụ ihe ndị ọzọ na-atọ ụtọ.

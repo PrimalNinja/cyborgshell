@@ -1,0 +1,27 @@
+Nnọọ na CyborgShell!
+
+CyborgShell n jẹ́ ẹ̀ka kọ̀ǹpútà atijọ́ ti ilé sí ẹrọ tuntun, tó ń fún ọ ní àǹfààní láti dá, gbé kóòdù sórí, àti ṣiṣẹ́ pọ̀ ní gbogbo ipò, ní gbogbo àkókò. Ní CyborgShell, o lè:
+
+- Dá àkàǹtù àti bọ́ sí àwọn ẹrọ tó yàtọ̀
+- Gbè kóòdù ní JavaScript, ní gbogbo rẹ̀ tàbí nínú ẹgbẹ́
+- Pèsè ìkóòdù rẹ ní "ibè" tó yàn
+
+A dá a láti irọrun ti kọ̀ǹpútà ilé 8-bit, CyborgShell ń fẹ́ dá àyáyá àìkù, láìsí ìyàtọ̀ ti kọ̀ǹpútà àtijọ́. Forúkọsílẹ̀, bọ́, kí o sì bẹ̀rẹ̀ sí í gbé kóòdù nínú ìsẹ́kẹsẹ́!
+
+Ní CyborgShell, "ibè" rẹ jẹ́ ibi ipamọ́ ti ara rẹ, tó nìkan rẹ lè wọlé. O tún lè ṣàwárí ibi àgbà, níbi tí o ti lè dá, pín, àti ṣe ìdánwò pẹ̀lú àwọn míì.
+
+Agbara pínpín jẹ́ àfihàn pàtàkì ní CyborgShell. Bí diski floppy ṣe yí padà ní ọdún 80, o lè pín ibè rẹ pẹ̀lú àwọn míì, ní ọna míì. Ilana pínpín yìí rọrùn, tó ń jẹ́ kí ó ṣee ṣe fún ipò tó yàtọ̀:
+
+- Ikẹ́kọ̀ọ́: Pín ibè pẹ̀lú àwọn ọmọ-ẹ̀kọ́ láti kọ́ ìtòsọ́nà
+- Iṣẹ́ ẹgbẹ́: Ṣiṣẹ́ pọ̀ ní iṣẹ́ nínú ibè ẹgbẹ́ tó pín
+- Ọrẹ: Pín ibè láàárín rẹ àti àwọn ọrẹ tó ní ìtẹ́wọ́gbà
+
+CyborgShell [github.com/PrimalNinja/cyborgshell] ti dá a lábẹ́ àṣẹ sọ́fítwẹ́ MIT, nítorí pé "pín túmọ̀ sí àkíyèsí."
+
+Nípa Wa
+
+A ń gbé ní Ostiraliya àti pé a ń ṣiṣẹ́ pẹ̀lú àwọn ilé iṣẹ́ sọ́fítwẹ́ kan tó ń pèsè sọ́fítwẹ́ fún àwọn ilé iṣẹ́ nla àti sọ́fítwẹ́ nínú àwọn ilé iṣẹ́ míì. Pẹ̀lú èyí, a ń dá sọ́fítwẹ́ fún àwọn ẹrọ alágbèéká àti kọ̀ǹpútà atijọ́. Díẹ̀ nínú àwọn ohun tí a ń pèsè ni a ṣe é ní owó àgbà fún àwọn ilé iṣẹ́ míì, àwọn míì a ń ṣe é labẹ́ àmì wa.
+
+CyborgShell gba ìbùkún láti PrimalNinja ti Cyborg Unicorn Pty Ltd àti Mitsukibo Pty Ltd, nígbà míì ń ta àjà tó jẹ́ QuickDigital àti Retrokibo.
+
+Ránṣẹ́ ìròyìn aṣiṣe sí contact@ apá yìí.

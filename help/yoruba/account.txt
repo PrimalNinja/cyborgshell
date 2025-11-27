@@ -1,0 +1,54 @@
+Àwọn Àṣẹ Àkọọ́lẹ̀
+Àwọn àṣẹ wọ̀nyí jẹ mọ́ àkọọ́lẹ̀ rẹ àti ìwọlé sí àkọọ́lẹ̀.
+
+about [<ìfiranṣẹ́>]
+
+	Ó ń fi ìfiranṣẹ́ rẹ nípa rẹ hàn tàbí ń ṣètò tuntun.
+
+admins [<orúkọ mìíràn>]
+
+	Ó ń ṣe àkójọ gbogbo àwọn alábòójútó ètò náà. Orúkọ mìíràn lè ní àwọn àmì wildcards * tàbí ?.
+
+alias [<orúkọ mìíràn>]
+
+	Ó ń fi orúkọ mìíràn rẹ hàn tàbí ń ṣètò tuntun.
+
+device <bọ́tìnì ẹ̀rọ> <orúkọ mìíràn>
+
+	Ó ń fún ẹ̀rọ rẹ ní orúkọ mìíràn tuntun.
+
+devices
+
+	Ó ń ṣe àkójọ àwọn ẹ̀rọ rẹ.
+
+login <orúkọ olùmúlò> <ọ̀rọ̀ ìgbaniwọlé>
+
+	Ó ń forúkọsílẹ̀ sórí ẹ̀rọ lọ́wọ́lọ́wọ́.
+
+logout
+
+	Ó ń mú ọ jáde kúrò lórí ẹ̀rọ lọ́wọ́lọ́wọ́.
+
+offline
+
+	Ó ń fihàn pé o kò sí ní ìpèsè fún àwọn olùmúlò mìíràn, èyí ni ìpéwọ̀n fún àwọn ìforúkọsílẹ̀ tuntun.
+
+online
+
+	Ó ń fihàn pé o wà ní ìpèsè fún àwọn olùmúlò mìíràn, ìwọ yóò wà ní ìpèsè títí tí ìwọ yóò fi pa ara rẹ dà sí offline.
+
+password <ọ̀rọ̀ ìgbaniwọlé àtijọ́> <ọ̀rọ̀ ìgbaniwọlé tuntun> (tàbí chpwd)
+
+	Ó ń yí ọ̀rọ̀ ìgbaniwọlé rẹ padà.
+
+register <orúkọ olùmúlò> <ọ̀rọ̀ ìgbaniwọlé> [<orúkọ mìíràn>]
+
+	Ó ń ṣẹ̀dá àkọọ́lẹ̀ olùmúlò tuntun. Àkíyèsí: Èyí kò forúkọsílẹ̀ sí àkọọ́lẹ̀ tuntun tí a ṣẹ̀dá.
+
+username [<orúkọ olùmúlò>]
+
+	Ó ń fi orúkọ olùmúlò rẹ hàn tàbí ó ṣètò orúkọ tuntun.
+
+users [<orúkọ mìíràn>]
+
+	Ó ń ṣe àkójọ gbogbo àwọn olùmúlò ètò náà. Orúkọ mìíràn lè ní àwọn àmì wildcards * tàbí ?.

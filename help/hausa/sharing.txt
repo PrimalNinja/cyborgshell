@@ -1,0 +1,48 @@
+Raba da Umarnin Sararin Fayil
+
+Wannan umarni yana da alaƙa da raba sararin fayil da sararin fayil da kake da damar shiga.
+
+grant <mabuɗin rabawa>
+
+	Yana rabawa sararin fayil dinka da mai amfani wanda ya bayar da mabuɗin rabawa.
+	
+keys
+
+	Yana lissafa dukkan makullin ka. Ka raba kawai makullin rabonka.
+	
+newkey <sunan mabuɗi>
+
+	Yana ƙirƙirar sabon mabuɗin rabawa tare da sunan makullin da aka bayar.
+	
+revoke <mabuɗin rabawa>
+
+	Yana cire rabon sararin fayil dinka daga mai amfani wanda ya bayar da mabuɗin rabawa.
+	
+shares
+
+	Yana lissafa dukkan rabon da ka bayar.
+
+
+Tsarin Raba
+
+Misali na yadda za a raba sararin fayil:
+
+Fred
+
+	1. Fred yana son samun dama ga sararin Wilma.
+	2. Fred yana ƙirƙirar mabuɗin rabawa ga Wilma ta hanyar rubuta 'newkey wilma' kuma yana bayar da mabuɗin rabawa ga Wilma.
+	note: wilma a cikin 'newkey wilma' shine sunan laƙabin Fred don mabuɗin rabawa, ba shi da alaƙa da asusun Wilma.
+										
+Wilma
+
+	3. Ta amfani da mabuɗin rabawa da Fred ya bayar, tana bayar da dama ga Fred ta hanyar rubuta 'grant <mabuɗin rabawa>'.
+
+Fred
+
+	4. Fred yanzu yana da dama ga sararin Wilma.
+
+Wilma
+
+	5. Wilma har yanzu tana da iko akan wanda take rabawa kuma tana iya cire ko dawo da Fred kamar yadda take so.
+
+Wannan tsarin raba yana ba da dama ga ƙungiyoyi su sami yanki na rabawa. Bari mu yi tunanin Wilma tana kula da sararin ƙungiyar. Wilma na iya neman makullin rabawa daga kowanne mai haɓaka a cikin ƙungiyar don a iya bayarwa ko cire su kamar yadda ake buƙata ga sararin ƙungiyar.

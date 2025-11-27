@@ -1,0 +1,47 @@
+Iwu Nkekọrịta na Ebe Nchekwa Faịlụ
+Ndị a bụ iwu metụtara ịkekọrịta ebe faịlụ na ebe faịlụ ị nwere ohere ịnweta.
+
+grant <igodo nkekọrịta>
+
+	Ọ na-enye ebe faịlụ gị na onye ọrụ nyere igodo nkekọrịta.
+
+keys
+
+	Ọ na-edepụta igodo gị niile. Kekọrịta naanị igodo ịkekọrịta gị.
+
+newkey <aha igodo>
+
+	Ọ na-emepụta igodo nkekọrịta ọhụrụ na aha igodo a nyere.
+
+revoke <igodo nkekọrịta>
+
+	Ọ na-ewepụ ebe faịlụ gị na onye ọrụ nyere igodo nkekọrịta.
+
+shares
+
+	Ọ na-edepụta nkekọrịta niile ị nyere.
+
+
+Usoro Iwepụta
+
+Nke a bụ ihe atụ nke otu esi ekekọrịta ebe faịlụ:
+
+Fred
+
+	1. Fred chọrọ ohere na ebe Wilma.
+	2. Fred na-emepụta igodo nkekọrịta maka Wilma site n'itinye 'newkey wilma' ma na-enye igodo nkekọrịta ahụ na Wilma.
+	nkwupụta: wilma na 'newkey wilma' bụ aha ọzọ Fred na-eji maka igodo nkekọrịta, ọ nweghị njikọ na akaụntụ Wilma.
+
+Wilma
+
+	3. Site na igodo nkekọrịta Fred nyere, na-enye ohere na Fred site n'itinye 'grant <igodo nkekọrịta>'.
+
+Fred
+
+	4. Fred ugbu a nwere ohere na ebe Wilma.
+
+Wilma
+
+	5. Wilma ka nwere njikwa banyere onye ọ na-ekekọrịta na ya ma nwee ike iwepụ ma ọ bụ weghachite Fred dịka ọ chọrọ.
+
+Usoro a nke ịkekọrịta na-enye ohere maka ndị otu inwe mpaghara nke ha na-ekekọrịta. Ka anyị chee na Wilma bụ onye na-ahụ maka mpaghara otu ahụ. Wilma nwere ike ịrịọ igodo nkekọrịta nkeonwe site na onye ọ bụla mmepe na otu ahụ ka a nwee ike ikwado ma ọ bụ wepụ ha dịka achọrọ na mpaghara otu ahụ.

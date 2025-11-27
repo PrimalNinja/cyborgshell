@@ -1,0 +1,54 @@
+Iwu Akaụntụ
+Iwu ndị a bụ iwu metụtara akaụntụ gị na inweta ohere na akaụntụ gị.
+
+about [<nkwupụta>]
+
+	O na-egosi ozi gị gbasara gị ma ọ bụ na-ahazi ozi ọhụrụ.
+
+admins [<aha njirimara>]
+
+	O na-akpọpụtakarị ndị nchịkwa niile nke usoro. Aha njirimara nwere ike ịnwe akara wildcards * ma ọ bụ ?.
+
+alias [<aha njirimara>]
+
+	O na-egosi aha njirimara gị ma ọ bụ na-ahazi aha njirimara ọhụrụ.
+
+device <isi ngwaọrụ> <aha njirimara>
+
+	O na-enye aha njirimara ọhụrụ maka ngwaọrụ gị.
+
+devices
+
+	O na-akpọpụta ngwaọrụ gị.
+
+login <aha onye ọrụ> <okwu nzuzo>
+
+	O na-edebanye gị na ngwaọrụ ahụ.
+
+logout
+
+	O na-ewepụ gị na ngwaọrụ ahụ.
+
+offline
+
+	O na-egosi gị dịka onye na-abụghị n'ịntanetị maka ndị ọzọ, nke a bụ ntọala ochie maka ndebanye ọhụrụ.
+
+online
+
+	O na-egosi gị dịka onye nọ n'ịntanetị maka ndị ọzọ, ị ga-anọgide na n'ịntanetị ruo mgbe ị gbanwere onwe gị na offline.
+
+password <okwu nzuzo ochie> <okwu nzuzo ọhụrụ> (ma ọ bụ chpwd)
+
+	O na-agbanwe okwu nzuzo gị.
+
+register <aha onye ọrụ> <okwu nzuzo> [<aha njirimara>]
+
+	O na-emepụta akaụntụ onye ọrụ ọhụrụ. Nọtụ: Nke a anaghị edebanye gị na akaụntụ ọhụrụ e kere.
+
+username [<aha onye ọrụ>]
+
+	O na-egosi aha onye ọrụ gị ma ọ bụ na-ahazi aha ọhụrụ.
+
+users [<aha njirimara>]
+
+	O na-akpọpụtakarị ndị ọrụ niile nke usoro. Aha njirimara nwere ike ịnwe akara wildcards * ma ọ bụ ?.

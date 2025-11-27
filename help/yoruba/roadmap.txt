@@ -1,0 +1,25 @@
+Ọ̀nà Àbáwọlé
+
+Eyi ni diẹ ninu alaye nipa diẹ ninu awọn ẹya tuntun ti a n gbero lati fi kun si ọja yii pẹlu fojusi lori irorun gẹgẹbi ibi-afẹde pataki. Ko ṣe pataki lati ṣe akojọ wọn gẹgẹbi akoko ti wọn yoo ti ṣetan:
+
+- Agbara lati ṣẹda apoti, firanṣẹ apoti, ati pin apoti boya niwaju tabi fun awọn ti a yan.
+
+- Fi aṣẹ faili kun lati jẹ ki o rọrun lati daakọ ati gbe faili laarin awọn ipo ati apoti.
+
+- Diẹ ninu awọn iṣẹ iṣakoso ẹrọ ati bọtini (pa wọn).
+
+- Iṣakoso irufẹ. Agbara lati ṣafikun awọn paramita, gbe awọn paramita atijọ soke, pada si awọn paramita atijọ.
+
+- Agbara lati faagun ati mu ọja yii dara si nipa lilo ara rẹ.
+
+- Diẹ ninu awọn agbegbe AI, kii ṣe nikan asopọ LLM ṣugbọn boya asopọ si ọja wa ti dAIbolical.
+
+- Iṣakoso API ki o ma ṣe ohun kan lati ibẹrẹ.
+
+- Ṣiṣẹda iṣẹlẹ lẹsẹkẹsẹ nigbati o ba wọle, ati aṣayan lati fi silẹ ti nkan ko ba le ṣiṣẹ daradara.
+
+- Atilẹyin 'flavour' ti koodu orisun ki o le ṣiṣẹ pẹlu awọn irufẹ faili oriṣiriṣi ni ọna ti o mọ, gẹgẹbi atunṣe faili binary ati olootu ila.
+
+- Fi awọn irinṣẹ miiran kun ki ikẹkọ ati idagbasoke sọfitiwia di irorun bi o ti jẹ ni awọn ọdun 80.
+
+- Diẹ ninu awọn nkan miiran ti o nifẹ.

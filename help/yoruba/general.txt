@@ -1,0 +1,19 @@
+Àwọn Àṣẹ Gbogbogbò
+
+Iwu àwọn yìí ń fúnni ní ìtàn àgbáyé àti iṣakoso.
+
+language [<èdè>]
+
+    Ó ń fi èdè rẹ hàn báyìí tàbí ó ń tẹ̀síwájú èdè tuntun.
+
+languages
+
+    Ó ń tọ́ka sí èdè tí àwọn ènìyàn ní láti ṣiṣẹ́ pẹ̀lú nínú eto náà.
+
+reset
+
+    Ó ń tún ipo náà ṣe àti pé ó ń pa gbogbo kóòdù tó wà nínú kóòdù tó wà níbè.
+
+startup
+
+    Ó ń fi ìkọ̀wé ìbẹ̀rẹ̀ hàn.

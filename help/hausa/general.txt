@@ -1,0 +1,18 @@
+Umurnai na Gabaɗaya  
+Wannan umurnai suna bayar da bayani na gabaɗaya da iko.
+
+language [<yare>]
+
+    Yana nuna yarenka na yanzu ko ya sa sabon yare.
+
+language
+
+    Yana jera yarukan mutane da ake da su don amfani da tsarin.
+
+reset
+
+    Yana sake saita yanayin kuma yana rasa duk lambar da ke cikin editan lamba a halin yanzu.
+
+startup
+
+    Yana nuna rubutun farawa.

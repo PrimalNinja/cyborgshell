@@ -1,0 +1,27 @@
+Barka da zuwa CyborgShell!
+
+CyborgShell na kawo jigon tsofaffin kwamfutoci na gida zuwa na'urorin zamani, yana ba ku damar ƙirƙira, loda lambobi, da haɗin gwiwa a ko'ina, a kowane lokaci. Tare da CyborgShell, zaku iya:
+
+- Ƙirƙirar asusu da shiga a kan na'urori da yawa
+- Loda lambobi a cikin JavaScript, kai ko a cikin ƙungiyoyi
+- Adana shirye-shiryenku a cikin "sararin" da aka keɓance
+
+An yi wahayi daga sauƙin kwamfutocin gida na 8-bit, CyborgShell yana nufin sake ƙirƙirar gwaninta na nan take, ba tare da wahala ba na kwamfuta ta gargajiya. Yi rajista, shiga, kuma fara loda lambobi cikin seconds!
+
+A cikin CyborgShell, "sararin" ku shine wurin ajiyar ku na kashin kai, wanda kawai ku ke iya samun dama. Hakanan kuna iya bincika wurin jama'a, inda zaku iya ƙirƙira, raba, da gwada tare da wasu.
+
+Raba abu shine muhimmin fasali a cikin CyborgShell. Kamar yadda aka canza diski na floppy a cikin shekarun 80, zaku iya raba sararin ku tare da wasu, da akasin haka. Wannan tsarin raba mai sauƙi yana ba da damar yanayi daban-daban:
+
+- Koyarwa: Raba sarari tare da ɗalibai don koyon jagoranci
+- Aikin ƙungiya: Haɗin gwiwa akan ayyuka a cikin sararin ƙungiya na raba
+- Abota: Raba sarari juna tare da abokai masu amana
+
+CyborgShell [github.com/PrimalNinja/cyborgshell] an saki shi a ƙarƙashin lasisin software na MIT, saboda "raba yana nufin kula."
+
+Game da Mu
+
+Muna zaune a Ostiraliya kuma muna gudanar da wasu kamfanonin software da ke samar da software don manyan kamfanonin jigila da kuma software a wasu masana'antu. Bugu da ƙari, muna kuma haɓaka software don na'urorin hannu da kwamfutocin tsofaffi. Wasu daga cikin aikace-aikacenmu an bayar da su ga mu kuma an yi musu farashi na farar hula zuwa wasu kamfanoni, wasu kuma muna saki su a ƙarƙashin alamominmu.
+
+CyborgShell yana ci gaba da girmamawa daga PrimalNinja na Cyborg Unicorn Pty Ltd da Mitsukibo Pty Ltd, wani lokaci suna kasuwanci a matsayin QuickDigital da Retrokibo.
+
+Aika rahoton kwari zuwa contact@ wannan yankin.

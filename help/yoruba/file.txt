@@ -1,0 +1,46 @@
+Àwọn Àṣẹ Fáìlì
+Àwọn àṣẹ wọ̀nyí jẹ mọ́ fáìlì tó wà nínú ibi ìpamọ́ fáìlì rẹ lọ́wọ́lọ́wọ́.
+
+beautify <orúkọ fáìlì>
+
+	Ó ń ṣe lẹ́wà fáìlì JSON láìsí ìpa lórí ètò tí a ti gba láti ayélujára lọ́wọ́lọ́wọ́.
+	
+dir [<orúkọ fáìlì>] (tàbí cat, ls)
+
+	Ó ń ṣe àkójọ àwọn ètò tí a ti fipamọ́. Orúkọ fáìlì lè ní àwọn àmì wildcards * tàbí ?.
+	
+copy <orúkọ fáìlì a> <orúkọ fáìlì b> (tàbí cp)
+
+	Ó ń daakọ fáìlì láti orúkọ fáìlì a sí orúkọ fáìlì b.
+	
+del <orúkọ fáìlì> (tàbí delete, era)
+
+	Ó ń pa ètò.
+	
+load <orúkọ fáìlì>
+
+	Ó ń gba láti ayélujára ètò.
+	
+ren <orúkọ fáìlì a> <orúkọ fáìlì b> (tàbí rename, mv)
+
+	Ó ń yí orúkọ fáìlì padà láti orúkọ fáìlì a sí orúkọ fáìlì b.
+	
+run <orúkọ fáìlì>
+
+	Ó ń ṣiṣẹ́ ètò, yọ ètò tí a ti gba láti ayélujára lọ́wọ́lọ́wọ́.
+	
+save <orúkọ fáìlì>
+
+	Ó ń fipamọ́ ètò.
+	
+space [<bọ́tìnì àyè> | <orúkọ mìíràn>] (tàbí cs, cd, chdir)
+
+	Ó ń fi àyè tí o wà hàn tàbí yí padà sí tuntun.
+	
+spaces
+
+	Ó ń ṣe àkójọ gbogbo àwọn àyè fáìlì tí o ní ẹ̀tọ́ láti wọlé sí.
+	
+type <orúkọ fáìlì> [[láti ilà]-[sí ilà]]
+
+	Ó ń kọ ètò láìsí ìpa lórí ètò tí a ti gba láti ayélujára lọ́wọ́lọ́wọ́.

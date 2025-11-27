@@ -1,0 +1,19 @@
+Ìtọ́kasí API
+
+Fún ìsinsìnyí, ó ní àwọn wọ̀nyí:
+
+(tó jẹ mọ́ àtúnṣe)
+
+api.debugObject(<nkan>, [<àsìá ìpadàbọ̀>]);
+
+    Ó ń fi nkan tí a fún un hàn, tí a kò bá fi àsìá ìpadàbọ̀, ó padà sí òótọ́ àkọ́kọ́.
+
+(tó jẹ mọ́ ibojú)
+
+api.cls();
+
+    pa ibojú
+
+api.print(<àbájáde>);
+
+    tẹ̀ díẹ̀ nínú àbájáde

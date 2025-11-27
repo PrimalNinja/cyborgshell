@@ -1,0 +1,50 @@
+Àwọn Àṣẹ Olóòtú
+Àwọn àṣẹ wọ̀nyí ń ràn ọ́ lọ́wọ́ láti ṣe àtúnṣe ètò rẹ ní báyìí.
+
+beautify
+
+    Ó ń ṣe àtúnṣe JSON yìí tí a ránṣẹ́.
+
+cls (tàbí clear)
+
+    Ó ń pa iboju rẹ́ mọ́.
+
+edit <nọ́mbà àtẹ̀jáde> (tàbí ed)
+
+    Ó ń ṣe àtúnṣe àtẹ̀jáde tó ní àtẹ́jáde.
+
+file [<nọ́mbà fáìlì>]
+
+    Ó ń fi fáìlì rẹ́ tó wà níbè tí àṣẹ àtẹ́jáde ní í ṣe pẹ̀lú tàbí ń dá fáìlì tuntun.
+
+filename [<orúkọ fáìlì>]
+
+    Ó ń fi orúkọ fáìlì rẹ́ tó wà níbè hàn tàbí ń ṣe é. Orúkọ fáìlì yìí jẹ́ ti àtẹ́jáde, kì í ṣe ti a fi fún fáìlì tó ránṣẹ́ tàbí tó pa, ṣùgbọ́n a ó lo ó nígbà tá a bá ránṣẹ́ tàbí pa fáìlì.
+
+files
+
+    Ó ń ṣe àtòjọ fáìlì gbogbo tó wà ní àtẹ́jáde pẹ̀lú nọ́mbà fáìlì wọn.
+
+list [[láti àtẹ̀jáde]-[sí àtẹ̀jáde]]
+
+    Ó ń ṣe àtòjọ àtẹ̀jáde. Àpẹẹrẹ: list 30-, list -30, list 20-30, list, list 40.
+
+new
+
+    Ó ń pa àtẹ̀jáde tó wà níbè mọ́ ní àtẹ́jáde kóòdù.
+
+newfile
+
+    Ó ń dá fáìlì tuntun sí àtẹ́jáde rẹ.
+
+paste <nọ́mbà àtẹ̀jáde> <nọ́mbà fáìlì>
+
+    Ó ń fi ohun tó wà nínú nọ́mbà fáìlì yìí tí a tọ́ka sí nínú fáìlì tó wà níbè kí ó tó nọ́mbà àtẹ̀jáde yìí. Ìyẹn jẹ́ àṣẹ tó ń jẹ́ kí o lè lo apá tó yàtọ̀ sí i nínú kóòdù tó ránṣẹ́ sí àtẹ́jáde gẹ́gẹ́ bí apá yàtọ̀, kí o sì fi wọn sí i gẹ́gẹ́ bí o ṣe fẹ́ nínú kóòdù rẹ.
+
+renum
+
+    Ó ń ṣe àtúnṣe nọ́mbà àtẹ̀jáde. Àkíyèsí: JavaScript kò lò nọ́mbà àtẹ̀jáde, ṣùgbọ́n a ń lò wọn fún ìdí àtúnṣe.
+
+run
+
+    Ó ń ṣiṣẹ́ àtẹ̀jáde tó wà níbè.

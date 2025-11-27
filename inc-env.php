@@ -45,10 +45,10 @@ $strDataRoot = __DIR__;					// dev
 error_reporting(0);
 error_reporting(E_ALL);	// enable for debug
 
-$g_arrValidLanguages = ["arabic", "chinese", "chineset", "czech", "dutch", "english", "french", "german", "greek", 
-						"hebrew", "hindi", "italian", "japanese", "javanese", "klingon", "korean", "persian", "polish", 
+$g_arrValidLanguages = ["arabic", "chinese", "chineset", "czech", "dutch", "english", "french", "german", "greek", "hausa", 
+						"hebrew", "hindi", "igbo", "italian", "japanese", "javanese", "klingon", "korean", "persian", "polish", 
 						"portuguese", "romanian", "russian", "spanish", "swahili", "swedish", "tagalog", "thai", 
-						"turkish", "vietnamese"];
+						"turkish", "vietnamese", "yoruba"];
 $g_arrRTLLanguages = ["arabic", "hebrew", "persian"];
 
 // ensure directories exist

@@ -1,0 +1,47 @@
+Àwọn Àṣẹ Pínpín àti Àyè Fáìlì
+Àwọn àṣẹ wọ̀nyí jẹ mọ́ pínpín àyè fáìlì àti àyè fáìlì tí o ní ẹ̀tọ́ láti wọlé sí.
+
+grant <bọ́tìnì pínpín>
+
+	Ó ń fi àyè fáìlì rẹ fún olùmúlò tí ó fún ni bọ́tìnì pínpín.
+
+keys
+
+	Ó ń ṣe àkójọ gbogbo bọ́tìnì rẹ. Pin nìkan bọ́tìnì pínpín rẹ.
+
+newkey <orúkọ bọ́tìnì>
+
+	Ó ń ṣẹ̀dá bọ́tìnì pínpín tuntun pẹ̀lú orúkọ bọ́tìnì tí a fi.
+
+revoke <bọ́tìnì pínpín>
+
+	Ó ń yọ àyè fáìlì rẹ kúrò ní olùmúlò tí ó fún ni bọ́tìnì pínpín.
+
+shares
+
+	Ó ń ṣe àkójọ gbogbo pínpín tí o fi.
+
+
+Ìlànà Pínpín
+
+Èyí ni àpẹẹrẹ bí a ṣe lè pin àyè fáìlì:
+
+Fred
+
+	1. Fred fẹ́ ìwọlé sí àyè Wilma.
+	2. Fred ṣẹ̀dá bọ́tìnì pínpín fún Wilma nípa títẹ̀ 'newkey wilma' kí ó sì fi bọ́tìnì pínpín náà fún Wilma.
+	àkíyèsí: wilma ní 'newkey wilma' jẹ́ orúkọ mìíràn tí Fred ń lò fún bọ́tìnì pínpín, kò sí ìbátan sí àkọọ́lẹ̀ Wilma.
+
+Wilma
+
+	3. Pẹ̀lú bọ́tìnì pínpín tí Fred fi, ó fún Fred ní ìwọlé nípa títẹ̀ 'grant <bọ́tìnì pínpín>'.
+
+Fred
+
+	4. Fred ní ìwọlé sí àyè Wilma báyìí.
+
+Wilma
+
+	5. Wilma ṣì ní ìṣàkóso lórí ẹni tí ó ń pin pẹ̀lú rẹ̀ kí ó sì lè yọ tàbí mú Fred padà bí ó ṣe fẹ́.
+
+Ìlànà yìí ti pínpín ń fúnni ní ìwọlé fún àwọn ọmọ ẹgbẹ́ láti ní agbègbè tiwọn tí wọ́n ń pin. Jẹ́ ká ronú pé Wilma ni olùdarí agbègbè ẹgbẹ́ náà. Wilma lè béèrè bọ́tìnì pínpín ìkọ̀kọ̀ láti ọ̀dọ̀ eyíkéyìí ọ̀mọ̀wé nínú ẹgbẹ́ náà kí a lè jẹ́ kí wọ́n jẹ́wọ́ tàbí yọ wọ́n bí ó ti yẹ nínú agbègbè ẹgbẹ́ náà.

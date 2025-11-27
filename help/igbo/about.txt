@@ -1,0 +1,27 @@
+Nnọọ na CyborgShell!
+
+CyborgShell na-eweta isi nke kọmputa ochie nke ụlọ gaa na ngwaọrụ nke oge a, na-enye gị ohere ịmepụta, bulite koodu, na imekọrịta n'ọnọdụ niile, n'oge ọ bụla. Na CyborgShell, ị nwere ike:
+
+- Mepụta akaụntụ ma banye na ngwaọrụ dị iche iche
+- Bulite koodu na JavaScript, n'ozuzu ma ọ bụ n'ime otu
+- Chekwaa mmemme gị na "ebe" a kapịrị ọnụ
+
+E wepụtara ya site na mfe nke kọmputa ụlọ 8-bit, CyborgShell na-achọ ịmepụta ahụmịhe na-enweghị oge, na-enweghị mgbagha nke kọmputa ọdịnala. Debanye aha, banye, ma malite bulite koodu n'ime sekọnd!
+
+Na CyborgShell, "ebe" gị bụ ebe nchekwa nke onwe gị, nke naanị gị nwere ike ịnweta. I nwekwara ike nyochaa ebe ọha, ebe ị nwere ike ịmepụta, kesaa, na nwalee na ndị ọzọ.
+
+Ike kesaa bụ atụmatụ dị mkpa na CyborgShell. Dịka diski floppy si gbanwee na afọ 80, ị nwere ike kesaa ebe gị na ndị ọzọ, na n'ụzọ ọzọ. Usoro kesaa a dị mfe na-enye ohere maka ọnọdụ dị iche iche:
+
+- Ịkụziri: Kesaa ebe na ụmụ akwụkwọ iji mụta nduzi
+- Ọrụ otu: Imekọrịta na ọrụ n'ịbụ na ebe otu nke kesara
+- Enyi: Kesaa ebe n'etiti gị na ndị enyi nwere ntụkwasị obi
+
+CyborgShell [github.com/PrimalNinja/cyborgshell] wepụtara ya n'okpuru ikike sọftụwia MIT, n'ihi na "kesaa pụtara ịkpachara anya."
+
+Banyere Anyị
+
+Anyị bi na Ostiraliya ma na-arụ ọrụ ụfọdụ ụlọ ọrụ sọftụwia na-enye sọftụwia maka nnukwu ụlọ ọrụ mbupu na sọftụwia na ụlọ ọrụ ndị ọzọ. Na mgbakwunye, anyị na-emepụta sọftụwia maka ngwaọrụ mkpanaka na kọmputa ochie. Ụfọdụ n'ime ngwa anyị na-enye ha na anyị na-eme ha na ọnụahịa nke ọha na eze maka ụlọ ọrụ ndị ọzọ, ndị ọzọ anyị na-akwado ha n'okpuru akara anyị.
+
+CyborgShell na-enweta nsọpụrụ site na PrimalNinja nke Cyborg Unicorn Pty Ltd na Mitsukibo Pty Ltd, mgbe ụfọdụ na-ere ahịa dị ka QuickDigital na Retrokibo.
+
+Zipu akụkọ njehie na contact@ mpaghara a.

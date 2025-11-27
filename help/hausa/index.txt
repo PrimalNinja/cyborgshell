@@ -1,0 +1,55 @@
+Barka da zuwa CyborgShell!
+
+Wannan jagorar taimako za ta jagorance ku ta hanyoyin umarni da fasaloli daban-daban da ake da su.
+
+Kada ku manta ku karanta game da wannan ta hanyar rubuta 'help about' da kuma karanta ka'idojin sirri ta hanyar rubuta 'help privacy' da kuma sharuɗɗan amfani ta hanyar rubuta 'help terms'.
+(don haka idan kuna amfani da wannan samfur, kuna yarda da ka'idojin sirri da kuma sharuɗɗan amfani)
+
+Zaku iya yin rajista don ku iya shiga da tsara shirye-shiryenku da kuma raba su da wasu.
+Rubuta 'help account' don taimako akan umarnin rajista da shiga da wasu umarni na asusun.
+
+Jagorar Taimako
+
+help
+
+    Yana nuna wannan jagorar taimako.
+
+help general
+
+    Yana nuna taimako akan umarni na gaba ɗaya.
+
+help editor
+
+    Yana nuna taimako akan umarni na edita.
+
+help file
+
+    Yana nuna taimako akan umarni na fayil.
+
+help account
+
+    Yana nuna taimako akan umarni na asusun.
+
+help sharing
+
+    Yana nuna taimako akan umarni na raba.
+
+help about
+
+    Yana nuna wasu bayanai game da wannan samfur.
+
+help roadmap
+
+    Yana nuna wasu bayanai game da abin da muke shirin yi tare da wannan samfur.
+
+help privacy
+
+    Yana nuna ka'idojin sirri.
+
+help terms
+
+    Yana nuna sharuɗɗan amfani.
+
+help etiquette
+
+    Yana nuna ka'idojin ladabi don wannan tsarin jama'a.

@@ -1,0 +1,25 @@
+Tashar Hanya
+
+Ga wani bayani akan wasu sabbin fasaloli da muke shirin ƙara wa wannan samfur tare da mai da hankali kan sauƙi a matsayin babban buri. Ba lallai ne a jera su bisa ga lokacin da za su kasance a shirye ba:
+
+- Ikon ƙirƙirar fakitoci, tura fakitoci, da raba fakitoci ko dai a fili ko ga waɗanda aka zaɓa.
+  
+- Ƙara umarnin fayil don sauƙaƙe kwafi da motsa fayiloli tsakanin wurare da fakitoci.
+  
+- Wasu ayyukan sarrafa na'ura da maɓallan (goge su).
+  
+- Sarrafa sigar. Ikon lissafa sigogi, loda tsofaffin sigogi, dawowa ga tsofaffin sigogi.
+  
+- Ikon haɓaka da inganta wannan samfur ta amfani da kansa.
+  
+- Wasu wuraren AI, ba kawai haɗin LLM ba amma wataƙila haɗin gwiwa tare da samfurinmu na dAIbolical.
+  
+- Ci gaba da haɓaka API don kada ku yi komai daga farko.
+  
+- Aiwatar da shirin kai tsaye lokacin shiga, tare da zaɓin tsallake wannan idan wani abu ya tafi ba daidai ba.
+  
+- Tallafi na 'flavour' na lambar tushe don ku iya aiki tare da nau'ikan fayiloli daban-daban cikin hikima, kamar gyara fayilolin binary tare da editan layi.
+  
+- Karin kayan aiki don sanya koyar da haɓaka software ya zama mai sauƙi kamar yadda ya kasance a cikin shekarun 80.
+  
+- Wasu sauran mamaki.

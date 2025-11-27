@@ -1,0 +1,50 @@
+Iwu Edito  
+Iwu ndị a na-enyere gị aka idozi usoro gị ugbu a.
+
+beautify
+
+    Ọ na-emezi JSON a bulitere.
+
+cls (ma ọ bụ clear)
+
+    Ọ na-ehichapụ ihuenyo.
+
+edit <nọmba ahịrị> (ma ọ bụ ed)
+
+    Ọ na-edite ahịrị nwere editọ ahịrị.
+
+file [<nọmba faịlụ>]
+
+    Ọ na-egosi faịlụ gị ugbu a nke iwu editọ metụtara ma ọ bụ na-emepụta faịlụ ọhụrụ.
+
+filename [<aha faịlụ>]
+
+    Ọ na-egosi aha faịlụ gị ugbu a ma ọ bụ na-eme ka ọ bụrụ. Aha faịlụ a bụ nke editọ, ọ bụghị nke e nyere faịlụ ndị ị bulitere ma ọ bụ chekwaa, kama a ga-eji ya mgbe ị bulitere ma ọ bụ chekwaa faịlụ.
+
+files
+
+    Ọ na-edepụta faịlụ niile dị na editọ na nọmba faịlụ ha.
+
+list [[site na ahịrị]-[ruo ahịrị]]
+
+    Ọ na-edepụta usoro. Dịka ọmụmaatụ: list 30-, list -30, list 20-30, list, list 40.
+
+new
+
+    Ọ na-ehichapụ usoro ugbu a na editọ koodu.
+
+newfile
+
+    Ọ na-emepụta faịlụ ọhụrụ na editọ gị.
+
+paste <nọmba ahịrị> <nọmba faịlụ>
+
+    Ọ na-eti ihe dị n’ime nọmba faịlụ a kpọtụrụ aha n’ime faịlụ ugbu a tupu nọmba ahịrị a kpọtụrụ aha. Nke a ikike etinyere gị aka iji akụkụ dị iche iche nke koodu a bulitere na editọ dị ka akpa dị iche iche ma tinye ha dịka achọrọ n’ime koodu gị.
+
+renum
+
+    Ọ na-emegharị nọmba usoro. Nkwupụta: JavaScript anaghị eji nọmba ahịrị, mana anyị na-eji ha maka ebumnuche ndozi.
+
+run
+
+    Ọ na-agba ọsọ usoro ugbu a.

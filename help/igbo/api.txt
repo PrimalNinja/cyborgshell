@@ -1,0 +1,20 @@
+API Nkọwa
+
+Ugbu a, ọ nwere ndị a:
+
+(na-ejikọta na ndozi)
+
+api.debugObject(<ihe>, [<ọkọlọtọ nlaghachi azụ>]);
+
+	nye ihe e nyere, ma ọ bụrụ na e chụrụ ọkọlọtọ nlaghachi azụ, ọ na-alaghachi na eziokwu mbụ.
+
+(na-ejikọta na ihuenyo)
+
+api.cls();
+
+	kpochapụ ihuenyo
+
+api.print(<nsonapụta>);
+
+	bipụta ụfọdụ nsonapụta
+	

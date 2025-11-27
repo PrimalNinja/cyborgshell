@@ -1,0 +1,19 @@
+API Mai Bayani
+
+A halin yanzu, yana da wadannan:
+
+(mai dangantaka da gyara)
+
+api.debugObject(<abu>, [<alamar maimaitawa>]);
+
+	nuna abin da aka bayar, idan an gaji da alamar maimaitawa, yana koma zuwa gaskiya ta tsohuwa.
+
+(mai dangantaka da allon)
+
+api.cls();
+
+	share allon
+
+api.print(<fitarwa>);
+
+	buga wasu fitarwa

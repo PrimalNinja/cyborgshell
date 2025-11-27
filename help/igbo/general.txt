@@ -1,0 +1,19 @@
+Iwu Izugbe
+
+Iwu ndị a na-enye ozi izugbe na njikwa.
+
+language [<asụsụ>]
+
+    Ọ na-egosi asụsụ gị ugbu a ma ọ bụ na-etinye asụsụ ọhụrụ.
+
+languages
+
+    Ọ na-akpọtụrụ asụsụ ndị mmadụ nwere iji rụọ ọrụ na usoro ahụ.
+
+reset
+
+    Ọ na-emezigharị ọnọdụ ma na-ehichapụ koodu niile dị na edekọ koodu ugbu a.
+
+startup
+
+    Ọ na-egosi ederede mmalite.

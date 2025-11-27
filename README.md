@@ -2,6 +2,11 @@
 
 **RELEASE CANDIDATE 12**
 
+## 28th November 2025
+
+### Langues:
+- Added support for the 3 Nigerian languages: Hausa, Igbo and Yoruba.
+
 ## 27th October 2025
 
 ### Documentation

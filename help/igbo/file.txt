@@ -1,0 +1,46 @@
+Iwu Faịlụ  
+Iwu ndị a metụtara faịlụ dị na ebe nchekwa faịlụ gị ugbu a.
+
+beautify <aha faịlụ>
+
+	Ọ na-eme ka ọ maa mma faịlụ JSON na-enweghị imetụta mmemme nke a na-ebudata ugbu a.
+	
+dir [<aha faịlụ>] (ma ọ bụ cat, ls)
+
+	Ọ na-edepụta mmemme echekwara. Aha faịlụ nwere ike ịgụnye akara ngosi gungun * ma ọ bụ ?.
+	
+copy <aha faịlụ a> <aha faịlụ b> (ma ọ bụ cp)
+
+	Ọ na-emegharị faịlụ site na aha faịlụ a gaa na aha faịlụ b.
+	
+del <aha faịlụ> (ma ọ bụ delete, era)
+
+	Ọ na-ehichapụ mmemme.
+	
+load <aha faịlụ>
+
+	Ọ na-ebudata mmemme.
+	
+ren <aha faịlụ a> <aha faịlụ b> (ma ọ bụ rename, mv)
+
+	Ọ na-agbanwe aha faịlụ site na aha faịlụ a gaa na aha faịlụ b.
+	
+run <aha faịlụ>
+
+	Ọ na-arụ ọrụ mmemme, na-ewepụ mmemme nke a na-ebudata ugbu a.
+	
+save <aha faịlụ>
+
+	Ọ na-echekwa mmemme.
+	
+space [<mkpọchi oghere> | <aha>] (ma ọ bụ cs, cd, chdir)
+
+	Ọ na-egosi oghere ị nọ ma ọ bụ na-agbanwe na ọhụrụ.
+	
+spaces
+
+	Ọ na-edepụta niile oghere faịlụ ị nwere ikike ịbanye.
+	
+type <aha faịlụ> [[site na ahịrị]-[na ahịrị]]
+
+	Ọ na-ede mmemme na-enweghị imetụta mmemme nke a na-ebudata ugbu a.

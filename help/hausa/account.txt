@@ -1,0 +1,54 @@
+Umarnin Asusun  
+Waɗannan umarnin suna danganta da asusunka da samun dama ga asusunka.
+
+about [<saƙo>]
+
+	Yana nuna saƙonku na game da ku ko kuma yana saita sabon saƙo.
+
+admins [<laƙabi>]
+
+	Yana lissafa duk masu gudanarwa na tsarin. Laƙabi na iya ƙunshe da alamomin wildcards * ko ?.
+
+alias [<laƙabi>]
+
+	Yana nuna sunan laƙabin ku ko kuma yana saita sabon laƙabi.
+
+device <mabuɗin na'ura> <laƙabi>
+
+	Yana ba da sabuwar laƙabi ga na'urar ku.
+
+devices
+
+	Yana lissafa na'urorin ku.
+
+login <sunan mai amfani> <kalmar sirri>
+
+	Yana shigar da ku a kan na'urar da ake ciki.
+
+logout
+
+	Yana fitar da ku daga na'urar da ake ciki.
+
+offline
+
+	Yana nuna ku a matsayin wanda ba ya kan layi ga sauran masu amfani, wannan shine tsohuwar saiti ga sabbin rajistar.
+
+online
+
+	Yana nuna ku a matsayin wanda ke kan layi ga sauran masu amfani, za ku ci gaba da kasancewa kan layi har sai kun canza kanku zuwa offline.
+
+password <tsohuwar kalmar sirri> <sabuwar kalmar sirri> (ko chpwd)
+
+	Yana canza kalmar sirrinku.
+
+register <sunan mai amfani> <kalmar sirri> [<laƙabi>]
+
+	Yana ƙirƙirar sabon asusun mai amfani. Lura: Wannan ba ya shigar da ku cikin sabon asusun da aka ƙirƙira.
+
+username [<sunan mai amfani>]
+
+	Yana nuna sunan mai amfani da ku ko kuma yana saita sabon suna.
+
+users [<laƙabi>]
+
+	Yana lissafa duk masu amfani na tsarin. Laƙabi na iya ƙunshe da alamomin wildcards * ko ?.

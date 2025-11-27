@@ -1,0 +1,55 @@
+Nnọọ na CyborgShell!
+
+Nke a bụ nduzi enyemaka ga-eme gị ntuziaka site na ụzọ iwu na atụmatụ dị iche iche dị. 
+
+Echefula ịgụ banyere nke a site n'ịkọ 'help about' na ịgụ iwu nzuzo site n'ịkọ 'help privacy' na ọnọdụ ojiji site n'ịkọ 'help terms'.
+(nke a pụtara na ma ị na-eji ngwaahịa a, ị na-akwado iwu nzuzo na ọnọdụ ojiji)
+
+Ị nwere ike ịdebanye aha ka ị nwee ike banye ma hazie mmemme gị na ịkekọrịta ha na ndị ọzọ.
+Dee 'help account' maka enyemaka na iwu nke ịdebanye aha na nbanye na iwu ndị ọzọ gbasara akaụntụ.
+
+Nduzi Enyemaka
+
+help
+
+    Ọ na-egosi nduzi enyemaka a.
+
+help general
+
+    Ọ na-egosi enyemaka gbasara iwu nke zuru ezu.
+
+help editor
+
+    Ọ na-egosi enyemaka gbasara iwu nke edito.
+
+help file
+
+    Ọ na-egosi enyemaka gbasara iwu nke faịlụ.
+
+help account
+
+    Ọ na-egosi enyemaka gbasara iwu nke akaụntụ.
+
+help sharing
+
+    Ọ na-egosi enyemaka gbasara iwu nke ịkekọrịta.
+
+help about
+
+    Ọ na-egosi ụfọdụ ozi gbasara ngwaahịa a.
+
+help roadmap
+
+    Ọ na-egosi ụfọdụ ozi gbasara ihe anyị na-eme atụmatụ ime na ngwaahịa a.
+
+help privacy
+
+    Ọ na-egosi iwu nzuzo.
+
+help terms
+
+    Ọ na-egosi ọnọdụ ojiji.
+
+help etiquette
+
+    Ọ na-egosi iwu ndị a na-asọpụrụ maka usoro ọha a.

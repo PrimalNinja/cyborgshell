@@ -1,0 +1,50 @@
+Umarnin Edita  
+Waɗannan umarnin suna taimaka maka gyara shirin ka na yanzu.
+
+beautify
+
+    Yana kyautata JSON da aka loda.
+
+cls (ko clear)
+
+    Yana share fuskar.
+
+edit <lambar layi> (ko ed)
+
+    Yana gyara layi tare da editan layi.
+
+file [<lambar fayil>]
+
+    Yana nuna fayil ɗin ka na yanzu wanda umarnin editan suka shafi ko yana sa sabon fayil.
+
+filename [<sunan fayil>]
+
+    Yana nuna sunan fayil ɗin na yanzu ko yana sa shi. Wannan sunan fayil na editan ne, ba a ba da shi ga fayilolin da ka loda ko adana ba, amma a maimakon haka za a sa shi ta hanyar ka loda ko adana fayiloli.
+
+files
+
+    Yana lissafa duk fayiloli a cikin editan tare da lambobin fayil ɗin su.
+
+list [[daga layi]-[zuwa layi]]
+
+    Yana lissafa shirin. Misalai: list 30-, list -30, list 20-30, list, list 40.
+
+new
+
+    Yana share shirin na yanzu daga editan lambar.
+
+newfile
+
+    Yana ƙirƙirar sabon fayil a cikin editan ka.
+
+paste <lambar layi> <lambar fayil>
+
+    Yana liƙa abun cikin lambar fayil da aka kayyade a cikin fayil ɗin na yanzu kafin lambar layi da aka kayyade. Wannan ikon liƙa yana ba ka damar amfani da ɓangarori da yawa na lambar da aka loda a cikin editan a matsayin kwantena daban-daban kuma liƙa su kamar yadda ake buƙata a cikin lambarka.
+
+renum
+
+    Yana sake lamba shirin. Lura: JavaScript ba ya amfani da lambobin layi, amma muna amfani da su don dalilai na gyara.
+
+run
+
+    Yana gudanar da shirin na yanzu.

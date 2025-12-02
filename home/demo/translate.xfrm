@@ -23,6 +23,12 @@ function translate_xfrm(objAPI_a, objGlobals_a, objXFrmAPI_a, strArgs_a, cb_a)
 	var m_arrCode = [];
 	var m_strSourceFilenames = '';
 
+	// helpers
+	function endsWith(str_a, strSuffix_a) 
+	{
+		return str_a.indexOf(strSuffix_a, str_a.length - strSuffix_a.length) !== -1;
+	}
+
 	if (xfrmapi.sources && xfrmapi.sources.length > 0) 
 	{
 		var blnRenumber = xfrmapi.sources.length > 1;
@@ -105,7 +111,7 @@ function translate_xfrm(objAPI_a, objGlobals_a, objXFrmAPI_a, strArgs_a, cb_a)
 		m_strOverrideProvider = parts[0];
 
 		// Check if second part is session (ends with colon)
-		if (parts.length > 1 && parts[1].endsWith(':'))
+		if (parts.length > 1 && endsWith(parts[1], ':'))
 		{
 			m_strOverrideSession = parts[1].slice(0, -1); // remove colon
 			m_strProcessedArgs = parts.slice(2).join(' '); // rest is prompt

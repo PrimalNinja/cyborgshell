@@ -251,7 +251,7 @@ function cyborgShell(strContainer_a, strInput_a, strOutput_a, blnShowStartupText
 				intIndent += intIndentOffsetPre;
 				if (intIndent > 0)
 				{
-					strIndent = '\t'.repeat(intIndent);
+					strIndent = new Array(intIndent + 1).join('\t');
 				}
 
 				var strLine = '';
@@ -372,6 +372,11 @@ function cyborgShell(strContainer_a, strInput_a, strOutput_a, blnShowStartupText
 		document.cookie = strCookieName_a + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/";
 	}
 
+	function endsWith(str_a, strSuffix_a) 
+	{
+		return str_a.indexOf(strSuffix_a, str_a.length - strSuffix_a.length) !== -1;
+	}
+
 	function hasLocalStorage()
 	{
 		var blnResult = false;
@@ -389,6 +394,82 @@ function cyborgShell(strContainer_a, strInput_a, strOutput_a, blnShowStartupText
 		}
 		
 		return blnResult;
+	}
+
+	function includes(arr_a, str_a) 
+	{
+		return arr_a.indexOf(str_a) !== -1;
+	}
+
+	function padStart(str_a, intLength_a, strPad_a) 
+	{
+		var strResult = '';
+		var str = str_a.toString();
+		var strPad = strPad_a || ' ';
+		
+		if (str.length >= intLength_a) 
+		{
+			strResult = str;
+		}
+		else
+		{
+			var padLength = intLength_a - str.length;
+			var repeatedPad = '';
+			
+			while (repeatedPad.length < padLength) 
+			{
+				repeatedPad += strPad;
+			}
+			
+			strResult = repeatedPad.slice(0, padLength) + str;
+		}
+
+		return strResult;
+	}
+
+	function post(strURL_a, objData_a, cb_a) 
+	{
+		//appendOutput('POST: Starting request...', false);
+		
+		var objXHR = new XMLHttpRequest();
+		objXHR.open('POST', strURL_a || window.location.href, true);
+		objXHR.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+		objXHR.onload = function() 
+		{
+			if (objXHR.status >= 200 && objXHR.status < 300) 
+			{
+				//appendOutput('POST: Success (status ' + objXHR.status + ')', false);
+				cb_a(objXHR.responseText);
+			} 
+			else 
+			{
+				errorOutput('POST failed: status ' + objXHR.status + ' - ' + objXHR.statusText);
+			}
+		};
+
+		objXHR.onerror = function() 
+		{
+			errorOutput('POST: Network error occurred');
+		};
+
+		// Convert objData_a object to URL-encoded string
+		var arrParams = [];
+		for (var strKey in objData_a) 
+		{
+			if (objData_a.hasOwnProperty(strKey)) 
+			{
+				arrParams.push(encodeURIComponent(strKey) + '=' + encodeURIComponent(objData_a[strKey]));
+			}
+		}
+
+		//appendOutput('POST: Sending ' + arrParams.length + ' parameters', false);
+		objXHR.send(arrParams.join('&'));
+	}
+
+	function startsWith(str_a, strPrefix_a) 
+	{
+		return str_a.indexOf(strPrefix_a) === 0;
 	}
 
 	// command support
@@ -1371,17 +1452,17 @@ console.log('eval plugin exception, end of executePlugin about to callback');
 			var objResponseJSON = JSON.parse(strResponse_a);
 
 			// standard actions
-			if (objResponseJSON.actions.includes('invalidate'))
+			if (objResponseJSON.actions.indexOf('invalidate') !== -1)
 			{
 				deleteCookie(m_COOKIENAME);
 			}
 			
-			if (objResponseJSON.actions.includes('ltr'))
+			if (includes(objResponseJSON.actions, 'ltr'))
 			{
 				cmdLTR(false);
 			}
 			
-			if (objResponseJSON.actions.includes('rtl'))
+			if (includes(objResponseJSON.actions, 'rtl'))
 			{
 				cmdRTL(false);
 			}
@@ -1393,11 +1474,11 @@ console.log('eval plugin exception, end of executePlugin about to callback');
 			
 			if (!blnSuppressMessage && objResponseJSON.message.length > 0)
 			{
-				if (strInput_a.startsWith('help'))
+				if (startsWith(strInput_a, 'help'))
 				{
 					appendOutput(objResponseJSON.message, false, false, true);
 				}
-				else if ((strInput_a.startsWith('cat')) || (strInput_a.startsWith('dir')) || (strInput_a.startsWith('ls')))
+				else if ((startsWith(strInput_a, 'cat')) || (startsWith(strInput_a, 'dir')) || (startsWith(strInput_a, 'ls')))
 				{
 					appendOutput(objResponseJSON.message, false);
 					appendOutput(objResponseJSON.content, false);
@@ -1480,7 +1561,7 @@ console.log('eval plugin exception, end of executePlugin about to callback');
 			strPlugin = m_XFRM_NULL;
 		}
 		
-		if (!strPlugin.endsWith('.xfrm'))
+		if (!endsWith(strPlugin, '.xfrm'))
 		{
 			strPlugin += '.xfrm';
 		}
@@ -1596,7 +1677,7 @@ console.log('eval plugin exception, end of executePlugin about to callback');
 			var objResponseJSON = JSON.parse(strResponse_a);
 
 			// standard actions
-			if (objResponseJSON.actions.includes('invalidate'))
+			if (objResponseJSON.actions.indexOf('invalidate') !== -1)
 			{
 				deleteCookie(m_COOKIENAME);
 			}
@@ -1612,12 +1693,12 @@ console.log('eval plugin exception, end of executePlugin about to callback');
 	{
 		loadFile(strFilename_a, function(objResponseJSON_a)
 		{
-			if (objResponseJSON_a.actions.includes('ltr'))
+			if (includes(objResponseJSON_a.actions, 'ltr'))
 			{
 				cmdLTR(false);
 			}
 			
-			if (objResponseJSON_a.actions.includes('rtl'))
+			if (includes(objResponseJSON_a.actions, 'rtl'))
 			{
 				cmdRTL(false);
 			}
@@ -1773,7 +1854,7 @@ console.log('eval plugin exception, end of executePlugin about to callback');
 
 	function padWithSpaces(int_a, intLength_a)
 	{
-		return int_a.toString().padStart(intLength_a, " ");
+		return padStart(int_a.toString(), intLength_a, " ");
 	}
 	
 	// turn password mode on or off for the input box
@@ -1908,7 +1989,7 @@ console.log('eval plugin exception, end of executePlugin about to callback');
 			var objResponseJSON = JSON.parse(strResponse_a);
 
 			// standard actions
-			if (objResponseJSON.actions.includes('invalidate'))
+			if (objResponseJSON.actions.indexOf('invalidate') !== -1)
 			{
 				deleteCookie(m_COOKIENAME);
 			}
@@ -2731,7 +2812,7 @@ console.log('eval plugin exception, end of executePlugin about to callback');
 			for (var intI = 0; intI < localStorage.length; intI++)
 			{
 				var strKey = localStorage.key(intI);
-				if (typeof strKey === 'string' && strKey.length > 0 && strKey.startsWith(m_LOCALSTORAGEPREFIX))
+				if (typeof strKey === 'string' && strKey.length > 0 && startsWith(strKey, m_LOCALSTORAGEPREFIX))
 				{
 					var strFilename = strKey.substring(m_LOCALSTORAGEPREFIX.length);
 					
@@ -2859,7 +2940,7 @@ console.log('eval plugin exception, end of executePlugin about to callback');
 			}
 
 			var strType = "";
-			if (objFile_a.fn.endsWith('.xfrm') || objFile_a.mt === m_MIME_TEXTTRANSFORMER)
+			if (endsWith(objFile_a.fn, '.xfrm') || objFile_a.mt === m_MIME_TEXTTRANSFORMER)
 			{
 				strType = " [PLUGIN]";
 			}
@@ -3024,7 +3105,7 @@ console.log('eval plugin exception, end of executePlugin about to callback');
 					var strTransformer = arrParams_a[2];
 					strArguments = arrParams_a.slice(3).join(' ');
 
-					if (!strTransformer.endsWith('.xfrm'))
+					if (!endsWith(strTransformer, '.xfrm'))
 					{
 						strTransformer += '.xfrm';
 					}
@@ -3090,7 +3171,7 @@ console.log('eval plugin exception, end of executePlugin about to callback');
 						intIndent += intIndentOffsetPre;
 						if (intIndent > 0)
 						{
-							strIndent = '\t'.repeat(intIndent);
+							strIndent = new Array(intIndent + 1).join('\t');
 						}
 
 						var strLineNumber = padWithSpaces(intLineNumber, m_LINENUMBERWIDTH);
@@ -3404,7 +3485,7 @@ console.log('eval plugin exception, end of executePlugin about to callback');
 		if (arrParams_a.length > 2)
 		{
 			var strFilename = arrParams_a[2].trim();
-			if (!strFilename.endsWith('.prj'))
+			if (!endsWith(strFilename, '.prj'))
 			{
 				strFilename += '.prj';
 			}
@@ -3550,7 +3631,7 @@ console.log('eval plugin exception, end of executePlugin about to callback');
 			var strFilename = arrParams_a[2].trim();
 			
 			// Add .prj if not present
-			if (!strFilename.endsWith('.prj'))
+			if (!endsWith(strFilename, '.prj'))
 			{
 				strFilename += '.prj';
 			}
@@ -4214,7 +4295,7 @@ console.log('eval plugin exception, end of executePlugin about to callback');
 		}
 		else
 		{
-			if (!arrParams[0].endsWith('.js'))
+			if (!endsWith(arrParams[0], '.js'))
 			{
 				arrParams[0] = arrParams[0] + '.js';
 			}
@@ -4716,9 +4797,9 @@ console.log('eval plugin exception, end of executePlugin about to callback');
 
 		console.log("Sending secure token exchange request to " + strURL + " using jQuery.post...");
 		
-		// Send the request using jQuery's $.post
-		$.post(strURL, JSON.stringify(objPayload), function(objResponse_a) {
-			
+		// Send the request using jQuery's post
+		$.post(strURL, JSON.stringify(objPayload), function(objResponse_a) 
+		{
 			if (objResponse_a && objResponse_a.success) 
 			{
 				// SUCCESS: Token successfully received and exchanged.

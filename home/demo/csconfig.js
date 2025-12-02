@@ -10,6 +10,12 @@ var m_KEY_APIKEYS = "zoscii-apikeys";
 var m_FILE_APIKEYS = "csapikeys.zoc";
 var m_FILE_CONFIG = "csconfig.json";
 
+// helpers
+function startsWith(str_a, strPrefix_a) 
+{
+	return str_a.indexOf(strPrefix_a) === 0;
+}
+
 // Load language strings on startup
 function loadLanguage(cb_a)
 {
@@ -271,7 +277,7 @@ function listLocalFiles()
 	for (var intI = 0; intI < localStorage.length; intI++)
 	{
 		var strKey = localStorage.key(intI);
-		if (typeof strKey === 'string' && strKey.length > 0 && strKey.startsWith(m_LOCALSTORAGEPREFIX))
+		if (typeof strKey === 'string' && strKey.length > 0 && startsWith(strKey, m_LOCALSTORAGEPREFIX))
 		{
 			var strFilename = strKey.substring(m_LOCALSTORAGEPREFIX.length);
 
@@ -693,10 +699,10 @@ function configBackup()
 			for (var intI = 0; intI < localStorage.length; intI++)
 			{
 				var strKey = localStorage.key(intI);
-				if (typeof strKey === 'string' && strKey.length > 0 && strKey.startsWith(m_LOCALSTORAGEPREFIX))
+				if (typeof strKey === 'string' && strKey.length > 0 && startsWith(strKey, m_LOCALSTORAGEPREFIX))
 				{
 					var strFilename = strKey.substring(m_LOCALSTORAGEPREFIX.length);
-					if (strFilename.startsWith(m_LOCALSTORAGECONFIG))
+					if (startsWith(strFilename, m_LOCALSTORAGECONFIG))
 					{
 						var strConfigKey = strFilename.substring(m_LOCALSTORAGECONFIG.length);
 						var strData = localStorage.getItem(strKey);
@@ -856,10 +862,10 @@ function configDownload()
 			for (var intI = 0; intI < localStorage.length; intI++)
 			{
 				var strKey = localStorage.key(intI);
-				if (typeof strKey === 'string' && strKey.length > 0 && strKey.startsWith(m_LOCALSTORAGEPREFIX))
+				if (typeof strKey === 'string' && strKey.length > 0 && startsWith(strKey, m_LOCALSTORAGEPREFIX))
 				{
 					var strFilename = strKey.substring(m_LOCALSTORAGEPREFIX.length);
-					if (strFilename.startsWith(m_LOCALSTORAGECONFIG))
+					if (startsWith(strFilename, m_LOCALSTORAGECONFIG))
 					{
 						var strConfigKey = strFilename.substring(m_LOCALSTORAGECONFIG.length);
 						var strData = localStorage.getItem(strKey);
@@ -1197,7 +1203,7 @@ function clearLocalStorage()
 			{
 				var strKey = localStorage.key(intI);
 				// Safety check to only remove keys starting with the app's prefix
-				if (typeof strKey === 'string' && strKey.startsWith(strPrefix))
+				if (typeof strKey === 'string' && startsWith(strKey, strPrefix))
 				{
 					arrKeysToRemove.push(strKey);
 				}

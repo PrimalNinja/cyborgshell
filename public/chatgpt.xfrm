@@ -25,6 +25,17 @@ function chatgpt_xfrm(objAPI_a, objGlobals_a, objXFrmAPI_a, strArgs_a, cb_a)
 	var m_arrCode = [];
 	var m_strSourceFilenames = '';
 
+	// helpers
+	function endsWith(str_a, strSuffix_a) 
+	{
+		return str_a.indexOf(strSuffix_a, str_a.length - strSuffix_a.length) !== -1;
+	}
+
+	function startsWith(str_a, strPrefix_a) 
+	{
+		return str_a.indexOf(strPrefix_a) === 0;
+	}
+
 	if (xfrmapi.sources && xfrmapi.sources.length > 0) 
 	{
 		var blnRenumber = xfrmapi.sources.length > 1;
@@ -106,7 +117,7 @@ function chatgpt_xfrm(objAPI_a, objGlobals_a, objXFrmAPI_a, strArgs_a, cb_a)
 		m_strOverrideProvider = parts[0];
 
 		// Check if second part is session (ends with colon)
-		if (parts.length > 1 && parts[1].endsWith(':'))
+		if (parts.length > 1 && endsWith(parts[1], ':'))
 		{
 			m_strOverrideSession = parts[1].slice(0, -1); // remove colon
 			m_strProcessedArgs = parts.slice(2).join(' '); // rest is prompt
@@ -687,7 +698,7 @@ else if (strFlavour.toLowerCase() === 'gemini')
 				strLine = arrLines[intI];
 				strTrimmedLine = strLine.trim();
 
-				if (strTrimmedLine.endsWith('AI IGNORE'))
+				if (endsWith(strTrimmedLine, 'AI IGNORE'))
 				{
 					blnAIIgnore = true;
 				}
@@ -723,14 +734,14 @@ else if (strFlavour.toLowerCase() === 'gemini')
 						}
 					}
 				}
-				else if (strTrimmedLine.startsWith('AI SESSION START '))
+				else if (startsWith(strTrimmedLine, 'AI SESSION START '))
 				{
 					strSessionID = strTrimmedLine.substring(17).trim();
 					strCurrentSessionID = strSessionID;
 					blnInSession = true;
 					strSessionData = '';
 				}
-				else if (strTrimmedLine.startsWith('AI SESSION END '))
+				else if (startsWith(strTrimmedLine, 'AI SESSION END '))
 				{
 					strSessionID = strTrimmedLine.substring(15).trim();
 					if (blnInSession && strCurrentSessionID === strSessionID)
@@ -745,14 +756,14 @@ else if (strFlavour.toLowerCase() === 'gemini')
 						strSessionData = '';
 					}
 				}
-				else if (strTrimmedLine.startsWith('AI PROMPT START '))
+				else if (startsWith(strTrimmedLine, 'AI PROMPT START '))
 				{
 					if (blnInSession)
 					{
 						blnInPromptBlock = true;  // Mark that we're in a prompt block
 					}
 				}
-				else if (strTrimmedLine.startsWith('AI PROMPT END '))
+				else if (startsWith(strTrimmedLine, 'AI PROMPT END '))
 				{
 					if (blnInSession && blnInPromptBlock)
 					{
@@ -802,7 +813,7 @@ else if (strFlavour.toLowerCase() === 'gemini')
 				strLine = arrLines[intI];
 				strTrimmedLine = strLine.trim();
 
-				if (strTrimmedLine.startsWith('AI PROMPT START '))
+				if (startsWith(strTrimmedLine, 'AI PROMPT START '))
 				{
 					var strRemainder = strTrimmedLine.substring(16);
 					var intSpaceIndex = strRemainder.indexOf(' ');
@@ -822,7 +833,7 @@ else if (strFlavour.toLowerCase() === 'gemini')
 					intPromptStartLine = intI;
 					arrResult.push(''); // Placeholder for response
 				}
-				else if (strTrimmedLine.startsWith('AI PROMPT END '))
+				else if (startsWith(strTrimmedLine, 'AI PROMPT END '))
 				{
 					strSessionID = strTrimmedLine.substring(14).trim();
 
@@ -848,7 +859,7 @@ else if (strFlavour.toLowerCase() === 'gemini')
 					}
 					strCurrentPrompt += strLine;
 				}
-				else if (!strTrimmedLine.startsWith('AI SESSION'))
+				else if (!startsWith(strTrimmedLine, 'AI SESSION'))
 				{
 					// Regular line (not a session or prompt command), keep as-is
 					arrResult.push(strLine);

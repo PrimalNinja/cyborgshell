@@ -20,6 +20,12 @@ function session_xfrm(objAPI_a, objGlobals_a, objXFrmAPI_a, strArgs_a, cb_a)
 	var m_arrCode = [];
 	var m_strSourceFilenames = '';
 	
+	// helpers
+	function endsWith(str_a, strSuffix_a) 
+	{
+		return str_a.indexOf(strSuffix_a, str_a.length - strSuffix_a.length) !== -1;
+	}
+
 	if (xfrmapi.sources && xfrmapi.sources.length > 0) 
 	{
 		var blnRenumber = xfrmapi.sources.length > 1;
@@ -167,7 +173,7 @@ function session_xfrm(objAPI_a, objGlobals_a, objXFrmAPI_a, strArgs_a, cb_a)
 	var strFilename = '';
 	
 	// Parse session: syntax
-	if (arrWords[0].endsWith(':'))
+	if (endsWith(arrWords[0], ':'))
 	{
 		// Format: session myproject: [command] [filename]
 		strSessionID = arrWords[0].substring(0, arrWords[0].length - 1);
@@ -345,7 +351,7 @@ function session_xfrm(objAPI_a, objGlobals_a, objXFrmAPI_a, strArgs_a, cb_a)
 			{
 				// Session ID provided - strip colon if present
 				strSessionID = arrWords[1];
-				if (strSessionID.endsWith(':'))
+				if (endsWith(strSessionID, ':'))
 				{
 					strSessionID = strSessionID.substring(0, strSessionID.length - 1);
 				}
@@ -404,7 +410,7 @@ function session_xfrm(objAPI_a, objGlobals_a, objXFrmAPI_a, strArgs_a, cb_a)
 						continue;
 					}
 					
-					if (strSource.endsWith(':'))
+					if (endsWith(strSource, ':'))
 					{
 						// Session reference - copy from another session
 						var strSourceSession = strSource.substring(0, strSource.length - 1);

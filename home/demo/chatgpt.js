@@ -23,6 +23,17 @@ function chatgpt(strPrompt_a)
 	var m_strProxy = '';
 	var m_strJSONBearer = '';
 	
+	// helpers
+	function endsWith(str_a, strSuffix_a) 
+	{
+		return str_a.indexOf(strSuffix_a, str_a.length - strSuffix_a.length) !== -1;
+	}
+
+	function startsWith(str_a, strPrefix_a) 
+	{
+		return str_a.indexOf(strPrefix_a) === 0;
+	}
+
 	function loadProviderSettings(strProvider_a, cb_a)
 	{
 		// Load provider-specific configs
@@ -466,7 +477,7 @@ function chatgpt(strPrompt_a)
 				{
 					// Session ID provided - strip colon if present
 					strSessionID = arrWords[1];
-					if (strSessionID.endsWith(':'))
+					if (endsWith(strSessionID, ':'))
 					{
 						strSessionID = strSessionID.substring(0, strSessionID.length - 1);
 					}
@@ -525,7 +536,7 @@ function chatgpt(strPrompt_a)
 							continue;
 						}
 						
-						if (strSource.endsWith(':'))
+						if (endsWith(strSource, ':'))
 						{
 							// Session reference - copy from another session
 							var strSourceSession = strSource.substring(0, strSource.length - 1);
@@ -633,15 +644,15 @@ function chatgpt(strPrompt_a)
 				for (intI = 0; intI < localStorage.length; intI++)
 				{
 					strKey = localStorage.key(intI);
-					if (typeof strKey === 'string' && strKey.length > 0 && strKey.startsWith(m_LOCALSTORAGEPREFIX))
+					if (typeof strKey === 'string' && strKey.length > 0 && startsWith(strKey, m_LOCALSTORAGEPREFIX))
 					{
 						strFilename = strKey.substring(m_LOCALSTORAGEPREFIX.length);
-						if (strFilename.startsWith(m_LOCALSTORAGECONFIG))
+						if (startsWith(strFilename, m_LOCALSTORAGECONFIG))
 						{
 							strConfigKey = strFilename.substring(m_LOCALSTORAGECONFIG.length);
 							
 							// Check if this ends with '-provider'
-							if (strConfigKey.endsWith('-provider'))
+							if (endsWith(strConfigKey, '-provider'))
 							{
 								strServiceName = strConfigKey.substring(0, strConfigKey.length - 9);
 								var strData = localStorage.getItem(strKey);
@@ -697,16 +708,16 @@ function chatgpt(strPrompt_a)
 			for (intI = 0; intI < localStorage.length; intI++)
 			{
 				strKey = localStorage.key(intI);
-				if (typeof strKey === 'string' && strKey.length > 0 && strKey.startsWith(m_LOCALSTORAGEPREFIX))
+				if (typeof strKey === 'string' && strKey.length > 0 && startsWith(strKey, m_LOCALSTORAGEPREFIX))
 				{
 					strFilename = strKey.substring(m_LOCALSTORAGEPREFIX.length);
-					if (strFilename.startsWith(m_LOCALSTORAGECONFIG))
+					if (startsWith(strFilename, m_LOCALSTORAGECONFIG))
 					{
 						strConfigKey = strFilename.substring(m_LOCALSTORAGECONFIG.length);
 						
 						// Check if this ends with '-endpoint'
 						// strConfigKey format: <service>-endpoint
-						if (strConfigKey.endsWith('-endpoint'))
+						if (endsWith(strConfigKey, '-endpoint'))
 						{
 							// Extract the service name (everything before '-endpoint')
 							strServiceName = strConfigKey.substring(0, strConfigKey.length - 9); // 9 = '-endpoint'.length
@@ -816,12 +827,12 @@ function chatgpt(strPrompt_a)
 		}
 		var strActualPrompt = strPrompt_a;
 
-		//if (strCommand.startsWith('[') && strCommand.endsWith(']'))
+		//if (startsWith(strCommand, '[') && endsWith(strCommand, ']'))
 		//{
 		//strSessionID = strCommand.substring(1, strCommand.length - 1);
 		//strActualPrompt = arrWords.slice(1).join(' ');
 		//}
-		if (strCommand.endsWith(':'))
+		if (endsWith(strCommand, ':'))
 		{
 			strSessionID = strCommand.substring(0, strCommand.length - 1);
 			strActualPrompt = arrWords.slice(1).join(' ');

@@ -24,6 +24,12 @@ function speak_xfrm(objAPI_a, objGlobals_a, objXFrmAPI_a, strArgs_a, cb_a)
 	var m_arrCode = [];
 	var m_strSourceFilenames = '';
 
+	// helpers
+	function startsWith(str_a, strPrefix_a) 
+	{
+		return str_a.indexOf(strPrefix_a) === 0;
+	}
+
 	if (xfrmapi.sources && xfrmapi.sources.length > 0) 
 	{
 		var blnRenumber = xfrmapi.sources.length > 1;
@@ -202,14 +208,29 @@ function speak_xfrm(objAPI_a, objGlobals_a, objXFrmAPI_a, strArgs_a, cb_a)
 		}
 
 		// Check if voices are loaded
+		// var arrVoices = speechSynthesis.getVoices();
+		// if (arrVoices.length === 0)
+		// {
+			// Voices not loaded yet, wait for them
+			// speechSynthesis.addEventListener('voiceschanged', function()
+			// {
+			// 	doSpeak();
+			// }, { once: true });
+		// }
+		// else
+		// {
+			// doSpeak();
+		// }
 		var arrVoices = speechSynthesis.getVoices();
 		if (arrVoices.length === 0)
 		{
 			// Voices not loaded yet, wait for them
-			speechSynthesis.addEventListener('voiceschanged', function()
+			var voicesChangedHandler = function()
 			{
+				speechSynthesis.removeEventListener('voiceschanged', voicesChangedHandler);
 				doSpeak();
-			}, { once: true });
+			};
+			speechSynthesis.addEventListener('voiceschanged', voicesChangedHandler);
 		}
 		else
 		{
@@ -277,7 +298,7 @@ function speak_xfrm(objAPI_a, objGlobals_a, objXFrmAPI_a, strArgs_a, cb_a)
 				strLine = arrLines[intI];
 				strTrimmedLine = strLine.trim();
 				
-				if (strTrimmedLine.startsWith('SPEAK START'))
+				if (startsWith(strTrimmedLine, 'SPEAK START'))
 				{
 					strCurrentOptions = strTrimmedLine.substring(11).trim(); // Get options after "SPEAK START"
 					blnInSpeech = true;
@@ -315,7 +336,7 @@ function speak_xfrm(objAPI_a, objGlobals_a, objXFrmAPI_a, strArgs_a, cb_a)
 				strLine = arrLines[intI];
 				strTrimmedLine = strLine.trim();
 				
-				if (strTrimmedLine.startsWith('SPEAK START'))
+				if (startsWith(strTrimmedLine, 'SPEAK START'))
 				{
 					blnInSpeech = true;
 				}

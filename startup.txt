@@ -1,2 +1,9 @@
 This is RELEASE CANDIDATE 12. Type 'help' for online help. Type 'notes' for release notes.
 English documentation available here: https://cyborgshell.com/docs
+
+Languages: arabic, chinese, chineset, czech, dutch, english, french, german, greek, hausa, hebrew, hindi, igbo, italian, japanese, javanese, klingon, korean, persian, polish, portuguese, romanian, russian, spanish, swahili, swedish, tagalog, thai, turkish, vietnamese, yoruba
+
+e.g. 
+
+language yoruba
+help
